@@ -14,7 +14,7 @@ from PIL import Image, ImageOps
 
 ROOT = Path("/Users/dm/Desktop/фото")
 OUT = Path("/Users/dm/Desktop/сайт/img/catalog")
-W, H = 900, 675
+W, H = 1200, 900
 PAPER = (250, 249, 247)
 PAD = 0.92  # доля кадра под товар в режиме «вписать»
 
