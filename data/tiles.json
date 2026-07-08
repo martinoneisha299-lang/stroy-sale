@@ -63,7 +63,13 @@
    "images": [
     {
      "path": "Новый город/Агат коричневый/Схемы раскладки/form-1-agat-kor.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Агат коричневый/agat-kor-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Агат коричневый/Схемы раскладки/form-1-agat-kor.webp",
@@ -87,7 +93,8 @@
    "images": [
     {
      "path": "Новый город/Агат коричневый — Мрамор/agat-korichnevyj-m.jpg",
-     "clean": true
+     "clean": true,
+     "is_render": false
     }
    ],
    "texture": "Новый город/Агат коричневый — Мрамор/agat-korichnevyj-m.jpg",
@@ -111,7 +118,13 @@
    "images": [
     {
      "path": "Новый город/Агат кофейный/agat-kofejnyj.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Агат кофейный/96674674747.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Агат кофейный/agat-kofejnyj.webp",
@@ -135,7 +148,13 @@
    "images": [
     {
      "path": "Новый город/Агат оранжевый/agat-orang-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Агат оранжевый/agat-orang-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Агат оранжевый/agat-orang-nov2.webp",
@@ -159,7 +178,8 @@
    "images": [
     {
      "path": "Новый город/Агат серокофейный/agat-serokofejnyj-g.jpg",
-     "clean": true
+     "clean": true,
+     "is_render": false
     }
    ],
    "texture": "Новый город/Агат серокофейный/agat-serokofejnyj-g.jpg",
@@ -183,7 +203,13 @@
    "images": [
     {
      "path": "Новый город/Агат солнечный/agat-soln-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Агат солнечный/agat-soln-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Агат солнечный/agat-soln-nov2.webp",
@@ -207,7 +233,13 @@
    "images": [
     {
      "path": "Новый город/Антрацит/antraczit.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Антрацит/Схемы раскладки/form-1-antracit2.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Антрацит/antraczit.webp",
@@ -231,7 +263,13 @@
    "images": [
     {
      "path": "Новый город/Гончар/gonchar-b-600x600-1.jpg",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Гончар/gonchar-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Гончар/gonchar-b-600x600-1.jpg",
@@ -255,7 +293,13 @@
    "images": [
     {
      "path": "Новый город/Джафар/dzhafar.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Джафар/djaphar-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Джафар/dzhafar.webp",
@@ -279,7 +323,13 @@
    "images": [
     {
      "path": "Новый город/Дюна/duna-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Дюна/duna-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Дюна/duna-nov2.webp",
@@ -303,7 +353,8 @@
    "images": [
     {
      "path": "Новый город/Инь и Ян/in-i-yan-b.jpg",
-     "clean": true
+     "clean": true,
+     "is_render": false
     }
    ],
    "texture": "Новый город/Инь и Ян/in-i-yan-b.jpg",
@@ -327,7 +378,13 @@
    "images": [
     {
      "path": "Новый город/Инь и Ян — Мрамор/in-i-yan-mramor.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Инь и Ян — Мрамор/inyan.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Инь и Ян — Мрамор/in-i-yan-mramor.webp",
@@ -351,7 +408,13 @@
    "images": [
     {
      "path": "Новый город/Клинкер/klinker-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Клинкер/klinker-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Клинкер/klinker-nov2.webp",
@@ -375,7 +438,13 @@
    "images": [
     {
      "path": "Новый город/Кофе с молоком/kofe-s-molokom.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Кофе с молоком/kofe-smolokom-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Кофе с молоком/kofe-s-molokom.webp",
@@ -399,7 +468,13 @@
    "images": [
     {
      "path": "Новый город/Моно 1/mono1-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Моно 1/mono1-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Моно 1/mono1-nov2.webp",
@@ -423,7 +498,13 @@
    "images": [
     {
      "path": "Новый город/Моно 2/Схемы раскладки/form-1-mono_2-1.jpg",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Моно 2/mono2-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Моно 2/Схемы раскладки/form-1-mono_2-1.jpg",
@@ -447,7 +528,13 @@
    "images": [
     {
      "path": "Новый город/Моно 3/mono3-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Моно 3/mono3-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Моно 3/mono3-nov2.webp",
@@ -471,7 +558,13 @@
    "images": [
     {
      "path": "Новый город/Моно 4/mono4-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Моно 4/mono4-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Моно 4/mono4-nov2.webp",
@@ -495,7 +588,13 @@
    "images": [
     {
      "path": "Новый город/Моно 5/mono5-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Моно 5/mono5-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Моно 5/mono5-nov2.webp",
@@ -519,7 +618,13 @@
    "images": [
     {
      "path": "Новый город/Моно 6/mono6-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Моно 6/mono6-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Моно 6/mono6-nov2.webp",
@@ -543,7 +648,13 @@
    "images": [
     {
      "path": "Новый город/Моно 7/mono7-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Моно 7/mono7-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Моно 7/mono7-nov2.webp",
@@ -567,7 +678,13 @@
    "images": [
     {
      "path": "Новый город/Моно 8/mono8-nov2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Моно 8/mono8-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Моно 8/mono8-nov2.webp",
@@ -591,7 +708,13 @@
    "images": [
     {
      "path": "Новый город/Светлый листопад/img_4101.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Светлый листопад/svlistopad-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Светлый листопад/img_4101.webp",
@@ -615,7 +738,8 @@
    "images": [
     {
      "path": "Новый город/Солнечный Инь и Ян/solnechnyj-in-i-yan-b.jpg",
-     "clean": true
+     "clean": true,
+     "is_render": false
     }
    ],
    "texture": "Новый город/Солнечный Инь и Ян/solnechnyj-in-i-yan-b.jpg",
@@ -639,7 +763,13 @@
    "images": [
     {
      "path": "Новый город/Степь/step.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Степь/step-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Степь/step.webp",
@@ -663,7 +793,13 @@
    "images": [
     {
      "path": "Новый город/Темный листопад/temnyj-listopad.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Темный листопад/temniy-list-mov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Темный листопад/temnyj-listopad.webp",
@@ -687,7 +823,13 @@
    "images": [
     {
      "path": "Новый город/Хаски/haski.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Хаски/husky-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Хаски/haski.webp",
@@ -711,7 +853,8 @@
    "images": [
     {
      "path": "Новый город/Хаски — Мрамор/haski-m.jpg",
-     "clean": true
+     "clean": true,
+     "is_render": false
     }
    ],
    "texture": "Новый город/Хаски — Мрамор/haski-m.jpg",
@@ -735,7 +878,13 @@
    "images": [
     {
      "path": "Новый город/Яшма/yashma.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Новый город/Яшма/yachma-nov.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Новый город/Яшма/yashma.webp",
@@ -759,7 +908,13 @@
    "images": [
     {
      "path": "Старый город/Агат коричневый/agat-korichnevyj-star2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Агат коричневый/agat-korichnevyj-star.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Агат коричневый/agat-korichnevyj-star2.webp",
@@ -783,7 +938,8 @@
    "images": [
     {
      "path": "Старый город/Агат кофейный — Мрамор/agat-kof-m.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
     }
    ],
    "texture": "Старый город/Агат кофейный — Мрамор/agat-kof-m.webp",
@@ -807,7 +963,13 @@
    "images": [
     {
      "path": "Старый город/Агат оранжевый/agat-oranzhevyj-star2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Агат оранжевый/agat-oranzhevyj-star.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Агат оранжевый/agat-oranzhevyj-star2.webp",
@@ -831,7 +993,13 @@
    "images": [
     {
      "path": "Старый город/Агат солнечный/agat-solnechnyj-star2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Агат солнечный/agat-solnechnyj-star.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Агат солнечный/agat-solnechnyj-star2.webp",
@@ -855,7 +1023,13 @@
    "images": [
     {
      "path": "Старый город/Антрацит/46735652452.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Антрацит/antraczit-star.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Антрацит/46735652452.webp",
@@ -879,7 +1053,13 @@
    "images": [
     {
      "path": "Старый город/Гончар/351512.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Гончар/Схемы раскладки/form-2-gonchar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Гончар/351512.webp",
@@ -903,7 +1083,13 @@
    "images": [
     {
      "path": "Старый город/Джафар/Схемы раскладки/form-2-dzhafar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Джафар/Схемы раскладки/form-2-dzhafar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Джафар/Схемы раскладки/form-2-dzhafar2.webp",
@@ -927,7 +1113,13 @@
    "images": [
     {
      "path": "Старый город/Дюна/Схемы раскладки/form-2-dyuna2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Дюна/Схемы раскладки/form-2-dyuna.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Дюна/Схемы раскладки/form-2-dyuna2.webp",
@@ -951,7 +1143,13 @@
    "images": [
     {
      "path": "Старый город/Инь ян/Схемы раскладки/form-2-in-yan2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Инь ян/Схемы раскладки/form-2-in-yan.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Инь ян/Схемы раскладки/form-2-in-yan2.webp",
@@ -975,7 +1173,13 @@
    "images": [
     {
      "path": "Старый город/Клинкер/klinker-b-1.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Клинкер/Схемы раскладки/form-2-klinker.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Клинкер/klinker-b-1.webp",
@@ -999,7 +1203,13 @@
    "images": [
     {
      "path": "Старый город/Кофе с молоком/Схемы раскладки/form-2-kofe-s-molokom2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Кофе с молоком/Схемы раскладки/form-2-kofe-s-molokom.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Кофе с молоком/Схемы раскладки/form-2-kofe-s-molokom2.webp",
@@ -1023,7 +1233,13 @@
    "images": [
     {
      "path": "Старый город/Моно 1/Схемы раскладки/form-2-mono_12.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Моно 1/Схемы раскладки/form-2-mono_1.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Моно 1/Схемы раскладки/form-2-mono_12.webp",
@@ -1047,7 +1263,13 @@
    "images": [
     {
      "path": "Старый город/Моно 2/Схемы раскладки/form-2-mono_22.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Моно 2/Схемы раскладки/form-2-mono_2-1.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Моно 2/Схемы раскладки/form-2-mono_22.webp",
@@ -1071,7 +1293,13 @@
    "images": [
     {
      "path": "Старый город/Моно 3/Схемы раскладки/form-2-mono_32.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Моно 3/Схемы раскладки/form-2-mono_3.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Моно 3/Схемы раскладки/form-2-mono_32.webp",
@@ -1095,7 +1323,13 @@
    "images": [
     {
      "path": "Старый город/Моно 4/Схемы раскладки/form-2-mono_42.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Моно 4/Схемы раскладки/form-2-mono_4.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Моно 4/Схемы раскладки/form-2-mono_42.webp",
@@ -1119,7 +1353,13 @@
    "images": [
     {
      "path": "Старый город/Моно 5/Схемы раскладки/form-2-mono_52.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Моно 5/Схемы раскладки/form-2-mono_5.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Моно 5/Схемы раскладки/form-2-mono_52.webp",
@@ -1143,7 +1383,13 @@
    "images": [
     {
      "path": "Старый город/Моно 6/Схемы раскладки/form-2-mono_62.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Моно 6/Схемы раскладки/form-2-mono_6.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Моно 6/Схемы раскладки/form-2-mono_62.webp",
@@ -1167,7 +1413,13 @@
    "images": [
     {
      "path": "Старый город/Моно 7/Схемы раскладки/form-2-mono_72.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Моно 7/Схемы раскладки/form-2-mono_7.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Моно 7/Схемы раскладки/form-2-mono_72.webp",
@@ -1191,7 +1443,13 @@
    "images": [
     {
      "path": "Старый город/Моно 8/Схемы раскладки/form-2-mono_82.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Моно 8/Схемы раскладки/form-2-mono_8.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Моно 8/Схемы раскладки/form-2-mono_82.webp",
@@ -1215,7 +1473,13 @@
    "images": [
     {
      "path": "Старый город/Светлый листопад гладкий/sv-list-g-1.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Светлый листопад гладкий/Схемы раскладки/form-2-svetlyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Светлый листопад гладкий/sv-list-g-1.webp",
@@ -1239,7 +1503,13 @@
    "images": [
     {
      "path": "Старый город/Степь/step-1.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Степь/Схемы раскладки/form-2-step.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Степь/step-1.webp",
@@ -1263,7 +1533,13 @@
    "images": [
     {
      "path": "Старый город/Тёмный листопад/Схемы раскладки/form-2-tyomnyj-listopad2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Тёмный листопад/Схемы раскладки/form-2-tyomnyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Тёмный листопад/Схемы раскладки/form-2-tyomnyj-listopad2.webp",
@@ -1287,7 +1563,13 @@
    "images": [
     {
      "path": "Старый город/Хаски/haski-g.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Хаски/Схемы раскладки/form-2-haski.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Хаски/haski-g.webp",
@@ -1311,7 +1593,13 @@
    "images": [
     {
      "path": "Старый город/Яшма/Схемы раскладки/form-2-yashma2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Старый город/Яшма/Схемы раскладки/form-2-yashma.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Старый город/Яшма/Схемы раскладки/form-2-yashma2.webp",
@@ -1335,7 +1623,13 @@
    "images": [
     {
      "path": "Брусчатка/Агат коричневый (Б)/Схемы раскладки/form-6-agat-korichnevyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Агат коричневый (Б)/Схемы раскладки/form-6-agat-korichnevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Агат коричневый (Б)/Схемы раскладки/form-6-agat-korichnevyj2.webp",
@@ -1359,7 +1653,13 @@
    "images": [
     {
      "path": "Брусчатка/Агат кофейный (Б)/Схемы раскладки/form-6-agat-kofejnyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Агат кофейный (Б)/Схемы раскладки/form-6-agat-kofejnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Агат кофейный (Б)/Схемы раскладки/form-6-agat-kofejnyj2.webp",
@@ -1383,7 +1683,13 @@
    "images": [
     {
      "path": "Брусчатка/Агат оранжевый (Б)/Схемы раскладки/form-6-agat-oranzhevyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Агат оранжевый (Б)/Схемы раскладки/form-6-agat-oranzhevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Агат оранжевый (Б)/Схемы раскладки/form-6-agat-oranzhevyj2.webp",
@@ -1407,7 +1713,13 @@
    "images": [
     {
      "path": "Брусчатка/Агат солнечный (Б)/Схемы раскладки/form-6-agat-solnechnyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Агат солнечный (Б)/Схемы раскладки/form-6-agat-solnechnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Агат солнечный (Б)/Схемы раскладки/form-6-agat-solnechnyj2.webp",
@@ -1431,7 +1743,13 @@
    "images": [
     {
      "path": "Брусчатка/Антрацит (Б)/antr-g.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Антрацит (Б)/Схемы раскладки/form-6-antraczit.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Антрацит (Б)/antr-g.webp",
@@ -1455,7 +1773,13 @@
    "images": [
     {
      "path": "Брусчатка/Гончар (Б)/Схемы раскладки/form-6-gonchar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Гончар (Б)/Схемы раскладки/form-6-gonchar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Гончар (Б)/Схемы раскладки/form-6-gonchar2.webp",
@@ -1479,7 +1803,13 @@
    "images": [
     {
      "path": "Брусчатка/Джафар (Б)/Схемы раскладки/form-6-dzhafar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Джафар (Б)/Схемы раскладки/form-6-dzhafar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Джафар (Б)/Схемы раскладки/form-6-dzhafar2.webp",
@@ -1503,7 +1833,13 @@
    "images": [
     {
      "path": "Брусчатка/Дюна (Б)/Схемы раскладки/form-6-dyuna2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Дюна (Б)/Схемы раскладки/form-6-dyuna.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Дюна (Б)/Схемы раскладки/form-6-dyuna2.webp",
@@ -1527,7 +1863,13 @@
    "images": [
     {
      "path": "Брусчатка/Клинкер (Б)/klinker-b.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Клинкер (Б)/Схемы раскладки/form-6-klinker.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Клинкер (Б)/klinker-b.webp",
@@ -1551,7 +1893,13 @@
    "images": [
     {
      "path": "Брусчатка/Кофе с молоком (Б)/Схемы раскладки/form-6-kofe-s-molokom2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Кофе с молоком (Б)/Схемы раскладки/form-6-kofe-s-molokom.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Кофе с молоком (Б)/Схемы раскладки/form-6-kofe-s-molokom2.webp",
@@ -1575,7 +1923,13 @@
    "images": [
     {
      "path": "Брусчатка/Моно 1 (Б)/Схемы раскладки/form-6-mono_12.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Моно 1 (Б)/Схемы раскладки/form-6-mono_1.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Моно 1 (Б)/Схемы раскладки/form-6-mono_12.webp",
@@ -1599,7 +1953,13 @@
    "images": [
     {
      "path": "Брусчатка/Моно 2 (Б)/Схемы раскладки/form-6-mono_22.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Моно 2 (Б)/Схемы раскладки/form-6-mono_2.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Моно 2 (Б)/Схемы раскладки/form-6-mono_22.webp",
@@ -1623,7 +1983,13 @@
    "images": [
     {
      "path": "Брусчатка/Моно 3 (Б)/Схемы раскладки/form-6-mono_32.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Моно 3 (Б)/Схемы раскладки/form-6-mono_3.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Моно 3 (Б)/Схемы раскладки/form-6-mono_32.webp",
@@ -1647,7 +2013,13 @@
    "images": [
     {
      "path": "Брусчатка/Моно 4 (Б)/Схемы раскладки/form-6-mono_42.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Моно 4 (Б)/Схемы раскладки/form-6-mono_4.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Моно 4 (Б)/Схемы раскладки/form-6-mono_42.webp",
@@ -1671,7 +2043,13 @@
    "images": [
     {
      "path": "Брусчатка/Моно 5 (Б)/Схемы раскладки/form-6-mono_52.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Моно 5 (Б)/Схемы раскладки/form-6-mono_5.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Моно 5 (Б)/Схемы раскладки/form-6-mono_52.webp",
@@ -1695,7 +2073,13 @@
    "images": [
     {
      "path": "Брусчатка/Моно 6 (Б)/Схемы раскладки/form-6-mono_62.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Моно 6 (Б)/Схемы раскладки/form-6-mono_6.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Моно 6 (Б)/Схемы раскладки/form-6-mono_62.webp",
@@ -1719,7 +2103,13 @@
    "images": [
     {
      "path": "Брусчатка/Моно 7 (Б)/Схемы раскладки/form-6-mono_72.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Моно 7 (Б)/Схемы раскладки/form-6-mono_7.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Моно 7 (Б)/Схемы раскладки/form-6-mono_72.webp",
@@ -1743,7 +2133,13 @@
    "images": [
     {
      "path": "Брусчатка/Моно 8 (Б)/Схемы раскладки/form-6-mono_82.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Моно 8 (Б)/Схемы раскладки/form-6-mono_8.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Моно 8 (Б)/Схемы раскладки/form-6-mono_82.webp",
@@ -1767,7 +2163,13 @@
    "images": [
     {
      "path": "Брусчатка/Светлый листопад (Б)/svetlyj-listopad.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Светлый листопад (Б)/Схемы раскладки/form-6-svetlyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Светлый листопад (Б)/svetlyj-listopad.webp",
@@ -1791,7 +2193,13 @@
    "images": [
     {
      "path": "Брусчатка/Степь (Б)/Схемы раскладки/form-6-step2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Степь (Б)/Схемы раскладки/form-6-step.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Степь (Б)/Схемы раскладки/form-6-step2.webp",
@@ -1815,7 +2223,13 @@
    "images": [
     {
      "path": "Брусчатка/Темный листопад (Б)/tem-list-g.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Темный листопад (Б)/Схемы раскладки/form-6-tyomnyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Темный листопад (Б)/tem-list-g.webp",
@@ -1839,7 +2253,13 @@
    "images": [
     {
      "path": "Брусчатка/Хаски (Б)/Схемы раскладки/form-6-haski2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Хаски (Б)/Схемы раскладки/form-6-haski.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Хаски (Б)/Схемы раскладки/form-6-haski2.webp",
@@ -1863,7 +2283,13 @@
    "images": [
     {
      "path": "Брусчатка/Яшма (Б)/Схемы раскладки/form-6-yashma2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Брусчатка/Яшма (Б)/Схемы раскладки/form-6-yashma.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Брусчатка/Яшма (Б)/Схемы раскладки/form-6-yashma2.webp",
@@ -1887,7 +2313,13 @@
    "images": [
     {
      "path": "Прямоугольник/Агат коричневый/Схемы раскладки/form-4-agat-korichnevyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Агат коричневый/Схемы раскладки/form-4-agat-korichnevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Агат коричневый/Схемы раскладки/form-4-agat-korichnevyj2.webp",
@@ -1911,7 +2343,13 @@
    "images": [
     {
      "path": "Прямоугольник/Агат кофейный/Схемы раскладки/form-4-agat-kofejnyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Агат кофейный/Схемы раскладки/form-4-agat-kofejnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Агат кофейный/Схемы раскладки/form-4-agat-kofejnyj2.webp",
@@ -1935,7 +2373,13 @@
    "images": [
     {
      "path": "Прямоугольник/Агат оранжевый/Схемы раскладки/form-4-agat-oranzhevyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Агат оранжевый/Схемы раскладки/form-4-agat-oranzhevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Агат оранжевый/Схемы раскладки/form-4-agat-oranzhevyj2.webp",
@@ -1959,7 +2403,13 @@
    "images": [
     {
      "path": "Прямоугольник/Агат солнечный/Схемы раскладки/form-4-agat-solnechnyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Агат солнечный/Схемы раскладки/form-4-agat-solnechnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Агат солнечный/Схемы раскладки/form-4-agat-solnechnyj2.webp",
@@ -1983,7 +2433,13 @@
    "images": [
     {
      "path": "Прямоугольник/Антрацит/antraczit-2.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Антрацит/Схемы раскладки/form-4-antraczit.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Антрацит/antraczit-2.webp",
@@ -2007,7 +2463,13 @@
    "images": [
     {
      "path": "Прямоугольник/Гончар/Схемы раскладки/form-4-gonchar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Гончар/Схемы раскладки/form-4-gonchar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Гончар/Схемы раскладки/form-4-gonchar2.webp",
@@ -2031,7 +2493,13 @@
    "images": [
     {
      "path": "Прямоугольник/Джафар/Схемы раскладки/form-4-dzhafar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Джафар/Схемы раскладки/form-4-dzhafar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Джафар/Схемы раскладки/form-4-dzhafar2.webp",
@@ -2055,7 +2523,13 @@
    "images": [
     {
      "path": "Прямоугольник/Дюна/Схемы раскладки/form-4-dyuna2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Дюна/Схемы раскладки/form-4-dyuna.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Дюна/Схемы раскладки/form-4-dyuna2.webp",
@@ -2079,7 +2553,13 @@
    "images": [
     {
      "path": "Прямоугольник/Инь ян/Схемы раскладки/form-4-in-yan2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Инь ян/Схемы раскладки/form-4-in-yan.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Инь ян/Схемы раскладки/form-4-in-yan2.webp",
@@ -2103,7 +2583,13 @@
    "images": [
     {
      "path": "Прямоугольник/Клинкер/Схемы раскладки/form-4-klinker2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Клинкер/Схемы раскладки/form-4-klinker.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Клинкер/Схемы раскладки/form-4-klinker2.webp",
@@ -2127,7 +2613,13 @@
    "images": [
     {
      "path": "Прямоугольник/Кофе с молоком/Схемы раскладки/form-4-kofe-s-molokom2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Кофе с молоком/Схемы раскладки/form-4-kofe-s-molokom.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Кофе с молоком/Схемы раскладки/form-4-kofe-s-molokom2.webp",
@@ -2151,7 +2643,13 @@
    "images": [
     {
      "path": "Прямоугольник/Моно 1/Схемы раскладки/form-4-mono_12.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Моно 1/Схемы раскладки/form-4-mono_1.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Моно 1/Схемы раскладки/form-4-mono_12.webp",
@@ -2175,7 +2673,13 @@
    "images": [
     {
      "path": "Прямоугольник/Моно 2/Схемы раскладки/form-4-mono_22.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Моно 2/Схемы раскладки/form-4-mono_2.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Моно 2/Схемы раскладки/form-4-mono_22.webp",
@@ -2199,7 +2703,13 @@
    "images": [
     {
      "path": "Прямоугольник/Моно 3/Схемы раскладки/form-4-mono_32.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Моно 3/Схемы раскладки/form-4-mono_3.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Моно 3/Схемы раскладки/form-4-mono_32.webp",
@@ -2223,7 +2733,13 @@
    "images": [
     {
      "path": "Прямоугольник/Моно 4/Схемы раскладки/form-4-mono_42.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Моно 4/Схемы раскладки/form-4-mono_4.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Моно 4/Схемы раскладки/form-4-mono_42.webp",
@@ -2247,7 +2763,13 @@
    "images": [
     {
      "path": "Прямоугольник/Моно 5/Схемы раскладки/form-4-mono_52.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Моно 5/Схемы раскладки/form-4-mono_5.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Моно 5/Схемы раскладки/form-4-mono_52.webp",
@@ -2271,7 +2793,13 @@
    "images": [
     {
      "path": "Прямоугольник/Моно 6/Схемы раскладки/form-4-mono_62.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Моно 6/Схемы раскладки/form-4-mono_6.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Моно 6/Схемы раскладки/form-4-mono_62.webp",
@@ -2295,7 +2823,13 @@
    "images": [
     {
      "path": "Прямоугольник/Моно 7/Схемы раскладки/form-4-mono_72.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Моно 7/Схемы раскладки/form-4-mono_7.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Моно 7/Схемы раскладки/form-4-mono_72.webp",
@@ -2319,7 +2853,13 @@
    "images": [
     {
      "path": "Прямоугольник/Моно 8/Схемы раскладки/form-4-mono_82.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Моно 8/Схемы раскладки/form-4-mono_8.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Моно 8/Схемы раскладки/form-4-mono_82.webp",
@@ -2343,7 +2883,13 @@
    "images": [
     {
      "path": "Прямоугольник/Светлый листопад/img_1433.jpeg",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Светлый листопад/Схемы раскладки/form-4-svetlyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Светлый листопад/img_1433.jpeg",
@@ -2367,7 +2913,13 @@
    "images": [
     {
      "path": "Прямоугольник/Степь/Схемы раскладки/form-4-step2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Степь/Схемы раскладки/form-4-step.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Степь/Схемы раскладки/form-4-step2.webp",
@@ -2391,7 +2943,13 @@
    "images": [
     {
      "path": "Прямоугольник/Тёмный листопад/Схемы раскладки/form-4-tyomnyj-listopad2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Тёмный листопад/Схемы раскладки/form-4-tyomnyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Тёмный листопад/Схемы раскладки/form-4-tyomnyj-listopad2.webp",
@@ -2415,7 +2973,13 @@
    "images": [
     {
      "path": "Прямоугольник/Хаски/haski-2.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Хаски/Схемы раскладки/form-4-haski.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Хаски/haski-2.webp",
@@ -2439,7 +3003,13 @@
    "images": [
     {
      "path": "Прямоугольник/Яшма/Схемы раскладки/form-4-yashma2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Прямоугольник/Яшма/Схемы раскладки/form-4-yashma.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Прямоугольник/Яшма/Схемы раскладки/form-4-yashma2.webp",
@@ -2463,7 +3033,13 @@
    "images": [
     {
      "path": "Мюнхен/Агат коричневый/agat-korichnevyj.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Агат коричневый/Схемы раскладки/form-3-agat-korichnevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Агат коричневый/agat-korichnevyj.webp",
@@ -2487,7 +3063,13 @@
    "images": [
     {
      "path": "Мюнхен/Агат кофейный/agat-kofejnyj.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Агат кофейный/Схемы раскладки/form-3-agat-kofejnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Агат кофейный/agat-kofejnyj.webp",
@@ -2511,7 +3093,13 @@
    "images": [
     {
      "path": "Мюнхен/Агат оранжевый/Схемы раскладки/form-3-agat-oranzhevyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Агат оранжевый/Схемы раскладки/form-3-agat-oranzhevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Агат оранжевый/Схемы раскладки/form-3-agat-oranzhevyj2.webp",
@@ -2535,7 +3123,13 @@
    "images": [
     {
      "path": "Мюнхен/Агат солнечный/Схемы раскладки/form-3-agat-solnechnyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Агат солнечный/Схемы раскладки/form-3-agat-solnechnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Агат солнечный/Схемы раскладки/form-3-agat-solnechnyj2.webp",
@@ -2559,7 +3153,13 @@
    "images": [
     {
      "path": "Мюнхен/Антрацит/antraczit.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Антрацит/Схемы раскладки/form-3-antraczit.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Антрацит/antraczit.webp",
@@ -2583,7 +3183,13 @@
    "images": [
     {
      "path": "Мюнхен/Гончар/Схемы раскладки/form-3-gonchar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Гончар/Схемы раскладки/form-3-gonchar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Гончар/Схемы раскладки/form-3-gonchar2.webp",
@@ -2607,7 +3213,13 @@
    "images": [
     {
      "path": "Мюнхен/Джафар/djafar.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Джафар/Схемы раскладки/form-3-dzhafar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Джафар/djafar.webp",
@@ -2631,7 +3243,13 @@
    "images": [
     {
      "path": "Мюнхен/Дюна/Схемы раскладки/form-3-dyuna2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Дюна/Схемы раскладки/form-3-dyuna.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Дюна/Схемы раскладки/form-3-dyuna2.webp",
@@ -2655,7 +3273,13 @@
    "images": [
     {
      "path": "Мюнхен/Инь ян/Схемы раскладки/form-3-in-yan2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Инь ян/Схемы раскладки/form-3-in-yan.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Инь ян/Схемы раскладки/form-3-in-yan2.webp",
@@ -2679,7 +3303,13 @@
    "images": [
     {
      "path": "Мюнхен/Клинкер/Схемы раскладки/form-3-klinker2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Клинкер/Схемы раскладки/form-3-klinker.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Клинкер/Схемы раскладки/form-3-klinker2.webp",
@@ -2703,7 +3333,13 @@
    "images": [
     {
      "path": "Мюнхен/Кофе с молоком/Схемы раскладки/form-3-kofe-s-molokom2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Кофе с молоком/Схемы раскладки/form-3-kofe-s-molokom.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Кофе с молоком/Схемы раскладки/form-3-kofe-s-molokom2.webp",
@@ -2727,7 +3363,13 @@
    "images": [
     {
      "path": "Мюнхен/Моно 1/Схемы раскладки/form-3-mono_12.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Моно 1/Схемы раскладки/form-3-mono_1.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Моно 1/Схемы раскладки/form-3-mono_12.webp",
@@ -2751,7 +3393,13 @@
    "images": [
     {
      "path": "Мюнхен/Моно 2/Схемы раскладки/form-3-mono_22.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Моно 2/Схемы раскладки/form-3-mono_2.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Моно 2/Схемы раскладки/form-3-mono_22.webp",
@@ -2775,7 +3423,13 @@
    "images": [
     {
      "path": "Мюнхен/Моно 3/Схемы раскладки/form-3-mono_32.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Моно 3/Схемы раскладки/form-3-mono_3.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Моно 3/Схемы раскладки/form-3-mono_32.webp",
@@ -2799,7 +3453,13 @@
    "images": [
     {
      "path": "Мюнхен/Моно 4/Схемы раскладки/form-3-mono_42.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Моно 4/Схемы раскладки/form-3-mono_4.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Моно 4/Схемы раскладки/form-3-mono_42.webp",
@@ -2823,7 +3483,13 @@
    "images": [
     {
      "path": "Мюнхен/Моно 5/Схемы раскладки/form-3-mono_52.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Моно 5/Схемы раскладки/form-3-mono_5.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Моно 5/Схемы раскладки/form-3-mono_52.webp",
@@ -2847,7 +3513,13 @@
    "images": [
     {
      "path": "Мюнхен/Моно 6/Схемы раскладки/form-3-mono_62.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Моно 6/Схемы раскладки/form-3-mono_6.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Моно 6/Схемы раскладки/form-3-mono_62.webp",
@@ -2871,7 +3543,13 @@
    "images": [
     {
      "path": "Мюнхен/Моно 7/Схемы раскладки/form-3-mono_72.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Моно 7/Схемы раскладки/form-3-mono_7.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Моно 7/Схемы раскладки/form-3-mono_72.webp",
@@ -2895,7 +3573,13 @@
    "images": [
     {
      "path": "Мюнхен/Моно 8/Схемы раскладки/form-3-mono_82.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Моно 8/Схемы раскладки/form-3-mono_8.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Моно 8/Схемы раскладки/form-3-mono_82.webp",
@@ -2919,7 +3603,13 @@
    "images": [
     {
      "path": "Мюнхен/Светлый листопад/Схемы раскладки/form-3-svetlyj-listopad2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Светлый листопад/Схемы раскладки/form-3-svetlyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Светлый листопад/Схемы раскладки/form-3-svetlyj-listopad2.webp",
@@ -2943,7 +3633,13 @@
    "images": [
     {
      "path": "Мюнхен/Степь/step.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Степь/Схемы раскладки/form-3-step.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Степь/step.webp",
@@ -2967,7 +3663,13 @@
    "images": [
     {
      "path": "Мюнхен/Тёмный листопад/Схемы раскладки/form-3-tyomnyj-listopad2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Тёмный листопад/Схемы раскладки/form-3-tyomnyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Тёмный листопад/Схемы раскладки/form-3-tyomnyj-listopad2.webp",
@@ -2991,7 +3693,13 @@
    "images": [
     {
      "path": "Мюнхен/Хаски/haski.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Хаски/Схемы раскладки/form-3-haski.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Хаски/haski.webp",
@@ -3015,7 +3723,13 @@
    "images": [
     {
      "path": "Мюнхен/Яшма/Схемы раскладки/form-3-yashma2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Мюнхен/Яшма/Схемы раскладки/form-3-yashma.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Мюнхен/Яшма/Схемы раскладки/form-3-yashma2.webp",
@@ -3039,7 +3753,13 @@
    "images": [
     {
      "path": "Паркет/Агат коричневый/agat-korichnevyj-1.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Агат коричневый/Схемы раскладки/form-5-agat-korichnevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Агат коричневый/agat-korichnevyj-1.webp",
@@ -3063,7 +3783,13 @@
    "images": [
     {
      "path": "Паркет/Агат кофейный/agat-kofejnyj.jpeg",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Агат кофейный/Схемы раскладки/form-5-agat-kofejnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Агат кофейный/agat-kofejnyj.jpeg",
@@ -3087,7 +3813,13 @@
    "images": [
     {
      "path": "Паркет/Агат оранжевый/Схемы раскладки/form-5-agat-oranzhevyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Агат оранжевый/Схемы раскладки/form-5-agat-oranzhevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Агат оранжевый/Схемы раскладки/form-5-agat-oranzhevyj2.webp",
@@ -3111,7 +3843,13 @@
    "images": [
     {
      "path": "Паркет/Агат солнечный/Схемы раскладки/form-5-agat-solnechnyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Агат солнечный/Схемы раскладки/form-5-agat-solnechnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Агат солнечный/Схемы раскладки/form-5-agat-solnechnyj2.webp",
@@ -3135,7 +3873,13 @@
    "images": [
     {
      "path": "Паркет/Антрацит/antraczit-1.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Антрацит/Схемы раскладки/form-5-antraczit.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Антрацит/antraczit-1.webp",
@@ -3159,7 +3903,13 @@
    "images": [
     {
      "path": "Паркет/Гончар/Схемы раскладки/form-5-gonchar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Гончар/Схемы раскладки/form-5-gonchar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Гончар/Схемы раскладки/form-5-gonchar2.webp",
@@ -3183,7 +3933,13 @@
    "images": [
     {
      "path": "Паркет/Джафар/Схемы раскладки/form-5-dzhafar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Джафар/Схемы раскладки/form-5-dzhafar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Джафар/Схемы раскладки/form-5-dzhafar2.webp",
@@ -3207,7 +3963,13 @@
    "images": [
     {
      "path": "Паркет/Дюна/Схемы раскладки/form-5-dyuna2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Дюна/Схемы раскладки/form-5-dyuna.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Дюна/Схемы раскладки/form-5-dyuna2.webp",
@@ -3231,7 +3993,13 @@
    "images": [
     {
      "path": "Паркет/Инь ян/Схемы раскладки/form-5-in-yan2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Инь ян/Схемы раскладки/form-5-in-yan.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Инь ян/Схемы раскладки/form-5-in-yan2.webp",
@@ -3255,7 +4023,13 @@
    "images": [
     {
      "path": "Паркет/Клинкер (П)/Схемы раскладки/form-5-klinker2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Клинкер (П)/Схемы раскладки/form-5-klinker.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Клинкер (П)/Схемы раскладки/form-5-klinker2.webp",
@@ -3279,7 +4053,13 @@
    "images": [
     {
      "path": "Паркет/Кофе с молоком (П)/Схемы раскладки/form-5-kofe-s-molokom2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Кофе с молоком (П)/Схемы раскладки/form-5-kofe-s-molokom.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Кофе с молоком (П)/Схемы раскладки/form-5-kofe-s-molokom2.webp",
@@ -3303,7 +4083,13 @@
    "images": [
     {
      "path": "Паркет/Моно 1 (П)/Схемы раскладки/form-5-mono_12.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Моно 1 (П)/Схемы раскладки/form-5-mono_1.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Моно 1 (П)/Схемы раскладки/form-5-mono_12.webp",
@@ -3327,7 +4113,13 @@
    "images": [
     {
      "path": "Паркет/Моно 2 (П)/Схемы раскладки/form-5-mono_22.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Моно 2 (П)/Схемы раскладки/form-5-mono_2.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Моно 2 (П)/Схемы раскладки/form-5-mono_22.webp",
@@ -3351,7 +4143,13 @@
    "images": [
     {
      "path": "Паркет/Моно 3 (П)/Схемы раскладки/form-5-mono_32.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Моно 3 (П)/Схемы раскладки/form-5-mono_3.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Моно 3 (П)/Схемы раскладки/form-5-mono_32.webp",
@@ -3375,7 +4173,13 @@
    "images": [
     {
      "path": "Паркет/Моно 4 (П)/Схемы раскладки/form-5-mono_42.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Моно 4 (П)/Схемы раскладки/form-5-mono_4.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Моно 4 (П)/Схемы раскладки/form-5-mono_42.webp",
@@ -3399,7 +4203,13 @@
    "images": [
     {
      "path": "Паркет/Моно 5 (П)/Схемы раскладки/form-5-mono_52.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Моно 5 (П)/Схемы раскладки/form-5-mono_5.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Моно 5 (П)/Схемы раскладки/form-5-mono_52.webp",
@@ -3423,7 +4233,13 @@
    "images": [
     {
      "path": "Паркет/Моно 6 (П)/Схемы раскладки/form-5-mono_62.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Моно 6 (П)/Схемы раскладки/form-5-mono_6.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Моно 6 (П)/Схемы раскладки/form-5-mono_62.webp",
@@ -3447,7 +4263,13 @@
    "images": [
     {
      "path": "Паркет/Моно 7 (П)/Схемы раскладки/form-5-mono_72.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Моно 7 (П)/Схемы раскладки/form-5-mono_7.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Моно 7 (П)/Схемы раскладки/form-5-mono_72.webp",
@@ -3471,7 +4293,13 @@
    "images": [
     {
      "path": "Паркет/Моно 8 (П)/Схемы раскладки/form-5-mono_82.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Моно 8 (П)/Схемы раскладки/form-5-mono_8.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Моно 8 (П)/Схемы раскладки/form-5-mono_82.webp",
@@ -3495,7 +4323,13 @@
    "images": [
     {
      "path": "Паркет/Светлый листопад (П)/Схемы раскладки/form-5-svetlyj-listopad2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Светлый листопад (П)/Схемы раскладки/form-5-svetlyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Светлый листопад (П)/Схемы раскладки/form-5-svetlyj-listopad2.webp",
@@ -3519,7 +4353,13 @@
    "images": [
     {
      "path": "Паркет/Степь (П)/step-1.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Степь (П)/Схемы раскладки/form-5-step.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Степь (П)/step-1.webp",
@@ -3543,7 +4383,13 @@
    "images": [
     {
      "path": "Паркет/Темный листопад (П)/temnyj-listopad.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Темный листопад (П)/Схемы раскладки/form-5-tyomnyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Темный листопад (П)/temnyj-listopad.webp",
@@ -3567,7 +4413,13 @@
    "images": [
     {
      "path": "Паркет/Хаски (П)/haski-1.webp",
-     "clean": true
+     "clean": true,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Хаски (П)/Схемы раскладки/form-5-haski.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Хаски (П)/haski-1.webp",
@@ -3591,7 +4443,13 @@
    "images": [
     {
      "path": "Паркет/Яшма (П)/Схемы раскладки/form-5-yashma2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Паркет/Яшма (П)/Схемы раскладки/form-5-yashma.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Паркет/Яшма (П)/Схемы раскладки/form-5-yashma2.webp",
@@ -3615,7 +4473,13 @@
    "images": [
     {
      "path": "Асгард/Агат коричневый (А)/Схемы раскладки/form-7-agat-korichnevyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Агат коричневый (А)/Схемы раскладки/form-7-agat-korichnevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Агат коричневый (А)/Схемы раскладки/form-7-agat-korichnevyj2.webp",
@@ -3639,7 +4503,13 @@
    "images": [
     {
      "path": "Асгард/Агат кофейный (А)/Схемы раскладки/form-7-agat-kofejnyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Агат кофейный (А)/Схемы раскладки/form-7-agat-kofejnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Агат кофейный (А)/Схемы раскладки/form-7-agat-kofejnyj2.webp",
@@ -3663,7 +4533,13 @@
    "images": [
     {
      "path": "Асгард/Агат оранжевый (А)/Схемы раскладки/form-7-agat-oranzhevyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Агат оранжевый (А)/Схемы раскладки/form-7-agat-oranzhevyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Агат оранжевый (А)/Схемы раскладки/form-7-agat-oranzhevyj2.webp",
@@ -3687,7 +4563,13 @@
    "images": [
     {
      "path": "Асгард/Агат солнечный (А)/Схемы раскладки/form-7-agat-solnechnyj2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Агат солнечный (А)/Схемы раскладки/form-7-agat-solnechnyj.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Агат солнечный (А)/Схемы раскладки/form-7-agat-solnechnyj2.webp",
@@ -3711,7 +4593,13 @@
    "images": [
     {
      "path": "Асгард/Антрацит (А)/Схемы раскладки/form-7-antraczit2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Антрацит (А)/Схемы раскладки/form-7-antraczit.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Антрацит (А)/Схемы раскладки/form-7-antraczit2.webp",
@@ -3735,7 +4623,13 @@
    "images": [
     {
      "path": "Асгард/Гончар (А)/Схемы раскладки/form-7-gonchar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Гончар (А)/Схемы раскладки/form-7-gonchar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Гончар (А)/Схемы раскладки/form-7-gonchar2.webp",
@@ -3759,7 +4653,13 @@
    "images": [
     {
      "path": "Асгард/Джафар (А)/Схемы раскладки/form-7-dzhafar2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Джафар (А)/Схемы раскладки/form-7-dzhafar.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Джафар (А)/Схемы раскладки/form-7-dzhafar2.webp",
@@ -3783,7 +4683,13 @@
    "images": [
     {
      "path": "Асгард/Дюна (А)/Схемы раскладки/form-7-dyuna2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Дюна (А)/Схемы раскладки/form-7-dyuna.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Дюна (А)/Схемы раскладки/form-7-dyuna2.webp",
@@ -3807,7 +4713,13 @@
    "images": [
     {
      "path": "Асгард/Инь ян (А)/Схемы раскладки/form-7-in-yan2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Инь ян (А)/Схемы раскладки/form-7-in-yan.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Инь ян (А)/Схемы раскладки/form-7-in-yan2.webp",
@@ -3831,7 +4743,13 @@
    "images": [
     {
      "path": "Асгард/Клинкер (А)/Схемы раскладки/form-7-klinker2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Клинкер (А)/Схемы раскладки/form-7-klinker.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Клинкер (А)/Схемы раскладки/form-7-klinker2.webp",
@@ -3855,7 +4773,13 @@
    "images": [
     {
      "path": "Асгард/Кофе с молоком (А)/Схемы раскладки/form-7-kofe-s-molokom2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Кофе с молоком (А)/Схемы раскладки/form-7-kofe-s-molokom.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Кофе с молоком (А)/Схемы раскладки/form-7-kofe-s-molokom2.webp",
@@ -3879,7 +4803,13 @@
    "images": [
     {
      "path": "Асгард/Моно 1 (А)/Схемы раскладки/form-7-mono_2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Моно 1 (А)/Схемы раскладки/form-7-mono_1.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Моно 1 (А)/Схемы раскладки/form-7-mono_2.webp",
@@ -3903,7 +4833,13 @@
    "images": [
     {
      "path": "Асгард/Моно 2 (А)/Схемы раскладки/form-7-mono_22.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Моно 2 (А)/Схемы раскладки/form-7-mono_2-1.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Моно 2 (А)/Схемы раскладки/form-7-mono_22.webp",
@@ -3927,7 +4863,13 @@
    "images": [
     {
      "path": "Асгард/Моно 3 (А)/Схемы раскладки/form-7-mono_32.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Моно 3 (А)/Схемы раскладки/form-7-mono_3.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Моно 3 (А)/Схемы раскладки/form-7-mono_32.webp",
@@ -3951,7 +4893,13 @@
    "images": [
     {
      "path": "Асгард/Моно 4 (А)/Схемы раскладки/form-7-mono_42.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Моно 4 (А)/Схемы раскладки/form-7-mono_4.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Моно 4 (А)/Схемы раскладки/form-7-mono_42.webp",
@@ -3975,7 +4923,13 @@
    "images": [
     {
      "path": "Асгард/Моно 5 (А)/Схемы раскладки/form-7-mono_52.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Моно 5 (А)/Схемы раскладки/form-7-mono_5.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Моно 5 (А)/Схемы раскладки/form-7-mono_52.webp",
@@ -3999,7 +4953,13 @@
    "images": [
     {
      "path": "Асгард/Моно 6 (А)/Схемы раскладки/form-7-mono_62.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Моно 6 (А)/Схемы раскладки/form-7-mono_6.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Моно 6 (А)/Схемы раскладки/form-7-mono_62.webp",
@@ -4023,7 +4983,13 @@
    "images": [
     {
      "path": "Асгард/Моно 7 (А)/Схемы раскладки/form-7-mono_72.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Моно 7 (А)/Схемы раскладки/form-7-mono_7.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Моно 7 (А)/Схемы раскладки/form-7-mono_72.webp",
@@ -4047,7 +5013,13 @@
    "images": [
     {
      "path": "Асгард/Оранжевый (А)/Схемы раскладки/form-7-mono_82.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Оранжевый (А)/Схемы раскладки/form-7-mono_8.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Оранжевый (А)/Схемы раскладки/form-7-mono_82.webp",
@@ -4071,7 +5043,13 @@
    "images": [
     {
      "path": "Асгард/Светлый листопад (А)/Схемы раскладки/form-7-svetlyj-listopad2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Светлый листопад (А)/Схемы раскладки/form-7-svetlyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Светлый листопад (А)/Схемы раскладки/form-7-svetlyj-listopad2.webp",
@@ -4095,7 +5073,13 @@
    "images": [
     {
      "path": "Асгард/Степь (А)/Схемы раскладки/form-7-step2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Степь (А)/Схемы раскладки/form-7-step.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Степь (А)/Схемы раскладки/form-7-step2.webp",
@@ -4119,7 +5103,13 @@
    "images": [
     {
      "path": "Асгард/Тёмный листопад (А)/Схемы раскладки/form-7-tyomnyj-listopad2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Тёмный листопад (А)/Схемы раскладки/form-7-tyomnyj-listopad.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Тёмный листопад (А)/Схемы раскладки/form-7-tyomnyj-listopad2.webp",
@@ -4143,7 +5133,13 @@
    "images": [
     {
      "path": "Асгард/Хаски (А)/Схемы раскладки/form-7-haski2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Хаски (А)/Схемы раскладки/form-7-haski.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Хаски (А)/Схемы раскладки/form-7-haski2.webp",
@@ -4167,7 +5163,13 @@
    "images": [
     {
      "path": "Асгард/Яшма (А)/Схемы раскладки/form-7-yashma2.webp",
-     "clean": false
+     "clean": false,
+     "is_render": false
+    },
+    {
+     "path": "Асгард/Яшма (А)/Схемы раскладки/form-7-yashma.webp",
+     "clean": true,
+     "is_render": true
     }
    ],
    "texture": "Асгард/Яшма (А)/Схемы раскладки/form-7-yashma2.webp",

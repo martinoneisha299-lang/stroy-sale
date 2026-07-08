@@ -71,12 +71,11 @@ def product_shots(p):
     shots = []
     for im in p["images"]:
         img = load(SRC / im["path"])
-        if im["clean"]:
-            shots.append(ImageOps.fit(img, (W, H), Image.LANCZOS))
+        # Используем полное изображение (вписанное в 4:3), чтобы сохранить высокое качество
+        shots.append(ImageOps.fit(img, (W, H), Image.LANCZOS))
+        # Если это текстура (а не 3D-рендер раскладки), добавляем приближенный фрагмент
+        if not im.get("is_render", False):
             shots.append(zoom_crop(img))
-        else:
-            shots.append(band_crop(img, 0.0, 0.40))
-            shots.append(band_crop(img, 0.62, 1.0))
         if len(shots) >= 3:
             break
     return shots[:3]

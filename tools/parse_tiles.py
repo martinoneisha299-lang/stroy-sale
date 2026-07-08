@@ -122,10 +122,11 @@ def main():
                 rel = str(f.relative_to(SRC))
                 if is_render(f):
                     render = render or rel
+                    textures.append({"path": rel, "clean": True, "is_render": True})
                 else:
-                    textures.append({"path": rel, "clean": rel in clean_set})
-            # чистые текстуры вперёд — они станут главным фото
-            textures.sort(key=lambda t: not t["clean"])
+                    textures.append({"path": rel, "clean": rel in clean_set, "is_render": False})
+            # Сортировка: сначала чистые текстуры, затем текстуры с водяным знаком, затем рендеры
+            textures.sort(key=lambda t: (t.get("is_render", False), not t["clean"]))
 
             idx += 1
             products.append({
