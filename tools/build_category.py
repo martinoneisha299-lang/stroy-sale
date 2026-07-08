@@ -312,17 +312,19 @@ def build_category():
             <div class="line-calc-group">
               <span class="line-calc-label">Стены, м²</span>
               <div class="line-calc-input-wrap">
-                <input class="line-calc-input" id="cWall" type="number" min="0" step="1" inputmode="decimal" placeholder="120">
+                <input class="line-calc-input" id="cWall" type="number" min="0" step="1" inputmode="decimal" placeholder="0" value="120">
               </div>
+              <span class="line-calc-helper">Площадь стен</span>
             </div>
-            <div class="line-calc-divider"></div>
+            <div class="line-calc-col-divider"></div>
             <div class="line-calc-group">
               <span class="line-calc-label">Окна/двери, м²</span>
               <div class="line-calc-input-wrap">
-                <input class="line-calc-input" id="cOpen" type="number" min="0" step="1" inputmode="decimal" placeholder="18">
+                <input class="line-calc-input" id="cOpen" type="number" min="0" step="1" inputmode="decimal" placeholder="0" value="18">
               </div>
+              <span class="line-calc-helper">Вычесть проёмы</span>
             </div>
-            <div class="line-calc-divider"></div>
+            <div class="line-calc-col-divider"></div>
             <div class="line-calc-group">
               <span class="line-calc-label">Формат</span>
               <select id="cFmt">
@@ -331,15 +333,17 @@ def build_category():
                 <option value="39.2">1,4НФ полуторный</option>
               </select>
             </div>
-            <div class="line-calc-divider"></div>
+            <div class="line-calc-col-divider"></div>
             <div class="line-calc-block">
               <span class="line-calc-sub">Понадобится:</span>
               <strong class="line-calc-val val-accent" id="calcQty">—</strong>
             </div>
-            <div class="line-calc-divider"></div>
-            <a class="line-calc-btn btn" href="index.html#lead">
-              Получить точный расчёт
-            </a>
+            <div class="line-calc-col-divider"></div>
+            <div class="line-calc-btn-wrap">
+              <button class="line-calc-btn btn" type="button" onclick="document.getElementById('lead').scrollIntoView({{behavior: 'smooth'}})">
+                ПОЛУЧИТЬ ТОЧНЫЙ РАСЧЕТ
+              </button>
+            </div>
           </div>
         </div>
       </div>

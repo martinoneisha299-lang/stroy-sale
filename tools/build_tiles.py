@@ -400,14 +400,14 @@ def calc_block(shape_select=None, root="",
           </div>"""
     if shape_select:
         fields += f"""
-          <div class="line-calc-divider"></div>
+          <div class="line-calc-col-divider"></div>
           <div class="line-calc-group">
             <span class="line-calc-label">Форма плитки</span>
             {shape_select}
           </div>"""
     
     price_block = f"""
-            <div class="line-calc-divider" id="calcPriceDivider"></div>
+            <div class="line-calc-int-divider" id="calcPriceDivider"></div>
             <div class="line-calc-block" id="calcPriceBlock">
               <span class="line-calc-sub">Ориентировочная стоимость:</span>
               <strong class="line-calc-val val-accent" id="calcPrice">—</strong>
@@ -417,20 +417,20 @@ def calc_block(shape_select=None, root="",
     <div class="line-calc" id="calcContainer" data-price="{price}">
       <div class="line-calc-wrap">
         {fields}
-        <div class="line-calc-divider"></div>
+        <div class="line-calc-col-divider"></div>
         <div class="line-calc-outputs">
           <div class="line-calc-block">
             <span class="line-calc-sub">Итого:</span>
             <strong class="line-calc-val" id="calcQty">—</strong>
           </div>
-          <div class="line-calc-divider"></div>
+          <div class="line-calc-int-divider"></div>
           <div class="line-calc-block">
             <span class="line-calc-sub">Объем:</span>
             <strong class="line-calc-val" id="calcPallets">—</strong>
           </div>
           {price_block}
         </div>
-        <div class="line-calc-divider"></div>
+        <div class="line-calc-col-divider"></div>
         <div class="line-calc-btn-wrap">
           <button class="line-calc-btn btn" type="button" onclick="document.getElementById('lead').scrollIntoView({{behavior: 'smooth'}})">
             ПОЛУЧИТЬ ТОЧНЫЙ РАСЧЕТ
