@@ -67,15 +67,23 @@ def fit_on_white(path, w=W, h=H, pad=0.92):
 
 
 def product_shots(p):
-    """До 3 кадров товара: (изображение, суффикс имени файла)."""
+    """До 3 кадров товара без водяного знака поставщика.
+
+    Рендеры и текстуры со знаком LEGION по центру целиком не публикуем:
+    чистая текстура → весь кадр + зум, текстура со знаком → верхняя
+    и нижняя чистые полосы (знак занимает ~44–58% высоты).
+    """
     shots = []
     for im in p["images"]:
+        if im.get("is_render", False):
+            continue
         img = load(SRC / im["path"])
-        # Используем полное изображение (вписанное в 4:3), чтобы сохранить высокое качество
-        shots.append(ImageOps.fit(img, (W, H), Image.LANCZOS))
-        # Если это текстура (а не 3D-рендер раскладки), добавляем приближенный фрагмент
-        if not im.get("is_render", False):
+        if im.get("clean", False):
+            shots.append(ImageOps.fit(img, (W, H), Image.LANCZOS))
             shots.append(zoom_crop(img))
+        else:
+            shots.append(band_crop(img, 0.0, 0.40))
+            shots.append(band_crop(img, 0.62, 1.0))
         if len(shots) >= 3:
             break
     return shots[:3]

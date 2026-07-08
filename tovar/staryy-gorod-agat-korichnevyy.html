@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=3">
+  <link rel="stylesheet" href="../styles.css?v=4">
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "Тротуарная плитка «Агат коричневый» (Старый город)", "image": "img/catalog/tile-030.jpg", "description": "Тротуарная плитка «Агат коричневый», форма «Старый город». Толщина 40 мм, морозостойкость F200, прочность B30.", "offers": {"@type": "Offer", "priceCurrency": "RUB", "price": 910, "availability": "https://schema.org/InStock"}}</script>
 </head>
 <body>
@@ -47,14 +47,14 @@
     <div class="wrap pd-grid">
       <div class="pd-gallery">
         <div class="pd-main-wrap" id="pdMainWrap">
-          <img class="pd-main" id="pdMain" src="../img/catalog/tile-030.jpg?v=2"
+          <img class="pd-main" id="pdMain" src="../img/catalog/tile-030.jpg?v=3"
             alt="Тротуарная плитка «Агат коричневый», форма «Старый город» — фактура укладки"
             width="640" height="480">
           <button class="pd-zoom-trigger" id="pdZoomTrigger" type="button" aria-label="Открыть во весь экран">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>
         </div>
-      <div class="pd-thumbs"><button class="pd-thumb is-on" type="button" data-src="../img/catalog/tile-030.jpg?v=2" aria-pressed="true" aria-label="Фото 1"><img src="../img/catalog/tile-030.jpg?v=2" alt="" width="640" height="480" loading="lazy"></button><button class="pd-thumb" type="button" data-src="../img/catalog/tile-030-2.jpg?v=2" aria-pressed="false" aria-label="Фото 2"><img src="../img/catalog/tile-030-2.jpg?v=2" alt="" width="640" height="480" loading="lazy"></button><button class="pd-thumb" type="button" data-src="../img/catalog/tile-030-3.jpg?v=2" aria-pressed="false" aria-label="Фото 3"><img src="../img/catalog/tile-030-3.jpg?v=2" alt="" width="640" height="480" loading="lazy"></button></div>
+      <div class="pd-thumbs"><button class="pd-thumb is-on" type="button" data-src="../img/catalog/tile-030.jpg?v=3" aria-pressed="true" aria-label="Фото 1"><img src="../img/catalog/tile-030.jpg?v=3" alt="" width="640" height="480" loading="lazy"></button><button class="pd-thumb" type="button" data-src="../img/catalog/tile-030-2.jpg?v=3" aria-pressed="false" aria-label="Фото 2"><img src="../img/catalog/tile-030-2.jpg?v=3" alt="" width="640" height="480" loading="lazy"></button></div>
       </div>
       <div class="pd-info">
         <p class="tag">Тротуарная плитка · Старый город</p>
@@ -76,44 +76,38 @@
         </dl>
         <p class="caption pd-usage"><strong>Куда берут:</strong> дорожки и площадки «под старину» — к кирпичному дому и саду; мягкая фаска не собирает грязь в швах.</p>
       </div>
-      <div style="grid-column: 1 / -1; width: 100%;">
+      <div class="pd-calc-row">
         
     <div class="line-calc" id="calcContainer" data-price="910">
       <div class="line-calc-wrap">
         
-          <div class="line-calc-group">
-            <span class="line-calc-label">Площадь под плитку, м²</span>
-            <div class="line-calc-input-wrap">
-              <input class="line-calc-input" id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="0" value="78">
-            </div>
-            <span class="line-calc-helper">Введите площадь в м²</span>
-          </div>
-        <div class="line-calc-col-divider"></div>
+        <label class="line-calc-group" for="cArea">
+          <span class="line-calc-label">Площадь<br>под плитку</span>
+          <span class="line-calc-input-wrap">
+            <input class="line-calc-input" id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="0" value="78">
+            <span class="line-calc-unit">м²</span>
+          </span>
+        </label>
         <div class="line-calc-outputs">
           <div class="line-calc-block">
-            <span class="line-calc-sub">Итого:</span>
+            <span class="line-calc-sub">С запасом 5%</span>
             <strong class="line-calc-val" id="calcQty">—</strong>
           </div>
-          <div class="line-calc-int-divider"></div>
           <div class="line-calc-block">
-            <span class="line-calc-sub">Объем:</span>
+            <span class="line-calc-sub">Отгрузка</span>
             <strong class="line-calc-val" id="calcPallets">—</strong>
           </div>
-          
-            <div class="line-calc-int-divider" id="calcPriceDivider"></div>
-            <div class="line-calc-block" id="calcPriceBlock">
-              <span class="line-calc-sub">Ориентировочная стоимость:</span>
-              <strong class="line-calc-val val-accent" id="calcPrice">—</strong>
-            </div>
+          <div class="line-calc-block" id="calcPriceBlock">
+            <span class="line-calc-sub">Стоимость</span>
+            <strong class="line-calc-val val-accent" id="calcPrice">—</strong>
+          </div>
         </div>
-        <div class="line-calc-col-divider"></div>
-        <div class="line-calc-btn-wrap">
-          <button class="line-calc-btn btn" type="button" onclick="document.getElementById('lead').scrollIntoView({behavior: 'smooth'})">
-            ПОЛУЧИТЬ ТОЧНЫЙ РАСЧЕТ
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true" style="margin-left: 4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </button>
-        </div>
+        <button class="btn line-calc-btn" type="button" onclick="document.getElementById('lead').scrollIntoView({behavior: 'smooth'})">
+          Получить точный расчёт
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
       </div>
+      <p class="caption line-calc-note">Стоимость по цене этой расцветки. Точный расчёт с раскладкой и доставкой сделает менеджер.</p>
     </div>
       </div>
     </div>
@@ -125,7 +119,7 @@
         <p class="caption">Та же форма и характеристики — другой рисунок.</p>
       </div>
       <div class="p-grid">
-<a class="p-card" data-kind="mix" href="../tovar/staryy-gorod-agat-oranzhevyy.html"><img class="p-img" src="../img/catalog/tile-032.jpg?v=2" alt="Тротуарная плитка «Агат оранжевый» — Старый город" width="640" height="480" loading="lazy"><h3 class="p-name">Агат оранжевый</h3><p class="p-meta">колормикс</p><p class="p-price">910 ₽/м²</p></a><a class="p-card" data-kind="mix" href="../tovar/staryy-gorod-agat-solnechnyy.html"><img class="p-img" src="../img/catalog/tile-033.jpg?v=2" alt="Тротуарная плитка «Агат солнечный» — Старый город" width="640" height="480" loading="lazy"><h3 class="p-name">Агат солнечный</h3><p class="p-meta">колормикс</p><p class="p-price">910 ₽/м²</p></a><a class="p-card" data-kind="mix" href="../tovar/staryy-gorod-antratsit.html"><img class="p-img" src="../img/catalog/tile-034.jpg?v=2" alt="Тротуарная плитка «Антрацит» — Старый город" width="640" height="480" loading="lazy"><h3 class="p-name">Антрацит</h3><p class="p-meta">колормикс</p><p class="p-price">910 ₽/м²</p></a><a class="p-card" data-kind="mix" href="../tovar/staryy-gorod-gonchar.html"><img class="p-img" src="../img/catalog/tile-035.jpg?v=2" alt="Тротуарная плитка «Гончар» — Старый город" width="640" height="480" loading="lazy"><h3 class="p-name">Гончар</h3><p class="p-meta">колормикс</p><p class="p-price">910 ₽/м²</p></a>
+<a class="p-card" data-kind="mix" href="../tovar/staryy-gorod-agat-oranzhevyy.html"><img class="p-img" src="../img/catalog/tile-032.jpg?v=3" alt="Тротуарная плитка «Агат оранжевый» — Старый город" width="640" height="480" loading="lazy"><h3 class="p-name">Агат оранжевый</h3><p class="p-meta">колормикс</p><p class="p-price">910 ₽/м²</p></a><a class="p-card" data-kind="mix" href="../tovar/staryy-gorod-agat-solnechnyy.html"><img class="p-img" src="../img/catalog/tile-033.jpg?v=3" alt="Тротуарная плитка «Агат солнечный» — Старый город" width="640" height="480" loading="lazy"><h3 class="p-name">Агат солнечный</h3><p class="p-meta">колормикс</p><p class="p-price">910 ₽/м²</p></a><a class="p-card" data-kind="mix" href="../tovar/staryy-gorod-antratsit.html"><img class="p-img" src="../img/catalog/tile-034.jpg?v=3" alt="Тротуарная плитка «Антрацит» — Старый город" width="640" height="480" loading="lazy"><h3 class="p-name">Антрацит</h3><p class="p-meta">колормикс</p><p class="p-price">910 ₽/м²</p></a><a class="p-card" data-kind="mix" href="../tovar/staryy-gorod-gonchar.html"><img class="p-img" src="../img/catalog/tile-035.jpg?v=3" alt="Тротуарная плитка «Гончар» — Старый город" width="640" height="480" loading="lazy"><h3 class="p-name">Гончар</h3><p class="p-meta">колормикс</p><p class="p-price">910 ₽/м²</p></a>
       </div>
       <div class="more">
         <span class="more-label">Вся форма</span>

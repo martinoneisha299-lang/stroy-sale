@@ -121,8 +121,9 @@ def main():
             for f in files:
                 rel = str(f.relative_to(SRC))
                 if is_render(f):
+                    # у рендеров поставщика логотип LEGION по центру — не «чистые»
                     render = render or rel
-                    textures.append({"path": rel, "clean": True, "is_render": True})
+                    textures.append({"path": rel, "clean": rel in clean_set, "is_render": True})
                 else:
                     textures.append({"path": rel, "clean": rel in clean_set, "is_render": False})
             # Сортировка: сначала чистые текстуры, затем текстуры с водяным знаком, затем рендеры

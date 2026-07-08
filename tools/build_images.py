@@ -61,8 +61,9 @@ def main():
             skipped += 1
             continue
         img = ImageOps.exif_transpose(Image.open(src))
-        if p["supplier"] == "Губский" and src.suffix.lower() == ".jpg":
-            # кадры видео Губского: внизу справа водяной знак конвертера — срезаем
+        if p["dir"].startswith("Губский") and src.suffix.lower() in (".jpg", ".jpeg"):
+            # кадры видео из папки Губского: внизу справа водяной знак
+            # конвертера clideo — срезаем (независимо от того, чей товар)
             img = img.crop((0, 0, img.width, int(img.height * 0.86)))
         if has_alpha(img) or white_corners(img):
             out = fit_on_paper(img)

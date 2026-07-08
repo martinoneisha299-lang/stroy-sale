@@ -115,7 +115,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=3">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=4">{extra_head}
 </head>
 <body>
 
@@ -174,7 +174,7 @@ def tile_card(p, root=""):
     """Карточка товара в сетке — вся карточка это ссылка на страницу товара."""
     alt = f"Тротуарная плитка «{p['name']}» — {SHAPES[p['shape']]['name']}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="{root}{p["_gallery"][0]}?v=2" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="{root}{p["_gallery"][0]}?v=3" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -391,53 +391,44 @@ def calc_block(shape_select=None, root="",
                price=0):
     """Калькулятор площади. shape_select: HTML select или None (тогда цена фиксированная в data-price)."""
     fields = f"""
-          <div class="line-calc-group">
-            <span class="line-calc-label">Площадь под плитку, м²</span>
-            <div class="line-calc-input-wrap">
-              <input class="line-calc-input" id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="0" value="78">
-            </div>
-            <span class="line-calc-helper">Введите площадь в м²</span>
-          </div>"""
+        <label class="line-calc-group" for="cArea">
+          <span class="line-calc-label">Площадь<br>под плитку</span>
+          <span class="line-calc-input-wrap">
+            <input class="line-calc-input" id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="0" value="78">
+            <span class="line-calc-unit">м²</span>
+          </span>
+        </label>"""
     if shape_select:
         fields += f"""
-          <div class="line-calc-col-divider"></div>
-          <div class="line-calc-group">
-            <span class="line-calc-label">Форма плитки</span>
-            {shape_select}
-          </div>"""
-    
-    price_block = f"""
-            <div class="line-calc-int-divider" id="calcPriceDivider"></div>
-            <div class="line-calc-block" id="calcPriceBlock">
-              <span class="line-calc-sub">Ориентировочная стоимость:</span>
-              <strong class="line-calc-val val-accent" id="calcPrice">—</strong>
-            </div>"""
-          
+        <div class="line-calc-group">
+          <span class="line-calc-label">Форма<br>плитки</span>
+          {shape_select}
+        </div>"""
+
     return f"""
     <div class="line-calc" id="calcContainer" data-price="{price}">
       <div class="line-calc-wrap">
         {fields}
-        <div class="line-calc-col-divider"></div>
         <div class="line-calc-outputs">
           <div class="line-calc-block">
-            <span class="line-calc-sub">Итого:</span>
+            <span class="line-calc-sub">С запасом 5%</span>
             <strong class="line-calc-val" id="calcQty">—</strong>
           </div>
-          <div class="line-calc-int-divider"></div>
           <div class="line-calc-block">
-            <span class="line-calc-sub">Объем:</span>
+            <span class="line-calc-sub">Отгрузка</span>
             <strong class="line-calc-val" id="calcPallets">—</strong>
           </div>
-          {price_block}
+          <div class="line-calc-block" id="calcPriceBlock">
+            <span class="line-calc-sub">Стоимость</span>
+            <strong class="line-calc-val val-accent" id="calcPrice">—</strong>
+          </div>
         </div>
-        <div class="line-calc-col-divider"></div>
-        <div class="line-calc-btn-wrap">
-          <button class="line-calc-btn btn" type="button" onclick="document.getElementById('lead').scrollIntoView({{behavior: 'smooth'}})">
-            ПОЛУЧИТЬ ТОЧНЫЙ РАСЧЕТ
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true" style="margin-left: 4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </button>
-        </div>
+        <button class="btn line-calc-btn" type="button" onclick="document.getElementById('lead').scrollIntoView({{behavior: 'smooth'}})">
+          Получить точный расчёт
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
       </div>
+      <p class="caption line-calc-note">{note}</p>
     </div>"""
 
 
@@ -738,9 +729,9 @@ def build_product(p):
             on = " is-on" if i == 0 else ""
             pressed = "true" if i == 0 else "false"
             btns.append(
-                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=2" '
+                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=3" '
                 f'aria-pressed="{pressed}" aria-label="Фото {i + 1}">'
-                f'<img src="{root}{src}?v=2" alt="" width="640" height="480" loading="lazy"></button>')
+                f'<img src="{root}{src}?v=3" alt="" width="640" height="480" loading="lazy"></button>')
         thumbs = f'\n      <div class="pd-thumbs">{"".join(btns)}</div>'
 
     price_html = (f'<p class="pd-price">{rub(p["price"])} ₽<span class="pd-price-unit">/м²</span></p>'
@@ -763,7 +754,7 @@ def build_product(p):
     <div class="wrap pd-grid">
       <div class="pd-gallery">
         <div class="pd-main-wrap" id="pdMainWrap">
-          <img class="pd-main" id="pdMain" src="{root}{p['_gallery'][0]}?v=2"
+          <img class="pd-main" id="pdMain" src="{root}{p['_gallery'][0]}?v=3"
             alt="Тротуарная плитка «{name}», форма «{shape_name}» — фактура укладки"
             width="640" height="480">
           <button class="pd-zoom-trigger" id="pdZoomTrigger" type="button" aria-label="Открыть во весь экран">
@@ -791,7 +782,7 @@ def build_product(p):
         </dl>
         <p class="caption pd-usage"><strong>Куда берут:</strong> {SHAPE_USE[p['shape']]}.</p>
       </div>
-      <div style="grid-column: 1 / -1; width: 100%;">
+      <div class="pd-calc-row">
         {calc_block(root=root, note=f"Стоимость по цене этой расцветки. Точный расчёт с раскладкой и доставкой сделает менеджер.", price=p['price'])}
       </div>
     </div>

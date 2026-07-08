@@ -36,11 +36,11 @@ COLLECTIONS = {
     },
     "klassika": {
         "name": "Классика",
-        "tagline": "Проверенная середина: дом, забор и цоколь из одной коллекции.",
+        "tagline": "Золотая середина по цене: дом, забор и цоколь из одной коллекции.",
     },
     "evropa": {
         "name": "Европа",
-        "tagline": "Фактуры под старину — кроста, антик, руст. Для фасадов с характером.",
+        "tagline": "Кирпич «под старину» с рельефной поверхностью — для фасадов с характером.",
     },
     "formovka": {
         "name": "Ручная формовка",
@@ -49,10 +49,12 @@ COLLECTIONS = {
 }
 COLL_ORDER = ["ekonom", "palitra", "klassika", "evropa", "formovka"]
 
+# подписи форматов простым языком: частник не обязан знать «1НФ»
 FMT_SHORT = {
-    "1НФ (одинарный)": "1НФ", "1,4НФ (полуторный)": "1,4НФ",
-    "0,7НФ (евро)": "0,7НФ", "0,9НФ": "0,9НФ",
-    "Ригель MF": "ригель", "Лонг LF": "лонг", "WDF": "WDF", "WMF": "WMF",
+    "1НФ (одинарный)": "одинарный", "1,4НФ (полуторный)": "полуторный",
+    "0,7НФ (евро)": "узкий (евро)", "0,9НФ": "формат 0,9НФ",
+    "Ригель MF": "ригель (длинный)", "Лонг LF": "лонг (длинный)",
+    "WDF": "WDF", "WMF": "WMF",
 }
 
 PRODUCTS = [p for p in DATA["products"] if p["category"] == "oblitsovochnyy"]
@@ -81,12 +83,13 @@ def sort_key(p):
     return (COLOR_ORDER.index(p["color_group"]), p["name"])
 
 
-def card(p, feat_hidden=None):
+def card(p, feat_hidden=None, link=None):
     """feat_hidden: None — всегда видна (страница коллекции);
-    True/False — категория, hidden если не featured."""
+    True/False — категория, hidden если не featured.
+    link: если задан — карточка-ссылка (лента категории ведёт в коллекцию)."""
     alt = f"Кирпич «{p['name']}» — {p['color_group']}, {p['texture']}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=2" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=3" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -97,14 +100,20 @@ def card(p, feat_hidden=None):
                '<span>Фото пришлём по запросу</span></div>')
     if p.get("price"):
         price = f'<p class="p-price">{rub(p["price"])} ₽/шт</p>'
+    elif link:
+        price = '<span class="p-ask">Узнать цену</span>'
     else:
         price = '<a class="p-ask" href="index.html#lead">Узнать цену</a>'
     hidden = " hidden" if feat_hidden else ""
     fmt = FMT_SHORT.get(p["format"], p["format"])
-    return (f'<article class="p-card" data-color="{esc(p["color_group"])}" '
-            f'data-texture="{esc(p["texture"])}" data-format="{esc(fmt)}"{hidden}>'
-            f'{img}<h3 class="p-name">{esc(p["name"])}</h3>'
-            f'<p class="p-meta">{esc(p["texture"])} · {esc(fmt)}</p>{price}</article>')
+    attrs = (f'data-color="{esc(p["color_group"])}" '
+             f'data-texture="{esc(p["texture"])}" data-format="{esc(fmt)}"{hidden}')
+    inner = (f'{img}<h3 class="p-name">{esc(p["name"])}</h3>'
+             f'<p class="p-meta">{esc(p["texture"])} · {esc(fmt)}</p>{price}')
+    if link:
+        return f'<a class="p-card" href="{link}" {attrs}>{inner}</a>'
+    return f'<article class="p-card" {attrs}>{inner}</article>'
+
 
 
 def pick_featured(items, n=4):
@@ -159,7 +168,7 @@ def page_shell(title, descr, body, extra_js=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
 
@@ -250,8 +259,11 @@ def build_category():
         featured = pick_featured(items)
         feat_ids = {p["id"] for p in featured}
         items_sorted = sorted(items, key=sort_key)
-        cards = "\n".join(card(p, feat_hidden=(p["id"] not in feat_ids))
-                          for p in items_sorted)
+        from urllib.parse import quote
+        cards = "\n".join(
+            card(p, feat_hidden=(p["id"] not in feat_ids),
+                 link=f"collection-{slug}.html?color={quote(p['color_group'])}")
+            for p in items_sorted)
         n = len(items)
         kinds = plural(n, "вид", "вида", "видов")
         price_note = f"от {rub(lo)} ₽/шт" if lo else "цена по запросу"
@@ -278,8 +290,8 @@ def build_category():
         <nav class="crumbs" aria-label="Вы здесь"><a href="index.html">Главная</a>
           <span aria-hidden="true">/</span> <span>Облицовочный кирпич</span></nav>
         <h1>Облицовочный кирпич</h1>
-        <p class="page-sub">{total} видов · 5 коллекций · от {rub(all_min)} ₽ за штуку.
-          Привозим на объект по Краснодару и краю, оплата при получении.</p>
+        <p class="page-sub">{total} видов — от {rub(all_min)} ₽ за штуку.
+          Привезём на объект, оплата при получении.</p>
       </div>
     </section>
 
@@ -287,10 +299,9 @@ def build_category():
       <div class="wrap">
         <div class="section-head">
           <span class="tag">Подбор по цвету</span>
-          <h2>Каким будет ваш дом?</h2>
-          <p class="caption pick-hint">Выберите цвет — покажем всё, что есть,
-            по коллекциям от эконома до премиума. Стили съёмки в коллекциях разные —
-            поэтому не смешиваем их в одну витрину.</p>
+          <h2>Выберите цвет фасада</h2>
+          <p class="caption pick-hint">Нажмите на цвет — покажем все варианты
+            в наличии, от эконома до премиума. Или просто листайте вниз.</p>
         </div>
         <div class="swatches" role="group" aria-label="Цвета кирпича">
 {chr(10).join(swatches)}
@@ -309,22 +320,20 @@ def build_category():
       <div class="wrap">
         <div class="line-calc" id="calcContainer">
           <div class="line-calc-wrap">
-            <div class="line-calc-group">
-              <span class="line-calc-label">Стены, м²</span>
-              <div class="line-calc-input-wrap">
+            <label class="line-calc-group" for="cWall">
+              <span class="line-calc-label">Стены</span>
+              <span class="line-calc-input-wrap">
                 <input class="line-calc-input" id="cWall" type="number" min="0" step="1" inputmode="decimal" placeholder="0" value="120">
-              </div>
-              <span class="line-calc-helper">Площадь стен</span>
-            </div>
-            <div class="line-calc-col-divider"></div>
-            <div class="line-calc-group">
-              <span class="line-calc-label">Окна/двери, м²</span>
-              <div class="line-calc-input-wrap">
+                <span class="line-calc-unit">м²</span>
+              </span>
+            </label>
+            <label class="line-calc-group" for="cOpen">
+              <span class="line-calc-label">Окна<br>и двери</span>
+              <span class="line-calc-input-wrap">
                 <input class="line-calc-input" id="cOpen" type="number" min="0" step="1" inputmode="decimal" placeholder="0" value="18">
-              </div>
-              <span class="line-calc-helper">Вычесть проёмы</span>
-            </div>
-            <div class="line-calc-col-divider"></div>
+                <span class="line-calc-unit">м²</span>
+              </span>
+            </label>
             <div class="line-calc-group">
               <span class="line-calc-label">Формат</span>
               <select id="cFmt">
@@ -333,18 +342,17 @@ def build_category():
                 <option value="39.2">1,4НФ полуторный</option>
               </select>
             </div>
-            <div class="line-calc-col-divider"></div>
-            <div class="line-calc-block">
-              <span class="line-calc-sub">Понадобится:</span>
-              <strong class="line-calc-val val-accent" id="calcQty">—</strong>
+            <div class="line-calc-outputs">
+              <div class="line-calc-block">
+                <span class="line-calc-sub">Понадобится</span>
+                <strong class="line-calc-val val-accent" id="calcQty">—</strong>
+              </div>
             </div>
-            <div class="line-calc-col-divider"></div>
-            <div class="line-calc-btn-wrap">
-              <button class="line-calc-btn btn" type="button" onclick="document.getElementById('lead').scrollIntoView({{behavior: 'smooth'}})">
-                ПОЛУЧИТЬ ТОЧНЫЙ РАСЧЕТ
-              </button>
-            </div>
+            <button class="btn line-calc-btn" type="button" onclick="document.getElementById('lead').scrollIntoView({{behavior: 'smooth'}})">
+              Получить точный расчёт
+            </button>
           </div>
+          <p class="caption line-calc-note">Считаем с запасом 5% на бой и подрезку. Раскладку и доставку посчитает менеджер.</p>
         </div>
       </div>
     </section>
@@ -638,7 +646,7 @@ def card_z(p):
     name, meta, tasks = RAB_VIEW[p["id"]]
     alt = f"Забутовочный кирпич: {name}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=2" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=3" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
