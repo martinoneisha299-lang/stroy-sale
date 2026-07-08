@@ -1,0 +1,484 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""tiles.json → страницы тротуарной плитки.
+
+Генерирует:
+- trotuarnaya-plitka.html — категория: герой с «живой» плиткой, 7 форм,
+  бордюры, калькулятор по площади, галерея работ + видео с производства;
+- plitka-<форма>.html × 7 — сетка цветов с фильтром однотонные/колормиксы.
+
+Один поставщик → без лент коллекций: форма = страница. Имя завода скрыто.
+"""
+
+import html
+import json
+import math
+from pathlib import Path
+
+BASE = Path("/Users/dm/Desktop/сайт")
+DATA = json.loads((BASE / "data" / "tiles.json").read_text())
+
+PRODUCTS = DATA["products"]
+SHAPES = DATA["shapes"]
+BORDERS = DATA["borders"]
+for p in PRODUCTS:
+    p["_thumb"] = (BASE / "img" / "catalog" / f"{p['id']}.jpg").exists()
+
+SHAPE_ORDER = ["novyy-gorod", "staryy-gorod", "bruschatka", "pryamougolnik",
+               "myunhen", "parket", "asgard"]
+
+# короткое «зачем эта форма» — по фото раскладок
+SHAPE_NOTE = {
+    "novyy-gorod": "Три размера в одной раскладке — берут чаще всего",
+    "staryy-gorod": "Рисунок старой мостовой, мягкая фаска",
+    "bruschatka": "Классический «кирпичик» — дорожки и парковки",
+    "pryamougolnik": "Строгая сетка — современные дворы",
+    "myunhen": "Крупный модуль, выглядит дорого",
+    "parket": "Узкая доска — укладка «ёлочкой»",
+    "asgard": "Крупный формат, парадные площадки",
+}
+
+PALLET_M2 = 15  # м² в поддоне (из спеков)
+
+
+def rub(v):
+    return f"{v:,}".replace(",", " ")
+
+
+def plural(n, one, few, many):
+    if n % 10 == 1 and n % 100 != 11:
+        return one
+    if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14:
+        return few
+    return many
+
+
+def esc(s):
+    return html.escape(str(s), quote=True)
+
+
+# Липкая полоса связи — единая для всех страниц (та же, что у кирпича).
+# TODO перед запуском: реальный номер и ссылки мессенджеров.
+CALLBAR = """
+  <nav class="callbar" aria-label="Быстрая связь">
+    <a class="callbar-item callbar-tel" href="tel:+79000000000">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Позвонить</span></a>
+    <a class="callbar-item" href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9-%D0%A1%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      <span>WhatsApp</span></a>
+    <a class="callbar-item" href="https://t.me/stroy_sale" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      <span>Telegram</span></a>
+    <a class="callbar-item" href="https://max.ru/stroy_sale" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+      <span>MAX</span></a>
+  </nav>"""
+
+
+def page_shell(title, descr, body, cta_h2, cta_note, extra_js=""):
+    return f"""<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content="{descr}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="wrap masthead-in">
+      <a class="wordmark" href="index.html">
+        <strong>СТРОЙ-СЕЙЛ</strong>
+        <span>Стройматериалы · Краснодар</span>
+      </a>
+      <nav class="masthead-nav" aria-label="Основное меню">
+        <a href="index.html#catalog">Каталог</a>
+        <a href="index.html#order">Доставка и оплата</a>
+        <a href="index.html#lead">Контакты</a>
+      </nav>
+      <div class="masthead-contact">
+        <a href="tel:+79000000000">+7 (900) 000-00-00</a>
+        <small>Перезвоним за 5 минут</small>
+      </div>
+    </div>
+  </header>
+
+{body}
+
+  <!-- Помощь с выбором -->
+  <section class="section">
+    <div class="wrap">
+      <div class="cta-band">
+        <div>
+          <h2>{cta_h2}</h2>
+          <p class="caption">{cta_note}</p>
+        </div>
+        <div class="cta-band-btns">
+          <a class="btn" href="tel:+79000000000">+7 (900) 000-00-00</a>
+          <a class="btn btn-ghost" href="index.html#lead">Оставить заявку</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer-in">
+      <span class="tag">Строй-Сейл · Краснодар · 2026</span>
+      <a href="tel:+79000000000">+7 (900) 000-00-00</a>
+      <span class="caption">Работаем с частными застройщиками, прорабами и бригадами</span>
+      <a class="footer-policy caption" href="policy.html">Политика конфиденциальности</a>
+    </div>
+  </footer>
+{CALLBAR}
+{extra_js}
+</body>
+</html>
+"""
+
+
+def tile_card(p):
+    alt = f"Тротуарная плитка «{p['name']}» — {SHAPES[p['shape']]['name']}"
+    if p["_thumb"]:
+        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg" alt="{esc(alt)}" '
+               f'width="640" height="480" loading="lazy">')
+    else:
+        img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
+               '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+               'stroke-width="1.5" stroke-linecap="round" aria-hidden="true">'
+               '<rect x="3" y="8" width="18" height="9"/>'
+               '<path d="M7 11h.01M12 11h.01M17 11h.01"/></svg>'
+               '<span>Фото пришлём по запросу</span></div>')
+    kind = "mono" if p["mono"] else "mix"
+    kind_ru = "однотонная" if p["mono"] else "колормикс"
+    price = (f'<p class="p-price">{rub(p["price"])} ₽/м²</p>' if p["price"]
+             else '<a class="p-ask" href="index.html#lead">Узнать цену</a>')
+    return (f'<article class="p-card" data-kind="{kind}">'
+            f'{img}<h3 class="p-name">{esc(p["name"])}</h3>'
+            f'<p class="p-meta">{kind_ru} · 40 мм</p>{price}</article>')
+
+
+CALC_JS = """
+  <script>
+    (function () {
+      var area = document.getElementById('cArea');
+      var shape = document.getElementById('cShape');
+      var qty = document.getElementById('calcQty');
+      var cap = document.getElementById('calcCap');
+      function recalc() {
+        var a = parseFloat(area.value);
+        if (!a || a <= 0) {
+          qty.textContent = '—';
+          cap.textContent = 'Укажите площадь — посчитаем объём и стоимость.';
+          return;
+        }
+        var need = a * 1.05;
+        var m2 = Math.ceil(need);
+        var pallets = Math.ceil(need / 15);
+        var price = shape ? parseInt(shape.value, 10) : 0;
+        qty.textContent = m2 + ' м²';
+        var txt = 'С запасом 5% на подрезку · ' + pallets + ' ' +
+          (pallets % 10 === 1 && pallets % 100 !== 11 ? 'поддон' :
+           (pallets % 10 >= 2 && pallets % 10 <= 4 && (pallets % 100 < 12 || pallets % 100 > 14) ? 'поддона' : 'поддонов'));
+        if (price) {
+          txt += ' · от ' + (m2 * price).toLocaleString('ru-RU') + ' ₽';
+        }
+        cap.textContent = txt;
+      }
+      area.addEventListener('input', recalc);
+      if (shape) shape.addEventListener('change', recalc);
+      recalc();
+    })();
+  </script>"""
+
+
+def calc_block(shape_select=None, note="Стоимость — по цене «от» выбранной формы. Точный расчёт с раскладкой и доставкой сделает менеджер."):
+    """Калькулятор площади. shape_select: HTML select или None (тогда цена фиксированная в data-price)."""
+    fields = f"""
+          <div class="field">
+            <label for="cArea">Площадь под плитку, м²</label>
+            <input id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="Например, 60">
+          </div>"""
+    if shape_select:
+        fields += shape_select
+    return f"""
+  <section class="section" id="calc" aria-label="Калькулятор плитки">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Сколько плитки вам нужно?</h2>
+        <p class="caption">Продаём в м², привозим поддонами по {PALLET_M2} м².</p>
+      </div>
+      <div class="calc">
+        <div class="calc-fields">
+{fields}
+        </div>
+        <div class="calc-out">
+          <p class="calc-num" id="calcQty">—</p>
+          <p class="caption" id="calcCap">Укажите площадь — посчитаем объём и стоимость.</p>
+          <a class="btn" href="index.html#lead">Получить точный расчёт</a>
+          <p class="caption">{note}</p>
+        </div>
+      </div>
+    </div>
+  </section>"""
+
+
+# ── Категория: trotuarnaya-plitka.html ───────────────────────────────────────
+
+def build_category():
+    total = len(PRODUCTS)
+    all_min = min(p["price"] for p in PRODUCTS if p["price"])
+
+    shape_cards = []
+    for slug in SHAPE_ORDER:
+        m = SHAPES[slug]
+        colors = plural(m["count"], "цвет", "цвета", "цветов")
+        shape_cards.append(f"""
+        <a class="cat" href="plitka-{slug}.html">
+          <img class="cat-img" src="img/plitka/shape-{slug}.jpg" alt="Тротуарная плитка «{esc(m['name'])}» — фактура" width="600" height="600" loading="lazy">
+          <div class="cat-row"><h3>{esc(m['name'])}</h3>
+            <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+          <p class="caption">{m['count']} {colors} · {esc(SHAPE_NOTE[slug])}</p>
+          <p class="cat-price">от {rub(m['min_price'])} ₽/м²</p>
+        </a>""")
+
+    border_cards = []
+    for b in BORDERS:
+        note = ("К дорожкам и парковкам — держит край полотна" if "дорожн" in b["name"].lower()
+                else "К садовым дорожкам и клумбам")
+        border_cards.append(f"""
+        <article class="p-card">
+          <img class="p-img" src="img/catalog/{b['id']}.jpg" alt="{esc(b['name'])}" width="640" height="480" loading="lazy">
+          <h3 class="p-name">{esc(b['name'])}</h3>
+          <p class="p-meta">{note}</p>
+          <p class="p-price">{rub(b['price'])} ₽/шт</p>
+        </article>""")
+
+    works = "\n".join(
+        f'<img src="img/plitka/work-{i:02d}.jpg" alt="Уложенная тротуарная плитка — наш объект, фото {i}" '
+        f'width="800" height="600" loading="lazy">'
+        for i in range(1, 11))
+
+    shape_options = "\n".join(
+        f'            <option value="{SHAPES[s]["min_price"]}">{esc(SHAPES[s]["name"])} — от {rub(SHAPES[s]["min_price"])} ₽/м²</option>'
+        for s in SHAPE_ORDER)
+    shape_select = f"""
+          <div class="field">
+            <label for="cShape">Форма плитки</label>
+            <select id="cShape">
+{shape_options}
+            </select>
+          </div>"""
+
+    body = f"""
+  <!-- Шапка категории: живая плитка -->
+  <section class="tile-hero" aria-label="Тротуарная плитка">
+    <div class="wrap tile-hero-in">
+      <div>
+        <nav class="crumbs" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
+          <span>Тротуарная плитка</span>
+        </nav>
+        <h1>Тротуарная плитка</h1>
+        <p class="page-sub">{total} {plural(total, 'вариант', 'варианта', 'вариантов')} в 7 формах — с завода-производителя.
+          Привезём на объект, разгрузим, оплата при получении.</p>
+        <ul class="tile-facts">
+          <li><strong>от {rub(all_min)} ₽/м²</strong> заводская цена</li>
+          <li><strong>40 мм</strong> — держит легковую машину</li>
+          <li><strong>F200</strong> — 200 зим без трещин</li>
+          <li><strong>B30</strong> — дорожная прочность</li>
+        </ul>
+        <div class="hero-cta">
+          <a class="btn" href="#shapes">Выбрать форму</a>
+          <a class="btn btn-ghost" href="#calc">Посчитать количество</a>
+        </div>
+      </div>
+      <div class="tile-hero-stage" aria-hidden="true">
+        <img class="tile-drift-b" src="img/plitka/hero-tiles-red.webp" alt="" width="550" height="413" loading="eager">
+        <img class="tile-drift-a" src="img/plitka/hero-tiles-grey.webp" alt="" width="770" height="578" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <!-- Формы -->
+  <section class="section" id="shapes" aria-label="Формы плитки">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Выберите форму</h2>
+        <p class="caption">Цвет подберёте внутри — в каждой форме порядка 24 расцветок.</p>
+      </div>
+      <div class="cats cats-tiles">
+{"".join(shape_cards)}
+      </div>
+      <p class="caption cats-note">Цены — заводские «от», зависят от расцветки.
+        Однотонные дешевле, колормиксы — дороже.</p>
+    </div>
+  </section>
+
+  <!-- Бордюры -->
+  <section class="section" aria-label="Бордюры">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Бордюры — сразу к плитке</h2>
+        <p class="caption">Продукция сертифицирована. Посчитаем метраж по вашему плану — просто пришлите размеры.</p>
+      </div>
+      <div class="p-grid p-grid-2">
+{"".join(border_cards)}
+      </div>
+    </div>
+  </section>
+{calc_block(shape_select)}
+  <!-- Наши работы -->
+  <section class="section" id="works" aria-label="Наши работы">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Наши работы</h2>
+        <p class="caption">Реальные объекты: дворы, дорожки, парковки — плитка из этого каталога.</p>
+      </div>
+      <div class="works-grid">
+{works}
+      </div>
+      <div class="works-video">
+        <video controls preload="none" poster="img/plitka/works-video-poster.jpg" width="360">
+          <source src="img/plitka/works-video.mp4" type="video/mp4">
+        </video>
+        <div>
+          <h3>Плитку прессуем на собственной линии</h3>
+          <p class="caption">30 секунд с производства: вибропресс, полусухая смесь,
+            выдержка в камере. Поэтому даём заводскую цену и гарантируем геометрию.</p>
+        </div>
+      </div>
+    </div>
+  </section>"""
+
+    out = page_shell(
+        "Тротуарная плитка от производителя — от 650 ₽/м² | Строй-Сейл Краснодар",
+        f"Тротуарная плитка в Краснодаре: {total} {plural(total, 'вариант', 'варианта', 'вариантов')}, "
+        "7 форм, 40 мм, F200. Заводские цены, доставка на объект, оплата при получении.",
+        body,
+        "Не знаете, какую форму выбрать?",
+        "Позвоните — подберём форму и цвет под дом, посчитаем площадь по плану участка и скажем точную цену с доставкой.",
+        CALC_JS)
+    (BASE / "trotuarnaya-plitka.html").write_text(out)
+    print(f"trotuarnaya-plitka.html: {total} товаров, 7 форм, от {all_min} ₽/м²")
+
+
+# ── Страницы форм: plitka-<slug>.html ────────────────────────────────────────
+
+def build_shape(slug):
+    m = SHAPES[slug]
+    items = sorted([p for p in PRODUCTS if p["shape"] == slug],
+                   key=lambda p: (not p["_thumb"] and not p["price"],
+                                  p["mono"], p["price"] or 0, p["name"]))
+    n = len(items)
+    n_mono = sum(1 for p in items if p["mono"])
+    n_mix = n - n_mono
+    cards = "\n".join(tile_card(p) for p in items)
+
+    others = " ".join(
+        f'<a href="plitka-{s}.html">{esc(SHAPES[s]["name"])}</a>'
+        for s in SHAPE_ORDER if s != slug)
+
+    specs = items[0]["specs"]
+    spec_bits = []
+    if specs.get("height"):
+        spec_bits.append("40 мм толщина")
+    spec_bits += ["F200 — 200 циклов зима-лето", "B30 — выдержит машину",
+                  f"поддон {PALLET_M2} м²"]
+
+    filter_html = ""
+    filter_js = ""
+    if n_mono and n_mix:
+        filter_html = f"""
+      <div class="filters" aria-label="Фильтр по типу окраски">
+        <div class="filter-row">
+          <div class="filter-chips" id="kindChips">
+            <button class="chip is-on" data-kind="" aria-pressed="true">Все · {n}</button>
+            <button class="chip" data-kind="mix" aria-pressed="false">Колормиксы · {n_mix}</button>
+            <button class="chip" data-kind="mono" aria-pressed="false">Однотонные · {n_mono}</button>
+          </div>
+          <p class="caption" id="shownNote">Показано {n} из {n}</p>
+        </div>
+      </div>"""
+        filter_js = """
+  <script>
+    (function () {
+      var chips = Array.prototype.slice.call(document.querySelectorAll('#kindChips .chip'));
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.p-card'));
+      var note = document.getElementById('shownNote');
+      chips.forEach(function (c) {
+        c.addEventListener('click', function () {
+          chips.forEach(function (x) {
+            x.classList.toggle('is-on', x === c);
+            x.setAttribute('aria-pressed', x === c ? 'true' : 'false');
+          });
+          var kind = c.dataset.kind;
+          var shown = 0;
+          cards.forEach(function (card) {
+            var ok = !kind || card.dataset.kind === kind;
+            card.hidden = !ok;
+            if (ok) shown++;
+          });
+          note.textContent = 'Показано ' + shown + ' из ' + cards.length;
+        });
+      });
+    })();
+  </script>"""
+
+    body = f"""
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Хлебные крошки">
+        <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
+        <a href="trotuarnaya-plitka.html">Тротуарная плитка</a> <span aria-hidden="true">/</span>
+        <span>{esc(m['name'])}</span>
+      </nav>
+      <h1>Плитка «{esc(m['name'])}»</h1>
+      <p class="page-sub">{esc(SHAPE_NOTE[slug])}. {n} {plural(n, 'расцветка', 'расцветки', 'расцветок')},
+        от {rub(m['min_price'])} ₽/м² с завода.</p>
+      <p class="caption pick-note">{" · ".join(spec_bits)}</p>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Расцветки">
+    <div class="wrap">
+{filter_html}
+      <div class="p-grid">
+{cards}
+      </div>
+      <p class="caption cats-note">Фото передают рисунок, оттенок на живой плитке
+        может отличаться — пришлём фото готовых партий в мессенджер.</p>
+      <div class="more">
+        <span class="more-label">Другие формы</span>
+        <div class="more-list">{others}</div>
+      </div>
+    </div>
+  </section>
+{calc_block(note=f"Стоимость — от {rub(m['min_price'])} ₽/м² по этой форме. Точный расчёт сделает менеджер.")}"""
+
+    # калькулятор формы: цена подставляется скрытым полем
+    body = body.replace('<div class="calc-fields">', f"""<div class="calc-fields">
+          <input type="hidden" id="cShape" value="{m['min_price']}">""")
+
+    out = page_shell(
+        f"Плитка «{m['name']}» — {n} расцветок от {rub(m['min_price'])} ₽/м² | Строй-Сейл",
+        f"Тротуарная плитка «{m['name']}» в Краснодаре: {n} расцветок, 40 мм, F200, "
+        f"от {rub(m['min_price'])} ₽/м². Доставка, оплата при получении.",
+        body,
+        "Поможем выбрать расцветку",
+        "Пришлём живые фото плитки в мессенджер, посчитаем количество и скажем цену с доставкой до вашего участка.",
+        CALC_JS + filter_js)
+    (BASE / f"plitka-{slug}.html").write_text(out)
+    print(f"plitka-{slug}.html: {n} расцветок (моно {n_mono} / микс {n_mix})")
+
+
+if __name__ == "__main__":
+    build_category()
+    for slug in SHAPE_ORDER:
+        build_shape(slug)

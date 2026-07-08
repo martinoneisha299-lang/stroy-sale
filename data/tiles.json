@@ -1,0 +1,2995 @@
+{
+ "generated": "2026-07-08",
+ "shapes": {
+  "novyy-gorod": {
+   "name": "Новый город",
+   "count": 29,
+   "min_price": 650,
+   "cover": "Категории/Новый город.webp"
+  },
+  "staryy-gorod": {
+   "name": "Старый город",
+   "count": 24,
+   "min_price": 650,
+   "cover": "Категории/Старый город.webp"
+  },
+  "bruschatka": {
+   "name": "Брусчатка",
+   "count": 23,
+   "min_price": 650,
+   "cover": "Категории/Брусчатка.webp"
+  },
+  "pryamougolnik": {
+   "name": "Прямоугольник",
+   "count": 24,
+   "min_price": 650,
+   "cover": "Категории/Прямоугольник.webp"
+  },
+  "myunhen": {
+   "name": "Мюнхен",
+   "count": 24,
+   "min_price": 700,
+   "cover": "Категории/Мюнхен.webp"
+  },
+  "parket": {
+   "name": "Паркет",
+   "count": 24,
+   "min_price": 700,
+   "cover": "Категории/Паркет.webp"
+  },
+  "asgard": {
+   "name": "Асгард",
+   "count": 24,
+   "min_price": 1260,
+   "cover": "Категории/Асгард.webp"
+  }
+ },
+ "products": [
+  {
+   "id": "tile-001",
+   "shape": "novyy-gorod",
+   "name": "Агат коричневый",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Агат коричневый/Схемы раскладки/form-1-agat-kor.webp",
+   "render": "Новый город/Агат коричневый/agat-kor-nov.webp"
+  },
+  {
+   "id": "tile-002",
+   "shape": "novyy-gorod",
+   "name": "Агат коричневый — Мрамор",
+   "mono": false,
+   "price": 1060,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": null
+  },
+  {
+   "id": "tile-003",
+   "shape": "novyy-gorod",
+   "name": "Агат кофейный",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Агат кофейный/agat-kofejnyj.webp",
+   "render": "Новый город/Агат кофейный/96674674747.webp"
+  },
+  {
+   "id": "tile-004",
+   "shape": "novyy-gorod",
+   "name": "Агат оранжевый",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Агат оранжевый/agat-orang-nov2.webp",
+   "render": "Новый город/Агат оранжевый/agat-orang-nov.webp"
+  },
+  {
+   "id": "tile-005",
+   "shape": "novyy-gorod",
+   "name": "Агат серокофейный",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": null
+  },
+  {
+   "id": "tile-006",
+   "shape": "novyy-gorod",
+   "name": "Агат солнечный",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Агат солнечный/agat-soln-nov2.webp",
+   "render": "Новый город/Агат солнечный/agat-soln-nov.webp"
+  },
+  {
+   "id": "tile-007",
+   "shape": "novyy-gorod",
+   "name": "Антрацит",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Антрацит/antraczit.webp",
+   "render": "Новый город/Антрацит/Схемы раскладки/form-1-antracit2.webp"
+  },
+  {
+   "id": "tile-008",
+   "shape": "novyy-gorod",
+   "name": "Гончар",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": "Новый город/Гончар/gonchar-nov.webp"
+  },
+  {
+   "id": "tile-009",
+   "shape": "novyy-gorod",
+   "name": "Джафар",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Джафар/dzhafar.webp",
+   "render": "Новый город/Джафар/djaphar-nov.webp"
+  },
+  {
+   "id": "tile-010",
+   "shape": "novyy-gorod",
+   "name": "Дюна",
+   "mono": false,
+   "price": 1010,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Дюна/duna-nov2.webp",
+   "render": "Новый город/Дюна/duna-nov.webp"
+  },
+  {
+   "id": "tile-011",
+   "shape": "novyy-gorod",
+   "name": "Инь и Ян",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": null
+  },
+  {
+   "id": "tile-012",
+   "shape": "novyy-gorod",
+   "name": "Инь и Ян — Мрамор",
+   "mono": false,
+   "price": 1060,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Инь и Ян — Мрамор/in-i-yan-mramor.webp",
+   "render": "Новый город/Инь и Ян — Мрамор/inyan.webp"
+  },
+  {
+   "id": "tile-013",
+   "shape": "novyy-gorod",
+   "name": "Клинкер",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Клинкер/klinker-nov2.webp",
+   "render": "Новый город/Клинкер/klinker-nov.webp"
+  },
+  {
+   "id": "tile-014",
+   "shape": "novyy-gorod",
+   "name": "Кофе с молоком",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Кофе с молоком/kofe-s-molokom.webp",
+   "render": "Новый город/Кофе с молоком/kofe-smolokom-nov.webp"
+  },
+  {
+   "id": "tile-015",
+   "shape": "novyy-gorod",
+   "name": "Моно 1",
+   "mono": true,
+   "price": 650,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Моно 1/mono1-nov2.webp",
+   "render": "Новый город/Моно 1/mono1-nov.webp"
+  },
+  {
+   "id": "tile-016",
+   "shape": "novyy-gorod",
+   "name": "Моно 2",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": "Новый город/Моно 2/mono2-nov.webp"
+  },
+  {
+   "id": "tile-017",
+   "shape": "novyy-gorod",
+   "name": "Моно 3",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Моно 3/mono3-nov2.webp",
+   "render": "Новый город/Моно 3/mono3-nov.webp"
+  },
+  {
+   "id": "tile-018",
+   "shape": "novyy-gorod",
+   "name": "Моно 4",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Моно 4/mono4-nov2.webp",
+   "render": "Новый город/Моно 4/mono4-nov.webp"
+  },
+  {
+   "id": "tile-019",
+   "shape": "novyy-gorod",
+   "name": "Моно 5",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Моно 5/mono5-nov2.webp",
+   "render": "Новый город/Моно 5/mono5-nov.webp"
+  },
+  {
+   "id": "tile-020",
+   "shape": "novyy-gorod",
+   "name": "Моно 6",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Моно 6/mono6-nov2.webp",
+   "render": "Новый город/Моно 6/mono6-nov.webp"
+  },
+  {
+   "id": "tile-021",
+   "shape": "novyy-gorod",
+   "name": "Моно 7",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Моно 7/mono7-nov2.webp",
+   "render": "Новый город/Моно 7/mono7-nov.webp"
+  },
+  {
+   "id": "tile-022",
+   "shape": "novyy-gorod",
+   "name": "Моно 8",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Моно 8/mono8-nov2.webp",
+   "render": "Новый город/Моно 8/mono8-nov.webp"
+  },
+  {
+   "id": "tile-023",
+   "shape": "novyy-gorod",
+   "name": "Светлый листопад",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Светлый листопад/img_4101.webp",
+   "render": "Новый город/Светлый листопад/svlistopad-nov.webp"
+  },
+  {
+   "id": "tile-024",
+   "shape": "novyy-gorod",
+   "name": "Солнечный Инь и Ян",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": null
+  },
+  {
+   "id": "tile-025",
+   "shape": "novyy-gorod",
+   "name": "Степь",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Степь/step.webp",
+   "render": "Новый город/Степь/step-nov.webp"
+  },
+  {
+   "id": "tile-026",
+   "shape": "novyy-gorod",
+   "name": "Темный листопад",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Темный листопад/temnyj-listopad.webp",
+   "render": "Новый город/Темный листопад/temniy-list-mov.webp"
+  },
+  {
+   "id": "tile-027",
+   "shape": "novyy-gorod",
+   "name": "Хаски",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Хаски/haski.webp",
+   "render": "Новый город/Хаски/husky-nov.webp"
+  },
+  {
+   "id": "tile-028",
+   "shape": "novyy-gorod",
+   "name": "Хаски — Мрамор",
+   "mono": false,
+   "price": 1060,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": null
+  },
+  {
+   "id": "tile-029",
+   "shape": "novyy-gorod",
+   "name": "Яшма",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Новый город/Яшма/yashma.webp",
+   "render": "Новый город/Яшма/yachma-nov.webp"
+  },
+  {
+   "id": "tile-030",
+   "shape": "staryy-gorod",
+   "name": "Агат коричневый",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Агат коричневый/agat-korichnevyj-star2.webp",
+   "render": "Старый город/Агат коричневый/agat-korichnevyj-star.webp"
+  },
+  {
+   "id": "tile-031",
+   "shape": "staryy-gorod",
+   "name": "Агат кофейный — Мрамор",
+   "mono": false,
+   "price": 1060,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Агат кофейный — Мрамор/agat-kof-m.webp",
+   "render": null
+  },
+  {
+   "id": "tile-032",
+   "shape": "staryy-gorod",
+   "name": "Агат оранжевый",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Агат оранжевый/agat-oranzhevyj-star2.webp",
+   "render": "Старый город/Агат оранжевый/agat-oranzhevyj-star.webp"
+  },
+  {
+   "id": "tile-033",
+   "shape": "staryy-gorod",
+   "name": "Агат солнечный",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Агат солнечный/agat-solnechnyj-star2.webp",
+   "render": "Старый город/Агат солнечный/agat-solnechnyj-star.webp"
+  },
+  {
+   "id": "tile-034",
+   "shape": "staryy-gorod",
+   "name": "Антрацит",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Антрацит/46735652452.webp",
+   "render": "Старый город/Антрацит/antraczit-star.webp"
+  },
+  {
+   "id": "tile-035",
+   "shape": "staryy-gorod",
+   "name": "Гончар",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Гончар/351512.webp",
+   "render": "Старый город/Гончар/Схемы раскладки/form-2-gonchar.webp"
+  },
+  {
+   "id": "tile-036",
+   "shape": "staryy-gorod",
+   "name": "Джафар",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Джафар/Схемы раскладки/form-2-dzhafar2.webp",
+   "render": "Старый город/Джафар/Схемы раскладки/form-2-dzhafar.webp"
+  },
+  {
+   "id": "tile-037",
+   "shape": "staryy-gorod",
+   "name": "Дюна",
+   "mono": false,
+   "price": 1010,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Дюна/Схемы раскладки/form-2-dyuna2.webp",
+   "render": "Старый город/Дюна/Схемы раскладки/form-2-dyuna.webp"
+  },
+  {
+   "id": "tile-038",
+   "shape": "staryy-gorod",
+   "name": "Инь и Ян",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Инь ян/Схемы раскладки/form-2-in-yan2.webp",
+   "render": "Старый город/Инь ян/Схемы раскладки/form-2-in-yan.webp"
+  },
+  {
+   "id": "tile-039",
+   "shape": "staryy-gorod",
+   "name": "Клинкер",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Клинкер/klinker-b-1.webp",
+   "render": "Старый город/Клинкер/Схемы раскладки/form-2-klinker.webp"
+  },
+  {
+   "id": "tile-040",
+   "shape": "staryy-gorod",
+   "name": "Кофе с молоком",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Кофе с молоком/Схемы раскладки/form-2-kofe-s-molokom2.webp",
+   "render": "Старый город/Кофе с молоком/Схемы раскладки/form-2-kofe-s-molokom.webp"
+  },
+  {
+   "id": "tile-041",
+   "shape": "staryy-gorod",
+   "name": "Моно 1",
+   "mono": true,
+   "price": 650,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Моно 1/Схемы раскладки/form-2-mono_12.webp",
+   "render": "Старый город/Моно 1/Схемы раскладки/form-2-mono_1.webp"
+  },
+  {
+   "id": "tile-042",
+   "shape": "staryy-gorod",
+   "name": "Моно 2",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Моно 2/Схемы раскладки/form-2-mono_22.webp",
+   "render": "Старый город/Моно 2/Схемы раскладки/form-2-mono_2-1.webp"
+  },
+  {
+   "id": "tile-043",
+   "shape": "staryy-gorod",
+   "name": "Моно 3",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": "Старый город/Моно 3/Схемы раскладки/form-2-mono_3.webp"
+  },
+  {
+   "id": "tile-044",
+   "shape": "staryy-gorod",
+   "name": "Моно 4",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Моно 4/Схемы раскладки/form-2-mono_42.webp",
+   "render": "Старый город/Моно 4/Схемы раскладки/form-2-mono_4.webp"
+  },
+  {
+   "id": "tile-045",
+   "shape": "staryy-gorod",
+   "name": "Моно 5",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Моно 5/Схемы раскладки/form-2-mono_52.webp",
+   "render": "Старый город/Моно 5/Схемы раскладки/form-2-mono_5.webp"
+  },
+  {
+   "id": "tile-046",
+   "shape": "staryy-gorod",
+   "name": "Моно 6",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Моно 6/Схемы раскладки/form-2-mono_62.webp",
+   "render": "Старый город/Моно 6/Схемы раскладки/form-2-mono_6.webp"
+  },
+  {
+   "id": "tile-047",
+   "shape": "staryy-gorod",
+   "name": "Моно 7",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Моно 7/Схемы раскладки/form-2-mono_72.webp",
+   "render": "Старый город/Моно 7/Схемы раскладки/form-2-mono_7.webp"
+  },
+  {
+   "id": "tile-048",
+   "shape": "staryy-gorod",
+   "name": "Моно 8",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Моно 8/Схемы раскладки/form-2-mono_82.webp",
+   "render": "Старый город/Моно 8/Схемы раскладки/form-2-mono_8.webp"
+  },
+  {
+   "id": "tile-049",
+   "shape": "staryy-gorod",
+   "name": "Светлый листопад гладкий",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Светлый листопад гладкий/sv-list-g-1.webp",
+   "render": "Старый город/Светлый листопад гладкий/Схемы раскладки/form-2-svetlyj-listopad.webp"
+  },
+  {
+   "id": "tile-050",
+   "shape": "staryy-gorod",
+   "name": "Степь",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Степь/step-1.webp",
+   "render": "Старый город/Степь/Схемы раскладки/form-2-step.webp"
+  },
+  {
+   "id": "tile-051",
+   "shape": "staryy-gorod",
+   "name": "Тёмный листопад",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Тёмный листопад/Схемы раскладки/form-2-tyomnyj-listopad2.webp",
+   "render": "Старый город/Тёмный листопад/Схемы раскладки/form-2-tyomnyj-listopad.webp"
+  },
+  {
+   "id": "tile-052",
+   "shape": "staryy-gorod",
+   "name": "Хаски",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Хаски/haski-g.webp",
+   "render": "Старый город/Хаски/Схемы раскладки/form-2-haski.webp"
+  },
+  {
+   "id": "tile-053",
+   "shape": "staryy-gorod",
+   "name": "Яшма",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Старый город/Яшма/Схемы раскладки/form-2-yashma2.webp",
+   "render": "Старый город/Яшма/Схемы раскладки/form-2-yashma.webp"
+  },
+  {
+   "id": "tile-054",
+   "shape": "bruschatka",
+   "name": "Агат коричневый",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Агат коричневый (Б)/Схемы раскладки/form-6-agat-korichnevyj2.webp",
+   "render": "Брусчатка/Агат коричневый (Б)/Схемы раскладки/form-6-agat-korichnevyj.webp"
+  },
+  {
+   "id": "tile-055",
+   "shape": "bruschatka",
+   "name": "Агат кофейный",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Агат кофейный (Б)/Схемы раскладки/form-6-agat-kofejnyj2.webp",
+   "render": "Брусчатка/Агат кофейный (Б)/Схемы раскладки/form-6-agat-kofejnyj.webp"
+  },
+  {
+   "id": "tile-056",
+   "shape": "bruschatka",
+   "name": "Агат оранжевый",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Агат оранжевый (Б)/Схемы раскладки/form-6-agat-oranzhevyj2.webp",
+   "render": "Брусчатка/Агат оранжевый (Б)/Схемы раскладки/form-6-agat-oranzhevyj.webp"
+  },
+  {
+   "id": "tile-057",
+   "shape": "bruschatka",
+   "name": "Агат солнечный",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Агат солнечный (Б)/Схемы раскладки/form-6-agat-solnechnyj2.webp",
+   "render": "Брусчатка/Агат солнечный (Б)/Схемы раскладки/form-6-agat-solnechnyj.webp"
+  },
+  {
+   "id": "tile-058",
+   "shape": "bruschatka",
+   "name": "Антрацит",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Антрацит (Б)/antr-g.webp",
+   "render": "Брусчатка/Антрацит (Б)/Схемы раскладки/form-6-antraczit.webp"
+  },
+  {
+   "id": "tile-059",
+   "shape": "bruschatka",
+   "name": "Гончар",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Гончар (Б)/Схемы раскладки/form-6-gonchar2.webp",
+   "render": "Брусчатка/Гончар (Б)/Схемы раскладки/form-6-gonchar.webp"
+  },
+  {
+   "id": "tile-060",
+   "shape": "bruschatka",
+   "name": "Джафар",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Джафар (Б)/Схемы раскладки/form-6-dzhafar2.webp",
+   "render": "Брусчатка/Джафар (Б)/Схемы раскладки/form-6-dzhafar.webp"
+  },
+  {
+   "id": "tile-061",
+   "shape": "bruschatka",
+   "name": "Дюна",
+   "mono": false,
+   "price": 1010,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Дюна (Б)/Схемы раскладки/form-6-dyuna2.webp",
+   "render": "Брусчатка/Дюна (Б)/Схемы раскладки/form-6-dyuna.webp"
+  },
+  {
+   "id": "tile-062",
+   "shape": "bruschatka",
+   "name": "Клинкер",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Клинкер (Б)/klinker-b.webp",
+   "render": "Брусчатка/Клинкер (Б)/Схемы раскладки/form-6-klinker.webp"
+  },
+  {
+   "id": "tile-063",
+   "shape": "bruschatka",
+   "name": "Кофе с молоком",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Кофе с молоком (Б)/Схемы раскладки/form-6-kofe-s-molokom2.webp",
+   "render": "Брусчатка/Кофе с молоком (Б)/Схемы раскладки/form-6-kofe-s-molokom.webp"
+  },
+  {
+   "id": "tile-064",
+   "shape": "bruschatka",
+   "name": "Моно 1",
+   "mono": true,
+   "price": 650,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Моно 1 (Б)/Схемы раскладки/form-6-mono_12.webp",
+   "render": "Брусчатка/Моно 1 (Б)/Схемы раскладки/form-6-mono_1.webp"
+  },
+  {
+   "id": "tile-065",
+   "shape": "bruschatka",
+   "name": "Моно 2",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Моно 2 (Б)/Схемы раскладки/form-6-mono_22.webp",
+   "render": "Брусчатка/Моно 2 (Б)/Схемы раскладки/form-6-mono_2.webp"
+  },
+  {
+   "id": "tile-066",
+   "shape": "bruschatka",
+   "name": "Моно 3",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Моно 3 (Б)/Схемы раскладки/form-6-mono_32.webp",
+   "render": "Брусчатка/Моно 3 (Б)/Схемы раскладки/form-6-mono_3.webp"
+  },
+  {
+   "id": "tile-067",
+   "shape": "bruschatka",
+   "name": "Моно 4",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Моно 4 (Б)/Схемы раскладки/form-6-mono_42.webp",
+   "render": "Брусчатка/Моно 4 (Б)/Схемы раскладки/form-6-mono_4.webp"
+  },
+  {
+   "id": "tile-068",
+   "shape": "bruschatka",
+   "name": "Моно 5",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Моно 5 (Б)/Схемы раскладки/form-6-mono_52.webp",
+   "render": "Брусчатка/Моно 5 (Б)/Схемы раскладки/form-6-mono_5.webp"
+  },
+  {
+   "id": "tile-069",
+   "shape": "bruschatka",
+   "name": "Моно 6",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Моно 6 (Б)/Схемы раскладки/form-6-mono_62.webp",
+   "render": "Брусчатка/Моно 6 (Б)/Схемы раскладки/form-6-mono_6.webp"
+  },
+  {
+   "id": "tile-070",
+   "shape": "bruschatka",
+   "name": "Моно 7",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Моно 7 (Б)/Схемы раскладки/form-6-mono_72.webp",
+   "render": "Брусчатка/Моно 7 (Б)/Схемы раскладки/form-6-mono_7.webp"
+  },
+  {
+   "id": "tile-071",
+   "shape": "bruschatka",
+   "name": "Моно 8",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Моно 8 (Б)/Схемы раскладки/form-6-mono_82.webp",
+   "render": "Брусчатка/Моно 8 (Б)/Схемы раскладки/form-6-mono_8.webp"
+  },
+  {
+   "id": "tile-072",
+   "shape": "bruschatka",
+   "name": "Светлый листопад",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Светлый листопад (Б)/svetlyj-listopad.webp",
+   "render": "Брусчатка/Светлый листопад (Б)/Схемы раскладки/form-6-svetlyj-listopad.webp"
+  },
+  {
+   "id": "tile-073",
+   "shape": "bruschatka",
+   "name": "Степь",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Степь (Б)/Схемы раскладки/form-6-step2.webp",
+   "render": "Брусчатка/Степь (Б)/Схемы раскладки/form-6-step.webp"
+  },
+  {
+   "id": "tile-074",
+   "shape": "bruschatka",
+   "name": "Темный листопад",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Темный листопад (Б)/tem-list-g.webp",
+   "render": "Брусчатка/Темный листопад (Б)/Схемы раскладки/form-6-tyomnyj-listopad.webp"
+  },
+  {
+   "id": "tile-075",
+   "shape": "bruschatka",
+   "name": "Хаски",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Хаски (Б)/Схемы раскладки/form-6-haski2.webp",
+   "render": "Брусчатка/Хаски (Б)/Схемы раскладки/form-6-haski.webp"
+  },
+  {
+   "id": "tile-076",
+   "shape": "bruschatka",
+   "name": "Яшма",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Брусчатка/Яшма (Б)/Схемы раскладки/form-6-yashma2.webp",
+   "render": "Брусчатка/Яшма (Б)/Схемы раскладки/form-6-yashma.webp"
+  },
+  {
+   "id": "tile-077",
+   "shape": "pryamougolnik",
+   "name": "Агат коричневый",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Агат коричневый/Схемы раскладки/form-4-agat-korichnevyj2.webp",
+   "render": "Прямоугольник/Агат коричневый/Схемы раскладки/form-4-agat-korichnevyj.webp"
+  },
+  {
+   "id": "tile-078",
+   "shape": "pryamougolnik",
+   "name": "Агат кофейный",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Агат кофейный/Схемы раскладки/form-4-agat-kofejnyj2.webp",
+   "render": "Прямоугольник/Агат кофейный/Схемы раскладки/form-4-agat-kofejnyj.webp"
+  },
+  {
+   "id": "tile-079",
+   "shape": "pryamougolnik",
+   "name": "Агат оранжевый",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Агат оранжевый/Схемы раскладки/form-4-agat-oranzhevyj2.webp",
+   "render": "Прямоугольник/Агат оранжевый/Схемы раскладки/form-4-agat-oranzhevyj.webp"
+  },
+  {
+   "id": "tile-080",
+   "shape": "pryamougolnik",
+   "name": "Агат солнечный",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Агат солнечный/Схемы раскладки/form-4-agat-solnechnyj2.webp",
+   "render": "Прямоугольник/Агат солнечный/Схемы раскладки/form-4-agat-solnechnyj.webp"
+  },
+  {
+   "id": "tile-081",
+   "shape": "pryamougolnik",
+   "name": "Антрацит",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Антрацит/antraczit-2.webp",
+   "render": "Прямоугольник/Антрацит/Схемы раскладки/form-4-antraczit.webp"
+  },
+  {
+   "id": "tile-082",
+   "shape": "pryamougolnik",
+   "name": "Гончар",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Гончар/Схемы раскладки/form-4-gonchar2.webp",
+   "render": "Прямоугольник/Гончар/Схемы раскладки/form-4-gonchar.webp"
+  },
+  {
+   "id": "tile-083",
+   "shape": "pryamougolnik",
+   "name": "Джафар",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Джафар/Схемы раскладки/form-4-dzhafar2.webp",
+   "render": "Прямоугольник/Джафар/Схемы раскладки/form-4-dzhafar.webp"
+  },
+  {
+   "id": "tile-084",
+   "shape": "pryamougolnik",
+   "name": "Дюна",
+   "mono": false,
+   "price": 1010,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Дюна/Схемы раскладки/form-4-dyuna2.webp",
+   "render": "Прямоугольник/Дюна/Схемы раскладки/form-4-dyuna.webp"
+  },
+  {
+   "id": "tile-085",
+   "shape": "pryamougolnik",
+   "name": "Инь и Ян",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Инь ян/Схемы раскладки/form-4-in-yan2.webp",
+   "render": "Прямоугольник/Инь ян/Схемы раскладки/form-4-in-yan.webp"
+  },
+  {
+   "id": "tile-086",
+   "shape": "pryamougolnik",
+   "name": "Клинкер",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Клинкер/Схемы раскладки/form-4-klinker2.webp",
+   "render": "Прямоугольник/Клинкер/Схемы раскладки/form-4-klinker.webp"
+  },
+  {
+   "id": "tile-087",
+   "shape": "pryamougolnik",
+   "name": "Кофе с молоком",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Кофе с молоком/Схемы раскладки/form-4-kofe-s-molokom2.webp",
+   "render": "Прямоугольник/Кофе с молоком/Схемы раскладки/form-4-kofe-s-molokom.webp"
+  },
+  {
+   "id": "tile-088",
+   "shape": "pryamougolnik",
+   "name": "Моно 1",
+   "mono": true,
+   "price": 650,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Моно 1/Схемы раскладки/form-4-mono_12.webp",
+   "render": "Прямоугольник/Моно 1/Схемы раскладки/form-4-mono_1.webp"
+  },
+  {
+   "id": "tile-089",
+   "shape": "pryamougolnik",
+   "name": "Моно 2",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Моно 2/Схемы раскладки/form-4-mono_22.webp",
+   "render": "Прямоугольник/Моно 2/Схемы раскладки/form-4-mono_2.webp"
+  },
+  {
+   "id": "tile-090",
+   "shape": "pryamougolnik",
+   "name": "Моно 3",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": "Прямоугольник/Моно 3/Схемы раскладки/form-4-mono_3.webp"
+  },
+  {
+   "id": "tile-091",
+   "shape": "pryamougolnik",
+   "name": "Моно 4",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Моно 4/Схемы раскладки/form-4-mono_42.webp",
+   "render": "Прямоугольник/Моно 4/Схемы раскладки/form-4-mono_4.webp"
+  },
+  {
+   "id": "tile-092",
+   "shape": "pryamougolnik",
+   "name": "Моно 5",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Моно 5/Схемы раскладки/form-4-mono_52.webp",
+   "render": "Прямоугольник/Моно 5/Схемы раскладки/form-4-mono_5.webp"
+  },
+  {
+   "id": "tile-093",
+   "shape": "pryamougolnik",
+   "name": "Моно 6",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Моно 6/Схемы раскладки/form-4-mono_62.webp",
+   "render": "Прямоугольник/Моно 6/Схемы раскладки/form-4-mono_6.webp"
+  },
+  {
+   "id": "tile-094",
+   "shape": "pryamougolnik",
+   "name": "Моно 7",
+   "mono": true,
+   "price": 710,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Моно 7/Схемы раскладки/form-4-mono_72.webp",
+   "render": "Прямоугольник/Моно 7/Схемы раскладки/form-4-mono_7.webp"
+  },
+  {
+   "id": "tile-095",
+   "shape": "pryamougolnik",
+   "name": "Моно 8",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Моно 8/Схемы раскладки/form-4-mono_82.webp",
+   "render": "Прямоугольник/Моно 8/Схемы раскладки/form-4-mono_8.webp"
+  },
+  {
+   "id": "tile-096",
+   "shape": "pryamougolnik",
+   "name": "Светлый листопад",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": "Прямоугольник/Светлый листопад/Схемы раскладки/form-4-svetlyj-listopad.webp"
+  },
+  {
+   "id": "tile-097",
+   "shape": "pryamougolnik",
+   "name": "Степь",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Степь/Схемы раскладки/form-4-step2.webp",
+   "render": "Прямоугольник/Степь/Схемы раскладки/form-4-step.webp"
+  },
+  {
+   "id": "tile-098",
+   "shape": "pryamougolnik",
+   "name": "Тёмный листопад",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Тёмный листопад/Схемы раскладки/form-4-tyomnyj-listopad2.webp",
+   "render": "Прямоугольник/Тёмный листопад/Схемы раскладки/form-4-tyomnyj-listopad.webp"
+  },
+  {
+   "id": "tile-099",
+   "shape": "pryamougolnik",
+   "name": "Хаски",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Хаски/haski-2.webp",
+   "render": "Прямоугольник/Хаски/Схемы раскладки/form-4-haski.webp"
+  },
+  {
+   "id": "tile-100",
+   "shape": "pryamougolnik",
+   "name": "Яшма",
+   "mono": false,
+   "price": 910,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Прямоугольник/Яшма/Схемы раскладки/form-4-yashma2.webp",
+   "render": "Прямоугольник/Яшма/Схемы раскладки/form-4-yashma.webp"
+  },
+  {
+   "id": "tile-101",
+   "shape": "myunhen",
+   "name": "Агат коричневый",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Агат коричневый/agat-korichnevyj.webp",
+   "render": "Мюнхен/Агат коричневый/Схемы раскладки/form-3-agat-korichnevyj.webp"
+  },
+  {
+   "id": "tile-102",
+   "shape": "myunhen",
+   "name": "Агат кофейный",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Агат кофейный/agat-kofejnyj.webp",
+   "render": "Мюнхен/Агат кофейный/Схемы раскладки/form-3-agat-kofejnyj.webp"
+  },
+  {
+   "id": "tile-103",
+   "shape": "myunhen",
+   "name": "Агат оранжевый",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Агат оранжевый/Схемы раскладки/form-3-agat-oranzhevyj2.webp",
+   "render": "Мюнхен/Агат оранжевый/Схемы раскладки/form-3-agat-oranzhevyj.webp"
+  },
+  {
+   "id": "tile-104",
+   "shape": "myunhen",
+   "name": "Агат солнечный",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Агат солнечный/Схемы раскладки/form-3-agat-solnechnyj2.webp",
+   "render": "Мюнхен/Агат солнечный/Схемы раскладки/form-3-agat-solnechnyj.webp"
+  },
+  {
+   "id": "tile-105",
+   "shape": "myunhen",
+   "name": "Антрацит",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Антрацит/antraczit.webp",
+   "render": "Мюнхен/Антрацит/Схемы раскладки/form-3-antraczit.webp"
+  },
+  {
+   "id": "tile-106",
+   "shape": "myunhen",
+   "name": "Гончар",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Гончар/Схемы раскладки/form-3-gonchar2.webp",
+   "render": "Мюнхен/Гончар/Схемы раскладки/form-3-gonchar.webp"
+  },
+  {
+   "id": "tile-107",
+   "shape": "myunhen",
+   "name": "Джафар",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Джафар/djafar.webp",
+   "render": "Мюнхен/Джафар/Схемы раскладки/form-3-dzhafar.webp"
+  },
+  {
+   "id": "tile-108",
+   "shape": "myunhen",
+   "name": "Дюна",
+   "mono": false,
+   "price": 1060,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Дюна/Схемы раскладки/form-3-dyuna2.webp",
+   "render": "Мюнхен/Дюна/Схемы раскладки/form-3-dyuna.webp"
+  },
+  {
+   "id": "tile-109",
+   "shape": "myunhen",
+   "name": "Инь и Ян",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Инь ян/Схемы раскладки/form-3-in-yan2.webp",
+   "render": "Мюнхен/Инь ян/Схемы раскладки/form-3-in-yan.webp"
+  },
+  {
+   "id": "tile-110",
+   "shape": "myunhen",
+   "name": "Клинкер",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Клинкер/Схемы раскладки/form-3-klinker2.webp",
+   "render": "Мюнхен/Клинкер/Схемы раскладки/form-3-klinker.webp"
+  },
+  {
+   "id": "tile-111",
+   "shape": "myunhen",
+   "name": "Кофе с молоком",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Кофе с молоком/Схемы раскладки/form-3-kofe-s-molokom2.webp",
+   "render": "Мюнхен/Кофе с молоком/Схемы раскладки/form-3-kofe-s-molokom.webp"
+  },
+  {
+   "id": "tile-112",
+   "shape": "myunhen",
+   "name": "Моно 1",
+   "mono": true,
+   "price": 700,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Моно 1/Схемы раскладки/form-3-mono_12.webp",
+   "render": "Мюнхен/Моно 1/Схемы раскладки/form-3-mono_1.webp"
+  },
+  {
+   "id": "tile-113",
+   "shape": "myunhen",
+   "name": "Моно 2",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Моно 2/Схемы раскладки/form-3-mono_22.webp",
+   "render": "Мюнхен/Моно 2/Схемы раскладки/form-3-mono_2.webp"
+  },
+  {
+   "id": "tile-114",
+   "shape": "myunhen",
+   "name": "Моно 3",
+   "mono": true,
+   "price": 810,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": "Мюнхен/Моно 3/Схемы раскладки/form-3-mono_3.webp"
+  },
+  {
+   "id": "tile-115",
+   "shape": "myunhen",
+   "name": "Моно 4",
+   "mono": true,
+   "price": 810,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Моно 4/Схемы раскладки/form-3-mono_42.webp",
+   "render": "Мюнхен/Моно 4/Схемы раскладки/form-3-mono_4.webp"
+  },
+  {
+   "id": "tile-116",
+   "shape": "myunhen",
+   "name": "Моно 5",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Моно 5/Схемы раскладки/form-3-mono_52.webp",
+   "render": "Мюнхен/Моно 5/Схемы раскладки/form-3-mono_5.webp"
+  },
+  {
+   "id": "tile-117",
+   "shape": "myunhen",
+   "name": "Моно 6",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Моно 6/Схемы раскладки/form-3-mono_62.webp",
+   "render": "Мюнхен/Моно 6/Схемы раскладки/form-3-mono_6.webp"
+  },
+  {
+   "id": "tile-118",
+   "shape": "myunhen",
+   "name": "Моно 7",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Моно 7/Схемы раскладки/form-3-mono_72.webp",
+   "render": "Мюнхен/Моно 7/Схемы раскладки/form-3-mono_7.webp"
+  },
+  {
+   "id": "tile-119",
+   "shape": "myunhen",
+   "name": "Моно 8",
+   "mono": true,
+   "price": 810,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Моно 8/Схемы раскладки/form-3-mono_82.webp",
+   "render": "Мюнхен/Моно 8/Схемы раскладки/form-3-mono_8.webp"
+  },
+  {
+   "id": "tile-120",
+   "shape": "myunhen",
+   "name": "Светлый листопад",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Светлый листопад/Схемы раскладки/form-3-svetlyj-listopad2.webp",
+   "render": "Мюнхен/Светлый листопад/Схемы раскладки/form-3-svetlyj-listopad.webp"
+  },
+  {
+   "id": "tile-121",
+   "shape": "myunhen",
+   "name": "Степь",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Степь/step.webp",
+   "render": "Мюнхен/Степь/Схемы раскладки/form-3-step.webp"
+  },
+  {
+   "id": "tile-122",
+   "shape": "myunhen",
+   "name": "Тёмный листопад",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Тёмный листопад/Схемы раскладки/form-3-tyomnyj-listopad2.webp",
+   "render": "Мюнхен/Тёмный листопад/Схемы раскладки/form-3-tyomnyj-listopad.webp"
+  },
+  {
+   "id": "tile-123",
+   "shape": "myunhen",
+   "name": "Хаски",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Хаски/haski.webp",
+   "render": "Мюнхен/Хаски/Схемы раскладки/form-3-haski.webp"
+  },
+  {
+   "id": "tile-124",
+   "shape": "myunhen",
+   "name": "Яшма",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Мюнхен/Яшма/Схемы раскладки/form-3-yashma2.webp",
+   "render": "Мюнхен/Яшма/Схемы раскладки/form-3-yashma.webp"
+  },
+  {
+   "id": "tile-125",
+   "shape": "parket",
+   "name": "Агат коричневый",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Агат коричневый/agat-korichnevyj-1.webp",
+   "render": "Паркет/Агат коричневый/Схемы раскладки/form-5-agat-korichnevyj.webp"
+  },
+  {
+   "id": "tile-126",
+   "shape": "parket",
+   "name": "Агат кофейный",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": "Паркет/Агат кофейный/Схемы раскладки/form-5-agat-kofejnyj.webp"
+  },
+  {
+   "id": "tile-127",
+   "shape": "parket",
+   "name": "Агат оранжевый",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Агат оранжевый/Схемы раскладки/form-5-agat-oranzhevyj2.webp",
+   "render": "Паркет/Агат оранжевый/Схемы раскладки/form-5-agat-oranzhevyj.webp"
+  },
+  {
+   "id": "tile-128",
+   "shape": "parket",
+   "name": "Агат солнечный",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Агат солнечный/Схемы раскладки/form-5-agat-solnechnyj2.webp",
+   "render": "Паркет/Агат солнечный/Схемы раскладки/form-5-agat-solnechnyj.webp"
+  },
+  {
+   "id": "tile-129",
+   "shape": "parket",
+   "name": "Антрацит",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Антрацит/antraczit-1.webp",
+   "render": "Паркет/Антрацит/Схемы раскладки/form-5-antraczit.webp"
+  },
+  {
+   "id": "tile-130",
+   "shape": "parket",
+   "name": "Гончар",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Гончар/Схемы раскладки/form-5-gonchar2.webp",
+   "render": "Паркет/Гончар/Схемы раскладки/form-5-gonchar.webp"
+  },
+  {
+   "id": "tile-131",
+   "shape": "parket",
+   "name": "Джафар",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Джафар/Схемы раскладки/form-5-dzhafar2.webp",
+   "render": "Паркет/Джафар/Схемы раскладки/form-5-dzhafar.webp"
+  },
+  {
+   "id": "tile-132",
+   "shape": "parket",
+   "name": "Дюна",
+   "mono": false,
+   "price": 1060,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Дюна/Схемы раскладки/form-5-dyuna2.webp",
+   "render": "Паркет/Дюна/Схемы раскладки/form-5-dyuna.webp"
+  },
+  {
+   "id": "tile-133",
+   "shape": "parket",
+   "name": "Инь и Ян",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Инь ян/Схемы раскладки/form-5-in-yan2.webp",
+   "render": "Паркет/Инь ян/Схемы раскладки/form-5-in-yan.webp"
+  },
+  {
+   "id": "tile-134",
+   "shape": "parket",
+   "name": "Клинкер",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Клинкер (П)/Схемы раскладки/form-5-klinker2.webp",
+   "render": "Паркет/Клинкер (П)/Схемы раскладки/form-5-klinker.webp"
+  },
+  {
+   "id": "tile-135",
+   "shape": "parket",
+   "name": "Кофе с молоком",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Кофе с молоком (П)/Схемы раскладки/form-5-kofe-s-molokom2.webp",
+   "render": "Паркет/Кофе с молоком (П)/Схемы раскладки/form-5-kofe-s-molokom.webp"
+  },
+  {
+   "id": "tile-136",
+   "shape": "parket",
+   "name": "Моно 1",
+   "mono": true,
+   "price": 700,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Моно 1 (П)/Схемы раскладки/form-5-mono_12.webp",
+   "render": "Паркет/Моно 1 (П)/Схемы раскладки/form-5-mono_1.webp"
+  },
+  {
+   "id": "tile-137",
+   "shape": "parket",
+   "name": "Моно 2",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Моно 2 (П)/Схемы раскладки/form-5-mono_22.webp",
+   "render": "Паркет/Моно 2 (П)/Схемы раскладки/form-5-mono_2.webp"
+  },
+  {
+   "id": "tile-138",
+   "shape": "parket",
+   "name": "Моно 3",
+   "mono": true,
+   "price": 810,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Моно 3 (П)/Схемы раскладки/form-5-mono_32.webp",
+   "render": "Паркет/Моно 3 (П)/Схемы раскладки/form-5-mono_3.webp"
+  },
+  {
+   "id": "tile-139",
+   "shape": "parket",
+   "name": "Моно 4",
+   "mono": true,
+   "price": 810,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Моно 4 (П)/Схемы раскладки/form-5-mono_42.webp",
+   "render": "Паркет/Моно 4 (П)/Схемы раскладки/form-5-mono_4.webp"
+  },
+  {
+   "id": "tile-140",
+   "shape": "parket",
+   "name": "Моно 5",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Моно 5 (П)/Схемы раскладки/form-5-mono_52.webp",
+   "render": "Паркет/Моно 5 (П)/Схемы раскладки/form-5-mono_5.webp"
+  },
+  {
+   "id": "tile-141",
+   "shape": "parket",
+   "name": "Моно 6",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Моно 6 (П)/Схемы раскладки/form-5-mono_62.webp",
+   "render": "Паркет/Моно 6 (П)/Схемы раскладки/form-5-mono_6.webp"
+  },
+  {
+   "id": "tile-142",
+   "shape": "parket",
+   "name": "Моно 7",
+   "mono": true,
+   "price": 760,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Моно 7 (П)/Схемы раскладки/form-5-mono_72.webp",
+   "render": "Паркет/Моно 7 (П)/Схемы раскладки/form-5-mono_7.webp"
+  },
+  {
+   "id": "tile-143",
+   "shape": "parket",
+   "name": "Моно 8",
+   "mono": true,
+   "price": 810,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Моно 8 (П)/Схемы раскладки/form-5-mono_82.webp",
+   "render": "Паркет/Моно 8 (П)/Схемы раскладки/form-5-mono_8.webp"
+  },
+  {
+   "id": "tile-144",
+   "shape": "parket",
+   "name": "Светлый листопад",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Светлый листопад (П)/Схемы раскладки/form-5-svetlyj-listopad2.webp",
+   "render": "Паркет/Светлый листопад (П)/Схемы раскладки/form-5-svetlyj-listopad.webp"
+  },
+  {
+   "id": "tile-145",
+   "shape": "parket",
+   "name": "Степь",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Степь (П)/step-1.webp",
+   "render": "Паркет/Степь (П)/Схемы раскладки/form-5-step.webp"
+  },
+  {
+   "id": "tile-146",
+   "shape": "parket",
+   "name": "Темный листопад",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Темный листопад (П)/temnyj-listopad.webp",
+   "render": "Паркет/Темный листопад (П)/Схемы раскладки/form-5-tyomnyj-listopad.webp"
+  },
+  {
+   "id": "tile-147",
+   "shape": "parket",
+   "name": "Хаски",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Хаски (П)/haski-1.webp",
+   "render": "Паркет/Хаски (П)/Схемы раскладки/form-5-haski.webp"
+  },
+  {
+   "id": "tile-148",
+   "shape": "parket",
+   "name": "Яшма",
+   "mono": false,
+   "price": 960,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Паркет/Яшма (П)/Схемы раскладки/form-5-yashma2.webp",
+   "render": "Паркет/Яшма (П)/Схемы раскладки/form-5-yashma.webp"
+  },
+  {
+   "id": "tile-149",
+   "shape": "asgard",
+   "name": "Агат коричневый",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Агат коричневый (А)/Схемы раскладки/form-7-agat-korichnevyj2.webp",
+   "render": "Асгард/Агат коричневый (А)/Схемы раскладки/form-7-agat-korichnevyj.webp"
+  },
+  {
+   "id": "tile-150",
+   "shape": "asgard",
+   "name": "Агат кофейный",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Агат кофейный (А)/Схемы раскладки/form-7-agat-kofejnyj2.webp",
+   "render": "Асгард/Агат кофейный (А)/Схемы раскладки/form-7-agat-kofejnyj.webp"
+  },
+  {
+   "id": "tile-151",
+   "shape": "asgard",
+   "name": "Агат оранжевый",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Агат оранжевый (А)/Схемы раскладки/form-7-agat-oranzhevyj2.webp",
+   "render": "Асгард/Агат оранжевый (А)/Схемы раскладки/form-7-agat-oranzhevyj.webp"
+  },
+  {
+   "id": "tile-152",
+   "shape": "asgard",
+   "name": "Агат солнечный",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Агат солнечный (А)/Схемы раскладки/form-7-agat-solnechnyj2.webp",
+   "render": "Асгард/Агат солнечный (А)/Схемы раскладки/form-7-agat-solnechnyj.webp"
+  },
+  {
+   "id": "tile-153",
+   "shape": "asgard",
+   "name": "Антрацит",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Антрацит (А)/Схемы раскладки/form-7-antraczit2.webp",
+   "render": "Асгард/Антрацит (А)/Схемы раскладки/form-7-antraczit.webp"
+  },
+  {
+   "id": "tile-154",
+   "shape": "asgard",
+   "name": "Гончар",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Гончар (А)/Схемы раскладки/form-7-gonchar2.webp",
+   "render": "Асгард/Гончар (А)/Схемы раскладки/form-7-gonchar.webp"
+  },
+  {
+   "id": "tile-155",
+   "shape": "asgard",
+   "name": "Джафар",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Джафар (А)/Схемы раскладки/form-7-dzhafar2.webp",
+   "render": "Асгард/Джафар (А)/Схемы раскладки/form-7-dzhafar.webp"
+  },
+  {
+   "id": "tile-156",
+   "shape": "asgard",
+   "name": "Дюна",
+   "mono": false,
+   "price": 1360,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Дюна (А)/Схемы раскладки/form-7-dyuna2.webp",
+   "render": "Асгард/Дюна (А)/Схемы раскладки/form-7-dyuna.webp"
+  },
+  {
+   "id": "tile-157",
+   "shape": "asgard",
+   "name": "Инь и Ян",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Инь ян (А)/Схемы раскладки/form-7-in-yan2.webp",
+   "render": "Асгард/Инь ян (А)/Схемы раскладки/form-7-in-yan.webp"
+  },
+  {
+   "id": "tile-158",
+   "shape": "asgard",
+   "name": "Клинкер",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Клинкер (А)/Схемы раскладки/form-7-klinker2.webp",
+   "render": "Асгард/Клинкер (А)/Схемы раскладки/form-7-klinker.webp"
+  },
+  {
+   "id": "tile-159",
+   "shape": "asgard",
+   "name": "Кофе с молоком",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Кофе с молоком (А)/Схемы раскладки/form-7-kofe-s-molokom2.webp",
+   "render": "Асгард/Кофе с молоком (А)/Схемы раскладки/form-7-kofe-s-molokom.webp"
+  },
+  {
+   "id": "tile-160",
+   "shape": "asgard",
+   "name": "Моно 1",
+   "mono": true,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Моно 1 (А)/Схемы раскладки/form-7-mono_2.webp",
+   "render": "Асгард/Моно 1 (А)/Схемы раскладки/form-7-mono_1.webp"
+  },
+  {
+   "id": "tile-161",
+   "shape": "asgard",
+   "name": "Моно 2",
+   "mono": true,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Моно 2 (А)/Схемы раскладки/form-7-mono_22.webp",
+   "render": "Асгард/Моно 2 (А)/Схемы раскладки/form-7-mono_2-1.webp"
+  },
+  {
+   "id": "tile-162",
+   "shape": "asgard",
+   "name": "Моно 3",
+   "mono": true,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": null,
+   "render": "Асгард/Моно 3 (А)/Схемы раскладки/form-7-mono_3.webp"
+  },
+  {
+   "id": "tile-163",
+   "shape": "asgard",
+   "name": "Моно 4",
+   "mono": true,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Моно 4 (А)/Схемы раскладки/form-7-mono_42.webp",
+   "render": "Асгард/Моно 4 (А)/Схемы раскладки/form-7-mono_4.webp"
+  },
+  {
+   "id": "tile-164",
+   "shape": "asgard",
+   "name": "Моно 5",
+   "mono": true,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Моно 5 (А)/Схемы раскладки/form-7-mono_52.webp",
+   "render": "Асгард/Моно 5 (А)/Схемы раскладки/form-7-mono_5.webp"
+  },
+  {
+   "id": "tile-165",
+   "shape": "asgard",
+   "name": "Моно 6",
+   "mono": true,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Моно 6 (А)/Схемы раскладки/form-7-mono_62.webp",
+   "render": "Асгард/Моно 6 (А)/Схемы раскладки/form-7-mono_6.webp"
+  },
+  {
+   "id": "tile-166",
+   "shape": "asgard",
+   "name": "Моно 7",
+   "mono": true,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Моно 7 (А)/Схемы раскладки/form-7-mono_72.webp",
+   "render": "Асгард/Моно 7 (А)/Схемы раскладки/form-7-mono_7.webp"
+  },
+  {
+   "id": "tile-167",
+   "shape": "asgard",
+   "name": "Оранжевый",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Оранжевый (А)/Схемы раскладки/form-7-mono_82.webp",
+   "render": "Асгард/Оранжевый (А)/Схемы раскладки/form-7-mono_8.webp"
+  },
+  {
+   "id": "tile-168",
+   "shape": "asgard",
+   "name": "Светлый листопад",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Светлый листопад (А)/Схемы раскладки/form-7-svetlyj-listopad2.webp",
+   "render": "Асгард/Светлый листопад (А)/Схемы раскладки/form-7-svetlyj-listopad.webp"
+  },
+  {
+   "id": "tile-169",
+   "shape": "asgard",
+   "name": "Степь",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Степь (А)/Схемы раскладки/form-7-step2.webp",
+   "render": "Асгард/Степь (А)/Схемы раскладки/form-7-step.webp"
+  },
+  {
+   "id": "tile-170",
+   "shape": "asgard",
+   "name": "Тёмный листопад",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Тёмный листопад (А)/Схемы раскладки/form-7-tyomnyj-listopad2.webp",
+   "render": "Асгард/Тёмный листопад (А)/Схемы раскладки/form-7-tyomnyj-listopad.webp"
+  },
+  {
+   "id": "tile-171",
+   "shape": "asgard",
+   "name": "Хаски",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Хаски (А)/Схемы раскладки/form-7-haski2.webp",
+   "render": "Асгард/Хаски (А)/Схемы раскладки/form-7-haski.webp"
+  },
+  {
+   "id": "tile-172",
+   "shape": "asgard",
+   "name": "Яшма",
+   "mono": false,
+   "price": 1260,
+   "specs": {
+    "height": "40мм",
+    "pallet_m2": "15 м²",
+    "pallet_weight": "1.400кг",
+    "truck_m2": "225 м²",
+    "strength": "B30",
+    "frost": "F200"
+   },
+   "texture": "Асгард/Яшма (А)/Схемы раскладки/form-7-yashma2.webp",
+   "render": "Асгард/Яшма (А)/Схемы раскладки/form-7-yashma.webp"
+  }
+ ],
+ "borders": [
+  {
+   "id": "bordur-1",
+   "name": "Бордюр дорожный",
+   "price": 560,
+   "photo": "Бордюр дорожный/bordur-dorojniy.webp",
+   "serts": [
+    "Бордюр дорожный/sert1.webp",
+    "Бордюр дорожный/sert2.webp"
+   ]
+  },
+  {
+   "id": "bordur-2",
+   "name": "Бордюр садовый",
+   "price": 240,
+   "photo": "Бордюр садовый/bsad.webp",
+   "serts": [
+    "Бордюр садовый/sert1.webp",
+    "Бордюр садовый/sert2.webp"
+   ]
+  }
+ ]
+}

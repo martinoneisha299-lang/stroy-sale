@@ -1127,6 +1127,139 @@ a { color: inherit; }
 
 .calc-out .caption { margin: 0; }
 
+/* ——— Тротуарная плитка: шапка категории с «живой» плиткой ——— */
+.tile-hero { padding-top: var(--space-lg); }
+
+.tile-hero-in {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.tile-hero h1 {
+  font-size: var(--text-display);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.tile-facts {
+  list-style: none;
+  margin: var(--space-md) 0 var(--space-lg);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xs) var(--space-md);
+}
+
+.tile-facts li {
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+}
+
+.tile-facts strong {
+  display: block;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* сцена: два кластера плитки, медленно «дышат» (как живая выкладка) */
+.tile-hero-stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  min-width: 0;
+}
+
+.tile-hero-stage img {
+  position: absolute;
+  height: auto;
+  filter: drop-shadow(0 18px 28px oklch(30% 0.02 60 / 0.18));
+}
+
+.tile-drift-a {
+  width: 74%;
+  right: 0;
+  top: 4%;
+  animation: tile-drift 11s var(--ease-in-out) infinite alternate;
+}
+
+.tile-drift-b {
+  width: 44%;
+  left: 0;
+  bottom: 0;
+  animation: tile-drift 14s var(--ease-in-out) 1.5s infinite alternate-reverse;
+}
+
+@keyframes tile-drift {
+  from { transform: translateY(7px) rotate(0.35deg); }
+  to   { transform: translateY(-9px) rotate(-0.45deg); }
+}
+
+@media (min-width: 900px) {
+  .tile-hero-in {
+    grid-template-columns: 5fr 6fr;
+    align-items: center;
+  }
+  .tile-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* сетка форм: квадратные фактуры */
+.cats-tiles { row-gap: var(--space-lg); }
+
+/* бордюры: две карточки в ряд на десктопе */
+@media (min-width: 720px) {
+  .p-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .p-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ——— Наши работы ——— */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xs);
+}
+
+.works-grid img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+@media (min-width: 900px) {
+  .works-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+.works-video {
+  margin-top: var(--space-xl);
+  display: grid;
+  gap: var(--space-md);
+  align-items: center;
+  border-top: var(--rule-hair);
+  padding-top: var(--space-lg);
+}
+
+.works-video video {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  background: var(--color-ink);
+}
+
+.works-video h3 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+
+@media (min-width: 720px) {
+  .works-video { grid-template-columns: 300px 1fr; gap: var(--space-xl); }
+}
+
 /* ——— Движение: уважение reduced motion ——— */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

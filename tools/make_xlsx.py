@@ -9,6 +9,7 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
 DATA = json.loads(Path("/Users/dm/Desktop/сайт/data/catalog.json").read_text())
+TILES = json.loads(Path("/Users/dm/Desktop/сайт/data/tiles.json").read_text())
 OUT = "/Users/dm/Desktop/сайт/КАТАЛОГ-ТАБЛИЦА.xlsx"
 
 products = DATA["products"]
@@ -134,6 +135,48 @@ for col in colors:
 
 for i, w in enumerate([30, 12, 10, 10], 1):
     sv.column_dimensions[get_column_letter(i)].width = w
+
+# ── Лист «Плитка» ─────────────────────────────────────────────────────────────
+tp = wb.create_sheet("Плитка")
+TP_HEAD = ["ID", "Форма", "Название на сайте", "Тип окраски", "Цена ₽/м²",
+           "Высота", "Поддон", "Морозостойкость", "Фото", "Поставщик (на сайт НЕ выводим)"]
+tp.append(TP_HEAD)
+for c in range(1, len(TP_HEAD) + 1):
+    cell = tp.cell(row=1, column=c)
+    cell.font = Font(name="Arial", bold=True, color="FFFFFF", size=10)
+    cell.fill = header_fill
+    cell.alignment = Alignment(vertical="center", wrap_text=True)
+
+shape_names = {s: m["name"] for s, m in TILES["shapes"].items()}
+for p in TILES["products"]:
+    tp.append([
+        p["id"], shape_names[p["shape"]], p["name"],
+        "однотонная" if p["mono"] else "колормикс",
+        p["price"],
+        p["specs"].get("height", ""),
+        p["specs"].get("pallet_m2", ""),
+        p["specs"].get("frost", ""),
+        "есть" if p["texture"] or p["render"] else "НЕТ",
+        "Легион",
+    ])
+for b in TILES["borders"]:
+    tp.append([b["id"], "Бордюры", b["name"], "", b["price"], "", "", "",
+               "есть" if b["photo"] else "НЕТ", "Легион"])
+
+tp_last = tp.max_row
+for r in range(2, tp_last + 1):
+    for c in range(1, len(TP_HEAD) + 1):
+        cell = tp.cell(row=r, column=c)
+        cell.font = Font(name="Arial", size=10)
+        cell.border = thin
+    if tp.cell(row=r, column=9).value == "НЕТ":
+        tp.cell(row=r, column=9).fill = nophoto_fill
+    tp.cell(row=r, column=5).number_format = "#,##0"
+
+for i, w in enumerate([10, 16, 30, 13, 11, 9, 9, 15, 7, 24], 1):
+    tp.column_dimensions[get_column_letter(i)].width = w
+tp.freeze_panes = "D2"
+tp.auto_filter.ref = f"A1:{get_column_letter(len(TP_HEAD))}{tp_last}"
 
 wb.save(OUT)
 print("OK →", OUT)
