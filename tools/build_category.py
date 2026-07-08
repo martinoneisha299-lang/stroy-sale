@@ -307,47 +307,39 @@ def build_category():
          шов 10 мм); 1,4НФ — по габаритам ГОСТ из тех же спеков -->
     <section class="section" id="calc" aria-label="Калькулятор кирпича">
       <div class="wrap">
-        <div class="section-head">
-          <span class="tag">Калькулятор</span>
-          <h2>Сколько кирпича вам нужно?</h2>
-          <p class="caption pick-hint">Считаем облицовку в полкирпича со швом
-            10 мм — по размерам кирпича из нашего каталога. Запас 5% на бой
-            и подрезку уже включён.</p>
-        </div>
-        <div class="calc-card" id="calcContainer">
-          <div class="calc-fields">
-            <div class="field">
-              <label for="cWall">Площадь стен, м²</label>
-              <div class="input-with-unit">
-                <input id="cWall" type="number" min="0" step="1" inputmode="decimal"
-                       placeholder="например, 120">
-                <span class="unit">м²</span>
+        <div class="line-calc" id="calcContainer">
+          <div class="line-calc-wrap">
+            <div class="line-calc-group">
+              <span class="line-calc-label">Стены, м²</span>
+              <div class="line-calc-input-wrap">
+                <input class="line-calc-input" id="cWall" type="number" min="0" step="1" inputmode="decimal" placeholder="120">
               </div>
             </div>
-            <div class="field">
-              <label for="cOpen">Минус окна и двери, м²</label>
-              <div class="input-with-unit">
-                <input id="cOpen" type="number" min="0" step="1" inputmode="decimal"
-                       placeholder="например, 18">
-                <span class="unit">м²</span>
+            <div class="line-calc-divider"></div>
+            <div class="line-calc-group">
+              <span class="line-calc-label">Окна/двери, м²</span>
+              <div class="line-calc-input-wrap">
+                <input class="line-calc-input" id="cOpen" type="number" min="0" step="1" inputmode="decimal" placeholder="18">
               </div>
             </div>
-            <div class="field">
-              <label for="cFmt">Формат кирпича</label>
+            <div class="line-calc-divider"></div>
+            <div class="line-calc-group">
+              <span class="line-calc-label">Формат</span>
               <select id="cFmt">
-                <option value="51.4">1НФ одинарный — 250×65 мм</option>
-                <option value="51.4">0,7НФ евро — 250×65 мм</option>
-                <option value="39.2">1,4НФ полуторный — 250×88 мм</option>
+                <option value="51.4">1НФ одинарный</option>
+                <option value="51.4">0,7НФ евро</option>
+                <option value="39.2">1,4НФ полуторный</option>
               </select>
             </div>
-          </div>
-          <div class="calc-out">
-            <div id="calcOut" style="width: 100%; display: flex; flex-direction: column; gap: var(--space-xs);">
-              <div class="calc-receipt-placeholder">Введите площадь стен, чтобы рассчитать количество кирпича.</div>
+            <div class="line-calc-divider"></div>
+            <div class="line-calc-block">
+              <span class="line-calc-sub">Понадобится:</span>
+              <strong class="line-calc-val val-accent" id="calcQty">—</strong>
             </div>
-            <a class="btn" href="index.html#lead">Получить точный расчёт</a>
-            <p class="caption">Ручную формовку и лонг посчитает менеджер —
-              у них нестандартные размеры.</p>
+            <div class="line-calc-divider"></div>
+            <a class="line-calc-btn btn" href="index.html#lead">
+              Получить точный расчёт
+            </a>
           </div>
         </div>
       </div>
@@ -429,14 +421,14 @@ def build_category():
     var cWall = document.getElementById('cWall');
     var cOpen = document.getElementById('cOpen');
     var cFmt = document.getElementById('cFmt');
-    var calcOut = document.getElementById('calcOut');
+    var calcQty = document.getElementById('calcQty');
 
     function recalc() {
       var w = parseFloat(cWall.value) || 0;
       var o = parseFloat(cOpen.value) || 0;
       var area = w - o;
       if (w <= 0 || area <= 0) {
-        calcOut.innerHTML = '<div class="calc-receipt-placeholder">Введите площадь стен, чтобы рассчитать количество кирпича.</div>';
+        calcQty.textContent = '—';
         return;
       }
       var rate = parseFloat(cFmt.value);
@@ -444,12 +436,7 @@ def build_category():
       var reserve = Math.ceil(rawQty * 0.05);
       var totalQty = Math.ceil((rawQty + reserve) / 10) * 10;
       
-      calcOut.innerHTML = '<div class="calc-receipt">' +
-        '<div class="calc-row"><span>Чистая площадь стен:</span><strong>' + area.toFixed(0) + ' м²</strong></div>' +
-        '<div class="calc-row"><span>Расход кирпича:</span><strong>' + rawQty.toLocaleString('ru-RU') + ' шт</strong></div>' +
-        '<div class="calc-row"><span>Запас на подрезку (+5%):</span><strong>+' + reserve.toLocaleString('ru-RU') + ' шт</strong></div>' +
-        '<div class="calc-row calc-total"><span>Итого к заказу:</span><strong>' + totalQty.toLocaleString('ru-RU') + ' шт</strong></div>' +
-        '</div>';
+      calcQty.textContent = totalQty.toLocaleString('ru-RU') + ' шт';
     }
 
     [cWall, cOpen, cFmt].forEach(function (el) {

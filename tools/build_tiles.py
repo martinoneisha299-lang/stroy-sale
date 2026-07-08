@@ -198,9 +198,13 @@ CALC_JS = """
       var container = document.getElementById('calcContainer');
       var area = document.getElementById('cArea');
       var shape = document.getElementById('cShape');
-      var out = document.getElementById('calcOut');
+      var qty = document.getElementById('calcQty');
+      var pallets = document.getElementById('calcPallets');
+      var price = document.getElementById('calcPrice');
+      var priceBlock = document.getElementById('calcPriceBlock');
+      var priceDivider = document.getElementById('calcPriceDivider');
       
-      if (!area || !out) return;
+      if (!area) return;
       
       var basePrice = container ? parseInt(container.dataset.price, 10) : 0;
       var palletSize = 15;
@@ -208,30 +212,31 @@ CALC_JS = """
       function recalc() {
         var a = parseFloat(area.value);
         if (!a || a <= 0) {
-          out.innerHTML = '<div class="calc-receipt-placeholder">Введите площадь, чтобы рассчитать объём и стоимость плитки с доставкой.</div>';
+          qty.textContent = '—';
+          pallets.textContent = '—';
+          if (price) price.textContent = '—';
           return;
         }
-        var price = basePrice || (shape ? parseInt(shape.value, 10) : 0);
+        var activePrice = basePrice || (shape ? parseInt(shape.value, 10) : 0);
         var need = a * 1.05;
         var m2 = Math.ceil(need);
-        var pallets = Math.ceil(need / palletSize);
+        var pCount = Math.ceil(need / palletSize);
         
-        var priceHtml = '';
-        if (price) {
-          priceHtml = '<div class="calc-row calc-total"><span>Ориентировочная стоимость:</span><strong>от ' + (m2 * price).toLocaleString('ru-RU') + ' ₽</strong></div>';
+        qty.textContent = m2 + ' м²';
+        
+        var palletsText = pCount + ' ' +
+          (pCount % 10 === 1 && pCount % 100 !== 11 ? 'поддон' :
+           (pCount % 10 >= 2 && pCount % 10 <= 4 && (pCount % 100 < 12 || pCount % 100 > 14) ? 'поддона' : 'поддонов'));
+        pallets.textContent = palletsText;
+        
+        if (activePrice) {
+          if (priceBlock) priceBlock.style.display = '';
+          if (priceDivider) priceDivider.style.display = '';
+          if (price) price.textContent = 'от ' + (m2 * activePrice).toLocaleString('ru-RU') + ' ₽';
+        } else {
+          if (priceBlock) priceBlock.style.display = 'none';
+          if (priceDivider) priceDivider.style.display = 'none';
         }
-        
-        var palletsText = pallets + ' ' +
-          (pallets % 10 === 1 && pallets % 100 !== 11 ? 'поддон' :
-           (pallets % 10 >= 2 && pallets % 10 <= 4 && (pallets % 100 < 12 || pallets % 100 > 14) ? 'поддона' : 'поддонов'));
-           
-        out.innerHTML = '<div class="calc-receipt">' +
-          '<div class="calc-row"><span>Необходимая площадь:</span><strong>' + a + ' м²</strong></div>' +
-          '<div class="calc-row"><span>Запас на подрезку (+5%):</span><strong>+' + Math.max(0, m2 - a).toFixed(0) + ' м²</strong></div>' +
-          '<div class="calc-row"><span>Итого к заказу:</span><strong>' + m2 + ' м²</strong></div>' +
-          '<div class="calc-row"><span>Объем поставки:</span><strong>' + palletsText + '</strong></div>' +
-          priceHtml +
-          '</div>';
       }
       area.addEventListener('input', recalc);
       if (shape) shape.addEventListener('change', recalc);
@@ -382,40 +387,53 @@ GALLERY_JS = """
 
 
 def calc_block(shape_select=None, root="",
-               note="Стоимость — по цене «от» выбранной формы. Точный расчёт с раскладкой и доставкой сделает менеджер.",
+               note="Точный расчёт с раскладкой и доставкой сделает менеджер.",
                price=0):
     """Калькулятор площади. shape_select: HTML select или None (тогда цена фиксированная в data-price)."""
     fields = f"""
-          <div class="field">
-            <label for="cArea">Площадь под плитку, м²</label>
-            <div class="input-with-unit">
-              <input id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="Например, 60">
-              <span class="unit">м²</span>
+          <div class="line-calc-group">
+            <span class="line-calc-label">Площадь под плитку, м²</span>
+            <div class="line-calc-input-wrap">
+              <input class="line-calc-input" id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="78">
             </div>
           </div>"""
     if shape_select:
-        fields += shape_select
+        fields += f"""
+          <div class="line-calc-divider"></div>
+          <div class="line-calc-group">
+            <span class="line-calc-label">Форма плитки</span>
+            {shape_select}
+          </div>"""
+    
+    price_block = f"""
+          <div class="line-calc-divider" id="calcPriceDivider"></div>
+          <div class="line-calc-block" id="calcPriceBlock">
+            <span class="line-calc-sub">Ориентировочная стоимость:</span>
+            <strong class="line-calc-val val-accent" id="calcPrice">—</strong>
+          </div>"""
+          
     return f"""
-  <section class="section" id="calc" aria-label="Калькулятор плитки">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Сколько плитки вам нужно?</h2>
-        <p class="caption">Продаём в м², привозим поддонами по {PALLET_M2} м².</p>
-      </div>
-      <div class="calc-card" id="calcContainer" data-price="{price}">
-        <div class="calc-fields">
-{fields}
+    <div class="line-calc" id="calcContainer" data-price="{price}">
+      <div class="line-calc-wrap">
+        {fields}
+        <div class="line-calc-divider"></div>
+        <div class="line-calc-block">
+          <span class="line-calc-sub">Итого:</span>
+          <strong class="line-calc-val" id="calcQty">—</strong>
         </div>
-        <div class="calc-out">
-          <div id="calcOut" style="width: 100%; display: flex; flex-direction: column; gap: var(--space-xs);">
-            <div class="calc-receipt-placeholder">Введите площадь, чтобы рассчитать объём и стоимость плитки с доставкой.</div>
-          </div>
-          <a class="btn" href="{root}index.html#lead">Получить точный расчёт</a>
-          <p class="caption">{note}</p>
+        <div class="line-calc-divider"></div>
+        <div class="line-calc-block">
+          <span class="line-calc-sub">Объем:</span>
+          <strong class="line-calc-val" id="calcPallets">—</strong>
         </div>
+        {price_block}
+        <div class="line-calc-divider"></div>
+        <a class="line-calc-btn btn" href="{root}index.html#lead">
+          Получить точный расчёт
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
       </div>
-    </div>
-  </section>"""
+    </div>"""
 
 
 # ── Категория: trotuarnaya-plitka.html ───────────────────────────────────────
@@ -535,7 +553,11 @@ def build_category():
       </div>
     </div>
   </section>
-{calc_block(shape_select)}
+  <section class="section" id="calc" aria-label="Калькулятор плитки">
+    <div class="wrap">
+      {calc_block(shape_select)}
+    </div>
+  </section>
   <!-- Наши работы -->
   <section class="section" id="works" aria-label="Наши работы">
     <div class="wrap">
@@ -663,7 +685,11 @@ def build_shape(slug):
       </div>
     </div>
   </section>
-{calc_block(note=f"Стоимость — от {rub(m['min_price'])} ₽/м² по этой форме. Точный расчёт сделает менеджер.", price=m['min_price'])}"""
+  <section class="section" id="calc" aria-label="Калькулятор плитки">
+    <div class="wrap">
+      {calc_block(note=f"Стоимость — от {rub(m['min_price'])} ₽/м² по этой форме. Точный расчёт сделает менеджер.", price=m['min_price'])}
+    </div>
+  </section>"""
 
     # калькулятор формы: цена подставляется скрытым полем
     body = body.replace('<div class="calc-fields">', f"""<div class="calc-fields">
@@ -760,9 +786,11 @@ def build_product(p):
         </dl>
         <p class="caption pd-usage"><strong>Куда берут:</strong> {SHAPE_USE[p['shape']]}.</p>
       </div>
+      <div style="grid-column: 1 / -1; width: 100%;">
+        {calc_block(root=root, note=f"Стоимость по цене этой расцветки. Точный расчёт с раскладкой и доставкой сделает менеджер.", price=p['price'])}
+      </div>
     </div>
   </section>
-{calc_block(root=root, note=f"Стоимость по цене этой расцветки. Точный расчёт с раскладкой и доставкой сделает менеджер.", price=p['price'])}
   <section class="section" aria-label="Другие расцветки">
     <div class="wrap">
       <div class="section-head">
