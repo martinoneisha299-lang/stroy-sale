@@ -115,7 +115,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=3">{extra_head}
 </head>
 <body>
 
@@ -394,8 +394,9 @@ def calc_block(shape_select=None, root="",
           <div class="line-calc-group">
             <span class="line-calc-label">Площадь под плитку, м²</span>
             <div class="line-calc-input-wrap">
-              <input class="line-calc-input" id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="78">
+              <input class="line-calc-input" id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="0" value="78">
             </div>
+            <span class="line-calc-helper">Введите площадь в м²</span>
           </div>"""
     if shape_select:
         fields += f"""
@@ -406,32 +407,36 @@ def calc_block(shape_select=None, root="",
           </div>"""
     
     price_block = f"""
-          <div class="line-calc-divider" id="calcPriceDivider"></div>
-          <div class="line-calc-block" id="calcPriceBlock">
-            <span class="line-calc-sub">Ориентировочная стоимость:</span>
-            <strong class="line-calc-val val-accent" id="calcPrice">—</strong>
-          </div>"""
+            <div class="line-calc-divider" id="calcPriceDivider"></div>
+            <div class="line-calc-block" id="calcPriceBlock">
+              <span class="line-calc-sub">Ориентировочная стоимость:</span>
+              <strong class="line-calc-val val-accent" id="calcPrice">—</strong>
+            </div>"""
           
     return f"""
     <div class="line-calc" id="calcContainer" data-price="{price}">
       <div class="line-calc-wrap">
         {fields}
         <div class="line-calc-divider"></div>
-        <div class="line-calc-block">
-          <span class="line-calc-sub">Итого:</span>
-          <strong class="line-calc-val" id="calcQty">—</strong>
+        <div class="line-calc-outputs">
+          <div class="line-calc-block">
+            <span class="line-calc-sub">Итого:</span>
+            <strong class="line-calc-val" id="calcQty">—</strong>
+          </div>
+          <div class="line-calc-divider"></div>
+          <div class="line-calc-block">
+            <span class="line-calc-sub">Объем:</span>
+            <strong class="line-calc-val" id="calcPallets">—</strong>
+          </div>
+          {price_block}
         </div>
         <div class="line-calc-divider"></div>
-        <div class="line-calc-block">
-          <span class="line-calc-sub">Объем:</span>
-          <strong class="line-calc-val" id="calcPallets">—</strong>
+        <div class="line-calc-btn-wrap">
+          <button class="line-calc-btn btn" type="button" onclick="document.getElementById('lead').scrollIntoView({{behavior: 'smooth'}})">
+            ПОЛУЧИТЬ ТОЧНЫЙ РАСЧЕТ
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true" style="margin-left: 4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
         </div>
-        {price_block}
-        <div class="line-calc-divider"></div>
-        <a class="line-calc-btn btn" href="{root}index.html#lead">
-          Получить точный расчёт
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </a>
       </div>
     </div>"""
 
