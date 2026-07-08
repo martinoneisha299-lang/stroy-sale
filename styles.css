@@ -1208,12 +1208,12 @@ a { color: inherit; }
 /* сетка форм: квадратные фактуры */
 .cats-tiles { row-gap: var(--space-lg); }
 
-/* бордюры: две карточки в ряд на десктопе */
+/* бордюры: две карточки в ряд, без гигантских фото на десктопе */
 @media (min-width: 720px) {
-  .p-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (min-width: 1024px) {
-  .p-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .p-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 880px;
+  }
 }
 
 /* ——— Наши работы ——— */
@@ -1259,6 +1259,181 @@ a { color: inherit; }
 @media (min-width: 720px) {
   .works-video { grid-template-columns: 300px 1fr; gap: var(--space-xl); }
 }
+
+.works-video-txt { max-width: 56ch; }
+
+.works-video-txt .caption { margin-top: 0; }
+
+.wv-facts {
+  list-style: none;
+  margin: var(--space-md) 0 0;
+  padding: 0;
+}
+
+.wv-facts li {
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  border-top: var(--rule-hair);
+  padding-block: var(--space-sm);
+}
+
+.wv-facts li:last-child { border-bottom: var(--rule-hair); }
+
+.wv-facts strong { color: var(--color-ink); }
+
+/* ——— Карточка-ссылка в сетке товаров ——— */
+a.p-card {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.p-card .p-img { transition: opacity var(--dur-fast); }
+
+a.p-card:hover .p-img { opacity: 0.92; }
+
+a.p-card:hover .p-name {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+a.p-card:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* фото на белой подложке (бордюры) — волосяная рамка вместо «плавающего» белого */
+.p-img-line { border: var(--rule-hair); }
+
+.cat-img-fit {
+  object-fit: contain;
+  background: #fff;
+  border: var(--rule-hair);
+}
+
+/* ——— Страница товара ——— */
+.pd { padding-top: var(--space-lg); }
+
+.pd-grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 900px) {
+  .pd-grid {
+    grid-template-columns: 7fr 5fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+}
+
+.pd-gallery { min-width: 0; }
+
+.pd-main {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--color-ph);
+}
+
+.pd-thumbs {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.pd-thumb {
+  appearance: none;
+  font: inherit;
+  padding: 0;
+  border: 1px solid transparent;
+  background: none;
+  cursor: pointer;
+  width: 72px;
+  min-height: 44px;
+  transition: border-color var(--dur-fast), opacity var(--dur-fast);
+}
+
+.pd-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  opacity: 0.75;
+  transition: opacity var(--dur-fast);
+}
+
+.pd-thumb:hover img { opacity: 1; }
+
+.pd-thumb.is-on { border-color: var(--color-ink); }
+
+.pd-thumb.is-on img { opacity: 1; }
+
+.pd-thumb:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.pd-info { min-width: 0; }
+
+.pd-name {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: var(--space-xs) 0 var(--space-2xs);
+}
+
+.pd-price {
+  font-size: clamp(1.75rem, 3vw + 0.5rem, 2.25rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: var(--space-md) 0 0;
+}
+
+.pd-price-unit {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--color-ink-soft);
+}
+
+.pd-price-ask { font-size: var(--text-2xl); }
+
+.pd-price-note { margin-top: var(--space-2xs); }
+
+.pd-cta { margin-top: var(--space-md); }
+
+.pd-specs {
+  margin: var(--space-lg) 0 0;
+}
+
+.pd-specs > div {
+  display: grid;
+  grid-template-columns: minmax(112px, 34%) 1fr;
+  gap: var(--space-md);
+  border-top: var(--rule-hair);
+  padding-block: var(--space-sm);
+}
+
+.pd-specs > div:last-child { border-bottom: var(--rule-hair); }
+
+.pd-specs dt {
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+}
+
+.pd-specs dd {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.pd-usage {
+  margin-top: var(--space-md);
+  max-width: 52ch;
+}
+
+.pd-usage strong { color: var(--color-ink); }
 
 /* ——— Движение: уважение reduced motion ——— */
 @media (prefers-reduced-motion: reduce) {

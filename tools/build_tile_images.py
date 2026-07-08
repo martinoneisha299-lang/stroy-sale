@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Фото плитки → img/catalog/tile-*.jpg + обложки форм + герой + бордюры.
+"""Фото плитки → img/catalog/tile-*.jpg (+ галерея), обложки форм, герой, бордюры.
 
-Текстуры: водяной знак по центру кадра → берём чистый верхний левый угол
-(40% высоты, пропорция 4:3) и растягиваем до 640×480. На типичной текстуре
-900×900 это кроп 480×360 — запас качества достаточный.
+Каждому товару — до 3 кадров 640×480:
+- чистая текстура (без водяного знака) → целиком + приближенный фрагмент;
+- текстура со знаком по центру → верхняя и нижняя чистые полосы
+  (знак занимает ~44–58% высоты, полосы 0–40% и 62–100% безопасны).
+Главный кадр = tile-XXX.jpg (карточки), доп. кадры = tile-XXX-2/-3.jpg
+(галерея на странице товара). Рендеры с логотипом на сайт не идут.
 """
 
 import json
@@ -16,7 +19,6 @@ SITE = Path("/Users/dm/Desktop/сайт")
 CAT = SITE / "img" / "catalog"
 PLITKA = SITE / "img" / "plitka"
 W, H = 640, 480
-PAPER = (250, 249, 247)
 
 CAT.mkdir(parents=True, exist_ok=True)
 PLITKA.mkdir(parents=True, exist_ok=True)
@@ -24,47 +26,88 @@ PLITKA.mkdir(parents=True, exist_ok=True)
 DATA = json.loads((SITE / "data" / "tiles.json").read_text())
 
 
-def save(img, dst, q=76):
+def save(img, dst, q=78):
     img.save(dst, "JPEG", quality=q, optimize=True, progressive=True)
 
 
-def corner_crop(path):
-    """Чистый верхний левый угол текстуры, 4:3."""
-    img = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
+def load(path):
+    return ImageOps.exif_transpose(Image.open(path)).convert("RGB")
+
+
+def band_crop(img, y0, y1):
+    """Горизонтальная полоса кадра → 4:3, по центру ширины."""
     w, h = img.size
-    ch = int(h * 0.40)
+    ch = int(h * (y1 - y0))
     cw = min(int(ch * 4 / 3), w)
     ch = int(cw * 3 / 4)
-    return img.crop((0, 0, cw, ch)).resize((W, H), Image.LANCZOS)
+    x = (w - cw) // 2
+    top = int(h * y0)
+    return img.crop((x, top, x + cw, top + ch)).resize((W, H), Image.LANCZOS)
 
 
-def fit_on_paper(path):
-    canvas = Image.new("RGB", (W, H), PAPER)
-    img = ImageOps.exif_transpose(Image.open(path)).convert("RGBA")
-    img.thumbnail((int(W * 0.92), int(H * 0.92)), Image.LANCZOS)
-    canvas.paste(img, ((W - img.width) // 2, (H - img.height) // 2), img)
-    return canvas
+def zoom_crop(img):
+    """Приближенный фрагмент — деталь фактуры (верхняя левая треть кадра)."""
+    w, h = img.size
+    cw, ch = int(w * 0.58), int(w * 0.58 * 3 / 4)
+    return img.crop((int(w * 0.04), int(h * 0.05),
+                     int(w * 0.04) + cw, int(h * 0.05) + ch)) \
+              .resize((W, H), Image.LANCZOS)
 
 
 def cover_crop(path, w=W, h=H):
-    img = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
-    return ImageOps.fit(img, (w, h), Image.LANCZOS)
+    return ImageOps.fit(load(path), (w, h), Image.LANCZOS)
+
+
+def fit_on_white(path, w=W, h=H, pad=0.92):
+    canvas = Image.new("RGB", (w, h), (255, 255, 255))
+    img = ImageOps.exif_transpose(Image.open(path)).convert("RGBA")
+    img.thumbnail((int(w * pad), int(h * pad)), Image.LANCZOS)
+    canvas.paste(img, ((w - img.width) // 2, (h - img.height) // 2), img)
+    return canvas
+
+
+def product_shots(p):
+    """До 3 кадров товара: (изображение, суффикс имени файла)."""
+    shots = []
+    for im in p["images"]:
+        img = load(SRC / im["path"])
+        if im["clean"]:
+            shots.append(ImageOps.fit(img, (W, H), Image.LANCZOS))
+            shots.append(zoom_crop(img))
+        else:
+            shots.append(band_crop(img, 0.0, 0.40))
+            shots.append(band_crop(img, 0.62, 1.0))
+        if len(shots) >= 3:
+            break
+    return shots[:3]
 
 
 def main():
     done = 0
-    # карточки товаров: чистый угловой кроп текстуры
-    for p in DATA["products"]:
-        if not p["texture"]:
-            continue
-        save(corner_crop(SRC / p["texture"]), CAT / f"{p['id']}.jpg")
-        done += 1
+    # старые кадры галереи чистим (набор мог поменяться)
+    for f in CAT.glob("tile-*-*.jpg"):
+        f.unlink()
 
-    # бордюры: белый фон → вписываем на подложку
+    n_multi = 0
+    for p in DATA["products"]:
+        shots = product_shots(p)
+        if not shots:
+            continue
+        save(shots[0], CAT / f"{p['id']}.jpg")
+        for i, img in enumerate(shots[1:], 2):
+            save(img, CAT / f"{p['id']}-{i}.jpg")
+        p["_n"] = len(shots)
+        n_multi += len(shots) > 1
+        done += len(shots)
+
+    # бордюры: белый фон → вписываем на белый холст
     for b in DATA["borders"]:
         if b["photo"]:
-            save(fit_on_paper(SRC / b["photo"]), CAT / f"{b['id']}.jpg")
+            save(fit_on_white(SRC / b["photo"]), CAT / f"{b['id']}.jpg")
             done += 1
+    # квадратная обложка «Бордюры» для сетки форм
+    save(fit_on_white(SRC / DATA["borders"][0]["photo"], 600, 600, pad=0.82),
+         PLITKA / "shape-bordur.jpg", q=80)
 
     # обложки форм (исходники квадратные 500×500 — оставляем квадрат)
     for slug, m in DATA["shapes"].items():
@@ -106,7 +149,8 @@ def main():
 
     total_kb = (sum(f.stat().st_size for f in CAT.glob("tile-*.jpg"))
                 + sum(f.stat().st_size for f in PLITKA.iterdir())) // 1024
-    print(f"готово: {done} файлов, ~{total_kb} КБ")
+    print(f"готово: {done} файлов, ~{total_kb} КБ, "
+          f"товаров с галереей 2+: {n_multi} из {len(DATA['products'])}")
 
 
 if __name__ == "__main__":
