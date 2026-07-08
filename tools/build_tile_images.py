@@ -18,7 +18,7 @@ SRC = Path("/Users/dm/Desktop/фото/Тротурная плитка")
 SITE = Path("/Users/dm/Desktop/сайт")
 CAT = SITE / "img" / "catalog"
 PLITKA = SITE / "img" / "plitka"
-W, H = 640, 480
+W, H = 960, 720
 
 CAT.mkdir(parents=True, exist_ok=True)
 PLITKA.mkdir(parents=True, exist_ok=True)
