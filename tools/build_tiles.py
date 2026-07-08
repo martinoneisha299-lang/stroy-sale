@@ -174,7 +174,7 @@ def tile_card(p, root=""):
     """Карточка товара в сетке — вся карточка это ссылка на страницу товара."""
     alt = f"Тротуарная плитка «{p['name']}» — {SHAPES[p['shape']]['name']}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="{root}{p["_gallery"][0]}" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="{root}{p["_gallery"][0]}?v=2" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -688,9 +688,9 @@ def build_product(p):
             on = " is-on" if i == 0 else ""
             pressed = "true" if i == 0 else "false"
             btns.append(
-                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}" '
+                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=2" '
                 f'aria-pressed="{pressed}" aria-label="Фото {i + 1}">'
-                f'<img src="{root}{src}" alt="" width="640" height="480" loading="lazy"></button>')
+                f'<img src="{root}{src}?v=2" alt="" width="640" height="480" loading="lazy"></button>')
         thumbs = f'\n      <div class="pd-thumbs">{"".join(btns)}</div>'
 
     price_html = (f'<p class="pd-price">{rub(p["price"])} ₽<span class="pd-price-unit">/м²</span></p>'
@@ -713,7 +713,7 @@ def build_product(p):
     <div class="wrap pd-grid">
       <div class="pd-gallery">
         <div class="pd-main-wrap" id="pdMainWrap">
-          <img class="pd-main" id="pdMain" src="{root}{p['_gallery'][0]}"
+          <img class="pd-main" id="pdMain" src="{root}{p['_gallery'][0]}?v=2"
             alt="Тротуарная плитка «{name}», форма «{shape_name}» — фактура укладки"
             width="640" height="480">
           <button class="pd-zoom-trigger" id="pdZoomTrigger" type="button" aria-label="Открыть во весь экран">

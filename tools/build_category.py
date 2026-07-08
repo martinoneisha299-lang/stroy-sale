@@ -86,7 +86,7 @@ def card(p, feat_hidden=None):
     True/False — категория, hidden если не featured."""
     alt = f"Кирпич «{p['name']}» — {p['color_group']}, {p['texture']}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=2" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -632,7 +632,7 @@ def card_z(p):
     name, meta, tasks = RAB_VIEW[p["id"]]
     alt = f"Забутовочный кирпич: {name}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=2" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'

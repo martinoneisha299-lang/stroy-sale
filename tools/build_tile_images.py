@@ -18,7 +18,7 @@ SRC = Path("/Users/dm/Desktop/фото/Тротурная плитка")
 SITE = Path("/Users/dm/Desktop/сайт")
 CAT = SITE / "img" / "catalog"
 PLITKA = SITE / "img" / "plitka"
-W, H = 960, 720
+W, H = 900, 675
 
 CAT.mkdir(parents=True, exist_ok=True)
 PLITKA.mkdir(parents=True, exist_ok=True)
@@ -26,7 +26,7 @@ PLITKA.mkdir(parents=True, exist_ok=True)
 DATA = json.loads((SITE / "data" / "tiles.json").read_text())
 
 
-def save(img, dst, q=78):
+def save(img, dst, q=92):
     img.save(dst, "JPEG", quality=q, optimize=True, progressive=True)
 
 

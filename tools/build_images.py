@@ -14,7 +14,7 @@ from PIL import Image, ImageOps
 
 ROOT = Path("/Users/dm/Desktop/фото")
 OUT = Path("/Users/dm/Desktop/сайт/img/catalog")
-W, H = 960, 720
+W, H = 900, 675
 PAPER = (250, 249, 247)
 PAD = 0.92  # доля кадра под товар в режиме «вписать»
 
@@ -68,7 +68,7 @@ def main():
             out = fit_on_paper(img)
         else:
             out = cover_crop(img)
-        out.save(dst, "JPEG", quality=74, optimize=True, progressive=True)
+        out.save(dst, "JPEG", quality=92, optimize=True, progressive=True)
         done += 1
     total_kb = sum(f.stat().st_size for f in OUT.glob("*.jpg")) // 1024
     print(f"готово: {done}, пропущено: {skipped}, всего {total_kb} КБ")
