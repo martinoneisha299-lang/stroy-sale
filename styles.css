@@ -1326,14 +1326,63 @@ a.p-card:focus-visible {
   }
 }
 
-.pd-gallery { min-width: 0; }
+.pd-gallery {
+  min-width: 0;
+}
+
+.pd-main-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-ph);
+  border: var(--rule-hair);
+  cursor: zoom-in;
+}
 
 .pd-main {
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  background: var(--color-ph);
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.4s var(--ease-out), opacity var(--dur-fast) ease-in-out;
+}
+
+.pd-main-wrap:hover .pd-main {
+  transform: scale(1.03);
+}
+
+.pd-main.is-fading {
+  opacity: 0;
+}
+
+.pd-zoom-trigger {
+  position: absolute;
+  bottom: var(--space-sm);
+  right: var(--space-sm);
+  background: rgba(255, 255, 255, 0.9);
+  border: var(--rule-hair);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: background var(--dur-fast), transform var(--dur-fast), opacity var(--dur-fast);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  opacity: 0.85;
+  z-index: 10;
+}
+
+.pd-main-wrap:hover .pd-zoom-trigger {
+  opacity: 1;
+  background: #fff;
+}
+
+.pd-zoom-trigger svg {
+  width: 18px;
+  height: 18px;
 }
 
 .pd-thumbs {
@@ -1346,12 +1395,12 @@ a.p-card:focus-visible {
   appearance: none;
   font: inherit;
   padding: 0;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   background: none;
   cursor: pointer;
   width: 72px;
-  min-height: 44px;
-  transition: border-color var(--dur-fast), opacity var(--dur-fast);
+  transition: border-color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+  overflow: hidden;
 }
 
 .pd-thumb img {
@@ -1360,19 +1409,151 @@ a.p-card:focus-visible {
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  opacity: 0.75;
-  transition: opacity var(--dur-fast);
+  opacity: 0.65;
+  transition: opacity var(--dur-fast), transform var(--dur-fast);
 }
 
-.pd-thumb:hover img { opacity: 1; }
+.pd-thumb:hover img {
+  opacity: 1;
+  transform: scale(1.04);
+}
 
-.pd-thumb.is-on { border-color: var(--color-ink); }
+.pd-thumb.is-on {
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
 
-.pd-thumb.is-on img { opacity: 1; }
+.pd-thumb.is-on img {
+  opacity: 1;
+}
 
 .pd-thumb:focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+/* Лайтбокс / Модальное окно просмотра */
+.pd-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(12, 10, 9, 0.97);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) ease;
+  z-index: 2000;
+  user-select: none;
+}
+
+.pd-lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pd-lightbox-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pd-lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease-out);
+}
+
+.pd-lightbox.is-open .pd-lightbox-img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.pd-lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--dur-fast), transform var(--dur-fast);
+  z-index: 2010;
+}
+
+.pd-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(1.05);
+}
+
+.pd-lightbox-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.pd-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--dur-fast), transform var(--dur-fast), opacity var(--dur-fast);
+  opacity: 0.7;
+  z-index: 2005;
+}
+
+.pd-lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.pd-lightbox-nav svg {
+  width: 24px;
+  height: 24px;
+}
+
+.pd-lightbox-prev {
+  left: 24px;
+}
+
+.pd-lightbox-next {
+  right: 24px;
+}
+
+@media (max-width: 600px) {
+  .pd-lightbox-nav {
+    width: 44px;
+    height: 44px;
+  }
+  .pd-lightbox-prev { left: 12px; }
+  .pd-lightbox-next { right: 12px; }
+  .pd-lightbox-close { top: 12px; right: 12px; }
 }
 
 .pd-info { min-width: 0; }

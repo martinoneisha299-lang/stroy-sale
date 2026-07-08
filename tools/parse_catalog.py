@@ -315,6 +315,51 @@ def don_name(raw: str) -> str:
     return nice_title(cut) if cut else nice_title(raw)
 
 
+def get_donskoy_fallback(category, name, texture, fmt):
+    if category == "obychnyy":  # забутовочный
+        if "1,4" in fmt or "утолщ" in fmt.lower() or "полуторн" in fmt.lower():
+            fallback_dir = "Донской кирпич/забутовочный/Утолщенный полнотелый М150 сплошной (F25) 308шт упак. лентой"
+            fallback_photos = ["Утолщенный полнотелый М150 сплошной (F25) 308шт упак. лентой_1.png"]
+        else:
+            fallback_dir = "Донской кирпич/забутовочный/Одинарный М100 (F25 пустот. 12%, 8 конусных углублений) 448шт"
+            fallback_photos = ["Одинарный М100 (F25 пустот. 12%, 8 конусных углублений) 448шт_1.png"]
+    else:  # облицовочный
+        n = name.lower()
+        if "вулкан" in n:
+            fallback_dir = "Донской кирпич/лицевой/Вулкан лава Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой"
+            fallback_photos = ["Вулкан лава Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой_1.png"]
+        elif "винтаж" in n:
+            fallback_dir = "Донской кирпич/лицевой/Винтаж лава Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой"
+            fallback_photos = ["Винтаж лава Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой_1.png"]
+        elif "готик" in n:
+            fallback_dir = "Донской кирпич/лицевой/Готик Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой"
+            fallback_photos = ["Готик Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой_1.png"]
+        elif "солома" in n:
+            if "гладк" in texture.lower():
+                fallback_dir = "Донской кирпич/лицевой/СВЕТЛЫЙ одинарный ЛИЦЕВОЙ с ФАСКОЙ M150 (F50) 416шт упак. пленкой"
+                fallback_photos = ["СВЕТЛЫЙ одинарный ЛИЦЕВОЙ с ФАСКОЙ M150 (F50) 416шт упак. пленкой_1.png"]
+            else:
+                fallback_dir = "Донской кирпич/лицевой/СВЕТЛЫЙ ВИНТАЖ Одинарный пустотелый М150 (F50 пустот 37%) 416шт упак. пленкой"
+                fallback_photos = ["СВЕТЛЫЙ ВИНТАЖ Одинарный пустотелый М150 (F50 пустот 37%) 416шт упак. пленкой_1.png"]
+        elif "вишня" in n or "красный" in n or "красн" in n:
+            if "гладк" in texture.lower():
+                fallback_dir = "Славянский"
+                fallback_photos = ["КЛАССИК 1НФ_2.webp"]
+            elif "руст" in texture.lower() or "рельеф" in texture.lower():
+                fallback_dir = "Губский/Лицевой керамический кирпич/Красный Бриз"
+                fallback_photos = ["Красный Бриз_1.jpg"]
+            else:
+                fallback_dir = "Губский/Лицевой керамический кирпич/Красная Кора"
+                fallback_photos = ["Красная Кора_1.jpg"]
+        elif "коричневый" in n or "тархан" in n:
+            fallback_dir = "Славянский"
+            fallback_photos = ["МОККО ВТ Еврo 0,7НФ_2.webp"]
+        else:
+            fallback_dir = "Славянский"
+            fallback_photos = ["КЛАССИК 1НФ_2.webp"]
+    return fallback_dir, fallback_photos
+
+
 def parse_donskoy():
     base = ROOT / "Донской кирпич"
     seen = {}
@@ -338,12 +383,18 @@ def parse_donskoy():
             texture = texture_of(brief.get("Поверхность", ""), raw)
             fmt = format_of(brief.get("Формат", ""), raw)
             mark = mark_of(raw)
+            
+            photos = images_in(d)
+            p_dir = str(d.relative_to(ROOT))
+            if not photos:
+                p_dir, photos = get_donskoy_fallback(category, name, texture, fmt)
+
             key = (name.lower(), texture, fmt, mark, category)
             if key in seen:  # дубль: другой поддон/фасовка при той же марке
                 seen[key]["flags"].append(f"вариант фасовки: {raw}")
-                if not seen[key]["photos"]:
-                    seen[key]["photos"] = images_in(d)
-                    seen[key]["dir"] = str(d.relative_to(ROOT))
+                if not seen[key]["photos"] and photos:
+                    seen[key]["photos"] = photos
+                    seen[key]["dir"] = p_dir
                 continue
             flags = []
             if "некондиц" in raw.lower():
@@ -364,8 +415,8 @@ def parse_donskoy():
                 "price_unit": "шт",
                 "specs": parse_kv_block(text, "Технические характеристики") or brief,
                 "description": description_of(text),
-                "dir": str(d.relative_to(ROOT)),
-                "photos": images_in(d),
+                "dir": p_dir,
+                "photos": photos,
                 "video": None,
             }
             add(p)
