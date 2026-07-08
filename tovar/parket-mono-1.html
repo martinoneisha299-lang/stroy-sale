@@ -85,18 +85,22 @@
         <h2>Сколько плитки вам нужно?</h2>
         <p class="caption">Продаём в м², привозим поддонами по 15 м².</p>
       </div>
-      <div class="calc">
+      <div class="calc-card" id="calcContainer" data-price="700">
         <div class="calc-fields">
           <input type="hidden" id="cShape" value="700">
 
           <div class="field">
             <label for="cArea">Площадь под плитку, м²</label>
-            <input id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="Например, 60">
+            <div class="input-with-unit">
+              <input id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="Например, 60">
+              <span class="unit">м²</span>
+            </div>
           </div>
         </div>
         <div class="calc-out">
-          <p class="calc-num" id="calcQty">—</p>
-          <p class="caption" id="calcCap">Укажите площадь — посчитаем объём и стоимость.</p>
+          <div id="calcOut" style="width: 100%; display: flex; flex-direction: column; gap: var(--space-xs);">
+            <div class="calc-receipt-placeholder">Введите площадь, чтобы рассчитать объём и стоимость плитки с доставкой.</div>
+          </div>
           <a class="btn" href="../index.html#lead">Получить точный расчёт</a>
           <p class="caption">Стоимость по цене этой расцветки. Точный расчёт с раскладкой и доставкой сделает менеджер.</p>
         </div>
@@ -161,29 +165,43 @@
 
   <script>
     (function () {
+      var container = document.getElementById('calcContainer');
       var area = document.getElementById('cArea');
       var shape = document.getElementById('cShape');
-      var qty = document.getElementById('calcQty');
-      var cap = document.getElementById('calcCap');
+      var out = document.getElementById('calcOut');
+      
+      if (!area || !out) return;
+      
+      var basePrice = container ? parseInt(container.dataset.price, 10) : 0;
+      var palletSize = 15;
+      
       function recalc() {
         var a = parseFloat(area.value);
         if (!a || a <= 0) {
-          qty.textContent = '—';
-          cap.textContent = 'Укажите площадь — посчитаем объём и стоимость.';
+          out.innerHTML = '<div class="calc-receipt-placeholder">Введите площадь, чтобы рассчитать объём и стоимость плитки с доставкой.</div>';
           return;
         }
+        var price = basePrice || (shape ? parseInt(shape.value, 10) : 0);
         var need = a * 1.05;
         var m2 = Math.ceil(need);
-        var pallets = Math.ceil(need / 15);
-        var price = shape ? parseInt(shape.value, 10) : 0;
-        qty.textContent = m2 + ' м²';
-        var txt = 'С запасом 5% на подрезку · ' + pallets + ' ' +
+        var pallets = Math.ceil(need / palletSize);
+        
+        var priceHtml = '';
+        if (price) {
+          priceHtml = '<div class="calc-row calc-total"><span>Ориентировочная стоимость:</span><strong>от ' + (m2 * price).toLocaleString('ru-RU') + ' ₽</strong></div>';
+        }
+        
+        var palletsText = pallets + ' ' +
           (pallets % 10 === 1 && pallets % 100 !== 11 ? 'поддон' :
            (pallets % 10 >= 2 && pallets % 10 <= 4 && (pallets % 100 < 12 || pallets % 100 > 14) ? 'поддона' : 'поддонов'));
-        if (price) {
-          txt += ' · от ' + (m2 * price).toLocaleString('ru-RU') + ' ₽';
-        }
-        cap.textContent = txt;
+           
+        out.innerHTML = '<div class="calc-receipt">' +
+          '<div class="calc-row"><span>Необходимая площадь:</span><strong>' + a + ' м²</strong></div>' +
+          '<div class="calc-row"><span>Запас на подрезку (+5%):</span><strong>+' + Math.max(0, m2 - a).toFixed(0) + ' м²</strong></div>' +
+          '<div class="calc-row"><span>Итого к заказу:</span><strong>' + m2 + ' м²</strong></div>' +
+          '<div class="calc-row"><span>Объем поставки:</span><strong>' + palletsText + '</strong></div>' +
+          priceHtml +
+          '</div>';
       }
       area.addEventListener('input', recalc);
       if (shape) shape.addEventListener('change', recalc);

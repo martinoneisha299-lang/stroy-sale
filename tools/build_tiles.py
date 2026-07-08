@@ -195,29 +195,43 @@ def tile_card(p, root=""):
 CALC_JS = """
   <script>
     (function () {
+      var container = document.getElementById('calcContainer');
       var area = document.getElementById('cArea');
       var shape = document.getElementById('cShape');
-      var qty = document.getElementById('calcQty');
-      var cap = document.getElementById('calcCap');
+      var out = document.getElementById('calcOut');
+      
+      if (!area || !out) return;
+      
+      var basePrice = container ? parseInt(container.dataset.price, 10) : 0;
+      var palletSize = 15;
+      
       function recalc() {
         var a = parseFloat(area.value);
         if (!a || a <= 0) {
-          qty.textContent = '—';
-          cap.textContent = 'Укажите площадь — посчитаем объём и стоимость.';
+          out.innerHTML = '<div class="calc-receipt-placeholder">Введите площадь, чтобы рассчитать объём и стоимость плитки с доставкой.</div>';
           return;
         }
+        var price = basePrice || (shape ? parseInt(shape.value, 10) : 0);
         var need = a * 1.05;
         var m2 = Math.ceil(need);
-        var pallets = Math.ceil(need / 15);
-        var price = shape ? parseInt(shape.value, 10) : 0;
-        qty.textContent = m2 + ' м²';
-        var txt = 'С запасом 5% на подрезку · ' + pallets + ' ' +
+        var pallets = Math.ceil(need / palletSize);
+        
+        var priceHtml = '';
+        if (price) {
+          priceHtml = '<div class="calc-row calc-total"><span>Ориентировочная стоимость:</span><strong>от ' + (m2 * price).toLocaleString('ru-RU') + ' ₽</strong></div>';
+        }
+        
+        var palletsText = pallets + ' ' +
           (pallets % 10 === 1 && pallets % 100 !== 11 ? 'поддон' :
            (pallets % 10 >= 2 && pallets % 10 <= 4 && (pallets % 100 < 12 || pallets % 100 > 14) ? 'поддона' : 'поддонов'));
-        if (price) {
-          txt += ' · от ' + (m2 * price).toLocaleString('ru-RU') + ' ₽';
-        }
-        cap.textContent = txt;
+           
+        out.innerHTML = '<div class="calc-receipt">' +
+          '<div class="calc-row"><span>Необходимая площадь:</span><strong>' + a + ' м²</strong></div>' +
+          '<div class="calc-row"><span>Запас на подрезку (+5%):</span><strong>+' + Math.max(0, m2 - a).toFixed(0) + ' м²</strong></div>' +
+          '<div class="calc-row"><span>Итого к заказу:</span><strong>' + m2 + ' м²</strong></div>' +
+          '<div class="calc-row"><span>Объем поставки:</span><strong>' + palletsText + '</strong></div>' +
+          priceHtml +
+          '</div>';
       }
       area.addEventListener('input', recalc);
       if (shape) shape.addEventListener('change', recalc);
@@ -368,12 +382,16 @@ GALLERY_JS = """
 
 
 def calc_block(shape_select=None, root="",
-               note="Стоимость — по цене «от» выбранной формы. Точный расчёт с раскладкой и доставкой сделает менеджер."):
+               note="Стоимость — по цене «от» выбранной формы. Точный расчёт с раскладкой и доставкой сделает менеджер.",
+               price=0):
     """Калькулятор площади. shape_select: HTML select или None (тогда цена фиксированная в data-price)."""
     fields = f"""
           <div class="field">
             <label for="cArea">Площадь под плитку, м²</label>
-            <input id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="Например, 60">
+            <div class="input-with-unit">
+              <input id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="Например, 60">
+              <span class="unit">м²</span>
+            </div>
           </div>"""
     if shape_select:
         fields += shape_select
@@ -384,13 +402,14 @@ def calc_block(shape_select=None, root="",
         <h2>Сколько плитки вам нужно?</h2>
         <p class="caption">Продаём в м², привозим поддонами по {PALLET_M2} м².</p>
       </div>
-      <div class="calc">
+      <div class="calc-card" id="calcContainer" data-price="{price}">
         <div class="calc-fields">
 {fields}
         </div>
         <div class="calc-out">
-          <p class="calc-num" id="calcQty">—</p>
-          <p class="caption" id="calcCap">Укажите площадь — посчитаем объём и стоимость.</p>
+          <div id="calcOut" style="width: 100%; display: flex; flex-direction: column; gap: var(--space-xs);">
+            <div class="calc-receipt-placeholder">Введите площадь, чтобы рассчитать объём и стоимость плитки с доставкой.</div>
+          </div>
           <a class="btn" href="{root}index.html#lead">Получить точный расчёт</a>
           <p class="caption">{note}</p>
         </div>
@@ -644,7 +663,7 @@ def build_shape(slug):
       </div>
     </div>
   </section>
-{calc_block(note=f"Стоимость — от {rub(m['min_price'])} ₽/м² по этой форме. Точный расчёт сделает менеджер.")}"""
+{calc_block(note=f"Стоимость — от {rub(m['min_price'])} ₽/м² по этой форме. Точный расчёт сделает менеджер.", price=m['min_price'])}"""
 
     # калькулятор формы: цена подставляется скрытым полем
     body = body.replace('<div class="calc-fields">', f"""<div class="calc-fields">
@@ -743,7 +762,7 @@ def build_product(p):
       </div>
     </div>
   </section>
-{calc_block(root=root, note=f"Стоимость по цене этой расцветки. Точный расчёт с раскладкой и доставкой сделает менеджер.")}
+{calc_block(root=root, note=f"Стоимость по цене этой расцветки. Точный расчёт с раскладкой и доставкой сделает менеджер.", price=p['price'])}
   <section class="section" aria-label="Другие расцветки">
     <div class="wrap">
       <div class="section-head">

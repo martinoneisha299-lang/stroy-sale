@@ -402,17 +402,23 @@
             10 мм — по размерам кирпича из нашего каталога. Запас 5% на бой
             и подрезку уже включён.</p>
         </div>
-        <div class="calc">
+        <div class="calc-card" id="calcContainer">
           <div class="calc-fields">
             <div class="field">
               <label for="cWall">Площадь стен, м²</label>
-              <input id="cWall" type="number" min="0" step="1" inputmode="decimal"
-                     placeholder="например, 120">
+              <div class="input-with-unit">
+                <input id="cWall" type="number" min="0" step="1" inputmode="decimal"
+                       placeholder="например, 120">
+                <span class="unit">м²</span>
+              </div>
             </div>
             <div class="field">
               <label for="cOpen">Минус окна и двери, м²</label>
-              <input id="cOpen" type="number" min="0" step="1" inputmode="decimal"
-                     placeholder="например, 18">
+              <div class="input-with-unit">
+                <input id="cOpen" type="number" min="0" step="1" inputmode="decimal"
+                       placeholder="например, 18">
+                <span class="unit">м²</span>
+              </div>
             </div>
             <div class="field">
               <label for="cFmt">Формат кирпича</label>
@@ -424,10 +430,9 @@
             </div>
           </div>
           <div class="calc-out">
-            <p class="tag">Понадобится примерно</p>
-            <p class="calc-num" id="calcQty" aria-live="polite">—</p>
-            <p class="caption" id="calcCap">Введите площадь стен — посчитаем
-              штуки с запасом.</p>
+            <div id="calcOut" style="width: 100%; display: flex; flex-direction: column; gap: var(--space-xs);">
+              <div class="calc-receipt-placeholder">Введите площадь стен, чтобы рассчитать количество кирпича.</div>
+            </div>
             <a class="btn" href="index.html#lead">Получить точный расчёт</a>
             <p class="caption">Ручную формовку и лонг посчитает менеджер —
               у них нестандартные размеры.</p>
@@ -552,26 +557,36 @@
     var cWall = document.getElementById('cWall');
     var cOpen = document.getElementById('cOpen');
     var cFmt = document.getElementById('cFmt');
-    var calcQty = document.getElementById('calcQty');
-    var calcCap = document.getElementById('calcCap');
+    var calcOut = document.getElementById('calcOut');
 
     function recalc() {
-      var area = (parseFloat(cWall.value) || 0) - (parseFloat(cOpen.value) || 0);
-      if (area <= 0) {
-        calcQty.textContent = '—';
-        calcCap.textContent = 'Введите площадь стен — посчитаем штуки с запасом.';
+      var w = parseFloat(cWall.value) || 0;
+      var o = parseFloat(cOpen.value) || 0;
+      var area = w - o;
+      if (w <= 0 || area <= 0) {
+        calcOut.innerHTML = '<div class="calc-receipt-placeholder">Введите площадь стен, чтобы рассчитать количество кирпича.</div>';
         return;
       }
-      var qty = Math.ceil(area * parseFloat(cFmt.value) * 1.05 / 10) * 10;
-      calcQty.textContent = qty.toLocaleString('ru-RU') + ' шт';
-      calcCap.textContent = 'На ' + area.toLocaleString('ru-RU') +
-        ' м² кладки, запас 5% включён.';
+      var rate = parseFloat(cFmt.value);
+      var rawQty = Math.ceil(area * rate);
+      var reserve = Math.ceil(rawQty * 0.05);
+      var totalQty = Math.ceil((rawQty + reserve) / 10) * 10;
+      
+      calcOut.innerHTML = '<div class="calc-receipt">' +
+        '<div class="calc-row"><span>Чистая площадь стен:</span><strong>' + area.toFixed(0) + ' м²</strong></div>' +
+        '<div class="calc-row"><span>Расход кирпича:</span><strong>' + rawQty.toLocaleString('ru-RU') + ' шт</strong></div>' +
+        '<div class="calc-row"><span>Запас на подрезку (+5%):</span><strong>+' + reserve.toLocaleString('ru-RU') + ' шт</strong></div>' +
+        '<div class="calc-row calc-total"><span>Итого к заказу:</span><strong>' + totalQty.toLocaleString('ru-RU') + ' шт</strong></div>' +
+        '</div>';
     }
 
     [cWall, cOpen, cFmt].forEach(function (el) {
-      el.addEventListener('input', recalc);
-      el.addEventListener('change', recalc);
+      if (el) {
+        el.addEventListener('input', recalc);
+        el.addEventListener('change', recalc);
+      }
     });
+    recalc();
   </script>
 </body>
 </html>

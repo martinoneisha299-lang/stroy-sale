@@ -1070,62 +1070,163 @@ a { color: inherit; }
 }
 
 /* ——— Калькулятор кирпича ——— */
-.calc {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-lg);
+.calc-card {
+  background: #ffffff;
+  border: var(--rule-hair);
+  border-radius: 8px;
+  padding: var(--space-lg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
   margin-top: var(--space-lg);
 }
 
 @media (min-width: 900px) {
-  .calc {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
+  .calc-card {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-xl);
+    padding: var(--space-xl);
   }
 }
 
 .calc-fields {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-md);
+  justify-content: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-2xs);
+}
+
+.input-with-unit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-with-unit input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  padding-right: var(--space-xl);
+  border: 1.5px solid var(--color-rule);
+  border-radius: 4px;
+  font: inherit;
+  font-size: var(--text-base);
+  color: var(--color-ink);
+  background: transparent;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.input-with-unit input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(212, 105, 74, 0.12);
+}
+
+.input-with-unit .unit {
+  position: absolute;
+  right: var(--space-md);
+  font-weight: 500;
+  color: var(--color-ink-soft);
 }
 
 .field select {
   width: 100%;
-  border: none;
-  border-bottom: 1px solid var(--color-rule);
-  border-radius: 0;
+  border: 1.5px solid var(--color-rule);
+  border-radius: 4px;
   background: transparent;
   font: inherit;
+  font-size: var(--text-base);
   color: var(--color-ink);
-  padding: var(--space-sm) 0;
+  padding: var(--space-sm) var(--space-md);
   min-height: 44px;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 
 .field select:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(212, 105, 74, 0.12);
 }
 
 .calc-out {
-  border: var(--rule-hair);
+  background: var(--color-paper);
+  border-radius: 6px;
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: var(--space-md);
+  height: 100%;
+  justify-content: space-between;
+}
+
+.calc-receipt {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-xs);
 }
 
-.calc-num {
-  margin: 0;
-  font-size: clamp(2rem, 3vw + 1rem, 3rem);
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--text-sm);
+  padding-bottom: var(--space-2xs);
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+  color: var(--color-ink-soft);
 }
 
-.calc-out .btn { margin-top: var(--space-xs); }
+.calc-row strong {
+  color: var(--color-ink);
+}
 
-.calc-out .caption { margin: 0; }
+.calc-row.calc-total {
+  border-bottom: none;
+  margin-top: var(--space-xs);
+  padding-top: var(--space-xs);
+  border-top: 1.5px solid var(--color-rule);
+  font-size: var(--text-base);
+  color: var(--color-ink);
+}
+
+.calc-row.calc-total strong {
+  font-size: var(--text-lg);
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.calc-receipt-placeholder {
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  line-height: var(--lh-base);
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  margin: auto 0;
+}
+
+.calc-out .btn {
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+}
+
+.calc-out .caption {
+  margin: 0;
+  font-size: var(--text-xs);
+}
 
 /* ——— Тротуарная плитка: шапка категории с «живой» плиткой ——— */
 .tile-hero { padding-top: var(--space-lg); }
