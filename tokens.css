@@ -1,0 +1,59 @@
+/* Hallmark · macrostructure: Photographic · theme: studied-DNA (source: petersen-tegl.dk screenshots + fireclaytile.com)
+ * paper oklch(99.2% 0.002 90) · ink oklch(21% 0.012 60) · accent terracotta oklch(56% 0.115 42) · footprint ≤5%
+ * display+body: Golos Text (single grotesk by design — caps/size contrast, Petersen DNA) · label: Golos caps letterspaced
+ * nav: N6 masthead · footer: Ft1 minimal · studied: yes · DNA-source: image (user screenshots) + url
+ * Hallmark · pre-emit critique: P5 H4 E4 S4 R5 V4
+ */
+:root {
+  /* Цвет — бумага, чернила, терракота из кирпича */
+  --color-paper: oklch(99.2% 0.002 90);
+  --color-ink: oklch(21% 0.012 60);
+  --color-ink-soft: oklch(45% 0.01 60);
+  --color-ink-faint: oklch(62% 0.008 60);
+  --color-accent: oklch(56% 0.115 42);
+  --color-rule: oklch(89% 0.004 80);
+  --color-ph: oklch(93.5% 0.006 85);       /* плейсхолдер фото */
+  --color-ph-line: oklch(89% 0.006 85);
+  --color-btn-hover: oklch(30% 0.014 60);
+  --color-focus: oklch(56% 0.115 42);
+
+  /* Свотчи цветов кирпича (подбор по цвету в каталоге) */
+  --sw-krasny: oklch(48% 0.13 35);
+  --sw-korichnevy: oklch(40% 0.06 55);
+  --sw-persik: oklch(78% 0.075 55);
+  --sw-bezh: oklch(84% 0.045 90);
+  --sw-sery: oklch(68% 0.008 80);
+  --sw-grafit: oklch(32% 0.008 270);
+  --sw-zeleny: oklch(48% 0.05 145);
+
+  /* Шрифт — один гротеск с кириллицей */
+  --font-sans: "Golos Text", system-ui, -apple-system, sans-serif;
+
+  /* Размеры */
+  --text-display: clamp(2.125rem, 5.5vw + 0.5rem, 4.25rem);
+  --text-2xl: clamp(1.375rem, 2.2vw + 0.5rem, 2rem);
+  --text-lg: 1.125rem;
+  --text-base: 1rem;
+  --text-sm: 0.8125rem;
+  --text-micro: 0.6875rem;
+
+  /* Отступы, 4pt-шкала */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: clamp(64px, 10vw, 128px);
+
+  /* Движение */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 260ms;
+
+  /* Линии */
+  --rule-hair: 1px solid var(--color-rule);
+  --radius-none: 0;
+}
