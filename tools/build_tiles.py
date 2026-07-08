@@ -115,7 +115,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=4">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=5">{extra_head}
 </head>
 <body>
 
@@ -139,8 +139,8 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
 
 {body}
 
-  <!-- Помощь с выбором -->
-  <section class="section">
+  <!-- Помощь с выбором; id=lead — сюда скроллит кнопка калькулятора -->
+  <section class="section" id="lead">
     <div class="wrap">
       <div class="cta-band">
         <div>
@@ -423,10 +423,10 @@ def calc_block(shape_select=None, root="",
             <strong class="line-calc-val val-accent" id="calcPrice">—</strong>
           </div>
         </div>
-        <button class="btn line-calc-btn" type="button" onclick="document.getElementById('lead').scrollIntoView({{behavior: 'smooth'}})">
+        <a class="btn line-calc-btn" href="#lead">
           Получить точный расчёт
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </button>
+        </a>
       </div>
       <p class="caption line-calc-note">{note}</p>
     </div>"""

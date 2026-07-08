@@ -168,7 +168,7 @@ def page_shell(title, descr, body, extra_js=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 
@@ -192,8 +192,8 @@ def page_shell(title, descr, body, extra_js=""):
 
 {body}
 
-  <!-- Помощь с выбором -->
-  <section class="section">
+  <!-- Помощь с выбором; id=lead — сюда скроллит кнопка калькулятора -->
+  <section class="section" id="lead">
     <div class="wrap">
       <div class="cta-band">
         <div>
@@ -348,9 +348,9 @@ def build_category():
                 <strong class="line-calc-val val-accent" id="calcQty">—</strong>
               </div>
             </div>
-            <button class="btn line-calc-btn" type="button" onclick="document.getElementById('lead').scrollIntoView({{behavior: 'smooth'}})">
+            <a class="btn line-calc-btn" href="#lead">
               Получить точный расчёт
-            </button>
+            </a>
           </div>
           <p class="caption line-calc-note">Считаем с запасом 5% на бой и подрезку. Раскладку и доставку посчитает менеджер.</p>
         </div>

@@ -35,3 +35,4 @@ out/
 
 # Keep data for public display
 # data/catalog.json - intentionally tracked for public view
+tools/.env
