@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-08",
+ "generated": "2026-07-09",
  "source_root": "/Users/dm/Desktop/фото",
  "collections": {
   "ekonom": "Эконом",
@@ -9253,15 +9253,13 @@
    "description": "Упаковка на невозвратном поддоне в термоусадочной пленке, с перекладкой рядов кирпича бумагой",
    "dir": "тербунский_гончар/Керамический/фактура/гладкий/Графит",
    "photos": [
+    "1.0_Одинарный.png",
     "0.7_Евроформат 0.7N.png",
     "0.9_Евроформат 0.9N.png",
-    "1.0_Одинарный.png",
     "1.4_Полуторный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -9294,15 +9292,13 @@
    "description": "Упаковка на невозвратном поддоне в термоусадочной пленке, с перекладкой рядов кирпича бумагой",
    "dir": "тербунский_гончар/Керамический/фактура/гладкий/Золотистый",
    "photos": [
+    "1.0_Одинарный.png",
     "0.7_Евроформат 0.7N.png",
     "0.9_Евроформат 0.9N.png",
-    "1.0_Одинарный.png",
     "1.4_Полуторный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -9335,15 +9331,13 @@
    "description": "Упаковка на невозвратном поддоне в термоусадочной пленке, с перекладкой рядов кирпича бумагой",
    "dir": "тербунский_гончар/Керамический/фактура/гладкий/Корица",
    "photos": [
+    "1.0_Одинарный.png",
     "0.7_Евроформат 0.7N.png",
     "0.9_Евроформат 0.9N.png",
-    "1.0_Одинарный.png",
     "1.4_Полуторный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -9376,15 +9370,13 @@
    "description": "Упаковка на невозвратном поддоне в термоусадочной пленке, с перекладкой рядов кирпича бумагой",
    "dir": "тербунский_гончар/Керамический/фактура/гладкий/Коричневый",
    "photos": [
+    "1.0_Одинарный.png",
     "0.7_Евроформат 0.7N.png",
     "0.9_Евроформат 0.9N.png",
-    "1.0_Одинарный.png",
     "1.4_Полуторный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -9417,15 +9409,13 @@
    "description": "Упаковка на невозвратном поддоне в термоусадочной пленке, с перекладкой рядов кирпича бумагой",
    "dir": "тербунский_гончар/Керамический/фактура/гладкий/Персик",
    "photos": [
+    "1.0_Одинарный.png",
     "0.7_Евроформат 0.7N.png",
     "0.9_Евроформат 0.9N.png",
-    "1.0_Одинарный.png",
     "1.4_Полуторный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -9491,13 +9481,11 @@
    "description": "Упаковка на невозвратном поддоне в термоусадочной пленке, с перекладкой рядов кирпича бумагой",
    "dir": "тербунский_гончар/Керамический/фактура/старый город/Золотистый",
    "photos": [
-    "0.7_Евроформат 0.7N.png",
-    "1.0_Одинарный.png"
+    "1.0_Одинарный.png",
+    "0.7_Евроформат 0.7N.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -9529,13 +9517,11 @@
    "description": "Упаковка на невозвратном поддоне в термоусадочной пленке, с перекладкой рядов кирпича бумагой",
    "dir": "тербунский_гончар/Керамический/фактура/старый город/Корица",
    "photos": [
-    "0.7_Евроформат 0.7N.png",
-    "1.0_Одинарный.png"
+    "1.0_Одинарный.png",
+    "0.7_Евроформат 0.7N.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -9545,7 +9531,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Бордовый Камень",
+   "name": "Бордовый Камень Клинкер",
    "factory_name": "Клинкерный/гладкий/Бордовый камень",
    "kind": "клинкерный",
    "color_raw": "Бордовый камень",
@@ -9579,7 +9565,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Графит",
+   "name": "Графит Клинкер",
    "factory_name": "Клинкерный/гладкий/Графит",
    "kind": "клинкерный",
    "color_raw": "Графит",
@@ -9601,9 +9587,7 @@
     "0.7_Евроформат 0.7N.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": true,
@@ -9613,7 +9597,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Золотистый",
+   "name": "Золотистый Клинкер",
    "factory_name": "Клинкерный/гладкий/Золотистый",
    "kind": "клинкерный",
    "color_raw": "Золотистый",
@@ -9635,9 +9619,7 @@
     "0.7_Евроформат 0.7N.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": true,
@@ -9647,7 +9629,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Корица",
+   "name": "Корица Клинкер",
    "factory_name": "Клинкерный/гладкий/Корица",
    "kind": "клинкерный",
    "color_raw": "Корица",
@@ -9669,9 +9651,7 @@
     "0.7_Евроформат 0.7N.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": true,
@@ -9681,7 +9661,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Коричневый",
+   "name": "Коричневый Клинкер",
    "factory_name": "Клинкерный/гладкий/Коричневый",
    "kind": "клинкерный",
    "color_raw": "Коричневый",
@@ -9703,19 +9683,17 @@
     "0.7_Евроформат 0.7N.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": true,
-   "id": "eko-018"
+   "id": "eko-020"
   },
   {
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Коричневый Камень",
+   "name": "Коричневый Камень Клинкер",
    "factory_name": "Клинкерный/гладкий/Коричневый камень",
    "kind": "клинкерный",
    "color_raw": "Коричневый камень",
@@ -9743,13 +9721,13 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "eko-020"
+   "id": "eko-018"
   },
   {
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Персик",
+   "name": "Персик Клинкер",
    "factory_name": "Клинкерный/гладкий/Персик",
    "kind": "клинкерный",
    "color_raw": "Персик",
@@ -9771,9 +9749,7 @@
     "0.7_Евроформат 0.7N.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": true,
@@ -9783,7 +9759,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Янтарный Камень",
+   "name": "Янтарный Камень Клинкер",
    "factory_name": "Клинкерный/гладкий/Янтарный камень",
    "kind": "клинкерный",
    "color_raw": "Янтарный камень",
@@ -9817,7 +9793,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Бордовый Камень",
+   "name": "Бордовый Камень Клинкер",
    "factory_name": "Клинкерный/старый город/Бордовый камень",
    "kind": "клинкерный",
    "color_raw": "Бордовый камень",
@@ -9851,7 +9827,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Золотистый",
+   "name": "Золотистый Клинкер",
    "factory_name": "Клинкерный/старый город/Золотистый",
    "kind": "клинкерный",
    "color_raw": "Золотистый",
@@ -9875,9 +9851,7 @@
     "0.7_Евроформат 0.7N.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -9887,7 +9861,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Корица",
+   "name": "Корица Клинкер",
    "factory_name": "Клинкерный/старый город/Корица",
    "kind": "клинкерный",
    "color_raw": "Корица",
@@ -9911,9 +9885,7 @@
     "0.7_Евроформат 0.7N.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -9923,7 +9895,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Коричневый Камень",
+   "name": "Коричневый Камень Клинкер",
    "factory_name": "Клинкерный/старый город/Коричневый камень",
    "kind": "клинкерный",
    "color_raw": "Коричневый камень",
@@ -9951,13 +9923,13 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "eko-021"
+   "id": "eko-019"
   },
   {
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Янтарный Камень",
+   "name": "Янтарный Камень Клинкер",
    "factory_name": "Клинкерный/старый город/Янтарный камень",
    "kind": "клинкерный",
    "color_raw": "Янтарный камень",
@@ -9991,7 +9963,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Графит",
+   "name": "Графит Полнотелый",
    "factory_name": "Полнотелый/гладкий/Графит",
    "kind": "полнотелый",
    "color_raw": "Графит",
@@ -10015,9 +9987,7 @@
     "1.0_Одинарный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -10027,7 +9997,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Золотистый",
+   "name": "Золотистый Полнотелый",
    "factory_name": "Полнотелый/гладкий/Золотистый",
    "kind": "полнотелый",
    "color_raw": "Золотистый",
@@ -10051,9 +10021,7 @@
     "1.0_Одинарный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -10063,7 +10031,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Корица",
+   "name": "Корица Полнотелый",
    "factory_name": "Полнотелый/гладкий/Корица",
    "kind": "полнотелый",
    "color_raw": "Корица",
@@ -10087,9 +10055,7 @@
     "1.0_Одинарный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -10099,7 +10065,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Коричневый",
+   "name": "Коричневый Полнотелый",
    "factory_name": "Полнотелый/гладкий/Коричневый",
    "kind": "полнотелый",
    "color_raw": "Коричневый",
@@ -10123,19 +10089,17 @@
     "1.0_Одинарный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "eko-019"
+   "id": "eko-021"
   },
   {
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Персик",
+   "name": "Персик Полнотелый",
    "factory_name": "Полнотелый/гладкий/Персик",
    "kind": "полнотелый",
    "color_raw": "Персик",
@@ -10159,9 +10123,7 @@
     "1.0_Одинарный.png"
    ],
    "video": null,
-   "flags": [
-    "совпадает имя с другим товаром — проверить"
-   ],
+   "flags": [],
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
@@ -10171,7 +10133,7 @@
    "category": "oblitsovochnyy",
    "collection": "ekonom",
    "supplier": "Тербунский гончар",
-   "name": "Платиновый",
+   "name": "Платиновый Полнотелый",
    "factory_name": "Полнотелый/гладкий/Платиновый",
    "kind": "полнотелый",
    "color_raw": "Платиновый",

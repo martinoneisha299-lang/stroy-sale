@@ -111,8 +111,16 @@ def card(p, feat_hidden=None, root=""):
     fmt = FMT_SHORT.get(p["format"], p["format"])
     attrs = (f'data-color="{esc(p["color_group"])}" '
              f'data-texture="{esc(p["texture"])}" data-format="{esc(fmt)}"{hidden}')
+    
+    meta_parts = []
+    if p.get("kind"):
+        meta_parts.append(p["kind"])
+    meta_parts.append(p["texture"])
+    meta_parts.append(fmt)
+    meta_text = " · ".join(meta_parts)
+    
     inner = (f'{img}<h3 class="p-name">{esc(p["name"])}</h3>'
-             f'<p class="p-meta">{esc(p["texture"])} · {esc(fmt)}</p>{price}')
+             f'<p class="p-meta">{esc(meta_text)}</p>{price}')
     return f'<a class="p-card" href="{root}tovar/kirpich-{p["id"]}.html" {attrs}>{inner}</a>'
 
 
@@ -1205,7 +1213,15 @@ def build_brick_product(p, is_rab=False):
     </div>
   </section>"""
 
-    meta_line = esc(disp_meta) if is_rab else f'{esc(p["texture"])} · {esc(FMT_SHORT.get(p["format"], p["format"]))}'
+    fmt_short = FMT_SHORT.get(p["format"], p["format"])
+    meta_parts = []
+    if p.get("kind"):
+        meta_parts.append(p["kind"])
+    meta_parts.append(p["texture"])
+    meta_parts.append(fmt_short)
+    meta_text = " · ".join(meta_parts)
+    
+    meta_line = esc(disp_meta) if is_rab else esc(meta_text)
 
     body = f"""
   <section class="page-head">

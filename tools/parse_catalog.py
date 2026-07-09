@@ -528,11 +528,29 @@ def parse_terbunskiy():
                                if f.suffix.lower() in IMG_EXT and f.stem == txt.stem]
                 if base_price is None and fmt_prices:
                     base_price = min(fmt_prices.values())
+
+                # Sort photos so standard 1НФ (1.0 / одинарный) is first
+                base_photos = []
+                other_photos = []
+                for ph in sorted(set(photos)):
+                    ph_low = ph.lower()
+                    if "1.0" in ph_low or "одинарн" in ph_low or "1нф" in ph_low:
+                        base_photos.append(ph)
+                    else:
+                        other_photos.append(ph)
+                sorted_photos = base_photos + other_photos
+
+                p_name = nice_title(color)
+                if type_dir.name == "Клинкерный":
+                    p_name += " Клинкер"
+                elif type_dir.name == "Полнотелый":
+                    p_name += " Полнотелый"
+
                 add({
                     "category": "oblitsovochnyy",
                     "collection": "ekonom",
                     "supplier": "Тербунский гончар",
-                    "name": nice_title(color),
+                    "name": p_name,
                     "factory_name": f"{type_dir.name}/{texture}/{color}",
                     "kind": t_ru,  # керамический/клинкерный/полнотелый
                     "color_raw": color,
@@ -545,7 +563,7 @@ def parse_terbunskiy():
                     "specs": spec_all,
                     "description": desc,
                     "dir": str(color_dir.relative_to(ROOT)),
-                    "photos": sorted(set(photos)),
+                    "photos": sorted_photos,
                     "video": None,
                 })
 

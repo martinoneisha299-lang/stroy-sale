@@ -1153,8 +1153,18 @@ a.p-card:hover { transform: translateY(-3px); }
 .p-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xs);
+  background: #ffffff;
+  border: 1px solid var(--color-rule);
+  transition: transform var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast);
+  text-decoration: none;
+  color: inherit;
   min-width: 0;
+}
+
+.p-card:hover {
+  border-color: var(--color-ink);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
 }
 
 .p-img {
@@ -1163,8 +1173,8 @@ a.p-card:hover { transform: translateY(-3px); }
   aspect-ratio: 4 / 3;
   object-fit: cover;
   background: var(--color-ph);
-  /* волосяная рамка выравнивает фото с разными фонами в один строй */
-  border: var(--rule-hair);
+  border: none !important;
+  border-bottom: 1px solid var(--color-rule) !important;
 }
 
 .p-none {
@@ -1174,40 +1184,43 @@ a.p-card:hover { transform: translateY(-3px); }
   justify-content: center;
   gap: var(--space-xs);
   color: var(--color-ink-soft);
-  border: 1px dashed var(--color-ph-line);
+  border: none !important;
+  border-bottom: 1px dashed var(--color-ph-line) !important;
   text-align: center;
   padding: var(--space-sm);
+  aspect-ratio: 4 / 3;
 }
 
 .p-none span { font-size: var(--text-micro); }
 
 .p-name {
-  font-size: var(--text-base);
-  font-weight: 600;
-  margin-top: var(--space-xs);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  margin: 14px 16px 4px 16px;
+  color: var(--color-ink);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
 .p-meta {
-  margin: 0;
-  font-size: var(--text-sm);
+  font-size: 11px;
+  font-weight: 500;
   color: var(--color-ink-soft);
+  margin: 0 16px 12px 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.p-price {
-  margin: 0;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
+.p-price, .p-ask {
+  font-size: var(--text-sm);
+  font-weight: 900;
+  margin: auto 16px 16px 16px;
+  color: var(--color-ink);
 }
 
 .p-ask {
-  align-self: flex-start;
-  font-size: var(--text-sm);
-  font-weight: 600;
   color: var(--color-accent);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  padding-block: 12px;
-  margin-block: -8px;
+  font-weight: 700;
 }
 
 /* ——— Фильтры на странице коллекции ——— */
