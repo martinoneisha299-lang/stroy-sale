@@ -1,5 +1,5 @@
 /* Hallmark · macrostructure: Photographic · theme: studied-DNA — см. tokens.css */
-@import url("tokens.css?v=6");
+@import url("tokens.css?v=7");
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -743,33 +743,121 @@ a { color: inherit; }
   .lead-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 
-/* ——— Заказ через мессенджеры ——— */
-.order-btns {
+/* ——— Заказ: одно главное действие + тихий ряд мессенджеров ——— */
+.order-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.order-row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
 }
 
-.btn-msg { gap: 8px; }
+.order-row .btn { justify-content: center; }
 
-.btn-msg svg, .btn-msg img { width: 18px; height: 18px; flex: none; }
+/* на телефоне кнопки ровным столбиком, подпись мессенджеров своей строкой */
+@media (max-width: 599px) {
+  .order-row { flex-direction: column; align-items: stretch; }
+  .msg-row-label { flex-basis: 100%; }
+}
 
-.btn-wa { background: var(--color-wa); color: var(--color-surface); }
-.btn-wa:hover { background: var(--color-wa-hover); }
-.btn-tg { background: var(--color-tg); color: var(--color-surface); }
-.btn-tg:hover { background: var(--color-tg-hover); }
-.btn-max { background: var(--color-max); color: var(--color-surface); }
-.btn-max:hover { background: var(--color-max-hover); }
+.msg-row {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.msg-row-label {
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+}
+
+.msg-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--color-surface);
+  transition: transform var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out);
+}
+
+.msg-circle svg { width: 22px; height: 22px; }
+.msg-circle img { width: 22px; height: 22px; }
+
+.msg-circle:hover { transform: translateY(-2px); }
+
+.msg-circle:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.mc-wa { background: var(--color-wa); }
+.mc-wa:hover { background: var(--color-wa-hover); }
+.mc-tg { background: var(--color-tg); }
+.mc-tg:hover { background: var(--color-tg-hover); }
+.mc-max { background: var(--color-max); }
+.mc-max:hover { background: var(--color-max-hover); }
+
+/* ——— CTA-блок: слева контакт, справа форма ——— */
+.cta-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+}
+
+.cta-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.cta-left .caption { margin: 0; max-width: 44ch; }
+
+.cta-phone {
+  font-size: var(--text-xl);
+  font-weight: 900;
+  color: var(--color-paper);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.cta-phone:hover { color: var(--color-amber-soft); }
+
+.cta-phone small {
+  display: block;
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-paper-mute);
+  margin-top: 4px;
+}
+
+.cta-band .msg-row-label { color: var(--color-paper-soft); }
+
+@media (min-width: 900px) {
+  .cta-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-2xl); }
+  .cta-form { align-content: start; }
+}
 
 /* ——— Мини-форма заявки в тёмном CTA-блоке ——— */
 .cta-form {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm) var(--space-md);
-  align-items: flex-end;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
-.cta-form .field { flex: 1 1 180px; }
+.cta-form .field { width: 100%; }
+
+.cta-form .btn { align-self: flex-start; }
 
 .cta-form .field label { color: var(--color-paper-soft); }
 

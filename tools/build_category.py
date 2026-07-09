@@ -172,16 +172,29 @@ def promo_bar(root=""):
             f'<span class="promo-bar-go">Выбрать</span></a>')
 
 
-def order_btns(root="", product=""):
-    """Кнопки заказа: звонок + мессенджеры в фирменных цветах."""
+def msg_circles(root="", product="", label="Быстрый ответ в мессенджере:"):
+    """Тихий ряд мессенджеров: подпись + три фирменных кружка."""
     txt = (f"Здравствуйте! Интересует {product} (пишу с сайта Строй-Сейл)"
            if product else "Здравствуйте! Пишу с сайта Строй-Сейл")
     wa = "https://wa.me/79000000000?text=" + quote(txt)
-    return f"""<div class="order-btns">
-          <a class="btn" href="tel:+79000000000">Позвонить</a>
-          <a class="btn btn-msg btn-wa" href="{wa}" target="_blank" rel="noopener">{WA_SVG}WhatsApp</a>
-          <a class="btn btn-msg btn-tg" href="https://t.me/stroy_sale" target="_blank" rel="noopener">{TG_SVG}Telegram</a>
-          <a class="btn btn-msg btn-max" href="https://max.ru/stroy_sale" target="_blank" rel="noopener"><img src="{root}img/max-icon-white.svg" alt="" width="18" height="18">MAX</a>
+    return f"""<p class="msg-row">
+          <span class="msg-row-label">{label}</span>
+          <a class="msg-circle mc-wa" href="{wa}" target="_blank" rel="noopener" aria-label="Написать в WhatsApp">{WA_SVG}</a>
+          <a class="msg-circle mc-tg" href="https://t.me/stroy_sale" target="_blank" rel="noopener" aria-label="Написать в Telegram">{TG_SVG}</a>
+          <a class="msg-circle mc-max" href="https://max.ru/stroy_sale" target="_blank" rel="noopener" aria-label="Написать в MAX"><img src="{root}img/max-icon-white.svg" alt="" width="22" height="22"></a>
+        </p>"""
+
+
+def order_btns(root="", product=""):
+    """Блок заказа: ОДНО главное действие + тихие альтернативы.
+    Иерархия по better-design/ui-ux-pro-max: primary solid, secondary ghost,
+    мессенджеры — кружки третьим уровнем."""
+    return f"""<div class="order-block">
+          <div class="order-row">
+            <a class="btn" href="tel:+79000000000">Позвонить</a>
+            <a class="btn btn-ghost" href="#lead">Оставить заявку</a>
+          </div>
+          {msg_circles(root, product)}
         </div>"""
 
 
@@ -222,7 +235,7 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=6">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=7">{extra_head}
 </head>
 <body>
 
@@ -257,22 +270,28 @@ def page_shell(title, descr, body, extra_js="", root="",
           <h2>{cta_h2}</h2>
           <p class="caption">{cta_note}</p>
         </div>
-        {order_btns(root, product)}
-        <form class="cta-form" id="ctaForm" novalidate>
-          <div class="field">
-            <label for="cfName">Имя</label>
-            <input id="cfName" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+        <div class="cta-grid">
+          <div class="cta-left">
+            <a class="cta-phone" href="tel:+79000000000">+7 (900) 000-00-00
+              <small>Перезвоним за 5 минут</small></a>
+            {msg_circles(root, product, label="Или напишите:")}
           </div>
-          <div class="field">
-            <label for="cfPhone">Телефон</label>
-            <input id="cfPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
-          </div>
-          <button class="btn" type="submit">Оставить заявку</button>
-        </form>
-        <p class="caption form-note">Нажимая кнопку, вы соглашаетесь с
-          <a href="{root}policy.html">политикой конфиденциальности</a>.
-          Номер не передаём третьим лицам.</p>
-        <p class="form-ok" id="ctaOk" hidden>Заявка принята — перезвоним за 5 минут (демо)</p>
+          <form class="cta-form" id="ctaForm" novalidate>
+            <div class="field">
+              <label for="cfName">Имя</label>
+              <input id="cfName" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+            </div>
+            <div class="field">
+              <label for="cfPhone">Телефон</label>
+              <input id="cfPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
+            </div>
+            <button class="btn" type="submit">Оставить заявку</button>
+            <p class="caption form-note">Нажимая кнопку, вы соглашаетесь с
+              <a href="{root}policy.html">политикой конфиденциальности</a>.
+              Номер не передаём третьим лицам.</p>
+          </form>
+          <p class="form-ok" id="ctaOk" hidden>Заявка принята — перезвоним за 5 минут (демо)</p>
+        </div>
       </div>
     </div>
   </section>
@@ -908,6 +927,10 @@ def brick_specs_rows(p):
         rows.append(("Структура", sp["Структура"].lower()))
     w = sp.get("Вес")
     if w:
+        w = str(w).strip()
+        if w.lower().startswith("кг"):  # у поставщика «кг 2,6-2,7»
+            w = w[2:].strip() + " кг"
+        w = w.replace("-", "–")
         rows.append(("Вес штуки", w))
     cons = p.get("consumption_per_m2")
     if cons:
@@ -960,6 +983,8 @@ def build_brick_product(p, is_rab=False):
         fmts = p.get("formats_prices") or {}
         fmt_lines = []
         for f_name, f_price in fmts.items():
+            if f_name == p["format"]:
+                continue  # базовый формат уже показан большой ценой
             short = FMT_SHORT.get(f_name, f_name)
             fmt_lines.append(f"{esc(short)} — {rub(f_price)} ₽")
         fmt_note = (f'<p class="caption pd-price-note">Другие форматы: {" · ".join(fmt_lines)}.</p>'
