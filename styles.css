@@ -199,28 +199,76 @@ a { color: inherit; }
   padding: var(--space-2xs) var(--space-xs);
 }
 
-/* ——— Hero: интерактивный дом ——— */
-.hero { padding-top: var(--space-lg); }
+/* ——— Hero: полноэкранный фото-баннер в стиле Fireclay Tile ——— */
+.hero {
+  position: relative;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.75) 30%, rgba(0, 0, 0, 0.2) 100%), url('img/hero-03.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  padding-block: var(--space-3xl);
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 899px) {
+  .hero {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%), url('img/hero-03.jpg');
+    min-height: 85vh;
+    padding-block: var(--space-2xl);
+  }
+}
+
+.hero .wrap {
+  width: 100%;
+}
 
 .hero-head {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  max-width: 65ch;
 }
 
 .hero h1 {
+  color: #ffffff;
   font-size: var(--text-display);
   font-weight: 900;
-  line-height: 1.02;
-  letter-spacing: -0.015em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   max-width: 15ch;
 }
 
+@media (max-width: 899px) {
+  .hero h1 {
+    font-size: 32px;
+    max-width: 100%;
+  }
+}
+
 .hero-sub {
-  max-width: 48ch;
-  color: var(--color-ink-soft);
+  color: rgba(255, 255, 255, 0.92);
   font-size: var(--text-lg);
+  line-height: 1.45;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  max-width: 46ch;
+}
+
+@media (max-width: 899px) {
+  .hero-sub {
+    font-size: 16px;
+    max-width: 100%;
+  }
+}
+
+.hero .tag {
+  color: var(--color-accent);
+  text-transform: uppercase;
+  font-size: var(--text-micro);
+  letter-spacing: 0.12em;
+  font-weight: 700;
 }
 
 .hero-cta {
@@ -235,143 +283,23 @@ a { color: inherit; }
   font-size: var(--text-micro);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-ink-soft);   /* контраст ≥4.5:1 */
+  color: rgba(255, 255, 255, 0.7);
 }
 
-/* Сцена: фото дома + маркеры */
-.hero-stage {
-  position: relative;
-  overflow: hidden;   /* пульс-кольца маркеров не выходят за край фото */
+.hero .btn {
+  background: #ffffff;
+  color: var(--color-ink);
+  transition: background-color var(--dur-fast), color var(--dur-fast), transform var(--dur-fast);
 }
 
-.hero-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;   /* совпадает с сеткой маркеров — не менять при кропе */
-  object-fit: cover;
-}
-
-/* Точка-маркер (ссылка в категорию) */
-.spot {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  transform: translate(-50%, -50%);
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  z-index: 2;
-  padding: 14px;          /* тап-зона ≥44px, визуально не видна */
-  margin: -14px;
-  animation: spot-in 480ms var(--ease-out) both;
-}
-
-/* Поочерёдное появление точек после загрузки */
-.spot:nth-of-type(1) { animation-delay: 250ms; }
-.spot:nth-of-type(2) { animation-delay: 420ms; }
-.spot:nth-of-type(3) { animation-delay: 590ms; }
-.spot:nth-of-type(4) { animation-delay: 760ms; }
-
-@keyframes spot-in {
-  from { opacity: 0; transform: translate(-50%, -30%) scale(0.6); }
-  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-
-.spot-dot {
-  position: relative;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
+.hero .btn:hover {
   background: var(--color-accent);
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-accent) 28%, transparent),
-              0 1px 4px rgba(0, 0, 0, 0.35);
-  flex: none;
+  color: #ffffff;
 }
 
-.spot-dot::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  border: 2px solid var(--color-accent);
-  animation: spot-pulse 2.8s var(--ease-out) infinite;
-}
-
-@keyframes spot-pulse {
-  0%        { transform: scale(1);   opacity: 0.7; }
-  70%, 100% { transform: scale(2.8); opacity: 0; }
-}
-
-.spot-label {
-  position: absolute;
-  left: 26px;
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-paper);
-  background: var(--color-ink);
-  padding: var(--space-2xs) var(--space-xs);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity var(--dur-fast) var(--ease-out);
-}
-
-.spot:hover .spot-label,
-.spot:focus-visible .spot-label {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Легенда под фото — основные кнопки на телефоне.
-   Одна колонка: подписи всегда в одну строку (без переносов в кнопках) */
-.hero-legend {
-  list-style: none;
-  margin: var(--space-md) 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-xs);
-}
-
-@media (min-width: 560px) {
-  .hero-legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-.hero-legend a {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  text-decoration: none;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  border: 1px solid var(--color-ink);
-  padding: var(--space-xs) var(--space-sm);
-}
-
-.hero-legend .dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  flex: none;
-}
-
-.hero-legend a:hover { background: var(--color-ink); color: var(--color-paper); }
-
-@media (min-width: 900px) {
-  .hero-legend { display: none; }
-
-  /* Десктоп: текст слева, дом с маркерами справа — всё в первом экране */
-  .hero .wrap {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: var(--space-2xl);
-    align-items: center;
-  }
-  .hero-head { margin-bottom: 0; }
+/* Полное скрытие хотспотов и легенды для чистоты интерфейса */
+.hero-stage, .hero-legend {
+  display: none !important;
 }
 
 /* ——— Кнопки ——— */
@@ -2040,7 +1968,34 @@ a.p-card:focus-visible {
   max-width: 52ch;
 }
 
-.pd-usage strong { color: var(--color-ink); }
+/* ——— Адаптивная оптимизация шапок страниц и фильтров ——— */
+@media (max-width: 575px) {
+  .pick .tag, .pick-coll .tag {
+    display: none !important;
+  }
+  .pick .pick-hint, .pick-coll .pick-hint {
+    display: none !important;
+  }
+  .section-head h2 {
+    font-size: var(--text-md) !important;
+    margin-bottom: 0 !important;
+  }
+  .pick, .pick-coll {
+    padding-block: var(--space-xs) !important;
+  }
+  .masthead {
+    padding-block: var(--space-xs) !important;
+  }
+  .page-head {
+    padding-block: var(--space-sm) !important;
+  }
+  .page-head h1 {
+    font-size: var(--text-lg) !important;
+  }
+  .page-sub {
+    font-size: var(--text-xs) !important;
+  }
+}
 
 /* ——— Движение: уважение reduced motion ——— */
 @media (prefers-reduced-motion: reduce) {
