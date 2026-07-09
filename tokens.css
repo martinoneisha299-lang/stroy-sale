@@ -15,10 +15,20 @@
   --color-surface: #ffffff;               /* карточки, врезки, калькулятор */
   --color-ph: oklch(93.5% 0.006 85);       /* плейсхолдер фото */
   --color-ph-line: oklch(89% 0.006 85);
+  --color-logo: #cd472c;                   /* фирменный оранжевый из брендбука */
+  --color-wa: #25d366;                     /* WhatsApp — фирменный зелёный */
+  --color-tg: #2aabee;                     /* Telegram — фирменный голубой */
+  --color-max: #471aff;                    /* MAX — «Синий гигант» из брендбука */
   --color-btn: oklch(50% 0.115 42);        /* терракота CTA-кнопок */
   --color-btn-hover: oklch(42% 0.12 42);   /* терракота глубже — hover */
   --color-tint: oklch(96.8% 0.012 55);     /* тёплая подложка секций */
   --color-paper-soft: oklch(82% 0.008 80); /* приглушённый текст на тёмном */
+  --color-paper-dim: oklch(60% 0.01 80);   /* линии и плейсхолдеры на тёмном */
+  --color-paper-mute: oklch(65% 0.008 80); /* мелкий текст на тёмном */
+  --color-amber-soft: oklch(78% 0.1 45);   /* тёплый акцент на тёмном (промо, фокус) */
+  --color-wa-hover: oklch(60% 0.16 155);
+  --color-tg-hover: oklch(58% 0.13 240);
+  --color-max-hover: oklch(44% 0.26 275);
   --color-focus: oklch(56% 0.115 42);
 
   /* Свотчи цветов кирпича (подбор по цвету в каталоге) */

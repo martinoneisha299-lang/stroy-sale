@@ -1,5 +1,5 @@
 /* Hallmark · macrostructure: Photographic · theme: studied-DNA — см. tokens.css */
-@import url("tokens.css?v=5");
+@import url("tokens.css?v=6");
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -61,6 +61,34 @@ a { color: inherit; }
   line-height: 1.45;
 }
 
+/* ——— Промо-полоска: сезонное предложение ——— */
+.promo-bar {
+  display: block;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 10px var(--space-md);
+  text-decoration: none;
+}
+
+.promo-bar b { color: var(--color-amber-soft); font-weight: 700; }
+
+.promo-bar-go {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.promo-bar:hover .promo-bar-go { color: var(--color-amber-soft); }
+
+.promo-bar:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: -3px;
+}
+
 /* ——— Шапка ——— */
 .masthead {
   border-bottom: var(--rule-hair);
@@ -77,7 +105,19 @@ a { color: inherit; }
 .wordmark {
   text-decoration: none;
   line-height: 1.1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
+
+/* фирменный знак — оранжевая «крыша» из брендбука */
+.brand-mark {
+  width: 32px;
+  height: 28px;
+  flex: none;
+}
+
+.wordmark-text { display: block; }
 
 .wordmark strong {
   display: block;
@@ -86,7 +126,7 @@ a { color: inherit; }
   letter-spacing: 0.06em;
 }
 
-.wordmark span {
+.wordmark-text > span {
   display: block;
   font-size: var(--text-micro);
   letter-spacing: 0.14em;
@@ -388,7 +428,7 @@ a { color: inherit; }
 
 /* ——— Полоса доверия ——— */
 .benefits {
-  margin-top: var(--space-2xl);
+  margin-top: var(--space-xl);
   border-top: var(--rule-hair);
   border-bottom: var(--rule-hair);
   background: var(--color-tint);
@@ -702,6 +742,111 @@ a { color: inherit; }
 @media (min-width: 900px) {
   .lead-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
+
+/* ——— Заказ через мессенджеры ——— */
+.order-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.btn-msg { gap: 8px; }
+
+.btn-msg svg, .btn-msg img { width: 18px; height: 18px; flex: none; }
+
+.btn-wa { background: var(--color-wa); color: var(--color-surface); }
+.btn-wa:hover { background: var(--color-wa-hover); }
+.btn-tg { background: var(--color-tg); color: var(--color-surface); }
+.btn-tg:hover { background: var(--color-tg-hover); }
+.btn-max { background: var(--color-max); color: var(--color-surface); }
+.btn-max:hover { background: var(--color-max-hover); }
+
+/* ——— Мини-форма заявки в тёмном CTA-блоке ——— */
+.cta-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  align-items: flex-end;
+}
+
+.cta-form .field { flex: 1 1 180px; }
+
+.cta-form .field label { color: var(--color-paper-soft); }
+
+.cta-form .field input {
+  border-bottom-color: var(--color-paper-dim);
+  color: var(--color-paper);
+}
+
+.cta-form .field input::placeholder { color: var(--color-paper-dim); }
+
+.cta-form .field input:focus { border-bottom-color: var(--color-amber-soft); }
+
+.cta-form .btn { flex: none; }
+
+.cta-band .form-note { color: var(--color-paper-mute); }
+.cta-band .form-note a { color: var(--color-paper-mute); }
+.cta-band .form-ok { color: var(--color-amber-soft); }
+
+/* ——— Карта в контактах ——— */
+.lead-place {
+  margin-top: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.map-embed {
+  width: 100%;
+  height: 260px;
+  border: var(--rule-hair);
+  display: block;
+}
+
+.footer-addr { margin: 0; color: var(--color-ink-soft); font-size: var(--text-sm); }
+
+/* ——— Подсветка выбора: подсказки кликабельности ——— */
+.swatch { transition: transform var(--dur-fast) var(--ease-out); }
+
+.swatch:hover { transform: translateY(-2px); }
+
+.swatch:hover .swatch-chip {
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-accent);
+}
+
+a.p-card { transition: transform var(--dur-fast) var(--ease-out); }
+
+a.p-card:hover { transform: translateY(-3px); }
+
+/* ——— Навигация по коллекциям: чипы с ценой ——— */
+.pick-coll { padding-top: 0; }
+
+.lane-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.lane-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: var(--rule-hair);
+  padding: 10px 14px;
+  min-height: 44px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.lane-nav a:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+.lane-nav a small { color: var(--color-ink-soft); font-size: var(--text-micro); font-weight: 500; }
+
+.lane-nav a:hover small { color: inherit; }
 
 /* ——— Наши работы на главной ——— */
 .works-grid-4 {
@@ -1099,7 +1244,11 @@ a { color: inherit; }
   color: var(--color-ink-soft);
 }
 
-.callbar-item svg { width: 22px; height: 22px; }
+.callbar-item svg, .callbar-item img { width: 24px; height: 24px; }
+
+/* брендовые цвета мессенджеров — узнаваемые, не серые */
+.cb-wa svg { color: var(--color-wa); }
+.cb-tg svg { color: var(--color-tg); }
 
 .callbar-tel {
   color: var(--color-accent);

@@ -14,6 +14,7 @@
 
 import html
 import json
+from urllib.parse import quote
 from pathlib import Path
 
 BASE = Path("/Users/dm/Desktop/сайт")
@@ -83,27 +84,81 @@ def esc(s):
     return html.escape(str(s), quote=True)
 
 
-# Липкая полоса связи — единая для всех страниц (та же, что у кирпича).
+# Глифы мессенджеров (simple-icons, CC0) — полоса связи и кнопки заказа
+WA_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>'
+TG_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>'
+PHONE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>'
+
+WA_LINK = ("https://wa.me/79000000000?text=" +
+           quote("Здравствуйте! Пишу с сайта Строй-Сейл"))
+
+
+# Липкая полоса связи (видна только на телефоне).
 # TODO перед запуском: реальный номер и ссылки мессенджеров.
-CALLBAR = """
+def callbar(root=""):
+    return f"""
   <nav class="callbar" aria-label="Быстрая связь">
     <a class="callbar-item callbar-tel" href="tel:+79000000000">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      {PHONE_SVG}
       <span>Позвонить</span></a>
-    <a class="callbar-item" href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9-%D0%A1%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    <a class="callbar-item cb-wa" href="{WA_LINK}" target="_blank" rel="noopener">
+      {WA_SVG}
       <span>WhatsApp</span></a>
-    <a class="callbar-item" href="https://t.me/stroy_sale" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    <a class="callbar-item cb-tg" href="https://t.me/stroy_sale" target="_blank" rel="noopener">
+      {TG_SVG}
       <span>Telegram</span></a>
-    <a class="callbar-item" href="https://max.ru/stroy_sale" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+    <a class="callbar-item cb-max" href="https://max.ru/stroy_sale" target="_blank" rel="noopener">
+      <img src="{root}img/max-icon.svg" alt="" width="24" height="24">
       <span>MAX</span></a>
   </nav>"""
 
 
+def promo_bar(root=""):
+    """Сезонное предложение: тонкая полоска над шапкой. data-until — дата
+    окончания; после неё полоска скрывается сама (скрипт в page_shell)."""
+    return (f'<a class="promo-bar" href="{root}plitka-staryy-gorod.html" data-until="2026-07-20">'
+            f'<b>−15%</b> на тротуарную плитку «Старый город» — до 20 июля · '
+            f'<span class="promo-bar-go">Выбрать</span></a>')
+
+
+def order_btns(root="", product=""):
+    """Кнопки заказа: звонок + мессенджеры в фирменных цветах."""
+    txt = (f"Здравствуйте! Интересует {product} (пишу с сайта Строй-Сейл)"
+           if product else "Здравствуйте! Пишу с сайта Строй-Сейл")
+    wa = "https://wa.me/79000000000?text=" + quote(txt)
+    return f"""<div class="order-btns">
+          <a class="btn" href="tel:+79000000000">Позвонить</a>
+          <a class="btn btn-msg btn-wa" href="{wa}" target="_blank" rel="noopener">{WA_SVG}WhatsApp</a>
+          <a class="btn btn-msg btn-tg" href="https://t.me/stroy_sale" target="_blank" rel="noopener">{TG_SVG}Telegram</a>
+          <a class="btn btn-msg btn-max" href="https://max.ru/stroy_sale" target="_blank" rel="noopener"><img src="{root}img/max-icon-white.svg" alt="" width="18" height="18">MAX</a>
+        </div>"""
+
+
+# Скрипты каркаса: форма заявки (демо) + срок промо-полоски
+SHELL_JS = """
+  <script>
+    (function () {
+      var f = document.getElementById('ctaForm');
+      if (f) {
+        f.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var ph = document.getElementById('cfPhone');
+          if (!ph.value.trim()) { ph.focus(); return; }
+          f.hidden = true;
+          document.getElementById('ctaOk').hidden = false;
+        });
+      }
+      var promo = document.querySelector('.promo-bar');
+      if (promo && promo.dataset.until) {
+        var end = new Date(promo.dataset.until + 'T23:59:59');
+        if (new Date() > end) promo.remove();
+      }
+    })();
+  </script>"""
+
+
 def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
-               extra_head=""):
+               extra_head="", product=""):
     """Каркас страницы. root = префикс относительных ссылок ('' или '../')."""
     return f"""<!DOCTYPE html>
 <html lang="ru">
@@ -115,15 +170,18 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=5">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=6">{extra_head}
 </head>
 <body>
+
+{promo_bar(root)}
 
   <header class="masthead">
     <div class="wrap masthead-in">
       <a class="wordmark" href="{root}index.html">
-        <strong>СТРОЙ-СЕЙЛ</strong>
-        <span>Стройматериалы · Краснодар</span>
+        <svg class="brand-mark" viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--color-logo)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
+        <span class="wordmark-text"><strong>СТРОЙСЕЙЛ</strong>
+        <span>Стройматериалы · Краснодар</span></span>
       </a>
       <nav class="masthead-nav" aria-label="Основное меню">
         <a href="{root}index.html#catalog">Каталог</a>
@@ -147,10 +205,22 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
           <h2>{cta_h2}</h2>
           <p class="caption">{cta_note}</p>
         </div>
-        <div class="cta-band-btns">
-          <a class="btn" href="tel:+79000000000">+7 (900) 000-00-00</a>
-          <a class="btn btn-ghost" href="{root}index.html#lead">Оставить заявку</a>
-        </div>
+        {order_btns(root, product)}
+        <form class="cta-form" id="ctaForm" novalidate>
+          <div class="field">
+            <label for="cfName">Имя</label>
+            <input id="cfName" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+          </div>
+          <div class="field">
+            <label for="cfPhone">Телефон</label>
+            <input id="cfPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
+          </div>
+          <button class="btn" type="submit">Оставить заявку</button>
+        </form>
+        <p class="caption form-note">Нажимая кнопку, вы соглашаетесь с
+          <a href="{root}policy.html">политикой конфиденциальности</a>.
+          Номер не передаём третьим лицам.</p>
+        <p class="form-ok" id="ctaOk" hidden>Заявка принята — перезвоним за 5 минут (демо)</p>
       </div>
     </div>
   </section>
@@ -159,11 +229,12 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
     <div class="wrap footer-in">
       <span class="tag">Строй-Сейл · Краснодар · 2026</span>
       <a href="tel:+79000000000">+7 (900) 000-00-00</a>
+      <span class="caption footer-addr">Краснодар, ул. Ореховая, 182</span>
       <span class="caption">Работаем с частными застройщиками, прорабами и бригадами</span>
       <a class="footer-policy caption" href="{root}policy.html">Политика конфиденциальности</a>
     </div>
   </footer>
-{CALLBAR}
+{callbar(root)}{SHELL_JS}
 {extra_js}
 </body>
 </html>
@@ -469,12 +540,12 @@ def build_category():
         note = ("К дорожкам и парковкам — держит край полотна" if "дорожн" in b["name"].lower()
                 else "К садовым дорожкам и клумбам")
         border_cards.append(f"""
-        <article class="p-card">
+        <a class="p-card" href="tovar/{b['id']}.html">
           <img class="p-img p-img-line" src="img/catalog/{b['id']}.jpg" alt="{esc(b['name'])}" width="640" height="480" loading="lazy">
           <h3 class="p-name">{esc(b['name'])}</h3>
           <p class="p-meta">{note}</p>
           <p class="p-price">{rub(b['price'])} ₽/шт</p>
-        </article>""")
+        </a>""")
 
     works = "\n".join(
         f'<img src="img/plitka/work-{i:02d}.jpg" alt="Уложенная тротуарная плитка — наш объект, фото {i}" '
@@ -721,6 +792,26 @@ def build_product(p):
     name = esc(p["name"])
     shape_name = esc(m["name"])
 
+    # та же расцветка в других формах — быстрый переход
+    cross = [q for q in PRODUCTS if q["name"] == p["name"] and q["shape"] != p["shape"]]
+    cross.sort(key=lambda q: SHAPE_ORDER.index(q["shape"]))
+    cross_form_html = ""
+    if cross:
+        chips = "".join(
+            f'<a href="{root}tovar/{q["slug"]}.html">{esc(SHAPES[q["shape"]]["name"])} '
+            f'<small>{rub(q["price"]) + " ₽/м²" if q["price"] else "цена по запросу"}</small></a>'
+            for q in cross)
+        cross_form_html = f"""
+  <section class="section" aria-label="Эта расцветка в других формах">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>«{name}» в других формах</h2>
+        <p class="caption">Тот же цвет — другой рисунок мощения.</p>
+      </div>
+      <nav class="lane-nav">{chips}</nav>
+    </div>
+  </section>"""
+
     # галерея
     thumbs = ""
     if len(p["_gallery"]) > 1:
@@ -769,9 +860,8 @@ def build_product(p):
         {price_html}
         <p class="caption pd-price-note">Заводская цена. Отгрузка поддонами
           по {PALLET_M2} м², обычно за 3–5 дней.</p>
-        <div class="hero-cta pd-cta">
-          <a class="btn" href="tel:+79000000000">Узнать наличие</a>
-          <a class="btn btn-ghost" href="{root}index.html#lead">Оставить заявку</a>
+        <div class="pd-cta">
+          {order_btns(root, f"плитка «{p['name']}» ({m['name']})")}
         </div>
         <dl class="pd-specs">
           <div><dt>Толщина</dt><dd>40 мм — дорожки, двор, легковая машина</dd></div>
@@ -801,7 +891,7 @@ def build_product(p):
         <div class="more-list"><a href="{root}plitka-{p['shape']}.html">{shape_name} — все {m['count']} {plural(m['count'], 'расцветка', 'расцветки', 'расцветок')}</a></div>
       </div>
     </div>
-  </section>"""
+  </section>{cross_form_html}"""
 
     body = body.replace('<div class="calc-fields">', f"""<div class="calc-fields">
           <input type="hidden" id="cShape" value="{p['price'] or 0}">""")
@@ -830,8 +920,61 @@ def build_product(p):
         body,
         "Возьмём подбор на себя",
         "Пришлём живые фото этой расцветки, посчитаем количество по вашему плану и скажем цену с доставкой.",
-        CALC_JS + GALLERY_JS, root=root, extra_head=extra_head)
+        CALC_JS + GALLERY_JS, root=root, extra_head=extra_head,
+        product=f"плитка «{p['name']}» ({m['name']})")
     (TOVAR / f"{p['slug']}.html").write_text(out)
+
+
+def build_border(b):
+    """Страница бордюра: фото, цена, зачем нужен, заказ."""
+    root = "../"
+    is_road = "дорожн" in b["name"].lower()
+    use = ("Держит край дорожки и парковки: полотно не расползается, край не крошится."
+           if is_road else
+           "Аккуратный край садовых дорожек и клумб — ниже и легче дорожного.")
+    name = esc(b["name"])
+    body = f"""
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Хлебные крошки">
+        <a href="{root}index.html">Главная</a> <span aria-hidden="true">/</span>
+        <a href="{root}trotuarnaya-plitka.html">Тротуарная плитка</a> <span aria-hidden="true">/</span>
+        <span>{name}</span>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section pd" aria-label="Карточка товара">
+    <div class="wrap pd-grid">
+      <div class="pd-gallery">
+        <div class="pd-main-wrap">
+          <img class="pd-main" src="{root}img/catalog/{b['id']}.jpg?v=3"
+            alt="{name} к тротуарной плитке" width="640" height="480">
+        </div>
+      </div>
+      <div class="pd-info">
+        <p class="tag">Бордюры</p>
+        <h1 class="pd-name">{name}</h1>
+        <p class="pd-price">{rub(b['price'])} ₽<span class="pd-price-unit">/шт</span></p>
+        <p class="caption pd-price-note">Заводская цена. Обычно берут вместе с плиткой —
+          посчитаем метраж по плану участка.</p>
+        <div class="pd-cta">
+          {order_btns(root, b["name"].lower())}
+        </div>
+        <p class="caption pd-usage"><strong>Зачем нужен:</strong> {use}</p>
+      </div>
+    </div>
+  </section>"""
+
+    out = page_shell(
+        f"{b['name']} — {rub(b['price'])} ₽/шт | Строй-Сейл Краснодар",
+        f"{b['name']}: {rub(b['price'])} ₽/шт, к тротуарной плитке. "
+        "Посчитаем метраж, привезём вместе с плиткой. Оплата при получении.",
+        body,
+        "Посчитаем бордюр вместе с плиткой",
+        "Пришлите план или размеры участка — скажем, сколько нужно бордюра и плитки, и назовём цену с доставкой.",
+        root=root, product=b["name"].lower())
+    (TOVAR / f"{b['id']}.html").write_text(out)
 
 
 if __name__ == "__main__":
@@ -840,4 +983,6 @@ if __name__ == "__main__":
         build_shape(slug)
     for p in PRODUCTS:
         build_product(p)
-    print(f"tovar/: {len(PRODUCTS)} страниц товара")
+    for b in BORDERS:
+        build_border(b)
+    print(f"tovar/: {len(PRODUCTS) + len(BORDERS)} страниц товара")
