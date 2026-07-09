@@ -75,12 +75,13 @@ def product_shots(p):
     """
     shots = []
     for im in p["images"]:
-        if im.get("is_render", False):
+        if im.get("is_render", False) and not im.get("clean", False):
             continue
         img = load(SRC / im["path"])
         if im.get("clean", False):
             shots.append(ImageOps.fit(img, (W, H), Image.LANCZOS))
-            shots.append(zoom_crop(img))
+            if not im.get("is_render", False):
+                shots.append(zoom_crop(img))
         else:
             shots.append(band_crop(img, 0.0, 0.40))
             shots.append(band_crop(img, 0.62, 1.0))

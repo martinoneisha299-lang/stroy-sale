@@ -59,8 +59,12 @@ FMT_SHORT = {
 }
 
 PRODUCTS = [p for p in DATA["products"] if p["category"] == "oblitsovochnyy"]
+CAT_IMG = BASE / "img" / "catalog"
 for p in PRODUCTS:
-    p["_thumb"] = (BASE / "img" / "catalog" / f"{p['id']}.jpg").exists()
+    p["_gallery"] = [f"img/catalog/{p['id']}.jpg"] + [
+        f"img/catalog/{p['id']}-{i}.jpg" for i in (2, 3, 4, 5)
+        if (CAT_IMG / f"{p['id']}-{i}.jpg").exists()]
+    p["_thumb"] = (CAT_IMG / f"{p['id']}.jpg").exists()
 
 
 def rub(v):
@@ -713,7 +717,10 @@ def build_collection(slug):
 
 RAB = [p for p in DATA["products"] if p["category"] == "obychnyy"]
 for p in RAB:
-    p["_thumb"] = (BASE / "img" / "catalog" / f"{p['id']}.jpg").exists()
+    p["_gallery"] = [f"img/catalog/{p['id']}.jpg"] + [
+        f"img/catalog/{p['id']}-{i}.jpg" for i in (2, 3, 4, 5)
+        if (CAT_IMG / f"{p['id']}-{i}.jpg").exists()]
+    p["_thumb"] = (CAT_IMG / f"{p['id']}.jpg").exists()
 
 TASKS = [
     ("fund", "Фундамент и цоколь"),
@@ -964,11 +971,187 @@ def build_brick_product(p, is_rab=False):
         use_note = COLL_USE[p["collection"]]
         title_kind = "Облицовочный кирпич"
 
+GALLERY_JS = """
+  <script>
+    (function () {
+      var main = document.getElementById('pdMain');
+      var mainWrap = document.getElementById('pdMainWrap');
+      var thumbs = Array.prototype.slice.call(document.querySelectorAll('.pd-thumb'));
+      
+      if (!main) return;
+      
+      // Смена изображений с плавным затуханием (fade)
+      function switchMain(src, activeThumb) {
+        if (main.src === src) return;
+        main.classList.add('is-fading');
+        setTimeout(function() {
+          main.src = src;
+          // Убираем fading после загрузки картинки
+          var tempImg = new Image();
+          tempImg.src = src;
+          tempImg.onload = function() {
+            main.classList.remove('is-fading');
+          };
+          // Резервный сброс, если событие onload не сработает
+          setTimeout(function() {
+            main.classList.remove('is-fading');
+          }, 250);
+        }, 150);
+        
+        thumbs.forEach(function (x) {
+          x.classList.toggle('is-on', x === activeThumb);
+          x.setAttribute('aria-pressed', x === activeThumb ? 'true' : 'false');
+        });
+      }
+      
+      thumbs.forEach(function (t) {
+        t.addEventListener('click', function () {
+          switchMain(t.dataset.src, t);
+        });
+      });
+      
+      // Динамическое добавление премиум-лайтбокса
+      var lightbox = document.createElement('div');
+      lightbox.className = 'pd-lightbox';
+      lightbox.innerHTML = '<button class="pd-lightbox-close" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
+        '<button class="pd-lightbox-nav pd-lightbox-prev" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>' +
+        '<button class="pd-lightbox-nav pd-lightbox-next" aria-label="Следующее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>' +
+        '<div class="pd-lightbox-content"><img class="pd-lightbox-img" src="" alt="Увеличенное фото"></div>';
+      document.body.appendChild(lightbox);
+      
+      var lbImg = lightbox.querySelector('.pd-lightbox-img');
+      var lbClose = lightbox.querySelector('.pd-lightbox-close');
+      var lbPrev = lightbox.querySelector('.pd-lightbox-prev');
+      var lbNext = lightbox.querySelector('.pd-lightbox-next');
+      
+      var currentIdx = 0;
+      var galleryUrls = thumbs.map(function(t) { return t.dataset.src; });
+      if (galleryUrls.length === 0) {
+        galleryUrls = [main.src];
+      }
+      
+      // Защита от пикселизации мелких картинок в лайтбоксе
+      lbImg.addEventListener('load', function() {
+        var naturalW = lbImg.naturalWidth;
+        if (naturalW && naturalW < 800) {
+          lbImg.style.maxWidth = naturalW + 'px';
+        } else {
+          lbImg.style.maxWidth = '90vw';
+        }
+      });
+      
+      function openLightbox(idx) {
+        currentIdx = idx;
+        lbImg.src = galleryUrls[currentIdx];
+        lightbox.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        updateNav();
+      }
+      
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+      
+      function updateNav() {
+        if (galleryUrls.length <= 1) {
+          lbPrev.style.display = 'none';
+          lbNext.style.display = 'none';
+        } else {
+          lbPrev.style.display = '';
+          lbNext.style.display = '';
+        }
+      }
+      
+      function showPrev() {
+        currentIdx = (currentIdx - 1 + galleryUrls.length) % galleryUrls.length;
+        lbImg.src = galleryUrls[currentIdx];
+      }
+      
+      function showNext() {
+        currentIdx = (currentIdx + 1) % galleryUrls.length;
+        lbImg.src = galleryUrls[currentIdx];
+      }
+      
+      // Открытие лайтбокса при клике на основную картинку
+      if (mainWrap) {
+        mainWrap.addEventListener('click', function(e) {
+          if (e.target.closest('.pd-zoom-trigger')) return;
+          var activeThumb = document.querySelector('.pd-thumb.is-on');
+          var idx = activeThumb ? thumbs.indexOf(activeThumb) : 0;
+          openLightbox(idx >= 0 ? idx : 0);
+        });
+      }
+      
+      var zoomTrigger = document.getElementById('pdZoomTrigger');
+      if (zoomTrigger) {
+        zoomTrigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var activeThumb = document.querySelector('.pd-thumb.is-on');
+          var idx = activeThumb ? thumbs.indexOf(activeThumb) : 0;
+          openLightbox(idx >= 0 ? idx : 0);
+        });
+      }
+      
+      lbClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox || e.target.classList.contains('pd-lightbox-content')) {
+          closeLightbox();
+        }
+      });
+      
+      lbPrev.addEventListener('click', function(e) { e.stopPropagation(); showPrev(); });
+      lbNext.addEventListener('click', function(e) { e.stopPropagation(); showNext(); });
+      
+      document.addEventListener('keydown', function(e) {
+        if (!lightbox.classList.contains('is-open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+      });
+    })();
+  </script>"""
+
+
+def build_brick_product(p, is_rab=False):
+    root = "../"
+    if is_rab:
+        disp_name, disp_meta, _tasks = RAB_VIEW[p["id"]]
+        crumb_cat = ("kirpich-zabutovochnyy.html", "Забутовочный кирпич")
+        crumb_coll = None
+        use_note = "Рабочая кладка: фундамент, несущие стены, перегородки — всё, что прячется под облицовкой."
+        title_kind = "Забутовочный кирпич"
+    else:
+        disp_name = p["name"]
+        disp_meta = None
+        meta = COLLECTIONS[p["collection"]]
+        crumb_cat = ("kirpich-oblitsovochnyy.html", "Облицовочный кирпич")
+        crumb_coll = (f"collection-{p['collection']}.html", f"«{meta['name']}»")
+        use_note = COLL_USE[p["collection"]]
+        title_kind = "Облицовочный кирпич"
+
     name = esc(disp_name)
     alt = f"{title_kind} «{disp_name}»"
+    
+    thumbs = ""
+    if len(p["_gallery"]) > 1:
+        btns = []
+        for i, src in enumerate(p["_gallery"]):
+            on = " is-on" if i == 0 else ""
+            pressed = "true" if i == 0 else "false"
+            btns.append(
+                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=4" '
+                f'aria-pressed="{pressed}" aria-label="Фото {i + 1}">'
+                f'<img src="{root}{src}?v=4" alt="" width="640" height="480" loading="lazy"></button>')
+        thumbs = f'\n      <div class="pd-thumbs">{"".join(btns)}</div>'
+
     if p["_thumb"]:
-        photo = (f'<img class="pd-main" src="{root}img/catalog/{p["id"]}.jpg?v=3" '
-                 f'alt="{esc(alt)}" width="640" height="480">')
+        photo = (f'<div class="pd-main-wrap" id="pdMainWrap">'
+                 f'<img class="pd-main" id="pdMain" src="{root}{p["_gallery"][0]}?v=4" '
+                 f'alt="{esc(alt)}" width="640" height="480">'
+                 f'<button class="pd-zoom-trigger" id="pdZoomTrigger" type="button" aria-label="Открыть во весь экран">'
+                 f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>'
+                 f'</button></div>{thumbs}')
     else:
         photo = ('<div class="pd-main p-none" role="img" aria-label="Фото готовим">'
                  '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
@@ -1079,7 +1262,7 @@ def build_brick_product(p, is_rab=False):
         f"{title_kind} «{disp_name}» — {price_str} | Строй-Сейл Краснодар",
         f"{title_kind} «{disp_name}»: {price_str}. {use_note} "
         "Доставка по Краснодару и краю, оплата при получении.",
-        body, root=root,
+        body, extra_js=GALLERY_JS, root=root,
         cta_h2="Возьмём подбор на себя",
         cta_note="Пришлём живые фото этого кирпича, посчитаем количество на дом и скажем цену с доставкой.",
         product=f"кирпич «{disp_name}»",

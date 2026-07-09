@@ -51,26 +51,38 @@ def cover_crop(img):
 def main():
     data = json.loads(Path("/Users/dm/Desktop/сайт/data/catalog.json").read_text())
     done = skipped = 0
+    # Clean old extra gallery files first
+    for f in OUT.glob("kirpich-*-*.jpg"):
+        f.unlink()
+
     for p in data["products"]:
         if p["category"] not in ("oblitsovochnyy", "obychnyy") or not p["photos"]:
             continue
-        src = ROOT / p["dir"] / p["photos"][0]
-        dst = OUT / f"{p['id']}.jpg"
-        if not src.exists():
-            print("нет файла:", src)
-            skipped += 1
-            continue
-        img = ImageOps.exif_transpose(Image.open(src))
-        if p["dir"].startswith("Губский") and src.suffix.lower() in (".jpg", ".jpeg"):
-            # кадры видео из папки Губского: внизу справа водяной знак
-            # конвертера clideo — срезаем (независимо от того, чей товар)
-            img = img.crop((0, 0, img.width, int(img.height * 0.86)))
-        if has_alpha(img) or white_corners(img):
-            out = fit_on_paper(img)
-        else:
-            out = cover_crop(img)
-        out.save(dst, "JPEG", quality=92, optimize=True, progressive=True)
-        done += 1
+        # Process up to 5 photos
+        for idx, photo_name in enumerate(p["photos"][:5]):
+            src = ROOT / p["dir"] / photo_name
+            if idx == 0:
+                dst = OUT / f"{p['id']}.jpg"
+            else:
+                dst = OUT / f"{p['id']}-{idx + 1}.jpg"
+
+            if not src.exists():
+                print("нет файла:", src)
+                if idx == 0:
+                    skipped += 1
+                continue
+
+            img = ImageOps.exif_transpose(Image.open(src))
+            if p["dir"].startswith("Губский") and src.suffix.lower() in (".jpg", ".jpeg"):
+                # кадры видео из папки Губского: внизу справа водяной знак
+                # конвертера clideo — срезаем (независимо от того, чей товар)
+                img = img.crop((0, 0, img.width, int(img.height * 0.86)))
+            if has_alpha(img) or white_corners(img):
+                out = fit_on_paper(img)
+            else:
+                out = cover_crop(img)
+            out.save(dst, "JPEG", quality=92, optimize=True, progressive=True)
+            done += 1
     total_kb = sum(f.stat().st_size for f in OUT.glob("*.jpg")) // 1024
     print(f"готово: {done}, пропущено: {skipped}, всего {total_kb} КБ")
 
