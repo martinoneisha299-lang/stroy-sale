@@ -1222,9 +1222,7 @@ def build_brick_product(p, is_rab=False):
   <section class="section pd" aria-label="Карточка товара">
     <div class="wrap pd-grid">
       <div class="pd-gallery">
-        <div class="pd-main-wrap">
-          {photo}
-        </div>
+        {photo}
       </div>
       <div class="pd-info">
         <p class="tag">{title_kind}</p>
