@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 
-<a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-07-20"><b>−15%</b> на тротуарную плитку «Старый город» — до 20 июля · <span class="promo-bar-go">Выбрать</span></a>
+<a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-07-20"><b>−15%</b> на плитку «Старый город» — до 20 июля<span class="promo-bar-go"> · Выбрать</span></a>
 
   <header class="masthead">
     <div class="wrap masthead-in">
@@ -46,21 +46,18 @@
       </div>
     </section>
 
-    <section class="section pick" aria-label="Подбор по задаче">
+    <section class="pick-bar" aria-label="Подбор по задаче">
       <div class="wrap">
-        <div class="section-head">
-          <span class="tag">Подбор по задаче</span>
-          <h2>Что будете строить?</h2>
-          <p class="caption pick-hint">Выберите задачу — покажем кирпич,
-            который для неё подходит по марке и структуре.</p>
-        </div>
-        <div class="filter-chips" role="group" aria-label="Задачи">
+        <div class="pick-row">
+          <span class="pick-row-label">Задача</span>
+          <div class="pick-scroll" role="group" aria-label="Что будете строить">
 <button class="chip is-on" data-task="" aria-pressed="true">Все задачи</button>
 <button class="chip" data-task="fund" aria-pressed="false">Фундамент и цоколь</button>
 <button class="chip" data-task="walls" aria-pressed="false">Несущие стены</button>
 <button class="chip" data-task="inner" aria-pressed="false">Перегородки и хозпостройки</button>
+          </div>
         </div>
-        <p class="caption pick-note" id="pickNote" aria-live="polite"></p>
+        <p class="pick-count" id="pickNote" aria-live="polite"></p>
       </div>
     </section>
 
@@ -68,9 +65,9 @@
 
       <section class="lane" aria-label="Классика — рабочая серия">
         <div class="lane-head">
-          <div>
+          <div class="lane-head-main">
             <h2>Классика — рабочая серия</h2>
-            <p class="caption lane-tag">Полнотелый и пустотелый под фундамент, стены и цоколь.</p>
+            <p class="lane-meta">Полнотелый и пустотелый под фундамент, стены и цоколь.</p>
           </div>
         </div>
         <div class="p-grid">
@@ -92,9 +89,9 @@
 
       <section class="lane" aria-label="Палитра — рядовая серия">
         <div class="lane-head">
-          <div>
+          <div class="lane-head-main">
             <h2>Палитра — рядовая серия</h2>
-            <p class="caption lane-tag">Рядовой и хозяйственный — на перегородки и постройки во дворе.</p>
+            <p class="lane-meta">Рядовой и хозяйственный — на перегородки и постройки во дворе.</p>
           </div>
         </div>
         <div class="p-grid">
@@ -145,7 +142,7 @@
               <a href="policy.html">политикой конфиденциальности</a>.
               Номер не передаём третьим лицам.</p>
           </form>
-          <p class="form-ok" id="ctaOk" hidden>Заявка принята — перезвоним за 5 минут (демо)</p>
+          <p class="form-ok" id="ctaOk" hidden>Заявка принята — скоро перезвоним (демо)</p>
         </div>
       </div>
     </div>

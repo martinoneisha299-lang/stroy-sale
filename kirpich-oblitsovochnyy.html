@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 
-<a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-07-20"><b>−15%</b> на тротуарную плитку «Старый город» — до 20 июля · <span class="promo-bar-go">Выбрать</span></a>
+<a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-07-20"><b>−15%</b> на плитку «Старый город» — до 20 июля<span class="promo-bar-go"> · Выбрать</span></a>
 
   <header class="masthead">
     <div class="wrap masthead-in">
@@ -40,55 +40,46 @@
         <nav class="crumbs" aria-label="Вы здесь"><a href="index.html">Главная</a>
           <span aria-hidden="true">/</span> <span>Облицовочный кирпич</span></nav>
         <h1>Облицовочный кирпич</h1>
-        <p class="page-sub">257 видов — от 18,50 ₽/шт.
-          Привезём на объект, оплата при получении.</p>
+        <p class="page-sub">257 видов, от 18,50 ₽/шт. Доставка на объект, оплата при получении.</p>
       </div>
     </section>
 
-    <section class="section pick" aria-label="Подбор по цвету">
+    <!-- Фильтр-бар: цвет и бюджет работают вместе -->
+    <section class="pick-bar" aria-label="Подбор кирпича">
       <div class="wrap">
-        <div class="section-head">
-          <span class="tag">Шаг 1 · Цвет</span>
-          <h2>Выберите цвет фасада</h2>
-          <p class="caption pick-hint">Нажмите на цвет — оставим только подходящие кирпичи.</p>
+        <div class="pick-row">
+          <span class="pick-row-label">Цвет</span>
+          <div class="pick-scroll" role="group" aria-label="Цвет кирпича">
+<button class="swatch is-on" data-color="" aria-pressed="true"><span class="swatch-dot sw-all" aria-hidden="true"></span>Все цвета</button>
+<button class="swatch" data-color="красный" aria-pressed="false"><span class="swatch-dot sw-krasny" aria-hidden="true"></span>красный <span class="swatch-n">78</span></button>
+<button class="swatch" data-color="коричневый" aria-pressed="false"><span class="swatch-dot sw-korichnevy" aria-hidden="true"></span>коричневый <span class="swatch-n">54</span></button>
+<button class="swatch" data-color="персиковый" aria-pressed="false"><span class="swatch-dot sw-persik" aria-hidden="true"></span>персиковый <span class="swatch-n">8</span></button>
+<button class="swatch" data-color="бежевый" aria-pressed="false"><span class="swatch-dot sw-bezh" aria-hidden="true"></span>бежевый <span class="swatch-n">53</span></button>
+<button class="swatch" data-color="серый" aria-pressed="false"><span class="swatch-dot sw-sery" aria-hidden="true"></span>серый <span class="swatch-n">28</span></button>
+<button class="swatch" data-color="графит" aria-pressed="false"><span class="swatch-dot sw-grafit" aria-hidden="true"></span>графит <span class="swatch-n">11</span></button>
+<button class="swatch" data-color="микс (бавария)" aria-pressed="false"><span class="swatch-dot sw-miks" aria-hidden="true"></span>микс (бавария) <span class="swatch-n">21</span></button>
+<button class="swatch" data-color="зелёный" aria-pressed="false"><span class="swatch-dot sw-zeleny" aria-hidden="true"></span>зелёный <span class="swatch-n">3</span></button>
+          </div>
         </div>
-        <div class="swatches" role="group" aria-label="Цвета кирпича">
-<button class="swatch is-on" data-color="" aria-pressed="true"><span class="swatch-dot sw-all" aria-hidden="true"></span><span class="swatch-name">Все цвета</span></button>
-<button class="swatch" data-color="красный" aria-pressed="false"><span class="swatch-dot sw-krasny" aria-hidden="true"></span><span class="swatch-name">красный</span><span class="swatch-n">78</span></button>
-<button class="swatch" data-color="коричневый" aria-pressed="false"><span class="swatch-dot sw-korichnevy" aria-hidden="true"></span><span class="swatch-name">коричневый</span><span class="swatch-n">54</span></button>
-<button class="swatch" data-color="персиковый" aria-pressed="false"><span class="swatch-dot sw-persik" aria-hidden="true"></span><span class="swatch-name">персиковый</span><span class="swatch-n">8</span></button>
-<button class="swatch" data-color="бежевый" aria-pressed="false"><span class="swatch-dot sw-bezh" aria-hidden="true"></span><span class="swatch-name">бежевый</span><span class="swatch-n">53</span></button>
-<button class="swatch" data-color="серый" aria-pressed="false"><span class="swatch-dot sw-sery" aria-hidden="true"></span><span class="swatch-name">серый</span><span class="swatch-n">28</span></button>
-<button class="swatch" data-color="графит" aria-pressed="false"><span class="swatch-dot sw-grafit" aria-hidden="true"></span><span class="swatch-name">графит</span><span class="swatch-n">11</span></button>
-<button class="swatch" data-color="микс (бавария)" aria-pressed="false"><span class="swatch-dot sw-miks" aria-hidden="true"></span><span class="swatch-name">микс (бавария)</span><span class="swatch-n">21</span></button>
-<button class="swatch" data-color="зелёный" aria-pressed="false"><span class="swatch-dot sw-zeleny" aria-hidden="true"></span><span class="swatch-name">зелёный</span><span class="swatch-n">3</span></button>
+        <div class="pick-row">
+          <span class="pick-row-label">Бюджет</span>
+          <div class="pick-scroll" role="group" aria-label="Коллекция по цене">
+            <button class="budget-chip is-on" data-coll="" aria-pressed="true">Все</button><button class="budget-chip" data-coll="ekonom" aria-pressed="false">Эконом <small>от 18,50 ₽</small></button><button class="budget-chip" data-coll="klassika" aria-pressed="false">Классика <small>от 22,30 ₽</small></button><button class="budget-chip" data-coll="palitra" aria-pressed="false">Палитра <small>от 25,64 ₽</small></button><button class="budget-chip" data-coll="evropa" aria-pressed="false">Европа <small>от 47 ₽</small></button><button class="budget-chip" data-coll="formovka" aria-pressed="false">Ручная формовка <small>от 54,80 ₽</small></button>
+          </div>
         </div>
-        <p class="caption pick-note" id="pickNote" aria-live="polite"></p>
-      </div>
-    </section>
-
-    <section class="section pick-coll" aria-label="Коллекции по цене">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="tag">Шаг 2 · Цена</span>
-          <h2>Или начните с бюджета</h2>
-          <p class="caption pick-hint">Пять коллекций — от эконома до ручной формовки. Нажмите, чтобы перейти.</p>
-        </div>
-        <nav class="lane-nav" aria-label="Коллекции">
-          <a href="#lane-ekonom">Эконом <small>от 18,50 ₽</small></a><a href="#lane-klassika">Классика <small>от 22,30 ₽</small></a><a href="#lane-palitra">Палитра <small>от 25,64 ₽</small></a><a href="#lane-evropa">Европа <small>от 47 ₽</small></a><a href="#lane-formovka">Ручная формовка <small>от 54,80 ₽</small></a>
-        </nav>
+        <p class="pick-count" id="pickNote" aria-live="polite"></p>
       </div>
     </section>
 
     <div class="wrap lanes" id="lanes">
 
-      <section class="lane" id="lane-ekonom" data-page="collection-ekonom.html" aria-label="Коллекция «Эконом»">
+      <section class="lane" id="lane-ekonom" data-coll="ekonom" data-page="collection-ekonom.html" aria-label="Коллекция «Эконом»">
         <div class="lane-head">
-          <div>
-            <h2>Коллекция «Эконом»</h2>
-            <p class="caption lane-tag">Когда важна цена: заборы, хозпостройки и большие объёмы — без потери вида.</p>
+          <div class="lane-head-main">
+            <h2>Эконом</h2>
+            <p class="lane-meta">27 видов · от 18,50 ₽/шт</p>
           </div>
-          <p class="lane-price">от 18,50 ₽/шт</p>
+          <a class="lane-all" href="collection-ekonom.html">Смотреть все 27&nbsp;→</a>
         </div>
         <div class="p-grid">
 <a class="p-card" href="tovar/kirpich-eko-001.html" data-color="красный" data-texture="гладкий" data-format="одинарный"><img class="p-img" src="img/catalog/eko-001.jpg?v=3" alt="Кирпич «Бордовый Камень Клинкер» — красный, гладкий" width="640" height="480" loading="lazy"><h3 class="p-name">Бордовый Камень Клинкер</h3><p class="p-meta">клинкерный · гладкий · одинарный</p><p class="p-price">26,50 ₽/шт</p></a>
@@ -119,16 +110,15 @@
 <a class="p-card" href="tovar/kirpich-eko-005.html" data-color="графит" data-texture="гладкий" data-format="одинарный" hidden><img class="p-img" src="img/catalog/eko-005.jpg?v=3" alt="Кирпич «Графит Клинкер» — графит, гладкий" width="640" height="480" loading="lazy"><h3 class="p-name">Графит Клинкер</h3><p class="p-meta">клинкерный · гладкий · одинарный</p><span class="p-ask">Узнать цену</span></a>
 <a class="p-card" href="tovar/kirpich-eko-006.html" data-color="графит" data-texture="гладкий" data-format="одинарный" hidden><img class="p-img" src="img/catalog/eko-006.jpg?v=3" alt="Кирпич «Графит Полнотелый» — графит, гладкий" width="640" height="480" loading="lazy"><h3 class="p-name">Графит Полнотелый</h3><p class="p-meta">полнотелый · гладкий · одинарный</p><p class="p-price">31 ₽/шт</p></a>
         </div>
-        <a class="btn btn-ghost lane-btn" href="collection-ekonom.html" data-label="Вся коллекция — 27 видов">Вся коллекция — 27 видов</a>
       </section>
 
-      <section class="lane" id="lane-klassika" data-page="collection-klassika.html" aria-label="Коллекция «Классика»">
+      <section class="lane" id="lane-klassika" data-coll="klassika" data-page="collection-klassika.html" aria-label="Коллекция «Классика»">
         <div class="lane-head">
-          <div>
-            <h2>Коллекция «Классика»</h2>
-            <p class="caption lane-tag">Золотая середина по цене: дом, забор и цоколь из одной коллекции.</p>
+          <div class="lane-head-main">
+            <h2>Классика</h2>
+            <p class="lane-meta">44 вида · от 22,30 ₽/шт</p>
           </div>
-          <p class="lane-price">от 22,30 ₽/шт</p>
+          <a class="lane-all" href="collection-klassika.html">Смотреть все 44&nbsp;→</a>
         </div>
         <div class="p-grid">
 <a class="p-card" href="tovar/kirpich-kla-004.html" data-color="красный" data-texture="береста" data-format="одинарный" hidden><img class="p-img" src="img/catalog/kla-004.jpg?v=3" alt="Кирпич «Вельвет» — красный, береста" width="640" height="480" loading="lazy"><h3 class="p-name">Вельвет</h3><p class="p-meta">береста · одинарный</p><p class="p-price">23,80 ₽/шт</p></a>
@@ -176,16 +166,15 @@
 <a class="p-card" href="tovar/kirpich-kla-002.html" data-color="микс (бавария)" data-texture="береста" data-format="одинарный" hidden><img class="p-img" src="img/catalog/kla-002.jpg?v=3" alt="Кирпич «Баварский Темный» — микс (бавария), береста" width="640" height="480" loading="lazy"><h3 class="p-name">Баварский Темный</h3><p class="p-meta">береста · одинарный</p><p class="p-price">28,40 ₽/шт</p></a>
 <a class="p-card" href="tovar/kirpich-kla-005.html" data-color="микс (бавария)" data-texture="береста" data-format="одинарный" hidden><img class="p-img" src="img/catalog/kla-005.jpg?v=3" alt="Кирпич «Винтаж» — микс (бавария), береста" width="640" height="480" loading="lazy"><h3 class="p-name">Винтаж</h3><p class="p-meta">береста · одинарный</p><p class="p-price">29,20 ₽/шт</p></a>
         </div>
-        <a class="btn btn-ghost lane-btn" href="collection-klassika.html" data-label="Вся коллекция — 44 вида">Вся коллекция — 44 вида</a>
       </section>
 
-      <section class="lane" id="lane-palitra" data-page="collection-palitra.html" aria-label="Коллекция «Палитра»">
+      <section class="lane" id="lane-palitra" data-coll="palitra" data-page="collection-palitra.html" aria-label="Коллекция «Палитра»">
         <div class="lane-head">
-          <div>
-            <h2>Коллекция «Палитра»</h2>
-            <p class="caption lane-tag">54 цвета — от белого до графита. Если ищете «тот самый» оттенок, он здесь.</p>
+          <div class="lane-head-main">
+            <h2>Палитра</h2>
+            <p class="lane-meta">54 вида · от 25,64 ₽/шт</p>
           </div>
-          <p class="lane-price">от 25,64 ₽/шт</p>
+          <a class="lane-all" href="collection-palitra.html">Смотреть все 54&nbsp;→</a>
         </div>
         <div class="p-grid">
 <a class="p-card" href="tovar/kirpich-pal-002.html" data-color="красный" data-texture="гладкий" data-format="одинарный"><img class="p-img" src="img/catalog/pal-002.jpg?v=3" alt="Кирпич «Амбрим» — красный, гладкий" width="640" height="480" loading="lazy"><h3 class="p-name">Амбрим</h3><p class="p-meta">гладкий · одинарный</p><p class="p-price">26,48 ₽/шт</p></a>
@@ -243,16 +232,15 @@
 <a class="p-card" href="tovar/kirpich-pal-026.html" data-color="зелёный" data-texture="гладкий" data-format="одинарный" hidden><img class="p-img" src="img/catalog/pal-026.jpg?v=3" alt="Кирпич «Малахит» — зелёный, гладкий" width="640" height="480" loading="lazy"><h3 class="p-name">Малахит</h3><p class="p-meta">гладкий · одинарный</p><p class="p-price">88,70 ₽/шт</p></a>
 <a class="p-card" href="tovar/kirpich-pal-039.html" data-color="зелёный" data-texture="гладкий" data-format="одинарный" hidden><img class="p-img" src="img/catalog/pal-039.jpg?v=3" alt="Кирпич «Светло-зеленый» — зелёный, гладкий" width="640" height="480" loading="lazy"><h3 class="p-name">Светло-зеленый</h3><p class="p-meta">гладкий · одинарный</p><p class="p-price">81,56 ₽/шт</p></a>
         </div>
-        <a class="btn btn-ghost lane-btn" href="collection-palitra.html" data-label="Вся коллекция — 54 вида">Вся коллекция — 54 вида</a>
       </section>
 
-      <section class="lane" id="lane-evropa" data-page="collection-evropa.html" aria-label="Коллекция «Европа»">
+      <section class="lane" id="lane-evropa" data-coll="evropa" data-page="collection-evropa.html" aria-label="Коллекция «Европа»">
         <div class="lane-head">
-          <div>
-            <h2>Коллекция «Европа»</h2>
-            <p class="caption lane-tag">Кирпич «под старину» с рельефной поверхностью — для фасадов с характером.</p>
+          <div class="lane-head-main">
+            <h2>Европа</h2>
+            <p class="lane-meta">32 вида · от 47 ₽/шт</p>
           </div>
-          <p class="lane-price">от 47 ₽/шт</p>
+          <a class="lane-all" href="collection-evropa.html">Смотреть все 32&nbsp;→</a>
         </div>
         <div class="p-grid">
 <a class="p-card" href="tovar/kirpich-evr-003.html" data-color="красный" data-texture="гладкий" data-format="одинарный"><img class="p-img" src="img/catalog/evr-003.jpg?v=3" alt="Кирпич «Бостон» — красный, гладкий" width="640" height="480" loading="lazy"><h3 class="p-name">Бостон</h3><p class="p-meta">гладкий · одинарный</p><p class="p-price">65 ₽/шт</p></a>
@@ -288,16 +276,15 @@
 <a class="p-card" href="tovar/kirpich-evr-028.html" data-color="микс (бавария)" data-texture="кроста" data-format="узкий (евро)" hidden><img class="p-img" src="img/catalog/evr-028.jpg?v=3" alt="Кирпич «Мокко Вт Кроста» — микс (бавария), кроста" width="640" height="480" loading="lazy"><h3 class="p-name">Мокко Вт Кроста</h3><p class="p-meta">кроста · узкий (евро)</p><span class="p-ask">Узнать цену</span></a>
 <a class="p-card" href="tovar/kirpich-evr-030.html" data-color="микс (бавария)" data-texture="руст" data-format="одинарный" hidden><img class="p-img" src="img/catalog/evr-030.jpg?v=3" alt="Кирпич «Прованс Вт Руст» — микс (бавария), руст" width="640" height="480" loading="lazy"><h3 class="p-name">Прованс Вт Руст</h3><p class="p-meta">руст · одинарный</p><span class="p-ask">Узнать цену</span></a>
         </div>
-        <a class="btn btn-ghost lane-btn" href="collection-evropa.html" data-label="Вся коллекция — 32 вида">Вся коллекция — 32 вида</a>
       </section>
 
-      <section class="lane" id="lane-formovka" data-page="collection-formovka.html" aria-label="Коллекция «Ручная формовка»">
+      <section class="lane" id="lane-formovka" data-coll="formovka" data-page="collection-formovka.html" aria-label="Коллекция «Ручная формовка»">
         <div class="lane-head">
-          <div>
-            <h2>Коллекция «Ручная формовка»</h2>
-            <p class="caption lane-tag">Премиум-кирпич: у каждого свой рисунок, как у кирпича столетней кладки.</p>
+          <div class="lane-head-main">
+            <h2>Ручная формовка</h2>
+            <p class="lane-meta">100 видов · от 54,80 ₽/шт</p>
           </div>
-          <p class="lane-price">от 54,80 ₽/шт</p>
+          <a class="lane-all" href="collection-formovka.html">Смотреть все 100&nbsp;→</a>
         </div>
         <div class="p-grid">
 <a class="p-card" href="tovar/kirpich-for-014.html" data-color="красный" data-texture="ручная формовка" data-format="ригель (длинный)"><img class="p-img" src="img/catalog/for-014.jpg?v=3" alt="Кирпич «Астра Modf» — красный, ручная формовка" width="640" height="480" loading="lazy"><h3 class="p-name">Астра Modf</h3><p class="p-meta">ручная формовка · ригель (длинный)</p><p class="p-price">189,20 ₽/шт</p></a>
@@ -401,7 +388,6 @@
 <a class="p-card" href="tovar/kirpich-for-066.html" data-color="зелёный" data-texture="ручная формовка" data-format="лонг (длинный)" hidden><img class="p-img" src="img/catalog/for-066.jpg?v=3" alt="Кирпич «Залесье» — зелёный, ручная формовка" width="640" height="480" loading="lazy"><h3 class="p-name">Залесье</h3><p class="p-meta">ручная формовка · лонг (длинный)</p><p class="p-price">329,60 ₽/шт</p></a>
 <a class="p-card" href="tovar/kirpich-for-041.html" data-color="разное" data-texture="ручная формовка" data-format="лонг (длинный)" hidden><img class="p-img" src="img/catalog/for-041.jpg?v=3" alt="Кирпич «Вена» — разное, ручная формовка" width="640" height="480" loading="lazy"><h3 class="p-name">Вена</h3><p class="p-meta">ручная формовка · лонг (длинный)</p><p class="p-price">303,70 ₽/шт</p></a>
         </div>
-        <a class="btn btn-ghost lane-btn" href="collection-formovka.html" data-label="Вся коллекция — 100 видов">Вся коллекция — 100 видов</a>
       </section>
     </div>
 
@@ -482,7 +468,7 @@
               <a href="policy.html">политикой конфиденциальности</a>.
               Номер не передаём третьим лицам.</p>
           </form>
-          <p class="form-ok" id="ctaOk" hidden>Заявка принята — перезвоним за 5 минут (демо)</p>
+          <p class="form-ok" id="ctaOk" hidden>Заявка принята — скоро перезвоним (демо)</p>
         </div>
       </div>
     </div>
@@ -533,56 +519,22 @@
   </script>
 
   <script>
-    // Подбор по цвету: карточки уже в разметке, фильтруем показом/скрытием.
-    // Результаты всегда группами по коллекциям — стили фото не смешиваем.
-    var LIMIT = 8;
+    // Фильтр каталога: цвет и бюджет работают вместе. Карточки уже в DOM,
+    // фильтруем показом/скрытием. Результат всегда группами по коллекциям —
+    // стили фото разных заводов не смешиваем. Инлайн-лимит на ленту, полный
+    // список — по ссылке «Смотреть все N».
+    var LANE_LIMIT = 8;
     var swatches = Array.prototype.slice.call(document.querySelectorAll('.swatch'));
+    var chips = Array.prototype.slice.call(document.querySelectorAll('.budget-chip'));
     var lanes = Array.prototype.slice.call(document.querySelectorAll('.lane'));
     var note = document.getElementById('pickNote');
+    var state = { color: '', coll: '' };
 
     function plural(n, one, few, many) {
       var m10 = n % 10, m100 = n % 100;
       if (m10 === 1 && m100 !== 11) return one;
       if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
       return many;
-    }
-
-    function apply(color) {
-      var total = 0;
-      lanes.forEach(function (lane) {
-        var cards = Array.prototype.slice.call(lane.querySelectorAll('.p-card'));
-        var btn = lane.querySelector('.lane-btn');
-        var shown = 0, match = 0;
-        cards.forEach(function (c) {
-          if (!color) {
-            c.hidden = c.dataset.feat === '0';
-          } else {
-            var ok = c.dataset.color === color;
-            if (ok) match++;
-            var show = ok && shown < LIMIT;
-            c.hidden = !show;
-            if (show) shown++;
-          }
-        });
-        if (!color) {
-          lane.hidden = false;
-          btn.textContent = btn.dataset.label;
-          btn.href = lane.dataset.page;
-        } else {
-          lane.hidden = match === 0;
-          total += match;
-          if (match > shown) {
-            var rest = match - shown;
-            btn.textContent = 'Ещё ' + rest + ' — в коллекции';
-          } else {
-            btn.textContent = btn.dataset.label;
-          }
-          btn.href = lane.dataset.page + '?color=' + encodeURIComponent(color);
-        }
-      });
-      note.textContent = color
-        ? 'Нашлось ' + total + ' ' + plural(total, 'вид', 'вида', 'видов') + ' — «' + color + '», по коллекциям:'
-        : '';
     }
 
     // featured-карточки помечаем по стартовому состоянию разметки
@@ -592,13 +544,64 @@
       });
     });
 
+    function apply() {
+      var filtered = !!(state.color || state.coll);
+      var totalMatch = 0;
+      lanes.forEach(function (lane) {
+        // фильтр коллекции: показываем только выбранную ленту
+        if (state.coll && lane.dataset.coll !== state.coll) {
+          lane.hidden = true;
+          return;
+        }
+        var cards = Array.prototype.slice.call(lane.querySelectorAll('.p-card'));
+        var shown = 0, match = 0;
+        cards.forEach(function (c) {
+          var colorOk = !state.color || c.dataset.color === state.color;
+          if (colorOk) match++;
+          var show = filtered ? (colorOk && shown < LANE_LIMIT) : (c.dataset.feat === '1');
+          c.hidden = !show;
+          if (show) shown++;
+        });
+        var hide = filtered && match === 0;
+        lane.hidden = hide;
+        if (!hide) totalMatch += match;
+        var all = lane.querySelector('.lane-all');
+        if (all) {
+          all.href = lane.dataset.page +
+            (state.color ? '?color=' + encodeURIComponent(state.color) : '');
+        }
+      });
+      if (!state.color) { note.textContent = ''; return; }
+      note.textContent = totalMatch
+        ? 'Нашлось ' + totalMatch + ' ' + plural(totalMatch, 'вид', 'вида', 'видов') + ' — ' + state.color
+        : 'Такого цвета сейчас нет — сбросьте фильтр';
+    }
+
     swatches.forEach(function (s) {
       s.addEventListener('click', function () {
+        state.color = s.dataset.color;
         swatches.forEach(function (x) {
-          x.classList.toggle('is-on', x === s);
-          x.setAttribute('aria-pressed', x === s ? 'true' : 'false');
+          var on = x === s;
+          x.classList.toggle('is-on', on);
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
-        apply(s.dataset.color);
+        apply();
+      });
+    });
+
+    chips.forEach(function (ch) {
+      ch.addEventListener('click', function () {
+        state.coll = ch.dataset.coll;
+        chips.forEach(function (x) {
+          var on = x === ch;
+          x.classList.toggle('is-on', on);
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        apply();
+        if (state.coll) {
+          var lane = document.getElementById('lane-' + state.coll);
+          if (lane) lane.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
 
