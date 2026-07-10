@@ -25,6 +25,22 @@ SWATCH_CLASS = {
     "персиковый": "sw-persik", "бежевый": "sw-bezh", "серый": "sw-sery",
     "графит": "sw-grafit", "микс (бавария)": "sw-miks", "зелёный": "sw-zeleny",
 }
+# короткая подпись под кружком-образцом (полное имя — в aria-label и статусе)
+SW_LABEL = {"микс (бавария)": "бавария"}
+
+
+def swatch_btn(label, dot_class, attrs, is_on=False, aria=""):
+    """Кнопка-образец цвета: кирпичик-образец + подпись.
+    dot_class=None — текстовая кнопка «Все» (не псевдо-свотч)."""
+    on = ' is-on' if is_on else ''
+    pressed = 'true' if is_on else 'false'
+    aria_attr = f' aria-label="{aria}"' if aria else ''
+    if dot_class is None:
+        return (f'<button class="swatch sw-text{on}" {attrs} '
+                f'aria-pressed="{pressed}"{aria_attr}>{label}</button>')
+    return (f'<button class="swatch{on}" {attrs} aria-pressed="{pressed}"{aria_attr}>'
+            f'<span class="swatch-dot {dot_class}" aria-hidden="true"></span>'
+            f'<span class="sw-name">{label}</span></button>')
 
 COLLECTIONS = {
     "ekonom": {
@@ -245,7 +261,7 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=10">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=11">{extra_head}
 </head>
 <body>
 
@@ -338,16 +354,16 @@ def build_category():
     color_counts = {}
     for p in PRODUCTS:
         color_counts[p["color_group"]] = color_counts.get(p["color_group"], 0) + 1
-    swatches = ['<button class="swatch is-on" data-color="" aria-pressed="true">'
-                '<span class="swatch-dot sw-all" aria-hidden="true"></span>'
-                'Все цвета</button>']
+    swatches = [swatch_btn("Все", None, 'data-color=""',
+                           is_on=True, aria="Все цвета")]
     for color in COLOR_ORDER:
         if color not in SWATCH_CLASS or not color_counts.get(color):
             continue
-        swatches.append(
-            f'<button class="swatch" data-color="{esc(color)}" aria-pressed="false">'
-            f'<span class="swatch-dot {SWATCH_CLASS[color]}" aria-hidden="true"></span>'
-            f'{esc(color)} <span class="swatch-n">{color_counts[color]}</span></button>')
+        n = color_counts[color]
+        swatches.append(swatch_btn(
+            esc(SW_LABEL.get(color, color)), SWATCH_CLASS[color],
+            f'data-color="{esc(color)}"',
+            aria=f"{esc(color)} — {n} {plural(n, 'вид', 'вида', 'видов')}"))
 
     # ленты в порядке цены: дешёвые первыми, «цена по запросу» в конце
     lane_order = sorted(COLL_ORDER,
@@ -412,7 +428,7 @@ def build_category():
         </div>
         <div class="pick-row">
           <span class="pick-row-label">Бюджет</span>
-          <div class="pick-scroll" role="group" aria-label="Коллекция по цене">
+          <div class="pick-scroll pick-scroll--slide" role="group" aria-label="Коллекция по цене">
             {"".join(budget_chips)}
           </div>
         </div>
@@ -599,10 +615,19 @@ def build_category():
 # ── Страницы коллекций ───────────────────────────────────────────────────────
 
 def chip_row(label, values, group):
-    chips = [f'<button class="chip is-on" data-group="{group}" data-val="" aria-pressed="true">Все</button>']
-    for v in values:
-        chips.append(f'<button class="chip" data-group="{group}" data-val="{esc(v)}" '
-                     f'aria-pressed="false">{esc(v)}</button>')
+    if group == "color":
+        # цвет — кирпичики-образцы, единый язык со страницей категории
+        chips = [swatch_btn("Все", None, f'data-group="{group}" data-val=""',
+                            is_on=True, aria="Все цвета")]
+        for v in values:
+            chips.append(swatch_btn(
+                esc(SW_LABEL.get(v, v)), SWATCH_CLASS.get(v, "sw-all"),
+                f'data-group="{group}" data-val="{esc(v)}"', aria=esc(v)))
+    else:
+        chips = [f'<button class="chip is-on" data-group="{group}" data-val="" aria-pressed="true">Все</button>']
+        for v in values:
+            chips.append(f'<button class="chip" data-group="{group}" data-val="{esc(v)}" '
+                         f'aria-pressed="false">{esc(v)}</button>')
     return (f'<div class="filter-row"><span class="tag filter-label">{label}</span>'
             f'<div class="filter-chips">{"".join(chips)}</div></div>')
 
@@ -666,7 +691,7 @@ def build_collection(slug):
     js = """
   <script>
     var state = { color: '', texture: '', format: '' };
-    var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+    var chips = Array.prototype.slice.call(document.querySelectorAll('.chip[data-group], .swatch[data-group]'));
     var cards = Array.prototype.slice.call(document.querySelectorAll('.p-card'));
     var note = document.getElementById('countNote');
     var empty = document.getElementById('emptyNote');
@@ -834,7 +859,7 @@ def build_zabutovka():
       <div class="wrap">
         <div class="pick-row">
           <span class="pick-row-label">Задача</span>
-          <div class="pick-scroll" role="group" aria-label="Что будете строить">
+          <div class="pick-scroll pick-scroll--slide" role="group" aria-label="Что будете строить">
 {chr(10).join(chips)}
           </div>
         </div>
