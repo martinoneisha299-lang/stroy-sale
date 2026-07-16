@@ -181,7 +181,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=14">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=15">{extra_head}
 </head>
 <body>
 
@@ -584,7 +584,7 @@ def build_category():
   <!-- Шапка категории: живая плитка -->
   <section class="tile-hero" aria-label="Тротуарная плитка">
     <div class="wrap tile-hero-in">
-      <div>
+      <div class="tile-hero-copy">
         <nav class="crumbs" aria-label="Хлебные крошки">
           <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
           <span>Тротуарная плитка</span>
@@ -706,14 +706,14 @@ def build_shape(slug):
     if n_mono and n_mix:
         filter_html = f"""
       <div class="filters" aria-label="Фильтр по типу окраски">
-        <div class="filter-row">
-          <div class="filter-chips" id="kindChips">
+        <div class="pick-row">
+          <div class="pick-scroll pick-scroll--slide" id="kindChips" role="group" aria-label="Тип окраски">
             <button class="chip is-on" data-kind="" aria-pressed="true">Все · {n}</button>
             <button class="chip" data-kind="mix" aria-pressed="false">Колормиксы · {n_mix}</button>
             <button class="chip" data-kind="mono" aria-pressed="false">Однотонные · {n_mono}</button>
           </div>
-          <p class="caption" id="shownNote">Показано {n} из {n}</p>
         </div>
+        <p class="pick-count" id="shownNote">Показано {n} из {n}</p>
       </div>"""
         filter_js = """
   <script>

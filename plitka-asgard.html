@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=14">
+  <link rel="stylesheet" href="styles.css?v=15">
 </head>
 <body>
 
@@ -52,14 +52,14 @@
     <div class="wrap">
 
       <div class="filters" aria-label="Фильтр по типу окраски">
-        <div class="filter-row">
-          <div class="filter-chips" id="kindChips">
+        <div class="pick-row">
+          <div class="pick-scroll pick-scroll--slide" id="kindChips" role="group" aria-label="Тип окраски">
             <button class="chip is-on" data-kind="" aria-pressed="true">Все · 24</button>
             <button class="chip" data-kind="mix" aria-pressed="false">Колормиксы · 17</button>
             <button class="chip" data-kind="mono" aria-pressed="false">Однотонные · 7</button>
           </div>
-          <p class="caption" id="shownNote">Показано 24 из 24</p>
         </div>
+        <p class="pick-count" id="shownNote">Показано 24 из 24</p>
       </div>
       <div class="p-grid">
 <a class="p-card" data-kind="mix" href="tovar/asgard-agat-korichnevyy.html"><img class="p-img" src="img/catalog/tile-149.jpg?v=3" alt="Тротуарная плитка «Агат коричневый» — Асгард" width="640" height="480" loading="lazy"><h3 class="p-name">Агат коричневый</h3><p class="p-meta">колормикс</p><p class="p-price">1 260 ₽/м²</p></a>

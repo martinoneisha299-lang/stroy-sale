@@ -300,7 +300,7 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=14">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=15">{extra_head}
 </head>
 <body>
 
@@ -652,6 +652,10 @@ def build_category():
 
 # ── Страницы коллекций ───────────────────────────────────────────────────────
 
+# первая пилюля ряда описывает сам ряд — ярлыки-колонки не нужны
+CHIP_ALL = {"Фактура": "Любая фактура", "Формат": "Любой формат"}
+
+
 def chip_row(label, values, group):
     if group == "color":
         # цвет — круги-образцы в одну прокручиваемую строку со стрелкой,
@@ -662,15 +666,18 @@ def chip_row(label, values, group):
             chips.append(swatch_btn(
                 esc(SW_LABEL.get(v, v)), SWATCH_CLASS.get(v, "sw-all"),
                 f'data-group="{group}" data-val="{esc(v)}"', aria=esc(v)))
-        return (f'<div class="filter-row filter-row--color">'
-                f'<span class="tag filter-label">{label}</span>'
+        return (f'<div class="pick-row pick-row--color">'
+                f'<span class="pick-row-label">{label}</span>'
                 f'{color_track(chr(10).join(chips))}</div>')
-    chips = [f'<button class="chip is-on" data-group="{group}" data-val="" aria-pressed="true">Все</button>']
+    all_label = CHIP_ALL.get(label, "Все")
+    chips = [f'<button class="chip is-on" data-group="{group}" data-val="" '
+             f'aria-pressed="true">{all_label}</button>']
     for v in values:
         chips.append(f'<button class="chip" data-group="{group}" data-val="{esc(v)}" '
                      f'aria-pressed="false">{esc(v)}</button>')
-    return (f'<div class="filter-row"><span class="tag filter-label">{label}</span>'
-            f'<div class="filter-chips">{"".join(chips)}</div></div>')
+    return (f'<div class="pick-row"><span class="pick-row-label">{label}</span>'
+            f'<div class="pick-scroll pick-scroll--slide" role="group" '
+            f'aria-label="{label}">{"".join(chips)}</div></div>')
 
 
 def build_collection(slug):
@@ -712,12 +719,16 @@ def build_collection(slug):
       </div>
     </section>
 
+    <!-- Фильтр-бар: тот же язык, что на странице категории -->
+    <section class="pick-bar" aria-label="Подбор в коллекции">
+      <div class="wrap">
+{chr(10).join(filters)}
+        <p class="pick-count" id="countNote" aria-live="polite"></p>
+      </div>
+    </section>
+
     <section class="section coll" aria-label="Товары коллекции">
       <div class="wrap">
-        <div class="filters">
-{chr(10).join(filters)}
-        </div>
-        <p class="pick-count" id="countNote" aria-live="polite"></p>
         <div class="p-grid" id="grid">
 {cards}
         </div>
