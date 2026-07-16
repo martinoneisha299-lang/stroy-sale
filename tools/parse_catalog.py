@@ -74,6 +74,7 @@ TEXTURES = [
     ("винтаж", ["винтаж"]),
     ("ретро", ["ретро"]),
     ("рельефный", ["рельеф"]),
+    ("коралл", ["коралл"]),   # раньше «кора» — но фактура Донского другая
     ("кора", ["кора", "кедра"]),
     ("бриз", ["бриз"]),
     ("велюр", ["вельвет", "велюр"]),
@@ -315,51 +316,6 @@ def don_name(raw: str) -> str:
     return nice_title(cut) if cut else nice_title(raw)
 
 
-def get_donskoy_fallback(category, name, texture, fmt):
-    if category == "obychnyy":  # забутовочный
-        if "1,4" in fmt or "утолщ" in fmt.lower() or "полуторн" in fmt.lower():
-            fallback_dir = "Донской кирпич/забутовочный/Утолщенный полнотелый М150 сплошной (F25) 308шт упак. лентой"
-            fallback_photos = ["Утолщенный полнотелый М150 сплошной (F25) 308шт упак. лентой_1.png"]
-        else:
-            fallback_dir = "Донской кирпич/забутовочный/Одинарный М100 (F25 пустот. 12%, 8 конусных углублений) 448шт"
-            fallback_photos = ["Одинарный М100 (F25 пустот. 12%, 8 конусных углублений) 448шт_1.png"]
-    else:  # облицовочный
-        n = name.lower()
-        if "вулкан" in n:
-            fallback_dir = "Донской кирпич/лицевой/Вулкан лава Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой"
-            fallback_photos = ["Вулкан лава Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой_1.png"]
-        elif "винтаж" in n:
-            fallback_dir = "Донской кирпич/лицевой/Винтаж лава Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой"
-            fallback_photos = ["Винтаж лава Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой_1.png"]
-        elif "готик" in n:
-            fallback_dir = "Донской кирпич/лицевой/Готик Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой"
-            fallback_photos = ["Готик Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой_1.png"]
-        elif "солома" in n:
-            if "гладк" in texture.lower():
-                fallback_dir = "Донской кирпич/лицевой/СВЕТЛЫЙ одинарный ЛИЦЕВОЙ с ФАСКОЙ M150 (F50) 416шт упак. пленкой"
-                fallback_photos = ["СВЕТЛЫЙ одинарный ЛИЦЕВОЙ с ФАСКОЙ M150 (F50) 416шт упак. пленкой_1.png"]
-            else:
-                fallback_dir = "Донской кирпич/лицевой/СВЕТЛЫЙ ВИНТАЖ Одинарный пустотелый М150 (F50 пустот 37%) 416шт упак. пленкой"
-                fallback_photos = ["СВЕТЛЫЙ ВИНТАЖ Одинарный пустотелый М150 (F50 пустот 37%) 416шт упак. пленкой_1.png"]
-        elif "вишня" in n or "красный" in n or "красн" in n:
-            if "гладк" in texture.lower():
-                fallback_dir = "Славянский"
-                fallback_photos = ["КЛАССИК 1НФ_2.webp"]
-            elif "руст" in texture.lower() or "рельеф" in texture.lower():
-                fallback_dir = "Губский/Лицевой керамический кирпич/Красный Бриз"
-                fallback_photos = ["Красный Бриз_1.jpg"]
-            else:
-                fallback_dir = "Губский/Лицевой керамический кирпич/Красная Кора"
-                fallback_photos = ["Красная Кора_1.jpg"]
-        elif "коричневый" in n or "тархан" in n:
-            fallback_dir = "Славянский"
-            fallback_photos = ["МОККО ВТ Еврo 0,7НФ_2.webp"]
-        else:
-            fallback_dir = "Славянский"
-            fallback_photos = ["КЛАССИК 1НФ_2.webp"]
-    return fallback_dir, fallback_photos
-
-
 def parse_donskoy():
     base = ROOT / "Донской кирпич"
     seen = {}
@@ -386,8 +342,7 @@ def parse_donskoy():
             
             photos = images_in(d)
             p_dir = str(d.relative_to(ROOT))
-            if not photos:
-                p_dir, photos = get_donskoy_fallback(category, name, texture, fmt)
+            # нет фото — честная заглушка «Фото пришлём по запросу»
 
             key = (name.lower(), texture, fmt, mark, category)
             if key in seen:  # дубль: другой поддон/фасовка при той же марке
@@ -575,20 +530,113 @@ parse_slavyanskiy()
 parse_tandem()
 parse_terbunskiy()
 
-# Коллизии имён: «Коричневый» гладкий 1НФ есть в М150 и М175 —
-# дописываем марку, чтобы клиент видел разницу
+# ─── «Без каши»: один цвет+фактура = одна карточка ───────────────────────────
+# Донской («Классика»): форматы и марки одного цвета+фактуры сливаются
+# в базовый товар, варианты уходят в formats_prices (как у Губского).
+# Порядок как у самого завода: карточка = цвет+фактура, формат внутри.
 from collections import defaultdict
-groups = defaultdict(list)
+
+FMT_RANK = {"1НФ (одинарный)": 0, "0,7НФ (евро)": 1, "0,9НФ": 2,
+            "1,4НФ (полуторный)": 3}
+
+
+def merge_klassika():
+    groups = defaultdict(list)
+    for p in products:
+        if p["collection"] == "klassika":
+            groups[(p["name"].lower(), p["texture"])].append(p)
+    removed = []
+    for grp in groups.values():
+        if len(grp) < 2:
+            continue
+        # база: с фото → одинарный формат → дешевле
+        grp.sort(key=lambda p: (not p["photos"],
+                                FMT_RANK.get(p["format"], 9),
+                                p["price"] or 10**9))
+        base = grp[0]
+        for v in grp[1:]:
+            if v["price"]:
+                if v["format"] != base["format"]:
+                    label = v["format"]
+                else:  # тот же формат, другая марка прочности
+                    label = f'{v["format"]}, марка {v.get("mark") or "выше"}'
+                # не затираем и не дублируем
+                if label not in base["formats_prices"]:
+                    base["formats_prices"][label] = v["price"]
+            base["flags"].append(f"объединён вариант: {v['factory_name']}")
+            removed.append(id(v))
+    products[:] = [p for p in products if id(p) not in removed]
+
+
+def merge_exact_twins():
+    """Полные двойники (имя+фактура+формат): Славянский «Классик»/«Классик УС»,
+    Тандем «Омега Modf» ×2 — покупателю различий не видно, оставляем один."""
+    groups = defaultdict(list)
+    for p in products:
+        groups[(p["collection"], p["name"].lower(), p["texture"], p["format"])].append(p)
+    removed = []
+    for grp in groups.values():
+        if len(grp) < 2:
+            continue
+        grp.sort(key=lambda p: (not p["photos"], p["price"] or 10**9,
+                                len(p["factory_name"])))
+        base = grp[0]
+        for v in grp[1:]:
+            if v["price"] and v["price"] != base["price"]:
+                label = f'вариант ({v.get("mark") or v["factory_name"][:20]})'
+                base["formats_prices"].setdefault(label, v["price"])
+            base["flags"].append(f"объединён двойник: {v['factory_name']}")
+            removed.append(id(v))
+    products[:] = [p for p in products if id(p) not in removed]
+
+
+# Имя карточки как у завода: цвет + фактура («Красный руст»),
+# чтобы соседние карточки одного цвета не выглядели дублями.
+# Делается ДО схлопывания, чтобы «Красный»+береста слился с «Красный Береста».
+_TEX_STOP = ([t for t, _ in TEXTURES if t not in ("гладкий", "ручная формовка")]
+             + [k for _, keys in TEXTURES for k in keys]
+             + ["лава"])  # «Вулкан Лава» — заводское имя, не дописываем
 for p in products:
-    groups[(p["collection"], p["name"].lower(), p["texture"], p["format"])].append(p)
-for grp in groups.values():
+    if p["collection"] == "klassika":
+        tex = p["texture"]
+        low = p["name"].lower()
+        if (tex not in ("гладкий", "ручная формовка")
+                and not any(w in low for w in _TEX_STOP)):
+            p["name"] = f'{p["name"]} {tex}'
+
+merge_klassika()
+
+# фасовки-двойники Донского: одно имя, формат и марка, но фактура в спеках
+# распознана по-разному («Красный Рельефный» 416шт=береста / 480шт=рельефный)
+_pack = defaultdict(list)
+for p in products:
+    if p["collection"] == "klassika":
+        _pack[(p["name"].lower(), p["format"], p.get("mark"))].append(p)
+for grp in _pack.values():
     if len(grp) > 1:
-        for p in grp:
-            mark = p.get("mark") or ""
-            if mark:
-                p["name"] = f"{p['name']} {mark}"
-            else:
-                p["flags"].append("совпадает имя с другим товаром — проверить")
+        grp.sort(key=lambda p: (not p["photos"], p["price"] or 10**9))
+        base = grp[0]
+        for v in grp[1:]:
+            base["flags"].append(f"объединена фасовка: {v['factory_name']}")
+            products.remove(v)
+
+merge_exact_twins()
+
+# Европа (Славянский, цены по запросу): один цвет в двух форматах —
+# одна карточка, второй формат уходит в характеристики
+_ev = defaultdict(list)
+for p in products:
+    if p["collection"] == "evropa":
+        _ev[(p["name"].lower(), p["texture"])].append(p)
+for grp in _ev.values():
+    if len(grp) > 1:
+        grp.sort(key=lambda p: (not p["photos"], FMT_RANK.get(p["format"], 9)))
+        base = grp[0]
+        others = ", ".join(v["format"] for v in grp[1:])
+        base["specs"]["Форматы"] = f'{base["format"]}, также {others}'
+        for v in grp[1:]:
+            base["flags"].append(f"объединён формат: {v['factory_name']}")
+            products.remove(v)
 
 # id: коллекция-NNN, стабильно по сортировке
 counters = {}

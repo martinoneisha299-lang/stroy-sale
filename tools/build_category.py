@@ -139,8 +139,15 @@ def esc(s):
     return html.escape(str(s), quote=True)
 
 
+FMT_RANK = {"1НФ (одинарный)": 0, "0,7НФ (евро)": 1, "0,9НФ": 2,
+            "1,4НФ (полуторный)": 3}
+
+
 def sort_key(p):
-    return (COLOR_ORDER.index(p["color_group"]), p["name"])
+    # цветовая семья → имя → гладкие первыми → формат (как на сайте завода)
+    return (COLOR_ORDER.index(p["color_group"]), p["name"],
+            p["texture"] != "гладкий", p["texture"],
+            FMT_RANK.get(p["format"], 9))
 
 
 def card(p, feat_hidden=None, root=""):
@@ -149,7 +156,7 @@ def card(p, feat_hidden=None, root=""):
     True/False — лента категории, hidden если не featured."""
     alt = f"Кирпич «{p['name']}» — {p['color_group']}, {p['texture']}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="{root}img/catalog/{p["id"]}.jpg?v=3" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="{root}img/catalog/{p["id"]}.jpg?v=5" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -300,7 +307,7 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=15">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=18">{extra_head}
 </head>
 <body>
 
@@ -854,7 +861,7 @@ def card_z(p):
     name, meta, tasks = RAB_VIEW[p["id"]]
     alt = f"Забутовочный кирпич: {name}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=3" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=5" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -1229,14 +1236,14 @@ def build_brick_product(p, is_rab=False):
             on = " is-on" if i == 0 else ""
             pressed = "true" if i == 0 else "false"
             btns.append(
-                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=4" '
+                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=5" '
                 f'aria-pressed="{pressed}" aria-label="Фото {i + 1}">'
-                f'<img src="{root}{src}?v=4" alt="" width="640" height="480" loading="lazy"></button>')
+                f'<img src="{root}{src}?v=5" alt="" width="640" height="480" loading="lazy"></button>')
         thumbs = f'\n      <div class="pd-thumbs">{"".join(btns)}</div>'
 
     if p["_thumb"]:
         photo = (f'<div class="pd-main-wrap" id="pdMainWrap">'
-                 f'<img class="pd-main" id="pdMain" src="{root}{p["_gallery"][0]}?v=4" '
+                 f'<img class="pd-main" id="pdMain" src="{root}{p["_gallery"][0]}?v=5" '
                  f'alt="{esc(alt)}" width="640" height="480">'
                  f'<button class="pd-zoom-trigger" id="pdZoomTrigger" type="button" aria-label="Открыть во весь экран">'
                  f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>'
@@ -1257,7 +1264,13 @@ def build_brick_product(p, is_rab=False):
         for f_name, f_price in fmts.items():
             if f_name == p["format"]:
                 continue  # базовый формат уже показан большой ценой
-            short = FMT_SHORT.get(f_name, f_name)
+            short = FMT_SHORT.get(f_name)
+            if short is None:
+                # составная метка («1НФ (одинарный), марка М175») —
+                # переводим известную часть на простой язык
+                short = f_name
+                for full, s in FMT_SHORT.items():
+                    short = short.replace(full, s)
             fmt_lines.append(f"{esc(short)} — {rub(f_price)} ₽")
         fmt_note = (f'<p class="caption pd-price-note">Другие форматы: {" · ".join(fmt_lines)}.</p>'
                     if fmt_lines else "")
