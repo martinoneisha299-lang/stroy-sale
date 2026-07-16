@@ -859,14 +859,9 @@ a { color: inherit; }
 
 .pick-row + .pick-row { margin-top: var(--space-2xs); }
 
-.pick-row-label {
-  flex: none;
-  width: 58px;
-  font-size: var(--text-micro);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-ink-soft);
-}
+/* ярлыки рядов скрыты: образцы, цены-пилюли и чипы-задачи самоописательны —
+   как на эталоне; освобождает ширину под карусель */
+.pick-row-label { display: none; }
 
 /* ряд опций: всё видно сразу, переносится — без горизонтальной прокрутки */
 .pick-scroll {
@@ -877,8 +872,8 @@ a { color: inherit; }
   min-width: 0;
 }
 
-/* образец цвета в форме кирпичика (ложковая грань, нулевой радиус — ДНК
-   сайта): ряд образцов читается как кладка. Тап-зона 44px, подпись под ним */
+/* образец цвета — круг: крупная тап-зона, подпись под ним. Ряд читается
+   как палитра. Тап-зона 44px+, подпись всегда видна (ховера на таче нет) */
 .swatch {
   appearance: none;
   border: 0;
@@ -887,59 +882,111 @@ a { color: inherit; }
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-width: 48px;
-  min-height: 44px;
-  padding: 6px 4px;
+  justify-content: flex-start;
+  gap: 8px;
+  min-width: 44px;
+  padding: 4px 6px;
   font: 400 var(--text-micro) var(--font-sans);
-  color: var(--color-ink-faint);
+  color: var(--color-ink-soft);
   cursor: pointer;
   transition: color var(--dur-fast) var(--ease-out);
 }
 
+/* белая обводка-кольцо: цвет → белый зазор 3px → тонкая серая линия (образец
+   «оправлен», не касается соседей) */
 .swatch-dot {
-  width: 40px;
-  height: 18px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 0;
   flex: none;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 3px var(--color-paper),
+              0 0 0 4px var(--color-rule),
+              0 1px 4px rgba(0, 0, 0, 0.08);
   transition: transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-fast) var(--ease-out);
 }
 
 .swatch:hover { color: var(--color-ink); }
-.swatch:hover .swatch-dot { transform: scale(1.09); }
+.swatch:hover .swatch-dot { transform: scale(1.05); }
 
 .swatch.is-on { color: var(--color-ink); }
 
 .swatch.is-on .swatch-dot {
-  box-shadow: 0 0 0 2.5px var(--color-paper), 0 0 0 4px var(--color-ink);
+  box-shadow: 0 0 0 3px var(--color-paper),
+              0 0 0 5px var(--color-ink),
+              0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .sw-name {
   line-height: 1;
   white-space: nowrap;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
-/* «Все» в ряду образцов — текстовая кнопка, не псевдо-свотч */
-.sw-text {
-  flex-direction: row;
-  font: 600 var(--text-sm) var(--font-sans);
-  color: var(--color-ink-soft);
-  padding: 0 var(--space-xs);
-  box-shadow: inset 0 -2px 0 transparent;
-  transition: color var(--dur-fast) var(--ease-out),
-              box-shadow var(--dur-fast) var(--ease-out);
+/* «Все» — круг-образец с текстом внутри, без подписи снизу; кольцо чуть темнее,
+   чтобы читался как «сбросить цвет» */
+.sw-all {
+  background: var(--color-surface);
+  font: 500 var(--text-sm) var(--font-sans);
+  color: var(--color-ink);
+  box-shadow: 0 0 0 3px var(--color-paper),
+              0 0 0 4px var(--color-ink-faint),
+              0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-.sw-text.is-on { box-shadow: inset 0 -2px 0 var(--color-accent); }
+.sw-all-btn.is-on .sw-all { color: var(--color-ink); }
+
+/* дорожка ряда цвета: образцы + стрелка «ещё» у правого края */
+.pick-track {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ряд образцов — горизонтальная карусель (крупные круги не влезают в ряд) */
+/* ряд пилюль бюджета — свой межэлементный шаг */
+.pick-scroll--slide { gap: var(--space-2xs); }
+
+.pick-scroll--swatch {
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  gap: 0 var(--space-2xs);
+  padding: 2px 40px 2px 4px;
+}
+.pick-scroll--swatch::-webkit-scrollbar { display: none; }
+
+.pick-next {
+  position: absolute;
+  top: 33px;
+  right: 0;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  box-shadow: -14px 0 14px 6px var(--color-paper);
+  display: grid;
+  place-items: center;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+.pick-next:hover { border-color: var(--color-ink); color: var(--color-ink); }
+.pick-next[hidden] { display: none; }
 
 @media (max-width: 899px) {
-  /* все ряды фильтров на телефоне — одна строка с прокруткой; правый край
-     растворяется — подсказка, что дальше есть ещё (подписи остаются видны:
-     ховера на таче нет) */
-  .pick-scroll,
+  /* прочие ряды фильтров на телефоне — одна строка с прокруткой; правый край
+     растворяется — подсказка, что дальше есть ещё */
+  .pick-scroll--slide,
   .filter-chips {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -948,8 +995,11 @@ a { color: inherit; }
     -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
     mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
   }
-  .pick-scroll::-webkit-scrollbar,
+  .pick-scroll--slide::-webkit-scrollbar,
   .filter-chips::-webkit-scrollbar { display: none; }
+
+  .swatch-dot { width: 54px; height: 54px; }
+  .pick-next { top: 29px; }
 }
 
 @media (max-width: 599px) {
@@ -957,27 +1007,31 @@ a { color: inherit; }
   .pick-row-label { display: none; }
 }
 
-/* бюджет и прочие чипы-фильтры: текстовая строка вместо коробок */
+/* бюджет-фильтр — кнопка-пилюля: имя + цена в две строки, активная залита
+   чернилами (как на эталоне). Ряд прокручивается на телефоне */
 .budget-chip {
   appearance: none;
-  border: 0;
-  background: none;
   flex: none;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  min-height: 40px;
-  padding: 0 var(--space-xs);
+  justify-content: center;
+  gap: 1px;
+  min-height: 54px;
+  padding: 7px 18px;
+  border: 1px solid var(--color-rule);
+  border-radius: 14px;
+  background: var(--color-surface);
   font: 600 var(--text-sm) var(--font-sans);
-  color: var(--color-ink-soft);
+  color: var(--color-ink);
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: inset 0 -2px 0 transparent;
-  transition: color var(--dur-fast) var(--ease-out),
-              box-shadow var(--dur-fast) var(--ease-out);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
 }
 
-.budget-chip:hover { color: var(--color-ink); }
+.budget-chip:hover { border-color: var(--color-ink-faint); }
 
 .budget-chip small {
   font-weight: 400;
@@ -986,9 +1040,12 @@ a { color: inherit; }
 }
 
 .budget-chip.is-on {
-  color: var(--color-ink);
-  box-shadow: inset 0 -2px 0 var(--color-accent);
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-paper);
 }
+
+.budget-chip.is-on small { color: var(--color-paper-mute); }
 
 .pick-count {
   margin: var(--space-2xs) 0 0;

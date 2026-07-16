@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body>
 
@@ -47,10 +47,11 @@
     <!-- Фильтр-бар: цвет и бюджет работают вместе -->
     <section class="pick-bar" aria-label="Подбор кирпича">
       <div class="wrap">
-        <div class="pick-row">
+        <div class="pick-row pick-row--color">
           <span class="pick-row-label">Цвет</span>
-          <div class="pick-scroll" role="group" aria-label="Цвет кирпича">
-<button class="swatch sw-text is-on" data-color="" aria-pressed="true" aria-label="Все цвета">Все</button>
+          <div class="pick-track">
+          <div class="pick-scroll pick-scroll--swatch" data-carousel role="group" aria-label="Цвет кирпича">
+<button class="swatch sw-all-btn is-on" data-color="" aria-pressed="true" aria-label="Все цвета"><span class="swatch-dot sw-all">Все</span></button>
 <button class="swatch" data-color="красный" aria-pressed="false" aria-label="красный — 78 видов"><span class="swatch-dot sw-krasny" aria-hidden="true"></span><span class="sw-name">красный</span></button>
 <button class="swatch" data-color="коричневый" aria-pressed="false" aria-label="коричневый — 54 вида"><span class="swatch-dot sw-korichnevy" aria-hidden="true"></span><span class="sw-name">коричневый</span></button>
 <button class="swatch" data-color="персиковый" aria-pressed="false" aria-label="персиковый — 8 видов"><span class="swatch-dot sw-persik" aria-hidden="true"></span><span class="sw-name">персиковый</span></button>
@@ -60,6 +61,8 @@
 <button class="swatch" data-color="микс (бавария)" aria-pressed="false" aria-label="микс (бавария) — 21 вид"><span class="swatch-dot sw-miks" aria-hidden="true"></span><span class="sw-name">бавария</span></button>
 <button class="swatch" data-color="зелёный" aria-pressed="false" aria-label="зелёный — 3 вида"><span class="swatch-dot sw-zeleny" aria-hidden="true"></span><span class="sw-name">зелёный</span></button>
           </div>
+          <button class="pick-next" type="button" aria-label="Показать ещё цвета" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
         </div>
         <div class="pick-row">
           <span class="pick-row-label">Бюджет</span>
@@ -603,6 +606,23 @@
           if (lane) lane.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
+    });
+
+
+    // Круги-цвета: одна прокручиваемая строка; стрелка листает и прячется в конце
+    Array.prototype.forEach.call(document.querySelectorAll('.pick-track'), function (track) {
+      var scroll = track.querySelector('[data-carousel]');
+      var next = track.querySelector('.pick-next');
+      if (!scroll || !next) return;
+      function sync() {
+        next.hidden = (scroll.scrollWidth - scroll.clientWidth - scroll.scrollLeft) < 8;
+      }
+      next.addEventListener('click', function () {
+        scroll.scrollBy({ left: scroll.clientWidth * 0.8, behavior: 'smooth' });
+      });
+      scroll.addEventListener('scroll', sync);
+      window.addEventListener('resize', sync);
+      sync();
     });
 
     // Калькулятор: площадь × расход, запас 5%, округление до десятка

@@ -30,17 +30,56 @@ SW_LABEL = {"микс (бавария)": "бавария"}
 
 
 def swatch_btn(label, dot_class, attrs, is_on=False, aria=""):
-    """Кнопка-образец цвета: кирпичик-образец + подпись.
-    dot_class=None — текстовая кнопка «Все» (не псевдо-свотч)."""
+    """Кнопка-образец цвета: круг-образец + подпись.
+    dot_class=None — «Все»: круг-образец с текстом внутри, без подписи снизу."""
     on = ' is-on' if is_on else ''
     pressed = 'true' if is_on else 'false'
     aria_attr = f' aria-label="{aria}"' if aria else ''
     if dot_class is None:
-        return (f'<button class="swatch sw-text{on}" {attrs} '
-                f'aria-pressed="{pressed}"{aria_attr}>{label}</button>')
+        return (f'<button class="swatch sw-all-btn{on}" {attrs} '
+                f'aria-pressed="{pressed}"{aria_attr}>'
+                f'<span class="swatch-dot sw-all">{label}</span></button>')
     return (f'<button class="swatch{on}" {attrs} aria-pressed="{pressed}"{aria_attr}>'
             f'<span class="swatch-dot {dot_class}" aria-hidden="true"></span>'
             f'<span class="sw-name">{label}</span></button>')
+
+
+# стрелка-чеврон для карусели образцов
+CHEVRON = ('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" '
+           'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+           'stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>')
+
+
+def color_track(swatches_html, aria="Цвет кирпича"):
+    """Ряд образцов цвета: одна прокручиваемая строка + стрелка «ещё» справа."""
+    return (
+        '<div class="pick-track">\n'
+        f'          <div class="pick-scroll pick-scroll--swatch" data-carousel role="group" aria-label="{aria}">\n'
+        f'{swatches_html}\n'
+        '          </div>\n'
+        '          <button class="pick-next" type="button" aria-label="Показать ещё цвета" hidden>'
+        f'{CHEVRON}</button>\n'
+        '        </div>')
+
+
+# инициализация каруселей образцов (стрелка листает, прячется в конце ряда)
+CAROUSEL_JS = """
+    // Круги-цвета: одна прокручиваемая строка; стрелка листает и прячется в конце
+    Array.prototype.forEach.call(document.querySelectorAll('.pick-track'), function (track) {
+      var scroll = track.querySelector('[data-carousel]');
+      var next = track.querySelector('.pick-next');
+      if (!scroll || !next) return;
+      function sync() {
+        next.hidden = (scroll.scrollWidth - scroll.clientWidth - scroll.scrollLeft) < 8;
+      }
+      next.addEventListener('click', function () {
+        scroll.scrollBy({ left: scroll.clientWidth * 0.8, behavior: 'smooth' });
+      });
+      scroll.addEventListener('scroll', sync);
+      window.addEventListener('resize', sync);
+      sync();
+    });
+"""
 
 COLLECTIONS = {
     "ekonom": {
@@ -261,7 +300,7 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=11">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=13">{extra_head}
 </head>
 <body>
 
@@ -420,11 +459,9 @@ def build_category():
     <!-- Фильтр-бар: цвет и бюджет работают вместе -->
     <section class="pick-bar" aria-label="Подбор кирпича">
       <div class="wrap">
-        <div class="pick-row">
+        <div class="pick-row pick-row--color">
           <span class="pick-row-label">Цвет</span>
-          <div class="pick-scroll" role="group" aria-label="Цвет кирпича">
-{chr(10).join(swatches)}
-          </div>
+          {color_track(chr(10).join(swatches))}
         </div>
         <div class="pick-row">
           <span class="pick-row-label">Бюджет</span>
@@ -572,6 +609,7 @@ def build_category():
       });
     });
 
+""" + CAROUSEL_JS + """
     // Калькулятор: площадь × расход, запас 5%, округление до десятка
     var cWall = document.getElementById('cWall');
     var cOpen = document.getElementById('cOpen');
@@ -616,18 +654,21 @@ def build_category():
 
 def chip_row(label, values, group):
     if group == "color":
-        # цвет — кирпичики-образцы, единый язык со страницей категории
+        # цвет — круги-образцы в одну прокручиваемую строку со стрелкой,
+        # единый язык со страницей категории
         chips = [swatch_btn("Все", None, f'data-group="{group}" data-val=""',
                             is_on=True, aria="Все цвета")]
         for v in values:
             chips.append(swatch_btn(
                 esc(SW_LABEL.get(v, v)), SWATCH_CLASS.get(v, "sw-all"),
                 f'data-group="{group}" data-val="{esc(v)}"', aria=esc(v)))
-    else:
-        chips = [f'<button class="chip is-on" data-group="{group}" data-val="" aria-pressed="true">Все</button>']
-        for v in values:
-            chips.append(f'<button class="chip" data-group="{group}" data-val="{esc(v)}" '
-                         f'aria-pressed="false">{esc(v)}</button>')
+        return (f'<div class="filter-row filter-row--color">'
+                f'<span class="tag filter-label">{label}</span>'
+                f'{color_track(chr(10).join(chips))}</div>')
+    chips = [f'<button class="chip is-on" data-group="{group}" data-val="" aria-pressed="true">Все</button>']
+    for v in values:
+        chips.append(f'<button class="chip" data-group="{group}" data-val="{esc(v)}" '
+                     f'aria-pressed="false">{esc(v)}</button>')
     return (f'<div class="filter-row"><span class="tag filter-label">{label}</span>'
             f'<div class="filter-chips">{"".join(chips)}</div></div>')
 
@@ -742,6 +783,7 @@ def build_collection(slug):
       state.color = pre;
     }
     paint();
+""" + CAROUSEL_JS + """
   </script>"""
 
     out = page_shell(

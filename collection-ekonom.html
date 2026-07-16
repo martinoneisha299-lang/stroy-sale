@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body>
 
@@ -49,7 +49,18 @@
     <section class="section coll" aria-label="Товары коллекции">
       <div class="wrap">
         <div class="filters">
-<div class="filter-row"><span class="tag filter-label">Цвет</span><div class="filter-chips"><button class="swatch sw-text is-on" data-group="color" data-val="" aria-pressed="true" aria-label="Все цвета">Все</button><button class="swatch" data-group="color" data-val="красный" aria-pressed="false" aria-label="красный"><span class="swatch-dot sw-krasny" aria-hidden="true"></span><span class="sw-name">красный</span></button><button class="swatch" data-group="color" data-val="коричневый" aria-pressed="false" aria-label="коричневый"><span class="swatch-dot sw-korichnevy" aria-hidden="true"></span><span class="sw-name">коричневый</span></button><button class="swatch" data-group="color" data-val="персиковый" aria-pressed="false" aria-label="персиковый"><span class="swatch-dot sw-persik" aria-hidden="true"></span><span class="sw-name">персиковый</span></button><button class="swatch" data-group="color" data-val="бежевый" aria-pressed="false" aria-label="бежевый"><span class="swatch-dot sw-bezh" aria-hidden="true"></span><span class="sw-name">бежевый</span></button><button class="swatch" data-group="color" data-val="серый" aria-pressed="false" aria-label="серый"><span class="swatch-dot sw-sery" aria-hidden="true"></span><span class="sw-name">серый</span></button><button class="swatch" data-group="color" data-val="графит" aria-pressed="false" aria-label="графит"><span class="swatch-dot sw-grafit" aria-hidden="true"></span><span class="sw-name">графит</span></button></div></div>
+<div class="filter-row filter-row--color"><span class="tag filter-label">Цвет</span><div class="pick-track">
+          <div class="pick-scroll pick-scroll--swatch" data-carousel role="group" aria-label="Цвет кирпича">
+<button class="swatch sw-all-btn is-on" data-group="color" data-val="" aria-pressed="true" aria-label="Все цвета"><span class="swatch-dot sw-all">Все</span></button>
+<button class="swatch" data-group="color" data-val="красный" aria-pressed="false" aria-label="красный"><span class="swatch-dot sw-krasny" aria-hidden="true"></span><span class="sw-name">красный</span></button>
+<button class="swatch" data-group="color" data-val="коричневый" aria-pressed="false" aria-label="коричневый"><span class="swatch-dot sw-korichnevy" aria-hidden="true"></span><span class="sw-name">коричневый</span></button>
+<button class="swatch" data-group="color" data-val="персиковый" aria-pressed="false" aria-label="персиковый"><span class="swatch-dot sw-persik" aria-hidden="true"></span><span class="sw-name">персиковый</span></button>
+<button class="swatch" data-group="color" data-val="бежевый" aria-pressed="false" aria-label="бежевый"><span class="swatch-dot sw-bezh" aria-hidden="true"></span><span class="sw-name">бежевый</span></button>
+<button class="swatch" data-group="color" data-val="серый" aria-pressed="false" aria-label="серый"><span class="swatch-dot sw-sery" aria-hidden="true"></span><span class="sw-name">серый</span></button>
+<button class="swatch" data-group="color" data-val="графит" aria-pressed="false" aria-label="графит"><span class="swatch-dot sw-grafit" aria-hidden="true"></span><span class="sw-name">графит</span></button>
+          </div>
+          <button class="pick-next" type="button" aria-label="Показать ещё цвета" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div></div>
 <div class="filter-row"><span class="tag filter-label">Фактура</span><div class="filter-chips"><button class="chip is-on" data-group="texture" data-val="" aria-pressed="true">Все</button><button class="chip" data-group="texture" data-val="гладкий" aria-pressed="false">гладкий</button><button class="chip" data-group="texture" data-val="старый город" aria-pressed="false">старый город</button></div></div>
         </div>
         <p class="pick-count" id="countNote" aria-live="polite"></p>
@@ -226,6 +237,23 @@
       state.color = pre;
     }
     paint();
+
+    // Круги-цвета: одна прокручиваемая строка; стрелка листает и прячется в конце
+    Array.prototype.forEach.call(document.querySelectorAll('.pick-track'), function (track) {
+      var scroll = track.querySelector('[data-carousel]');
+      var next = track.querySelector('.pick-next');
+      if (!scroll || !next) return;
+      function sync() {
+        next.hidden = (scroll.scrollWidth - scroll.clientWidth - scroll.scrollLeft) < 8;
+      }
+      next.addEventListener('click', function () {
+        scroll.scrollBy({ left: scroll.clientWidth * 0.8, behavior: 'smooth' });
+      });
+      scroll.addEventListener('scroll', sync);
+      window.addEventListener('resize', sync);
+      sync();
+    });
+
   </script>
 </body>
 </html>
