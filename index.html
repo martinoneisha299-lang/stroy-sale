@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=15">
+  <link rel="stylesheet" href="styles.css?v=16">
 </head>
 <body>
 
@@ -84,25 +84,22 @@
     </div>
   </section>
 
-  <!-- Полоса доверия: тонкая строка, прикреплённая под hero -->
+  <!-- Полоса доверия: типографская строка-тикер под hero, пункты через «кирпичики».
+       На мобиле медленно едет (все 4 пункта видны без действий), на десктопе статична. -->
   <section class="benefits" aria-label="Наши условия">
-    <div class="wrap benefits-in">
-      <div class="benefit">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        <strong>Перезвоним за 5 минут</strong>
-      </div>
-      <div class="benefit">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18h-5"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-        <strong>Доставка на объект</strong>
-      </div>
-      <div class="benefit">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
-        <strong>Оплата при получении</strong>
-      </div>
-      <div class="benefit">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1M12 18h1M7 18h1"/></svg>
-        <strong>С заводов Юга напрямую</strong>
-      </div>
+    <div class="benefits-ticker">
+      <ul class="benefits-in">
+        <li>Перезвоним за 5&nbsp;минут</li>
+        <li>Доставка на&nbsp;объект</li>
+        <li>Оплата при&nbsp;получении</li>
+        <li>С&nbsp;заводов Юга напрямую</li>
+      </ul>
+      <ul class="benefits-in" aria-hidden="true">
+        <li>Перезвоним за 5&nbsp;минут</li>
+        <li>Доставка на&nbsp;объект</li>
+        <li>Оплата при&nbsp;получении</li>
+        <li>С&nbsp;заводов Юга напрямую</li>
+      </ul>
     </div>
   </section>
 
