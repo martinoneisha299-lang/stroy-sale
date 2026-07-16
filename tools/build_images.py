@@ -51,9 +51,17 @@ def cover_crop(img):
 def main():
     data = json.loads(Path("/Users/dm/Desktop/сайт/data/catalog.json").read_text())
     done = skipped = 0
-    # Clean old extra gallery files first
-    for f in OUT.glob("kirpich-*-*.jpg"):
-        f.unlink()
+    # Clean stale gallery extras ТОЛЬКО для id кирпича (эта папка img/catalog
+    # общая с плиткой/бордюрами — их трогать нельзя, те собирает другой скрипт).
+    # Иначе после уменьшения кол-ва фото на диске останутся файлы -4.jpg/-5.jpg
+    # от прошлой сборки, и build_category.py подхватит их как «существующие».
+    brick_ids = {p["id"] for p in data["products"]
+                 if p["category"] in ("oblitsovochnyy", "obychnyy")}
+    for suffix in (2, 3, 4, 5):
+        for pid in brick_ids:
+            f = OUT / f"{pid}-{suffix}.jpg"
+            if f.exists():
+                f.unlink()
 
     for p in data["products"]:
         if p["category"] not in ("oblitsovochnyy", "obychnyy") or not p["photos"]:
