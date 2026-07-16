@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-16",
+ "generated": "2026-07-17",
  "source_root": "/Users/dm/Desktop/фото",
  "collections": {
   "ekonom": "Эконом",
@@ -9,6 +9,317 @@
   "formovka": "Ручная формовка"
  },
  "products": [
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "СС-УС-01",
+   "factory_name": "01 СС УС",
+   "color_raw": "Коричневый",
+   "color_group": "коричневый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Коричневый",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/01 СС УС",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-039"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "УС-01.04",
+   "factory_name": "01.04.2026 УС",
+   "color_raw": "Коричневый",
+   "color_group": "коричневый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Коричневый",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/01.04.2026 УС",
+   "photos": [
+    "01.04.2026 УС_1.webp",
+    "01.04.2026 УС_2.webp",
+    "01.04.2026 УС_3.webp",
+    "01.04.2026 УС_4.webp"
+   ],
+   "video": null,
+   "flags": [],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-060"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "СС-УС-02",
+   "factory_name": "02 СС УС",
+   "color_raw": "Серый",
+   "color_group": "серый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Серый",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/02 СС УС",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-040"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "СС-УС-03.2",
+   "factory_name": "03.2 СС УС",
+   "color_raw": "Розовый",
+   "color_group": "персиковый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Розовый",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/03.2 СС УС",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-041"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "СС-УС-04",
+   "factory_name": "04 СС УС",
+   "color_raw": "Желтый",
+   "color_group": "бежевый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Желтый",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/04 СС УС",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-042"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "СС-УС-05",
+   "factory_name": "05 СС УС",
+   "color_raw": "Коричневый",
+   "color_group": "коричневый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Коричневый",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/05 СС УС",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-043"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "СС-УС-06",
+   "factory_name": "06 СС УС",
+   "color_raw": "Розовый",
+   "color_group": "персиковый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Розовый",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/06 СС УС",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-044"
+  },
   {
    "category": "oblitsovochnyy",
    "collection": "palitra",
@@ -115,6 +426,50 @@
    "category": "oblitsovochnyy",
    "collection": "palitra",
    "supplier": "Губский",
+   "name": "Арес",
+   "factory_name": "Арес",
+   "color_raw": "Желтый",
+   "color_group": "бежевый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Желтый",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/Арес",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-003"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
    "name": "Бежевая Кора",
    "factory_name": "Бежевая кора",
    "color_raw": "Бежевый",
@@ -160,7 +515,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-003"
+   "id": "pal-004"
   },
   {
    "category": "oblitsovochnyy",
@@ -209,7 +564,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-004"
+   "id": "pal-005"
   },
   {
    "category": "oblitsovochnyy",
@@ -259,7 +614,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-005"
+   "id": "pal-006"
   },
   {
    "category": "oblitsovochnyy",
@@ -309,7 +664,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-006"
+   "id": "pal-007"
   },
   {
    "category": "oblitsovochnyy",
@@ -357,7 +712,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-007"
+   "id": "pal-008"
   },
   {
    "category": "oblitsovochnyy",
@@ -407,7 +762,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-008"
+   "id": "pal-009"
   },
   {
    "category": "oblitsovochnyy",
@@ -455,7 +810,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-009"
+   "id": "pal-010"
   },
   {
    "category": "oblitsovochnyy",
@@ -503,7 +858,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-010"
+   "id": "pal-011"
   },
   {
    "category": "oblitsovochnyy",
@@ -553,7 +908,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-011"
+   "id": "pal-012"
   },
   {
    "category": "oblitsovochnyy",
@@ -603,7 +958,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-012"
+   "id": "pal-013"
   },
   {
    "category": "oblitsovochnyy",
@@ -653,7 +1008,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-013"
+   "id": "pal-014"
   },
   {
    "category": "oblitsovochnyy",
@@ -703,7 +1058,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-014"
+   "id": "pal-015"
   },
   {
    "category": "oblitsovochnyy",
@@ -753,7 +1108,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-015"
+   "id": "pal-016"
   },
   {
    "category": "oblitsovochnyy",
@@ -805,7 +1160,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-016"
+   "id": "pal-017"
   },
   {
    "category": "oblitsovochnyy",
@@ -858,7 +1213,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-017"
+   "id": "pal-018"
   },
   {
    "category": "oblitsovochnyy",
@@ -909,7 +1264,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-018"
+   "id": "pal-019"
   },
   {
    "category": "oblitsovochnyy",
@@ -959,7 +1314,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-019"
+   "id": "pal-020"
   },
   {
    "category": "oblitsovochnyy",
@@ -1009,7 +1364,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-020"
+   "id": "pal-021"
   },
   {
    "category": "oblitsovochnyy",
@@ -1059,7 +1414,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-021"
+   "id": "pal-022"
   },
   {
    "category": "oblitsovochnyy",
@@ -1111,7 +1466,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-022"
+   "id": "pal-023"
   },
   {
    "category": "oblitsovochnyy",
@@ -1162,7 +1517,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-023"
+   "id": "pal-024"
   },
   {
    "category": "oblitsovochnyy",
@@ -1213,7 +1568,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-024"
+   "id": "pal-025"
   },
   {
    "category": "oblitsovochnyy",
@@ -1264,7 +1619,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-025"
+   "id": "pal-026"
   },
   {
    "category": "oblitsovochnyy",
@@ -1312,7 +1667,139 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-026"
+   "id": "pal-027"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "Марс 01",
+   "factory_name": "Марс 01 УС",
+   "color_raw": "Красный",
+   "color_group": "красный",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Красный",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/Марс 01 УС",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-028"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "Марс 02",
+   "factory_name": "Марс 02 УС",
+   "color_raw": "Красный",
+   "color_group": "красный",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Красный",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/Марс 02 УС",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-029"
+  },
+  {
+   "category": "oblitsovochnyy",
+   "collection": "palitra",
+   "supplier": "Губский",
+   "name": "Марс 03",
+   "factory_name": "Марс 03 УС",
+   "color_raw": "Красный",
+   "color_group": "красный",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "formats_prices": {},
+   "price": null,
+   "price_unit": "шт",
+   "specs": {
+    "Вес": "2,2 кг",
+    "Габариты": "250×120×65 мм",
+    "Назначение": "Облицовочный",
+    "Структура": "Пустотелый",
+    "Фаска": "Прямая",
+    "Плотность (кг/м3)": "1,2",
+    "Пустотность (%)": "39",
+    "Марка морозостойкости": "F75",
+    "Марка прочности": "М150",
+    "Теплопроводность (Вт/м,°С)": "0,334",
+    "Водопоглощение (%)": "8",
+    "Расход на 1м2 (шт)": "51,40",
+    "Расход кладочного раствора на 1м2, кг": "60",
+    "Вес одного поддона (кг)": "1100",
+    "Тип": "Керамический",
+    "Цвет": "Красный",
+    "Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)": "352,480,484,660"
+   },
+   "consumption_per_m2": 51.4,
+   "description": "",
+   "dir": "Губский/Лицевой керамический кирпич/Марс 03 УС",
+   "photos": [],
+   "video": null,
+   "flags": [
+    "нет фото"
+   ],
+   "price_m2": null,
+   "price_on_request": true,
+   "id": "pal-030"
   },
   {
    "category": "oblitsovochnyy",
@@ -1361,7 +1848,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-027"
+   "id": "pal-031"
   },
   {
    "category": "oblitsovochnyy",
@@ -1412,7 +1899,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-028"
+   "id": "pal-032"
   },
   {
    "category": "oblitsovochnyy",
@@ -1462,7 +1949,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-029"
+   "id": "pal-033"
   },
   {
    "category": "oblitsovochnyy",
@@ -1512,7 +1999,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-030"
+   "id": "pal-034"
   },
   {
    "category": "oblitsovochnyy",
@@ -1560,7 +2047,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-031"
+   "id": "pal-035"
   },
   {
    "category": "oblitsovochnyy",
@@ -1611,7 +2098,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-032"
+   "id": "pal-036"
   },
   {
    "category": "oblitsovochnyy",
@@ -1662,7 +2149,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-033"
+   "id": "pal-037"
   },
   {
    "category": "oblitsovochnyy",
@@ -1713,7 +2200,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-034"
+   "id": "pal-038"
   },
   {
    "category": "oblitsovochnyy",
@@ -1764,7 +2251,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-035"
+   "id": "pal-045"
   },
   {
    "category": "oblitsovochnyy",
@@ -1814,7 +2301,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-036"
+   "id": "pal-046"
   },
   {
    "category": "oblitsovochnyy",
@@ -1863,7 +2350,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-037"
+   "id": "pal-047"
   },
   {
    "category": "oblitsovochnyy",
@@ -1912,7 +2399,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-038"
+   "id": "pal-048"
   },
   {
    "category": "oblitsovochnyy",
@@ -1959,7 +2446,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-039"
+   "id": "pal-049"
   },
   {
    "category": "oblitsovochnyy",
@@ -2008,7 +2495,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-040"
+   "id": "pal-050"
   },
   {
    "category": "oblitsovochnyy",
@@ -2056,7 +2543,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-041"
+   "id": "pal-051"
   },
   {
    "category": "oblitsovochnyy",
@@ -2102,7 +2589,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-042"
+   "id": "pal-052"
   },
   {
    "category": "oblitsovochnyy",
@@ -2148,7 +2635,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-043"
+   "id": "pal-053"
   },
   {
    "category": "oblitsovochnyy",
@@ -2196,7 +2683,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-048"
+   "id": "pal-058"
   },
   {
    "category": "oblitsovochnyy",
@@ -2244,7 +2731,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-049"
+   "id": "pal-059"
   },
   {
    "category": "oblitsovochnyy",
@@ -2294,7 +2781,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-046"
+   "id": "pal-056"
   },
   {
    "category": "oblitsovochnyy",
@@ -2344,7 +2831,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-047"
+   "id": "pal-057"
   },
   {
    "category": "oblitsovochnyy",
@@ -2392,7 +2879,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-044"
+   "id": "pal-054"
   },
   {
    "category": "oblitsovochnyy",
@@ -2440,7 +2927,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-045"
+   "id": "pal-055"
   },
   {
    "category": "oblitsovochnyy",
@@ -2490,7 +2977,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-050"
+   "id": "pal-061"
   },
   {
    "category": "oblitsovochnyy",
@@ -2537,7 +3024,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-051"
+   "id": "pal-062"
   },
   {
    "category": "oblitsovochnyy",
@@ -2584,7 +3071,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-052"
+   "id": "pal-063"
   },
   {
    "category": "oblitsovochnyy",
@@ -2634,7 +3121,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-053"
+   "id": "pal-064"
   },
   {
    "category": "oblitsovochnyy",
@@ -2684,7 +3171,7 @@
    "flags": [],
    "price_m2": null,
    "price_on_request": false,
-   "id": "pal-054"
+   "id": "pal-065"
   },
   {
    "category": "obychnyy",
@@ -2743,6 +3230,124 @@
    "consumption_per_m2": null,
    "price_on_request": false,
    "id": "rab-002"
+  },
+  {
+   "flags": [
+    "объединён вариант: БАВАРСКИЙ КЛАССИК Лицевой евро пустотелый М250 (F75) 572шт упак. пленкой"
+   ],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Баварский Классик береста",
+   "factory_name": "БАВАРСКИЙ КЛАССИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "микс (бавария)",
+   "color_group": "микс (бавария)",
+   "texture": "береста",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 28.4,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/БАВАРСКИЙ КЛАССИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "БАВАРСКИЙ КЛАССИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg",
+    "БАВАРСКИЙ КЛАССИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_2.jpg",
+    "БАВАРСКИЙ КЛАССИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_3.jpg",
+    "БАВАРСКИЙ КЛАССИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_4.jpg",
+    "БАВАРСКИЙ КЛАССИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_5.jpg",
+    "БАВАРСКИЙ КЛАССИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_6.jpg"
+   ],
+   "video": null,
+   "formats_prices": {
+    "0,7НФ (евро)": 23.5
+   },
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-002"
+  },
+  {
+   "flags": [
+    "объединён вариант: БАВАРСКИЙ СВЕТЛЫЙ Лицевой евро пустотелый М250 (F75) 572шт упак. пленкой"
+   ],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Баварский Светлый береста",
+   "factory_name": "БАВАРСКИЙ СВЕТЛЫЙ Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "микс (бавария)",
+   "color_group": "микс (бавария)",
+   "texture": "береста",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 28.4,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/БАВАРСКИЙ СВЕТЛЫЙ Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "БАВАРСКИЙ СВЕТЛЫЙ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_2.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_3.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_4.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_5.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_6.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_7.jpg"
+   ],
+   "video": null,
+   "formats_prices": {
+    "0,7НФ (евро)": 23.5
+   },
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-003"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Булат",
+   "factory_name": "БУЛАТ Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "коричневый",
+   "color_group": "коричневый",
+   "texture": "фактурный",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 32.4,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/БУЛАТ Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "БУЛАТ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-006"
   },
   {
    "flags": [],
@@ -2808,7 +3413,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-002"
+   "id": "kla-004"
   },
   {
    "flags": [],
@@ -2843,7 +3448,40 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-003"
+   "id": "kla-005"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Винтаж Лайт",
+   "factory_name": "ВИНТАЖ ЛАЙТ Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "коричневый",
+   "color_group": "коричневый",
+   "texture": "береста",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 29.2,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/ВИНТАЖ ЛАЙТ Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "ВИНТАЖ ЛАЙТ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-010"
   },
   {
    "flags": [
@@ -2873,7 +3511,45 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-005"
+   "id": "kla-008"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Винтаж Премиум",
+   "factory_name": "ВИНТАЖ ПРЕМИУМ Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "коричневый",
+   "color_group": "коричневый",
+   "texture": "береста",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 29.2,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/ВИНТАЖ ПРЕМИУМ Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "ВИНТАЖ ПРЕМИУМ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg",
+    "ВИНТАЖ ПРЕМИУМ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_2.jpg",
+    "ВИНТАЖ ПРЕМИУМ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_3.jpg",
+    "ВИНТАЖ ПРЕМИУМ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_4.jpg",
+    "ВИНТАЖ ПРЕМИУМ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_5.jpg",
+    "ВИНТАЖ ПРЕМИУМ Лицевой Одинарный М175 (F75) 416шт упак. пленкой_6.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-011"
   },
   {
    "flags": [
@@ -2903,7 +3579,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-008"
+   "id": "kla-013"
   },
   {
    "flags": [
@@ -2939,7 +3615,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-007"
+   "id": "kla-012"
   },
   {
    "flags": [
@@ -2969,7 +3645,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-009"
+   "id": "kla-014"
   },
   {
    "flags": [],
@@ -3000,7 +3676,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-004"
+   "id": "kla-007"
   },
   {
    "flags": [],
@@ -3035,7 +3711,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-006"
+   "id": "kla-009"
   },
   {
    "flags": [],
@@ -3067,7 +3743,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-011"
+   "id": "kla-016"
   },
   {
    "flags": [],
@@ -3102,7 +3778,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-010"
+   "id": "kla-015"
   },
   {
    "flags": [
@@ -3141,7 +3817,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-012"
+   "id": "kla-017"
   },
   {
    "flags": [],
@@ -3151,7 +3827,7 @@
    "name": "Гранит береста",
    "factory_name": "Гранит Одинарный пустотелый М175 (F75 пустот 37%) 416шт упак. пленкой",
    "color_raw": "коричневый",
-   "color_group": "серый",
+   "color_group": "коричневый",
    "texture": "береста",
    "format": "1НФ (одинарный)",
    "mark": "М175",
@@ -3176,7 +3852,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-013"
+   "id": "kla-018"
   },
   {
    "flags": [
@@ -3215,7 +3891,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-015"
+   "id": "kla-022"
   },
   {
    "flags": [
@@ -3254,7 +3930,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-014"
+   "id": "kla-019"
   },
   {
    "flags": [],
@@ -3289,7 +3965,87 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-016"
+   "id": "kla-023"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Коричневый Сахара",
+   "factory_name": "КОРИЧНЕВЫЙ САХАРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "color_raw": "коричневый",
+   "color_group": "коричневый",
+   "texture": "сахара",
+   "format": "1НФ (одинарный)",
+   "mark": "М150",
+   "price": 37.7,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М150",
+    "Морозостойкость": "F50",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/КОРИЧНЕВЫЙ САХАРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "photos": [
+    "КОРИЧНЕВЫЙ САХАРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_1.jpg",
+    "КОРИЧНЕВЫЙ САХАРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_2.jpg",
+    "КОРИЧНЕВЫЙ САХАРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_3.jpg",
+    "КОРИЧНЕВЫЙ САХАРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_4.jpg",
+    "КОРИЧНЕВЫЙ САХАРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_5.jpg",
+    "КОРИЧНЕВЫЙ САХАРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_6.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-020"
+  },
+  {
+   "flags": [
+    "объединён вариант: КОРИЧНЕВЫЙ СКАЛА АНТИК Лицевой УТОЛЩЕННЫЙ М175 (F75) 320шт упак. пленкой"
+   ],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Коричневый Скала Антик",
+   "factory_name": "КОРИЧНЕВЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "коричневый",
+   "color_group": "коричневый",
+   "texture": "антик",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 37.7,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/КОРИЧНЕВЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "КОРИЧНЕВЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg",
+    "КОРИЧНЕВЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_2.jpg",
+    "КОРИЧНЕВЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_3.jpg",
+    "КОРИЧНЕВЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_4.jpg",
+    "КОРИЧНЕВЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_5.jpg",
+    "КОРИЧНЕВЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_6.jpg"
+   ],
+   "video": null,
+   "formats_prices": {
+    "1,4НФ (полуторный)": 47.4
+   },
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-021"
   },
   {
    "flags": [
@@ -3329,7 +4085,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-018"
+   "id": "kla-025"
   },
   {
    "flags": [
@@ -3367,7 +4123,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-017"
+   "id": "kla-024"
   },
   {
    "flags": [
@@ -3407,7 +4163,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-020"
+   "id": "kla-027"
   },
   {
    "flags": [
@@ -3438,7 +4194,83 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-019"
+   "id": "kla-026"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Красный Сахара",
+   "factory_name": "КРАСНЫЙ САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "красный",
+   "color_group": "красный",
+   "texture": "сахара",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 22.3,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/КРАСНЫЙ САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "КРАСНЫЙ САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg",
+    "КРАСНЫЙ САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_2.jpg",
+    "КРАСНЫЙ САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_3.jpg",
+    "КРАСНЫЙ САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_4.jpg",
+    "КРАСНЫЙ САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_5.jpg",
+    "КРАСНЫЙ САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_6.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-028"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Красный Скала Антик",
+   "factory_name": "КРАСНЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "красный",
+   "color_group": "красный",
+   "texture": "антик",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 22.3,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/КРАСНЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "КРАСНЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg",
+    "КРАСНЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_2.jpg",
+    "КРАСНЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_3.jpg",
+    "КРАСНЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_4.jpg",
+    "КРАСНЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_5.jpg",
+    "КРАСНЫЙ СКАЛА АНТИК Лицевой Одинарный М175 (F75) 416шт упак. пленкой_6.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-029"
   },
   {
    "flags": [],
@@ -3473,7 +4305,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-021"
+   "id": "kla-030"
   },
   {
    "flags": [],
@@ -3508,7 +4340,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-022"
+   "id": "kla-031"
   },
   {
    "flags": [],
@@ -3539,7 +4371,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": true,
-   "id": "kla-024"
+   "id": "kla-033"
   },
   {
    "flags": [],
@@ -3574,7 +4406,45 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-023"
+   "id": "kla-032"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Светлый Береста",
+   "factory_name": "СВЕТЛЫЙ БЕРЕСТА Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "color_raw": "желтый",
+   "color_group": "бежевый",
+   "texture": "береста",
+   "format": "1НФ (одинарный)",
+   "mark": "М150",
+   "price": 28.0,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М150",
+    "Морозостойкость": "F50",
+    "Вес 1 шт": "1,9 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/СВЕТЛЫЙ БЕРЕСТА Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "photos": [
+    "СВЕТЛЫЙ БЕРЕСТА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_1.jpg",
+    "СВЕТЛЫЙ БЕРЕСТА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_2.jpg",
+    "СВЕТЛЫЙ БЕРЕСТА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_3.jpg",
+    "СВЕТЛЫЙ БЕРЕСТА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_4.jpg",
+    "СВЕТЛЫЙ БЕРЕСТА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_5.jpg",
+    "СВЕТЛЫЙ БЕРЕСТА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_6.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-036"
   },
   {
    "flags": [],
@@ -3609,7 +4479,73 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-027"
+   "id": "kla-037"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Светлый Крафт",
+   "factory_name": "СВЕТЛЫЙ КРАФТ Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "color_raw": "желтый",
+   "color_group": "бежевый",
+   "texture": "фактурный",
+   "format": "1НФ (одинарный)",
+   "mark": "М150",
+   "price": 42.0,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М150",
+    "Морозостойкость": "F50",
+    "Вес 1 шт": "1,9 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/СВЕТЛЫЙ КРАФТ Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "photos": [
+    "СВЕТЛЫЙ КРАФТ Лицевой Одинарный М150 (F50) 416шт упак. пленкой_1.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-038"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Светлый Терра",
+   "factory_name": "СВЕТЛЫЙ ТЕРРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "color_raw": "желтый",
+   "color_group": "бежевый",
+   "texture": "фактурный",
+   "format": "1НФ (одинарный)",
+   "mark": "М150",
+   "price": 42.0,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М150",
+    "Морозостойкость": "F50",
+    "Вес 1 шт": "1,9 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/СВЕТЛЫЙ ТЕРРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "photos": [
+    "СВЕТЛЫЙ ТЕРРА Лицевой Одинарный М150 (F50) 416шт упак. пленкой_1.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-039"
   },
   {
    "flags": [
@@ -3646,7 +4582,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-026"
+   "id": "kla-035"
   },
   {
    "flags": [
@@ -3685,7 +4621,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-029"
+   "id": "kla-041"
   },
   {
    "flags": [
@@ -3715,7 +4651,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-031"
+   "id": "kla-044"
   },
   {
    "flags": [
@@ -3753,7 +4689,45 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-030"
+   "id": "kla-043"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Солома Сахара",
+   "factory_name": "СОЛОМА САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "солома",
+   "color_group": "бежевый",
+   "texture": "сахара",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 35.15,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/СОЛОМА САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "СОЛОМА САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg",
+    "СОЛОМА САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_2.jpg",
+    "СОЛОМА САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_3.jpg",
+    "СОЛОМА САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_4.jpg",
+    "СОЛОМА САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_5.jpg",
+    "СОЛОМА САХАРА Лицевой Одинарный М175 (F75) 416шт упак. пленкой_6.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-042"
   },
   {
    "flags": [],
@@ -3787,7 +4761,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-025"
+   "id": "kla-034"
   },
   {
    "flags": [],
@@ -3797,7 +4771,7 @@
    "name": "Скала рельефный",
    "factory_name": "Скала Лицевой Одинарный Гладкий М150 (F50) 416шт упак. пленкой",
    "color_raw": "коричневый",
-   "color_group": "серый",
+   "color_group": "коричневый",
    "texture": "рельефный",
    "format": "1НФ (одинарный)",
    "mark": "М150",
@@ -3818,7 +4792,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-028"
+   "id": "kla-040"
   },
   {
    "flags": [],
@@ -3848,7 +4822,40 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-032"
+   "id": "kla-045"
+  },
+  {
+   "flags": [],
+   "category": "oblitsovochnyy",
+   "collection": "klassika",
+   "supplier": "Донской",
+   "name": "Темно-коричневый",
+   "factory_name": "ТЕМНО-КОРИЧНЕВЫЙ Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "color_raw": "коричневый",
+   "color_group": "коричневый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "mark": "М150",
+   "price": 48.25,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М150",
+    "Морозостойкость": "F50",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/лицевой/ТЕМНО-КОРИЧНЕВЫЙ Лицевой Одинарный М150 (F50) 416шт упак. пленкой",
+   "photos": [
+    "ТЕМНО-КОРИЧНЕВЫЙ Лицевой Одинарный М150 (F50) 416шт упак. пленкой_1.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "kla-046"
   },
   {
    "flags": [],
@@ -3884,7 +4891,112 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "kla-033"
+   "id": "kla-047"
+  },
+  {
+   "flags": [],
+   "category": "obychnyy",
+   "collection": null,
+   "supplier": "Донской",
+   "name": "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75)",
+   "factory_name": "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой",
+   "color_raw": "микс (бавария)",
+   "color_group": "микс (бавария)",
+   "texture": "велюр",
+   "format": "1НФ (одинарный)",
+   "mark": "М175",
+   "price": 28.4,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М175",
+    "Морозостойкость": "F75",
+    "Вес 1 шт": "2,2 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/забутовочный/БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой",
+   "photos": [
+    "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой_1.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой_2.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой_3.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой_4.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой_5.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой_6.jpg",
+    "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой_7.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "rab-003"
+  },
+  {
+   "flags": [],
+   "category": "obychnyy",
+   "collection": null,
+   "supplier": "Донской",
+   "name": "БЕЛЫЕ НОЧИ БЕРЕСТА Рядовой Одинарный М150 (F50)",
+   "factory_name": "БЕЛЫЕ НОЧИ БЕРЕСТА Рядовой Одинарный М150 (F50) 416шт упак. пленкой",
+   "color_raw": "белый",
+   "color_group": "белый",
+   "texture": "береста",
+   "format": "1НФ (одинарный)",
+   "mark": "М150",
+   "price": 37.0,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М150",
+    "Морозостойкость": "F50",
+    "Вес 1 шт": "1,9 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/забутовочный/БЕЛЫЕ НОЧИ БЕРЕСТА Рядовой Одинарный М150 (F50) 416шт упак. пленкой",
+   "photos": [
+    "БЕЛЫЕ НОЧИ БЕРЕСТА Рядовой Одинарный М150 (F50) 416шт упак. пленкой_1.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "rab-004"
+  },
+  {
+   "flags": [],
+   "category": "obychnyy",
+   "collection": null,
+   "supplier": "Донской",
+   "name": "БЕЛЫЕ НОЧИ Рядовой Одинарный М150 (F50)",
+   "factory_name": "БЕЛЫЕ НОЧИ Рядовой Одинарный М150 (F50) 416шт упак. пленкой",
+   "color_raw": "белый",
+   "color_group": "белый",
+   "texture": "гладкий",
+   "format": "1НФ (одинарный)",
+   "mark": "М150",
+   "price": 37.0,
+   "price_unit": "шт",
+   "specs": {
+    "Размер": "250×120×65 мм",
+    "Марка прочности": "М150",
+    "Морозостойкость": "F50",
+    "Вес 1 шт": "1,9 кг",
+    "Изготовлен по": "ГОСТ 530-2012"
+   },
+   "description": "",
+   "dir": "Донской кирпич/забутовочный/БЕЛЫЕ НОЧИ Рядовой Одинарный М150 (F50) 416шт упак. пленкой",
+   "photos": [
+    "БЕЛЫЕ НОЧИ Рядовой Одинарный М150 (F50) 416шт упак. пленкой_1.jpg"
+   ],
+   "video": null,
+   "formats_prices": {},
+   "price_m2": null,
+   "consumption_per_m2": null,
+   "price_on_request": false,
+   "id": "rab-005"
   },
   {
    "flags": [],
@@ -3916,7 +5028,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-003"
+   "id": "rab-006"
   },
   {
    "flags": [
@@ -3946,7 +5058,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-004"
+   "id": "rab-007"
   },
   {
    "flags": [
@@ -3976,7 +5088,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-005"
+   "id": "rab-008"
   },
   {
    "flags": [],
@@ -4007,7 +5119,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-006"
+   "id": "rab-009"
   },
   {
    "flags": [],
@@ -4037,7 +5149,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-007"
+   "id": "rab-010"
   },
   {
    "flags": [],
@@ -4069,7 +5181,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-008"
+   "id": "rab-011"
   },
   {
    "flags": [],
@@ -4099,7 +5211,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-009"
+   "id": "rab-012"
   },
   {
    "flags": [],
@@ -4129,7 +5241,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-010"
+   "id": "rab-013"
   },
   {
    "flags": [],
@@ -4159,7 +5271,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-011"
+   "id": "rab-014"
   },
   {
    "flags": [
@@ -4189,7 +5301,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-012"
+   "id": "rab-015"
   },
   {
    "flags": [],
@@ -4219,7 +5331,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-013"
+   "id": "rab-016"
   },
   {
    "flags": [],
@@ -4249,7 +5361,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-014"
+   "id": "rab-017"
   },
   {
    "flags": [],
@@ -4279,7 +5391,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-015"
+   "id": "rab-018"
   },
   {
    "flags": [],
@@ -4311,7 +5423,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-016"
+   "id": "rab-019"
   },
   {
    "flags": [],
@@ -4343,7 +5455,7 @@
    "price_m2": null,
    "consumption_per_m2": null,
    "price_on_request": false,
-   "id": "rab-017"
+   "id": "rab-020"
   },
   {
    "category": "oblitsovochnyy",

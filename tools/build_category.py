@@ -156,7 +156,7 @@ def card(p, feat_hidden=None, root=""):
     True/False — лента категории, hidden если не featured."""
     alt = f"Кирпич «{p['name']}» — {p['color_group']}, {p['texture']}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="{root}img/catalog/{p["id"]}.jpg?v=6" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="{root}img/catalog/{p["id"]}.jpg?v=7" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -828,26 +828,62 @@ TASKS = [
 ]
 
 # скрываем дубли-фасовки (та же марка и структура, другая упаковка, без фото)
-RAB_SKIP = {"rab-007", "rab-009"}
+# КЛЮЧИ — factory_name (не id!): при добавлении товаров id сдвигаются.
+RAB_SKIP = {
+    "Одинарный М100 (F25 пустот. 13%, 11 сквозных отверстий) 448шт",
+    "Одинарный М150 (F25 пустот. 13%, 11 сквозных отверстий) 448шт",
+}
 
 RAB_VIEW = {
-    # id: (имя на сайте, мета, задачи)
-    "rab-001": ("Рядовой пустотелый", "1НФ", ["inner", "walls"]),
-    "rab-002": ("Хозяйственный пустотелый", "1НФ", ["inner"]),
-    "rab-003": ("Камень керамический М175", "F75", ["walls"]),
-    "rab-004": ("Красный одинарный", "1НФ · некондиция — уценка", ["inner"]),
-    "rab-005": ("Красный одинарный М125", "1НФ · F50", ["walls"]),
-    "rab-006": ("Пустотелый М100", "1НФ · F25", ["inner"]),
-    "rab-008": ("Пустотелый М150", "1НФ · F25", ["walls", "inner"]),
-    "rab-010": ("Полнотелый М150", "1НФ · F25", ["fund", "walls"]),
-    "rab-011": ("Полнотелый М150", "1НФ · F35 — для цоколя", ["fund", "walls"]),
-    "rab-012": ("Полнотелый", "1НФ · некондиция — уценка", ["inner"]),
-    "rab-013": ("Полнотелый сплошной М100", "1НФ · F25", ["inner", "walls"]),
-    "rab-014": ("Полнотелый сплошной М150", "1НФ · F25", ["fund", "walls"]),
-    "rab-015": ("Полнотелый сплошной М150", "1НФ · F35 — для цоколя", ["fund", "walls"]),
-    "rab-016": ("Утолщённый полнотелый М150", "1,4НФ · F25", ["fund", "walls"]),
-    "rab-017": ("Утолщённый сплошной М150", "1,4НФ · F25", ["fund", "walls"]),
+    # factory_name: (имя на сайте, мета, задачи)
+    "Кирпич рядовой керамический пустотелый":
+        ("Рядовой пустотелый", "1НФ", ["inner", "walls"]),
+    "Кирпич хозяйственный керамический пустотелый":
+        ("Хозяйственный пустотелый", "1НФ", ["inner"]),
+    "КАМЕНЬ M175 (F75) 192шт упак. пленкой":
+        ("Камень керамический М175", "F75", ["walls"]),
+    "КРАСНЫЙ Одинарный некондиционный 416шт упак. лентой":
+        ("Красный одинарный", "1НФ · некондиция — уценка", ["inner"]),
+    "Красный Одинарный М125 (F50) 416шт упак. пленкой и лентой":
+        ("Красный одинарный М125", "1НФ · F50", ["walls"]),
+    "Одинарный М100 (F25 пустот. 12%, 8 конусных углублений) 448шт":
+        ("Пустотелый М100", "1НФ · F25", ["inner"]),
+    "Одинарный М150 (F25 пустот. 12%, 8 конусных углублений) 448шт":
+        ("Пустотелый М150", "1НФ · F25", ["walls", "inner"]),
+    "Одинарный полнотелый М150 (F25 пустот. 12%, 3 скв.отв) 480шт упак. лентой":
+        ("Полнотелый М150", "1НФ · F25", ["fund", "walls"]),
+    "Одинарный полнотелый М150 (F35 пустот. 12%, 3 скв.отв) 480шт упак. лентой":
+        ("Полнотелый М150", "1НФ · F35 — для цоколя", ["fund", "walls"]),
+    "Одинарный полнотелый СВАР / некондиция":
+        ("Полнотелый", "1НФ · некондиция — уценка", ["inner"]),
+    "Одинарный полнотелый сплошной М100 (F25) 420шт упак. лентой":
+        ("Полнотелый сплошной М100", "1НФ · F25", ["inner", "walls"]),
+    "Одинарный полнотелый сплошной М150 (F25) 420шт упак. лентой":
+        ("Полнотелый сплошной М150", "1НФ · F25", ["fund", "walls"]),
+    "Одинарный полнотелый сплошной М150 (F35) 420шт упак. лентой":
+        ("Полнотелый сплошной М150", "1НФ · F35 — для цоколя", ["fund", "walls"]),
+    "Утолщенный полнотелый М150 (F25 пустот. 12%, 3 скв.отв) 352шт упак. лентой":
+        ("Утолщённый полнотелый М150", "1,4НФ · F25", ["fund", "walls"]),
+    "Утолщенный полнотелый М150 сплошной (F25) 308шт упак. лентой":
+        ("Утолщённый сплошной М150", "1,4НФ · F25", ["fund", "walls"]),
+    # новинки завода 17.07 — рядовые с лицевой фактурой
+    "БЕЛЫЕ НОЧИ Рядовой Одинарный М150 (F50) 416шт упак. пленкой":
+        ("Белые ночи М150 — белый", "1НФ · F50", ["walls", "inner"]),
+    "БЕЛЫЕ НОЧИ БЕРЕСТА Рядовой Одинарный М150 (F50) 416шт упак. пленкой":
+        ("Белые ночи береста М150 — белый", "1НФ · F50", ["walls", "inner"]),
+    "БАВАРСКИЙ СВЕТЛЫЙ ВЕЛЬВЕТ Рядовой Одинарный М175 (F75) 416шт упак. пленкой":
+        ("Баварский светлый вельвет М175", "1НФ · F75", ["walls"]),
 }
+
+
+def rab_view(p):
+    """Имя/мета/задачи забутовки; не роняем сборку на будущей новинке."""
+    v = RAB_VIEW.get(p["factory_name"])
+    if v is None:
+        print(f"  !! RAB_VIEW: нет записи для «{p['factory_name']}» — "
+              f"показываю сырое имя")
+        v = (p["name"], p.get("mark") or "", ["walls"])
+    return v
 
 RAB_LANES = [
     ("Донской", "Классика — рабочая серия",
@@ -858,10 +894,10 @@ RAB_LANES = [
 
 
 def card_z(p):
-    name, meta, tasks = RAB_VIEW[p["id"]]
+    name, meta, tasks = rab_view(p)
     alt = f"Забутовочный кирпич: {name}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=6" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=7" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -877,7 +913,7 @@ def card_z(p):
 
 
 def build_zabutovka():
-    items = [p for p in RAB if p["id"] not in RAB_SKIP]
+    items = [p for p in RAB if p["factory_name"] not in RAB_SKIP]
     n = len(items)
 
     chips = ['<button class="chip is-on" data-task="" aria-pressed="true">Все задачи</button>']
@@ -887,7 +923,7 @@ def build_zabutovka():
     lanes = []
     for supplier, lane_name, tagline in RAB_LANES:
         sub = [p for p in items if p["supplier"] == supplier]
-        sub.sort(key=lambda p: (not p["_thumb"], RAB_VIEW[p["id"]][0]))
+        sub.sort(key=lambda p: (not p["_thumb"], rab_view(p)[0]))
         cards = "\n".join(card_z(p) for p in sub)
         lanes.append(f"""
       <section class="lane" aria-label="{esc(lane_name)}">
@@ -1053,7 +1089,7 @@ def similar_bricks(p, k=4):
 def build_brick_product(p, is_rab=False):
     root = "../"
     if is_rab:
-        disp_name, disp_meta, _tasks = RAB_VIEW[p["id"]]
+        disp_name, disp_meta, _tasks = rab_view(p)
         crumb_cat = ("kirpich-zabutovochnyy.html", "Забутовочный кирпич")
         crumb_coll = None
         use_note = "Рабочая кладка: фундамент, несущие стены, перегородки — всё, что прячется под облицовкой."
@@ -1212,7 +1248,7 @@ GALLERY_JS = """
 def build_brick_product(p, is_rab=False):
     root = "../"
     if is_rab:
-        disp_name, disp_meta, _tasks = RAB_VIEW[p["id"]]
+        disp_name, disp_meta, _tasks = rab_view(p)
         crumb_cat = ("kirpich-zabutovochnyy.html", "Забутовочный кирпич")
         crumb_coll = None
         use_note = "Рабочая кладка: фундамент, несущие стены, перегородки — всё, что прячется под облицовкой."
@@ -1236,14 +1272,14 @@ def build_brick_product(p, is_rab=False):
             on = " is-on" if i == 0 else ""
             pressed = "true" if i == 0 else "false"
             btns.append(
-                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=6" '
+                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=7" '
                 f'aria-pressed="{pressed}" aria-label="Фото {i + 1}">'
-                f'<img src="{root}{src}?v=6" alt="" width="640" height="480" loading="lazy"></button>')
+                f'<img src="{root}{src}?v=7" alt="" width="640" height="480" loading="lazy"></button>')
         thumbs = f'\n      <div class="pd-thumbs">{"".join(btns)}</div>'
 
     if p["_thumb"]:
         photo = (f'<div class="pd-main-wrap" id="pdMainWrap">'
-                 f'<img class="pd-main" id="pdMain" src="{root}{p["_gallery"][0]}?v=6" '
+                 f'<img class="pd-main" id="pdMain" src="{root}{p["_gallery"][0]}?v=7" '
                  f'alt="{esc(alt)}" width="640" height="480">'
                  f'<button class="pd-zoom-trigger" id="pdZoomTrigger" type="button" aria-label="Открыть во весь экран">'
                  f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>'
@@ -1385,7 +1421,7 @@ def build_brick_products():
         build_brick_product(p)
         n += 1
     for p in RAB:
-        if p["id"] in RAB_SKIP:
+        if p["factory_name"] in RAB_SKIP:
             continue
         build_brick_product(p, is_rab=True)
         n += 1

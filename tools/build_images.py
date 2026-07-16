@@ -57,9 +57,10 @@ def main():
     # от прошлой сборки, и build_category.py подхватит их как «существующие».
     brick_ids = {p["id"] for p in data["products"]
                  if p["category"] in ("oblitsovochnyy", "obychnyy")}
-    for suffix in (2, 3, 4, 5):
-        for pid in brick_ids:
-            f = OUT / f"{pid}-{suffix}.jpg"
+    # Чистим и базовый {id}.jpg: при добавлении товаров id сдвигаются, и
+    # товар без фото иначе унаследует «чужой» кадр со старого номера.
+    for pid in brick_ids:
+        for f in [OUT / f"{pid}.jpg"] + [OUT / f"{pid}-{s}.jpg" for s in (2, 3, 4, 5)]:
             if f.exists():
                 f.unlink()
 
