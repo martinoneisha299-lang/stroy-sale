@@ -430,8 +430,13 @@ def parse_tandem():
             chars = parse_kv_block(text, "Характеристики")
             price, price_m2 = parse_price(field(text, "Цена"))
             name = nice_title(field(text, "Название") or txt.stem)
+            # ИМЯ.jpg — основное фото; ИМЯ_2.jpg, ИМЯ_3.jpg… — доснимки
+            # галереи с сайта завода (мерж 16.07). Разделитель «_» не
+            # конфликтует с вариантами типа «ИМЯ 0,5WDF» (там пробел).
             photos = sorted(f.name for f in sub.iterdir()
-                            if f.suffix.lower() in IMG_EXT and f.stem == txt.stem)
+                            if f.suffix.lower() in IMG_EXT
+                            and (f.stem == txt.stem
+                                 or f.stem.startswith(txt.stem + "_")))
             add({
                 "category": "oblitsovochnyy",
                 "collection": "formovka",

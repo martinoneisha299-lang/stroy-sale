@@ -156,7 +156,7 @@ def card(p, feat_hidden=None, root=""):
     True/False — лента категории, hidden если не featured."""
     alt = f"Кирпич «{p['name']}» — {p['color_group']}, {p['texture']}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="{root}img/catalog/{p["id"]}.jpg?v=5" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="{root}img/catalog/{p["id"]}.jpg?v=6" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -861,7 +861,7 @@ def card_z(p):
     name, meta, tasks = RAB_VIEW[p["id"]]
     alt = f"Забутовочный кирпич: {name}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=5" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=6" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -1236,14 +1236,14 @@ def build_brick_product(p, is_rab=False):
             on = " is-on" if i == 0 else ""
             pressed = "true" if i == 0 else "false"
             btns.append(
-                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=5" '
+                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=6" '
                 f'aria-pressed="{pressed}" aria-label="Фото {i + 1}">'
-                f'<img src="{root}{src}?v=5" alt="" width="640" height="480" loading="lazy"></button>')
+                f'<img src="{root}{src}?v=6" alt="" width="640" height="480" loading="lazy"></button>')
         thumbs = f'\n      <div class="pd-thumbs">{"".join(btns)}</div>'
 
     if p["_thumb"]:
         photo = (f'<div class="pd-main-wrap" id="pdMainWrap">'
-                 f'<img class="pd-main" id="pdMain" src="{root}{p["_gallery"][0]}?v=5" '
+                 f'<img class="pd-main" id="pdMain" src="{root}{p["_gallery"][0]}?v=6" '
                  f'alt="{esc(alt)}" width="640" height="480">'
                  f'<button class="pd-zoom-trigger" id="pdZoomTrigger" type="button" aria-label="Открыть во весь экран">'
                  f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>'
