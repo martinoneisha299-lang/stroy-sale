@@ -168,6 +168,102 @@ SHELL_JS = """
   </script>"""
 
 
+# Плавающая видео-миниатюра «производство» — только на странице категории.
+# Лёгкий беззвучный клип (150 КБ) крутится в углу; тап — поп-ап с полным
+# видео со звуком и кнопкой к калькулятору. Крестик прячет до конца визита.
+X_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+         'stroke-width="2" stroke-linecap="round" aria-hidden="true">'
+         '<path d="M18 6 6 18M6 6l12 12"/></svg>')
+
+VIDEO_BUBBLE = f"""
+  <div class="vb" id="vb">
+    <button class="vb-mini" id="vbMini" type="button"
+      aria-label="Смотреть видео с нашего производства">
+      <video id="vbClip" data-src="img/plitka/works-video-mini.mp4"
+        poster="img/plitka/works-video-mini-poster.jpg"
+        muted loop playsinline preload="none" width="270" height="480"></video>
+      <span class="vb-live" aria-hidden="true"><i></i>видео</span>
+      <span class="vb-play" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24"
+        fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+      <span class="vb-cap" aria-hidden="true">Наше производство</span>
+    </button>
+    <button class="vb-hide" id="vbHide" type="button" aria-label="Скрыть видео">{X_SVG}</button>
+  </div>
+  <div class="vb-pop" id="vbPop" hidden>
+    <button class="vb-back" id="vbBack" type="button" tabindex="-1" aria-hidden="true"></button>
+    <figure class="vb-pop-body">
+      <video id="vbFull" data-src="img/plitka/works-video.mp4"
+        poster="img/plitka/works-video-poster.jpg"
+        playsinline controls preload="none" width="360" height="640"></video>
+      <a class="btn vb-cta" id="vbCta" href="#calc">Рассчитать плитку</a>
+    </figure>
+    <button class="vb-close" id="vbClose" type="button" aria-label="Закрыть видео">{X_SVG}</button>
+  </div>"""
+
+VIDEO_BUBBLE_JS = """
+  <script>
+    (function () {
+      var vb = document.getElementById('vb'), pop = document.getElementById('vbPop');
+      if (!vb) return;
+      if (sessionStorage.getItem('vbOff')) { vb.remove(); pop.remove(); return; }
+      var clip = document.getElementById('vbClip'),
+          full = document.getElementById('vbFull'),
+          mobile = window.matchMedia('(max-width: 899px)'),
+          still = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (!mobile.matches) { vb.remove(); pop.remove(); return; }
+
+      // мягкое появление; при reduced motion — постер с кнопкой play вместо автоплея
+      setTimeout(function () {
+        vb.classList.add('vb-on');
+        if (still.matches) { vb.classList.add('vb-rm'); return; }
+        clip.src = clip.dataset.src;
+        clip.play().catch(function () { vb.classList.add('vb-rm'); });
+      }, 900);
+
+      // доскроллил до видео-секции на странице — миниатюра прячется (дубль не нужен)
+      var section = document.querySelector('.works-video');
+      if (section && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          vb.classList.toggle('vb-away', es[0].isIntersecting);
+        }, { threshold: 0.15 }).observe(section);
+      }
+
+      function open() {
+        pop.hidden = false;
+        requestAnimationFrame(function () { pop.classList.add('vb-pop-on'); });
+        document.body.style.overflow = 'hidden';
+        clip.pause();
+        if (!full.src) full.src = full.dataset.src;
+        full.currentTime = 0;
+        full.muted = false;
+        full.play().catch(function () {});
+        document.getElementById('vbClose').focus();
+      }
+      function close() {
+        pop.classList.remove('vb-pop-on');
+        pop.hidden = true;
+        document.body.style.overflow = '';
+        full.pause();
+        if (!still.matches && !vb.classList.contains('vb-rm')) clip.play().catch(function () {});
+      }
+
+      document.getElementById('vbMini').addEventListener('click', open);
+      document.getElementById('vbClose').addEventListener('click', close);
+      document.getElementById('vbBack').addEventListener('click', close);
+      document.getElementById('vbCta').addEventListener('click', close);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !pop.hidden) close();
+      });
+      full.addEventListener('ended', close);
+      document.getElementById('vbHide').addEventListener('click', function () {
+        sessionStorage.setItem('vbOff', '1');
+        vb.classList.remove('vb-on');
+        setTimeout(function () { vb.remove(); pop.remove(); }, 400);
+      });
+    })();
+  </script>"""
+
+
 def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
                extra_head="", product=""):
     """Каркас страницы. root = префикс относительных ссылок ('' или '../')."""
@@ -181,7 +277,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=15">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=17">{extra_head}
 </head>
 <body>
 
@@ -674,10 +770,10 @@ def build_category():
         "Тротуарная плитка от производителя — от 650 ₽/м² | Строй-Сейл Краснодар",
         f"Тротуарная плитка в Краснодаре: {total} {plural(total, 'вариант', 'варианта', 'вариантов')}, "
         "7 форм, 40 мм, F200. Заводские цены, доставка на объект, оплата при получении.",
-        body,
+        body + VIDEO_BUBBLE,
         "Не знаете, какую форму выбрать?",
         "Позвоните — подберём форму и цвет под дом, посчитаем площадь по плану участка и скажем точную цену с доставкой.",
-        CALC_JS)
+        CALC_JS + VIDEO_BUBBLE_JS)
     (BASE / "trotuarnaya-plitka.html").write_text(out)
     print(f"trotuarnaya-plitka.html: {total} товаров, 7 форм, от {all_min} ₽/м²")
 

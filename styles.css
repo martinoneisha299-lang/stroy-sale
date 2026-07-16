@@ -2203,6 +2203,211 @@ a.p-card:focus-visible {
   }
 }
 
+/* ——— Видео-миниатюра «производство» (только мобайл, страница плитки) ———
+   Плавающий вертикальный ролик в левом нижнем углу над полосой связи.
+   Тап — поп-ап со звуком; крестик на миниатюре прячет до конца визита. */
+.vb {
+  position: fixed;
+  left: var(--space-xs);
+  bottom: calc(76px + env(safe-area-inset-bottom));
+  z-index: 55; /* под полосой связи (60), над контентом */
+  transform: translateY(18px) scale(.86);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .45s cubic-bezier(.2, .9, .3, 1.15), opacity .3s ease;
+}
+
+.vb.vb-on {
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* доскроллил до настоящей видео-секции — миниатюра уходит, дубль не нужен */
+.vb.vb-away {
+  transform: translateY(24px) scale(.9);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vb-mini {
+  display: block;
+  position: relative;
+  width: 92px;
+  height: 128px;
+  padding: 0;
+  border: 2px solid var(--color-paper);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--color-ink);
+  box-shadow: 0 6px 22px rgb(31 26 23 / .3);
+  cursor: pointer;
+}
+
+.vb-mini video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vb-live {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 4px rgb(0 0 0 / .55);
+}
+
+.vb-live i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e5484d;
+  animation: vb-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes vb-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
+
+.vb-cap {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 20px 8px 7px;
+  font-size: 11px;
+  line-height: 1.25;
+  color: #fff;
+  text-align: left;
+  /* вуаль-подложка для читаемости подписи поверх видео */
+  background: linear-gradient(transparent, rgb(0 0 0 / .62));
+}
+
+/* треугольник play — только когда автоплей выключен (reduced motion) */
+.vb-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / .5);
+  color: #fff;
+}
+
+.vb.vb-rm .vb-play { display: flex; }
+
+.vb-hide {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px var(--color-paper);
+}
+
+/* расширенная тап-зона крестика (сам кружок маленький намеренно) */
+.vb-hide::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+}
+
+.vb-hide svg { width: 12px; height: 12px; }
+
+/* ——— Поп-ап видео ——— */
+.vb-pop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.vb-pop[hidden] { display: none; }
+
+.vb-back {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgb(22 17 14 / .8);
+  cursor: default;
+}
+
+.vb-pop-body {
+  position: relative;
+  margin: 0;
+  width: min(78vw, 330px);
+  transform: scale(.92);
+  opacity: 0;
+  transition: transform .3s cubic-bezier(.2, .9, .3, 1.1), opacity .25s ease;
+}
+
+.vb-pop.vb-pop-on .vb-pop-body {
+  transform: none;
+  opacity: 1;
+}
+
+.vb-pop-body video {
+  display: block;
+  width: 100%;
+  max-height: 72vh;
+  border-radius: 18px;
+  background: #000;
+}
+
+.vb-cta {
+  width: 100%;
+  margin-top: var(--space-xs);
+}
+
+.vb-close {
+  position: absolute;
+  top: calc(var(--space-sm) + env(safe-area-inset-top));
+  right: var(--space-sm);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / .35);
+  border-radius: 50%;
+  background: rgb(255 255 255 / .14);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.vb-close svg { width: 20px; height: 20px; }
+
+@media (min-width: 900px) {
+  .vb, .vb-pop { display: none !important; }
+}
+
 /* ——— Движение: уважение reduced motion ——— */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
