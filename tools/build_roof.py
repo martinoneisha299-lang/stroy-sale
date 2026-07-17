@@ -29,7 +29,7 @@ COLORS = IMG["colors"]
 P_COLORS = IMG["product_colors"]
 P_IMAGES = IMG["products"]
 
-STYLES_V = 19
+STYLES_V = 20
 IMG_V = 1
 
 
@@ -478,6 +478,83 @@ SID = [
 ALL_PRODUCTS = MCH + PROF + SHT + SID
 BY_ID = {p["id"]: p for p in ALL_PRODUCTS}
 
+# ── Семейства = «категории»: путь категория → товар → цвет (как у europrofil93
+#    и как у нас в плитке). Сетка карточек для семейств с фото/чертежами,
+#    фото+список (duo) для «бедных на фото» штакетника и сайдинга. ──────────
+FAMILIES = [
+    dict(
+        slug="metallocherepitsa", title="Металлочерепица", short="Металлочерепица",
+        kind="Металлочерепица", tag="Для крыши дома", layout="grid",
+        products=MCH,
+        sub="Два профиля — оба режем в размер ската, крыша собирается "
+            "без горизонтальных стыков.",
+        card="2 профиля · для скатной крыши",
+        cover="cover-mch-monterrey.jpg", cover_scheme=False,
+        cover_alt="Металлочерепица крупным планом",
+        note="Оба профиля — сталь 0,4–0,5 мм с полимерным покрытием, "
+             "40 цветов. Цену и раскрой посчитаем по вашим размерам.",
+        cta_h2="Посчитаем черепицу по вашей крыше",
+        cta_note="Пришлите размеры или фото чертежа — вернём раскрой листов, "
+                  "доборные и цену с доставкой.",
+    ),
+    dict(
+        slug="profnastil", title="Профнастил", short="Профнастил",
+        kind="Профнастил", tag="Крыша · забор · навес", layout="grid",
+        products=PROF,
+        sub="Шесть профилей — от лёгкого заборного С-8 до несущего Н-60. "
+            "На каждой карточке — чертёж волны в размерах.",
+        card="6 профилей · крыша, забор, навес",
+        cover="roof-prof-mp20-scheme.jpg", cover_scheme=True,
+        cover_alt="Профнастил — чертёж профиля волны",
+        note="Не хотите разбираться в профилях? Назовите задачу — "
+             "подберём марку и посчитаем количество.",
+        cta_h2="Подберём профиль и посчитаем листы",
+        cta_note="Скажите, что закрываете — крышу, забор или стены. "
+                  "Подберём марку, цвет и цену с доставкой.",
+    ),
+    dict(
+        slug="shtaketnik", title="Штакетник", short="Штакетник",
+        kind="Штакетник", tag="Для забора", layout="duo",
+        products=SHT,
+        sub="Металлические планки с просветом: двор проветривается, "
+            "забор не парусит. Три формы верха, 40 цветов и рисунки под дерево.",
+        card="3 формы верха · для забора",
+        cover="sec-shtaketnik.jpg", cover_scheme=False,
+        cover_alt="Забор из графитового евроштакетника на фоне зелени",
+        duo_note="Евроштакетник круглый в цвете «Графит». Кромки завальцованы — "
+                 "без острых краёв.",
+        cta_h2="Посчитаем забор по вашим метрам",
+        cta_note="Пришлите длину забора и высоту — посчитаем планки, столбы "
+                  "и цену с доставкой.",
+    ),
+    dict(
+        slug="sayding", title="Металлосайдинг и софиты", short="Металлосайдинг",
+        kind="Металлосайдинг", tag="Для фасада и свесов", layout="duo",
+        products=SID, printech_live=True,
+        sub="Обшивка, которую не надо красить и пропитывать: металл с рисунком "
+            "дерева не гниёт, не выгорает и не боится огня.",
+        card="5 профилей · для фасада и свесов",
+        cover="sec-sayding.jpg", cover_scheme=False,
+        cover_alt="Металлосайдинг с фотопечатью под тёмное дерево крупным планом",
+        duo_note="Покрытие Printech: рисунок дерева — фотопечать на стали.",
+        cta_h2="Посчитаем фасад по вашим размерам",
+        cta_note="Пришлите площадь стен или фото дома — подберём профиль, "
+                  "цвет и цену с доставкой.",
+    ),
+]
+FAMILY_BY_SLUG = {f["slug"]: f for f in FAMILIES}
+FAMILY_OF = {p["id"]: f for f in FAMILIES for p in f["products"]}
+
+# Компактная палитра-тизер «один цвет — на всё»: спред по всем сериям
+ROOF_TEASER_COLORS = [
+    "ral-1014-bezhevyi", "ral-3005-spelaya-vishnya", "ral-3011-krasno-korichnevyi",
+    "ral-1018-zhe-ltyi", "ral-6002-zelenyi-list", "ral-6005-zele-nyi-moh",
+    "ral-5002-ultramarin", "ral-7024-grafitovyi-seryi", "ral-8017-shokolad",
+    "ral-9003-belyi", "granite-deep-mat-8004", "granite-deep-mat-9005",
+    "granite-deep-mat-6020", "antichnyi-dub", "oreh-temnyi",
+    "svetloe-derevo", "kirpich", "tsink",
+]
+
 # Доборные и водосток — без своих страниц: подбирает менеджер в цвет кровли
 DOBORNYE = [
     "Конёк фигурный", "Конёк полукруглый", "Конёк-ребро",
@@ -599,27 +676,90 @@ def product_card(p, root=""):
             f'<span class="p-ask">Узнать цену</span></a>')
 
 
-def duo_section(sec_id, tag, h2, lead, img_file, img_alt, img_note, products, root=""):
+def cat_img(src, alt, scheme=False, root=""):
+    cls = "cat-img cat-img-scheme" if scheme else "cat-img"
+    return (f'<img class="{cls}" src="{root}img/roof/{src}?v={IMG_V}" '
+            f'alt="{esc(alt)}" width="600" height="600" loading="lazy">')
+
+
+def cat_card(href, img, title, caption, price="Узнать цену"):
+    """Единая карточка сетки (как формы в плитке): фото/чертёж + имя + подпись."""
+    price_html = f'<p class="cat-price">{esc(price)}</p>' if price else ""
+    return (f'<a class="cat" href="{href}">{img}'
+            f'<div class="cat-row"><h3>{esc(title)}</h3>{ARR_SVG}</div>'
+            f'<p class="caption">{esc(caption)}</p>{price_html}</a>')
+
+
+def product_cat_card(p, root=""):
+    """Карточка товара в сетке семейства: фото (или чертёж) + имя + «Узнать цену»."""
+    entry = P_IMAGES[p["id"]]
+    if entry["gallery"]:
+        img = cat_img(entry["gallery"][0], f'{p["kind"]} «{p["name"]}»', False, root)
+    elif entry["scheme"]:
+        img = cat_img(entry["scheme"], f'{p["kind"]} {p["name"]} — чертёж профиля',
+                      True, root)
+    else:
+        img = ('<div class="cat-img p-none" role="img" aria-label="Фото пришлём по запросу">'
+               '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+               'stroke-width="1.5" stroke-linecap="round" aria-hidden="true">'
+               '<rect x="3" y="8" width="18" height="9"/>'
+               '<path d="M7 11h.01M12 11h.01M17 11h.01"/></svg>'
+               '<span>Фото пришлём по запросу</span></div>')
+    return cat_card(f'{root}tovar/krovlya-{p["id"]}.html', img,
+                    p["name"], p["meta"])
+
+
+def duo_rows(products, root=""):
     lis = []
     for p in products:
         lis.append(
             f'<li><a class="duo-item" href="{root}tovar/krovlya-{p["id"]}.html">'
             f'<div><h3>{esc(p["name"])}</h3>'
             f'<p class="caption">{esc(p["blurb"])}</p></div>{ARR_SVG}</a></li>')
+    return f'<ul class="duo-list">{"".join(lis)}</ul>'
+
+
+def color_strip(root=""):
+    dots = "".join(
+        f'<img src="{root}img/roof/{COLORS[s]["sw"]}?v={IMG_V}" '
+        f'alt="{esc(COLORS[s]["label"])}" width="52" height="52" loading="lazy">'
+        for s in ROOF_TEASER_COLORS)
+    return f'<div class="color-strip">{dots}</div>'
+
+
+def color_section(root=""):
+    """Компактный тизер «один цвет — на всё». Полная палитра — в карточке товара."""
     return f"""
-  <section class="section" id="{sec_id}">
+  <section class="section" id="tsveta">
     <div class="wrap">
       <div class="section-head">
-        <span class="tag">{tag}</span>
-        <h2>{h2}</h2>
-        <p class="caption">{lead}</p>
+        <span class="tag">Палитра</span>
+        <h2>Один цвет — на&nbsp;всё</h2>
+        <p class="caption">Лист, конёк, планки, водосток и саморезы красим в один тон —
+          крыша выглядит целой. 40 оттенков: глянцевый полиэстер, матовый Granite,
+          Printech под дерево и цинк.</p>
       </div>
-      <div class="duo">
-        <figure class="duo-img">
-          <img src="{root}img/roof/{img_file}?v={IMG_V}" alt="{esc(img_alt)}" width="1100" height="820" loading="lazy">
-          <figcaption class="caption">{img_note}</figcaption>
-        </figure>
-        <ul class="duo-list">{''.join(lis)}</ul>
+      {color_strip(root)}
+      <p class="caption cats-note">Полную палитру под каждый материал показываем
+        в карточке товара. Перед заказом привезём образец вживую.</p>
+    </div>
+  </section>"""
+
+
+def printech_live_section(root=""):
+    return f"""
+  <section class="section" aria-label="Printech вживую">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Printech вживую</h2>
+        <p class="caption">Так фотопечать под дерево выглядит на готовых панелях —
+          рисунок не повторяется от планки к планке.</p>
+      </div>
+      <div class="works-grid-4">
+        <img src="{root}img/roof/printech-live-1.jpg?v={IMG_V}" alt="Металлосайдинг под античный дуб" width="960" height="720" loading="lazy">
+        <img src="{root}img/roof/printech-live-2.jpg?v={IMG_V}" alt="Металлосайдинг под тёмный орех" width="960" height="720" loading="lazy">
+        <img src="{root}img/roof/printech-live-3.jpg?v={IMG_V}" alt="Металлосайдинг под светлую сосну" width="960" height="720" loading="lazy">
+        <img src="{root}img/roof/printech-live-4.jpg?v={IMG_V}" alt="Металлосайдинг под белёное дерево" width="960" height="720" loading="lazy">
       </div>
     </div>
   </section>"""
@@ -646,28 +786,13 @@ ROOF_CALC_JS = """
   </script>"""
 
 
-# ─────────────────────────────── страница категории ────────────────────
-def build_category():
-    mch_cards = []
-    for p in MCH:
-        mch_cards.append(f"""
-        <a class="cat" href="tovar/krovlya-{p['id']}.html">
-          <img class="cat-img" src="img/roof/cover-{p['id']}.jpg?v={IMG_V}" alt="{esc(p['kind'])} «{esc(p['name'])}» крупным планом" width="900" height="900" loading="lazy">
-          <div class="cat-row">
-            <h3>{esc(p['name'])}</h3>
-            {ARR_SVG}
-          </div>
-          <p class="caption">{esc(p['blurb'])}</p>
-          <p class="cat-price">Узнать цену</p>
-        </a>""")
-
-    prof_cards = "".join(product_card(p) for p in PROF)
-
-    kit_cols = []
+# ─────────────────────────────── общие куски хаба ──────────────────────
+def kit_columns():
+    cols = []
     for h3, items, cap in [
         ("Доборные элементы", DOBORNYE,
-         "Коньки, планки и ендовы гнём на своём оборудовании — в цвет кровли, "
-         "длина 2 м."),
+         "Коньки, планки и ендовы гнём на своём оборудовании — "
+         "в цвет кровли, длина 2 м."),
         ("Водосточные системы", VODOSTOK,
          "Комплект под вашу крышу соберёт менеджер: желоба, трубы, крюки — "
          "ничего не забудем."),
@@ -676,149 +801,12 @@ def build_category():
          "и дорожками."),
     ]:
         lis = "".join(f"<li>{esc(i)}</li>" for i in items)
-        kit_cols.append(f'<div><h3>{h3}</h3><p class="caption">{cap}</p><ul>{lis}</ul></div>')
+        cols.append(f'<div><h3>{esc(h3)}</h3>'
+                    f'<p class="caption">{esc(cap)}</p><ul>{lis}</ul></div>')
+    return "".join(cols)
 
-    body = f"""
-  <!-- Шапка категории -->
-  <section class="roof-hero" aria-label="Кровля">
-    <div class="wrap roof-hero-in">
-      <div>
-        <nav class="crumbs" aria-label="Хлебные крошки">
-          <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
-          <span>Кровля</span>
-        </nav>
-        <div class="page-head"><h1>Кровля и&nbsp;всё для крыши</h1></div>
-        <p class="page-sub">Металлочерепица, профнастил, штакетник и сайдинг
-          с завода в Краснодаре. Каждый лист режем в размер вашей крыши —
-          без стыков и обрезков.</p>
-        <ul class="tile-facts">
-          <li><strong>до 8 м</strong> лист целиком, без стыков</li>
-          <li><strong>40 цветов</strong> и покрытий на выбор</li>
-          <li><strong>0,4–0,5 мм</strong> сталь, оцинковка + полимер</li>
-          <li><strong>до 15 лет</strong> гарантия на покрытие</li>
-        </ul>
-        <div class="hero-cta">
-          <a class="btn" href="#metallocherepitsa">Выбрать материал</a>
-          <a class="btn btn-ghost" href="#calc">Посчитать крышу</a>
-        </div>
-      </div>
-      <div class="roof-hero-img">
-        <img src="img/roof/hero-roof.jpg?v={IMG_V}" alt="Тёмно-серая металлочерепица с каплями дождя крупным планом" width="1200" height="800" loading="eager" fetchpriority="high">
-      </div>
-    </div>
-  </section>
 
-  <!-- Подбор по задаче -->
-  <section class="section" aria-label="С чего начать">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tag">С чего начать</span>
-        <h2>Что будем закрывать?</h2>
-      </div>
-      <div class="doors">
-        <a class="door" href="#metallocherepitsa">
-          <h3>Крышу дома {ARR_SVG}</h3>
-          <p class="caption">Металлочерепица — красиво и привычно.
-            Профнастил МП-20 или НС-35 — практично и дешевле.</p>
-        </a>
-        <a class="door" href="#shtaketnik">
-          <h3>Забор {ARR_SVG}</h3>
-          <p class="caption">Штакетник — с просветом, не парусит.
-            Профнастил С-8 или С-21 — сплошной, «глухой» двор.</p>
-        </a>
-        <a class="door" href="#sayding">
-          <h3>Фасад или свесы {ARR_SVG}</h3>
-          <p class="caption">Металлосайдинг под дерево для стен
-            и софиты для подшивки свесов крыши.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Металлочерепица -->
-  <section class="section" id="metallocherepitsa">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tag">Для крыши дома</span>
-        <h2>Металлочерепица</h2>
-        <p class="caption">Два профиля. Оба режем в размер ската —
-          от 0,8 до 8 метров, крыша собирается без горизонтальных стыков.</p>
-      </div>
-      <div class="cats cats--2">{''.join(mch_cards)}
-      </div>
-    </div>
-  </section>
-
-  <!-- Профнастил -->
-  <section class="section" id="profnastil">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tag">Крыша · забор · навес</span>
-        <h2>Профнастил</h2>
-        <p class="caption">Шесть профилей — от лёгкого заборного С-8
-          до несущего Н-60. На карточках — чертёж волны в размерах.</p>
-      </div>
-      <div class="p-grid">{prof_cards}</div>
-      <p class="caption cats-note">Не хотите разбираться в профилях?
-        Позвоните — подберём по назначению и посчитаем количество.</p>
-    </div>
-  </section>
-
-  <!-- Палитра -->
-  <section class="section" id="tsveta">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tag">Палитра</span>
-        <h2>Один цвет — на&nbsp;всё</h2>
-        <p class="caption">Лист, конёк, планки, водосток и саморезы красим
-          в один цвет — крыша выглядит целой. Палитра общая для
-          металлочерепицы, профнастила, штакетника и сайдинга.</p>
-      </div>
-      {palette_html(note="Цвета на экране — ориентир: оттенок зависит от экрана. "
-                         "Перед заказом покажем образец вживую или пришлём фото готовых объектов.")}
-      <div class="palette-live">
-        <h3>Printech вживую</h3>
-        <p class="caption">Так фотопечать под дерево выглядит на готовых панелях.</p>
-      <div class="works-grid-4">
-        <img src="img/roof/printech-live-1.jpg?v={IMG_V}" alt="Металлосайдинг с покрытием под античный дуб" width="960" height="720" loading="lazy">
-        <img src="img/roof/printech-live-2.jpg?v={IMG_V}" alt="Металлосайдинг с покрытием под тёмный орех" width="960" height="720" loading="lazy">
-        <img src="img/roof/printech-live-3.jpg?v={IMG_V}" alt="Металлосайдинг с покрытием под светлую сосну" width="960" height="720" loading="lazy">
-        <img src="img/roof/printech-live-4.jpg?v={IMG_V}" alt="Металлосайдинг с покрытием под белёное дерево" width="960" height="720" loading="lazy">
-      </div>
-      </div>
-    </div>
-  </section>
-
-{duo_section("shtaketnik", "Для забора", "Штакетник",
-             "Металлические планки с просветом: двор проветривается, забор не парусит. "
-             "Три формы верха, 12 цветов и рисунки под дерево.",
-             IMG["sections"]["shtaketnik"],
-             "Забор из графитового евроштакетника на фоне зелени",
-             "Евроштакетник круглый в цвете «Графит». Кромки завальцованы — без острых краёв.",
-             SHT)}
-
-{duo_section("sayding", "Для фасада", "Металлосайдинг и софиты",
-             "Обшивка, которую не надо красить и пропитывать: металл с рисунком дерева "
-             "не гниёт, не выгорает и не боится огня.",
-             IMG["sections"]["sayding"],
-             "Металлосайдинг с фотопечатью под тёмное дерево крупным планом",
-             "Покрытие Printech: рисунок дерева — фотопечать на стали.",
-             SID)}
-
-  <!-- Доборные, водосток, безопасность -->
-  <section class="section" id="dobornye">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tag">К любой кровле</span>
-        <h2>Всё для крыши — сразу</h2>
-        <p class="caption">Крыша — это не только листы. Доборные, водосток и
-          снегозадержатели подберём в цвет кровли и посчитаем по вашим размерам —
-          одним заказом, одной доставкой.</p>
-      </div>
-      <div class="kit">{''.join(kit_cols)}</div>
-    </div>
-  </section>
-
+CALC_SECTION = f"""
   <!-- Калькулятор -->
   <section class="section" id="calc" aria-label="Калькулятор кровли">
     <div class="wrap">
@@ -866,6 +854,72 @@ def build_category():
     </div>
   </section>"""
 
+
+# ─────────────────────────────── страница-хаб «Кровля» ─────────────────
+def build_hub():
+    cards = []
+    for f in FAMILIES:
+        img = cat_img(f["cover"], f["cover_alt"], f.get("cover_scheme", False))
+        cards.append(cat_card(f'krovlya-{f["slug"]}.html', img,
+                              f["short"], f["card"], price=None))
+
+    body = f"""
+  <!-- Шапка раздела -->
+  <section class="roof-hero" aria-label="Кровля">
+    <div class="wrap roof-hero-in">
+      <div>
+        <nav class="crumbs" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
+          <span>Кровля</span>
+        </nav>
+        <div class="page-head"><h1>Кровля и&nbsp;всё для крыши</h1></div>
+        <p class="page-sub">Четыре материала с одного завода. Режем в размер
+          вашей крыши — без стыков и обрезков, цвет и покрытие общие.</p>
+        <ul class="tile-facts">
+          <li><strong>до 8 м</strong> лист целиком, без стыков</li>
+          <li><strong>40 цветов</strong> и покрытий на выбор</li>
+          <li><strong>0,4–0,5 мм</strong> сталь, оцинковка + полимер</li>
+          <li><strong>до 15 лет</strong> гарантия на покрытие</li>
+        </ul>
+        <div class="hero-cta">
+          <a class="btn" href="#materialy">Выбрать материал</a>
+          <a class="btn btn-ghost" href="#calc">Посчитать крышу</a>
+        </div>
+      </div>
+      <div class="roof-hero-img">
+        <img src="img/roof/hero-roof.jpg?v={IMG_V}" alt="Тёмно-серая металлочерепица с каплями дождя крупным планом" width="1200" height="800" loading="eager" fetchpriority="high">
+      </div>
+    </div>
+  </section>
+
+  <!-- Четыре материала = четыре категории -->
+  <section class="section" id="materialy">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Выберите материал</h2>
+        <p class="caption">Внутри каждой — товары и цвета. Не знаете, что нужно, —
+          позвоните, подскажем по задаче.</p>
+      </div>
+      <div class="cats cats-roof">{''.join(cards)}</div>
+    </div>
+  </section>
+
+  <!-- Доборные, водосток, безопасность -->
+  <section class="section" id="dobornye">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag">К любой кровле</span>
+        <h2>Всё для крыши — сразу</h2>
+        <p class="caption">Доборные, водосток и снегозадержатели подберём
+          в цвет кровли и посчитаем по вашим размерам — одним заказом.</p>
+      </div>
+      <div class="kit">{kit_columns()}</div>
+    </div>
+  </section>
+
+{color_section()}
+{CALC_SECTION}"""
+
     out = page_shell(
         "Кровля в Краснодаре: металлочерепица и профнастил с завода — Строй-Сейл",
         "Металлочерепица, профнастил, штакетник и сайдинг с завода в Краснодаре. "
@@ -878,6 +932,59 @@ def build_category():
         extra_js=ROOF_CALC_JS,
         product="кровля")
     (BASE / "krovlya.html").write_text(out)
+
+
+# ─────────────────────────────── страницы семейств ─────────────────────
+def build_family(f):
+    slug = f["slug"]
+    head = f"""
+  <section class="section">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Хлебные крошки">
+        <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
+        <a href="krovlya.html">Кровля</a> <span aria-hidden="true">/</span>
+        <span>{esc(f['title'])}</span>
+      </nav>
+      <div class="page-head"><h1>{esc(f['title'])}</h1></div>
+      <p class="page-sub">{esc(f['sub'])}</p>
+    </div>
+  </section>"""
+
+    if f["layout"] == "grid":
+        cards = "".join(product_cat_card(p) for p in f["products"])
+        main = f"""
+  <section class="section">
+    <div class="wrap">
+      <div class="cats cats-roof">{cards}</div>
+      <p class="caption cats-note">{esc(f['note'])}</p>
+    </div>
+  </section>"""
+    else:  # duo: одно хорошее фото + список вариантов (для «бедных на фото»)
+        main = f"""
+  <section class="section">
+    <div class="wrap">
+      <div class="duo">
+        <figure class="duo-img">
+          <img src="img/roof/{f['cover']}?v={IMG_V}" alt="{esc(f['cover_alt'])}" width="1100" height="820" loading="lazy">
+          <figcaption class="caption">{esc(f['duo_note'])}</figcaption>
+        </figure>
+        {duo_rows(f['products'])}
+      </div>
+    </div>
+  </section>"""
+
+    live = printech_live_section() if f.get("printech_live") else ""
+    body = head + main + live + color_section()
+
+    out = page_shell(
+        f"{f['title']} в Краснодаре — цена с завода | Строй-Сейл",
+        f"{f['title']}: {f['sub']} Заводские цены, режем в размер, "
+        "доставка по Краснодару и краю, оплата при получении.",
+        body,
+        cta_h2=f["cta_h2"],
+        cta_note=f["cta_note"],
+        product=f["title"].lower())
+    (BASE / f"krovlya-{slug}.html").write_text(out)
 
 
 # ─────────────────────────────── товарные страницы ─────────────────────
@@ -897,6 +1004,7 @@ def similar_html(p, root=""):
         pool = [x for x in SID if x is not p][:4]
         h2 = "Другой сайдинг"
     cards = "".join(product_card(x, root) for x in pool[:4])
+    fam = FAMILY_OF[p["id"]]
     return f"""
   <section class="section" aria-label="{esc(h2)}">
     <div class="wrap">
@@ -905,7 +1013,7 @@ def similar_html(p, root=""):
       </div>
       <div class="p-grid">{cards}</div>
       <div class="more">
-        <a class="btn btn-ghost" href="{root}krovlya.html">Весь раздел кровли</a>
+        <a class="btn btn-ghost" href="{root}krovlya-{fam['slug']}.html">В раздел «{esc(fam['title'])}»</a>
       </div>
     </div>
   </section>"""
@@ -923,6 +1031,7 @@ def full_name(p):
 def build_product(p):
     root = "../"
     pid = p["id"]
+    fam = FAMILY_OF[pid]
     specs = "".join(f"<div><dt>{esc(dt)}</dt><dd>{esc(dd)}</dd></div>"
                     for dt, dd in p["specs"])
     n_colors = len(P_COLORS[pid])
@@ -951,6 +1060,7 @@ def build_product(p):
       <nav class="crumbs" aria-label="Хлебные крошки">
         <a href="{root}index.html">Главная</a> <span aria-hidden="true">/</span>
         <a href="{root}krovlya.html">Кровля</a> <span aria-hidden="true">/</span>
+        <a href="{root}krovlya-{fam['slug']}.html">{esc(fam['short'])}</a> <span aria-hidden="true">/</span>
         <span>{esc(p['name'])}</span>
       </nav>
     </div>
@@ -1011,7 +1121,10 @@ def build_product(p):
     (TOVAR / f"krovlya-{pid}.html").write_text(out)
 
 
-build_category()
+build_hub()
+for _f in FAMILIES:
+    build_family(_f)
 for _p in ALL_PRODUCTS:
     build_product(_p)
-print(f"OK: krovlya.html + {len(ALL_PRODUCTS)} товарных страниц")
+print(f"OK: krovlya.html + {len(FAMILIES)} семейств + "
+      f"{len(ALL_PRODUCTS)} товарных страниц")
