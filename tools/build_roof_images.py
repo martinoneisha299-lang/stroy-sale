@@ -24,7 +24,7 @@ import re
 import unicodedata
 from pathlib import Path
 
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageFilter
 
 BASE = Path("/Users/dm/Desktop/сайт")
 SRC = Path("/Users/dm/Desktop/фото/кровля")
@@ -220,26 +220,18 @@ manifest["sections"] = {
     "sayding": "sec-sayding.jpg",
 }
 
-# ---- обложки категорий и «кита»: чистые lifestyle-кадры (превью категорий
-# со страницы каталога поставщика — без водяного знака, проверены глазами).
-# Источники небольшие (261–400 px), поэтому обложки держим 480², чтобы не
-# гнать сильный апскейл. ----
+# ---- обложки категорий для хаба «Выберите материал»: КРУПНЫЕ чистые
+# студийные кадры 1200px (было — крошечные превью 261–400px, отсюда жалоба
+# «растянуто/плохое качество»). Металлочерепица/штакетник/сайдинг — студийные
+# 1200px; профнастил — чистого hi-res нет (все фото завода под знаком), берём
+# превью 400px с лёгким шарпом. Обложки 600² (1:1 с размером в разметке). ----
 CAT_SRC = SRC / "_категории-17.07"
-CAT_COVERS = {
-    "cat-metallocherepitsa.jpg": ("cover-cat-mch.jpg", 480, 480),
-    "cat-profnastil.jpg":        ("cover-cat-prof.jpg", 480, 480),
-    "cat-shtaketnik.jpg":        ("cover-cat-sht.jpg", 480, 480),
-    "cat-sayding.jpg":           ("cover-cat-sid.jpg", 480, 480),
-    "kit-dobornye.jpg":          ("kit-dobornye.jpg", 560, 420),
-    "kit-vodostok.jpg":          ("kit-vodostok.jpg", 560, 420),
-    "kit-safety.jpg":            ("kit-safety.jpg", 560, 420),
-}
-for src_name, (dest, w, h) in CAT_COVERS.items():
-    src = CAT_SRC / src_name
-    if not src.exists():
-        print(f"!! нет обложки категории {src_name}")
-        continue
-    save(cover_crop(Image.open(src), w, h), OUT / dest, 84)
+save(cover_crop(Image.open(gal["supermonterrey-green"]), 600, 600), OUT / "cover-cat-mch.jpg", 87)
+save(cover_crop(Image.open(gal["shtaketnik-graphite"]), 600, 600), OUT / "cover-cat-sht.jpg", 87)
+save(cover_crop(Image.open(gal["sayding-dark"]), 600, 600), OUT / "cover-cat-sid.jpg", 87)
+_prof_cover = cover_crop(Image.open(CAT_SRC / "cat-profnastil.jpg"), 600, 600)
+_prof_cover = _prof_cover.filter(ImageFilter.UnsharpMask(radius=1.4, percent=90, threshold=2))
+save(_prof_cover, OUT / "cover-cat-prof.jpg", 89)
 
 # примеры покрытия Printech вживую (для страниц сайдинга/штакетника)
 PRINTECH_LIVE = ["sayding-oak", "sayding-walnut", "sayding-light", "sayding-white"]

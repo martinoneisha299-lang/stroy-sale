@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=21">
+  <link rel="stylesheet" href="styles.css?v=23">
 </head>
 <body>
 
@@ -34,21 +34,22 @@
   </header>
 
 
-  <!-- Шапка раздела -->
-  <section class="roof-hero" aria-label="Кровля">
-    <div class="wrap roof-hero-in">
-      <div>
+  <!-- Шапка раздела: в одном ключе с шапкой плитки — текст поверх парящего
+       фото крыши на мобиле, фото справа на десктопе -->
+  <section class="tile-hero roof-hero" aria-label="Кровля">
+    <div class="wrap tile-hero-in">
+      <div class="tile-hero-copy">
         <nav class="crumbs" aria-label="Хлебные крошки">
           <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
           <span>Кровля</span>
         </nav>
-        <div class="page-head"><h1>Кровля и&nbsp;всё для крыши</h1></div>
+        <h1>Кровля и&nbsp;всё для крыши</h1>
         <p class="page-sub">Четыре материала с одного завода. Режем в размер
           вашей крыши — без стыков и обрезков, цвет и покрытие общие.</p>
         <ul class="tile-facts">
           <li><strong>до 8 м</strong> лист целиком, без стыков</li>
           <li><strong>40 цветов</strong> и покрытий на выбор</li>
-          <li><strong>0,4–0,5 мм</strong> сталь, оцинковка + полимер</li>
+          <li><strong>0,4–0,5 мм</strong> сталь с полимером</li>
           <li><strong>до 15 лет</strong> гарантия на покрытие</li>
         </ul>
         <div class="hero-cta">
@@ -56,8 +57,8 @@
           <a class="btn btn-ghost" href="#calc">Посчитать крышу</a>
         </div>
       </div>
-      <div class="roof-hero-img">
-        <img src="img/roof/hero-roof.jpg?v=2" alt="Тёмно-серая металлочерепица с каплями дождя крупным планом" width="1200" height="800" loading="eager" fetchpriority="high">
+      <div class="tile-hero-stage roof-hero-stage" aria-hidden="true">
+        <img class="roof-hero-photo" src="img/roof/hero-roof.jpg?v=3" alt="" width="1200" height="800" loading="eager" fetchpriority="high">
       </div>
     </div>
   </section>
@@ -70,7 +71,7 @@
         <p class="caption">Внутри каждой — товары и цвета. Не знаете, что нужно, —
           позвоните, подскажем по задаче.</p>
       </div>
-      <div class="cats cats-roof"><a class="cat" href="krovlya-metallocherepitsa.html"><img class="cat-img" src="img/roof/cover-cat-mch.jpg?v=2" alt="Красная глянцевая металлочерепица с каплями дождя" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Металлочерепица</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">2 профиля · для скатной крыши</p></a><a class="cat" href="krovlya-profnastil.html"><img class="cat-img" src="img/roof/cover-cat-prof.jpg?v=2" alt="Профнастил серо-синего цвета крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Профнастил</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">6 профилей · крыша, забор, навес</p></a><a class="cat" href="krovlya-shtaketnik.html"><img class="cat-img" src="img/roof/cover-cat-sht.jpg?v=2" alt="Планки графитового евроштакетника крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Штакетник</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">3 формы верха · для забора</p></a><a class="cat" href="krovlya-sayding.html"><img class="cat-img" src="img/roof/cover-cat-sid.jpg?v=2" alt="Металлосайдинг с фотопечатью под серое дерево крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Металлосайдинг</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">5 профилей · для фасада и свесов</p></a></div>
+      <div class="cats cats-roof"><a class="cat" href="krovlya-metallocherepitsa.html"><img class="cat-img" src="img/roof/cover-cat-mch.jpg?v=3" alt="Красная глянцевая металлочерепица с каплями дождя" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Металлочерепица</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">2 профиля · для скатной крыши</p></a><a class="cat" href="krovlya-profnastil.html"><img class="cat-img" src="img/roof/cover-cat-prof.jpg?v=3" alt="Профнастил серо-синего цвета крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Профнастил</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">6 профилей · крыша, забор, навес</p></a><a class="cat" href="krovlya-shtaketnik.html"><img class="cat-img" src="img/roof/cover-cat-sht.jpg?v=3" alt="Планки графитового евроштакетника крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Штакетник</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">3 формы верха · для забора</p></a><a class="cat" href="krovlya-sayding.html"><img class="cat-img" src="img/roof/cover-cat-sid.jpg?v=3" alt="Металлосайдинг с фотопечатью под серое дерево крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Металлосайдинг</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">5 профилей · для фасада и свесов</p></a></div>
     </div>
   </section>
 
@@ -83,7 +84,7 @@
         <p class="caption">Доборные, водосток и снегозадержатели подберём
           в цвет кровли и посчитаем по вашим размерам — одним заказом.</p>
       </div>
-      <div class="kit"><div class="kit-col"><img class="kit-img" src="img/roof/kit-dobornye.jpg?v=2" alt="Конёк и ендова на крыше из металлочерепицы" width="560" height="420" loading="lazy"><h3>Доборные элементы</h3><p class="caption">Коньки, планки и ендовы гнём на своём оборудовании — в цвет кровли, длина 2 м.</p><ul><li>Конёк фигурный</li><li>Конёк полукруглый</li><li>Конёк-ребро</li><li>Заглушки конька</li><li>Планка карнизная</li><li>Планка ветровая</li><li>Планка лобовая</li><li>Ендова верхняя и нижняя</li><li>Планки примыкания</li><li>Планки углов</li><li>Планка снегозадержателя</li><li>Планка диагональная</li><li>L-планка заборная</li></ul></div><div class="kit-col"><img class="kit-img" src="img/roof/kit-vodostok.jpg?v=2" alt="Водосточный жёлоб и труба на углу дома" width="560" height="420" loading="lazy"><h3>Водосточные системы</h3><p class="caption">Комплект под вашу крышу соберёт менеджер: желоба, трубы, крюки — ничего не забудем.</p><ul><li>Круглая система «Оптима» 125/90 — желоба, трубы, углы, воронки</li><li>Прямоугольная гофрированная система — желоба, трубы, колена</li><li>Крюки, крепления, заглушки — весь крепёж в комплекте</li></ul></div><div class="kit-col"><img class="kit-img" src="img/roof/kit-safety.jpg?v=2" alt="Вентиляционный выход на скатной крыше" width="560" height="420" loading="lazy"><h3>Безопасность кровли</h3><p class="caption">Снег сходит порциями, а не лавиной — обязательная вещь над входом и дорожками.</p><ul><li>Снегозадержатели трубчатые, 1 м и 3 м</li><li>Кровельные ограждения, высота 650 и 900 мм</li></ul></div></div>
+      <div class="kit"><div class="kit-col"><h3>Доборные элементы</h3><p class="caption">Коньки, планки и ендовы гнём на своём оборудовании — в цвет кровли, длина 2 м.</p><ul><li>Конёк фигурный</li><li>Конёк полукруглый</li><li>Конёк-ребро</li><li>Заглушки конька</li><li>Планка карнизная</li><li>Планка ветровая</li><li>Планка лобовая</li><li>Ендова верхняя и нижняя</li><li>Планки примыкания</li><li>Планки углов</li><li>Планка снегозадержателя</li><li>Планка диагональная</li><li>L-планка заборная</li></ul></div><div class="kit-col"><h3>Водосточные системы</h3><p class="caption">Комплект под вашу крышу соберёт менеджер: желоба, трубы, крюки — ничего не забудем.</p><ul><li>Круглая система «Оптима» 125/90 — желоба, трубы, углы, воронки</li><li>Прямоугольная гофрированная система — желоба, трубы, колена</li><li>Крюки, крепления, заглушки — весь крепёж в комплекте</li></ul></div><div class="kit-col"><h3>Безопасность кровли</h3><p class="caption">Снег сходит порциями, а не лавиной — обязательная вещь над входом и дорожками.</p><ul><li>Снегозадержатели трубчатые, 1 м и 3 м</li><li>Кровельные ограждения, высота 650 и 900 мм</li></ul></div></div>
     </div>
   </section>
 
@@ -97,7 +98,7 @@
           крыша выглядит целой. 40 оттенков: глянцевый полиэстер, матовый Granite,
           Printech под дерево и цинк.</p>
       </div>
-      <div class="color-strip"><img src="img/roof/sw-ral-1014-bezhevyi.jpg?v=2" alt="Бежевый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-3005-spelaya-vishnya.jpg?v=2" alt="Спелая вишня" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-3011-krasno-korichnevyi.jpg?v=2" alt="Красно-коричневый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-1018-zhe-ltyi.jpg?v=2" alt="Жёлтый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-6002-zelenyi-list.jpg?v=2" alt="Зеленый лист" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-6005-zele-nyi-moh.jpg?v=2" alt="Зелёный Мох" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-5002-ultramarin.jpg?v=2" alt="Ультрамарин" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-7024-grafitovyi-seryi.jpg?v=2" alt="Графитовый серый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-8017-shokolad.jpg?v=2" alt="Шоколад" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-9003-belyi.jpg?v=2" alt="Белый" width="52" height="52" loading="lazy"><img src="img/roof/sw-granite-deep-mat-8004.jpg?v=2" alt="Терракота" width="52" height="52" loading="lazy"><img src="img/roof/sw-granite-deep-mat-9005.jpg?v=2" alt="Чёрный" width="52" height="52" loading="lazy"><img src="img/roof/sw-granite-deep-mat-6020.jpg?v=2" alt="Тёмная зелень" width="52" height="52" loading="lazy"><img src="img/roof/sw-antichnyi-dub.jpg?v=2" alt="Античный дуб" width="52" height="52" loading="lazy"><img src="img/roof/sw-oreh-temnyi.jpg?v=2" alt="Орех Темный" width="52" height="52" loading="lazy"><img src="img/roof/sw-svetloe-derevo.jpg?v=2" alt="Светлое дерево" width="52" height="52" loading="lazy"><img src="img/roof/sw-kirpich.jpg?v=2" alt="Кирпич" width="52" height="52" loading="lazy"><img src="img/roof/sw-tsink.jpg?v=2" alt="Цинк" width="52" height="52" loading="lazy"></div>
+      <div class="color-strip"><img src="img/roof/sw-ral-1014-bezhevyi.jpg?v=3" alt="Бежевый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-3005-spelaya-vishnya.jpg?v=3" alt="Спелая вишня" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-3011-krasno-korichnevyi.jpg?v=3" alt="Красно-коричневый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-1018-zhe-ltyi.jpg?v=3" alt="Жёлтый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-6002-zelenyi-list.jpg?v=3" alt="Зеленый лист" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-6005-zele-nyi-moh.jpg?v=3" alt="Зелёный Мох" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-5002-ultramarin.jpg?v=3" alt="Ультрамарин" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-7024-grafitovyi-seryi.jpg?v=3" alt="Графитовый серый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-8017-shokolad.jpg?v=3" alt="Шоколад" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-9003-belyi.jpg?v=3" alt="Белый" width="52" height="52" loading="lazy"><img src="img/roof/sw-granite-deep-mat-8004.jpg?v=3" alt="Терракота" width="52" height="52" loading="lazy"><img src="img/roof/sw-granite-deep-mat-9005.jpg?v=3" alt="Чёрный" width="52" height="52" loading="lazy"><img src="img/roof/sw-granite-deep-mat-6020.jpg?v=3" alt="Тёмная зелень" width="52" height="52" loading="lazy"><img src="img/roof/sw-antichnyi-dub.jpg?v=3" alt="Античный дуб" width="52" height="52" loading="lazy"><img src="img/roof/sw-oreh-temnyi.jpg?v=3" alt="Орех Темный" width="52" height="52" loading="lazy"><img src="img/roof/sw-svetloe-derevo.jpg?v=3" alt="Светлое дерево" width="52" height="52" loading="lazy"><img src="img/roof/sw-kirpich.jpg?v=3" alt="Кирпич" width="52" height="52" loading="lazy"><img src="img/roof/sw-tsink.jpg?v=3" alt="Цинк" width="52" height="52" loading="lazy"></div>
       <p class="caption cats-note">Полную палитру под каждый материал показываем
         в карточке товара. Перед заказом привезём образец вживую.</p>
     </div>

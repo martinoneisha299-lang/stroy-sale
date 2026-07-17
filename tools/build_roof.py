@@ -32,8 +32,8 @@ COLORS = IMG["colors"]
 P_COLORS = IMG["product_colors"]
 P_IMAGES = IMG["products"]
 
-STYLES_V = 21
-IMG_V = 2
+STYLES_V = 23
+IMG_V = 3
 
 
 def esc(s):
@@ -677,6 +677,25 @@ def plural(n, one, few, many):
     return many
 
 
+def swatch_preview(pid, root=""):
+    """Кружки цветов сразу под товаром — клиент видит, что есть варианты,
+    не листая до палитры. Показываем первые 7, ссылка ведёт к полной палитре."""
+    slugs = P_COLORS[pid]
+    if not slugs:
+        return ""
+    cap = 7
+    dots = "".join(
+        f'<img class="pd-sw-dot" src="{root}img/roof/{COLORS[s]["sw"]}?v={IMG_V}" '
+        f'alt="{esc(COLORS[s]["label"])}" width="44" height="44" loading="lazy">'
+        for s in slugs[:cap])
+    n = len(slugs)
+    more = (f'<span class="pd-sw-more">+{n - cap}</span>' if n > cap else "")
+    return (f'<a class="pd-swatches" href="#tsveta">'
+            f'<span class="pd-sw-row">{dots}{more}</span>'
+            f'<span class="pd-sw-label">{n} {plural(n, "цвет", "цвета", "цветов")} '
+            f'и рисунков — посмотреть все</span></a>')
+
+
 def product_card(p, root=""):
     """Карточка товара в сетке: фото или чертёж, «Узнать цену»."""
     entry = P_IMAGES[p["id"]]
@@ -826,25 +845,20 @@ ROOF_CALC_JS = """
 # ─────────────────────────────── общие куски хаба ──────────────────────
 def kit_columns():
     cols = []
-    for h3, items, cap, img, alt in [
+    for h3, items, cap in [
         ("Доборные элементы", DOBORNYE,
          "Коньки, планки и ендовы гнём на своём оборудовании — "
-         "в цвет кровли, длина 2 м.",
-         "kit-dobornye.jpg", "Конёк и ендова на крыше из металлочерепицы"),
+         "в цвет кровли, длина 2 м."),
         ("Водосточные системы", VODOSTOK,
          "Комплект под вашу крышу соберёт менеджер: желоба, трубы, крюки — "
-         "ничего не забудем.",
-         "kit-vodostok.jpg", "Водосточный жёлоб и труба на углу дома"),
+         "ничего не забудем."),
         ("Безопасность кровли", SAFETY,
          "Снег сходит порциями, а не лавиной — обязательная вещь над входом "
-         "и дорожками.",
-         "kit-safety.jpg", "Вентиляционный выход на скатной крыше"),
+         "и дорожками."),
     ]:
         lis = "".join(f"<li>{esc(i)}</li>" for i in items)
         cols.append(
             f'<div class="kit-col">'
-            f'<img class="kit-img" src="img/roof/{img}?v={IMG_V}" alt="{esc(alt)}" '
-            f'width="560" height="420" loading="lazy">'
             f'<h3>{esc(h3)}</h3>'
             f'<p class="caption">{esc(cap)}</p><ul>{lis}</ul></div>')
     return "".join(cols)
@@ -909,21 +923,22 @@ def build_hub():
                               f["short"], f["card"], price=None))
 
     body = f"""
-  <!-- Шапка раздела -->
-  <section class="roof-hero" aria-label="Кровля">
-    <div class="wrap roof-hero-in">
-      <div>
+  <!-- Шапка раздела: в одном ключе с шапкой плитки — текст поверх парящего
+       фото крыши на мобиле, фото справа на десктопе -->
+  <section class="tile-hero roof-hero" aria-label="Кровля">
+    <div class="wrap tile-hero-in">
+      <div class="tile-hero-copy">
         <nav class="crumbs" aria-label="Хлебные крошки">
           <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
           <span>Кровля</span>
         </nav>
-        <div class="page-head"><h1>Кровля и&nbsp;всё для крыши</h1></div>
+        <h1>Кровля и&nbsp;всё для крыши</h1>
         <p class="page-sub">Четыре материала с одного завода. Режем в размер
           вашей крыши — без стыков и обрезков, цвет и покрытие общие.</p>
         <ul class="tile-facts">
           <li><strong>до 8 м</strong> лист целиком, без стыков</li>
           <li><strong>40 цветов</strong> и покрытий на выбор</li>
-          <li><strong>0,4–0,5 мм</strong> сталь, оцинковка + полимер</li>
+          <li><strong>0,4–0,5 мм</strong> сталь с полимером</li>
           <li><strong>до 15 лет</strong> гарантия на покрытие</li>
         </ul>
         <div class="hero-cta">
@@ -931,8 +946,8 @@ def build_hub():
           <a class="btn btn-ghost" href="#calc">Посчитать крышу</a>
         </div>
       </div>
-      <div class="roof-hero-img">
-        <img src="img/roof/hero-roof.jpg?v={IMG_V}" alt="Тёмно-серая металлочерепица с каплями дождя крупным планом" width="1200" height="800" loading="eager" fetchpriority="high">
+      <div class="tile-hero-stage roof-hero-stage" aria-hidden="true">
+        <img class="roof-hero-photo" src="img/roof/hero-roof.jpg?v={IMG_V}" alt="" width="1200" height="800" loading="eager" fetchpriority="high">
       </div>
     </div>
   </section>
@@ -997,10 +1012,12 @@ def build_family(f):
 
     if f["layout"] == "grid":
         cards = "".join(product_cat_card(p) for p in f["products"])
+        n = len(f["products"])
+        ncls = " cats-n2" if n == 2 else " cats-n3" if n == 3 else ""
         main = f"""
   <section class="section">
     <div class="wrap">
-      <div class="cats cats-roof">{cards}</div>
+      <div class="cats cats-roof{ncls}">{cards}</div>
       <p class="caption cats-note">{esc(f['note'])}</p>
     </div>
   </section>"""
@@ -1121,6 +1138,7 @@ def build_product(p):
         <p class="pd-price pd-price-ask">Цена по запросу</p>
         <p class="caption pd-price-note">Цена зависит от покрытия и толщины стали.
           Назовите размеры — посчитаем и пришлём в WhatsApp за 5 минут.</p>
+        {swatch_preview(pid, root)}
         {order_btns()}
         <dl class="pd-specs">{specs}</dl>
         <p class="caption pd-usage"><strong>Куда подходит:</strong> {esc(p['use'])}.</p>
@@ -1128,7 +1146,7 @@ def build_product(p):
     </div>
   </section>
 
-  <section class="section" aria-label="Цвета">
+  <section class="section" id="tsveta" aria-label="Цвета">
     <div class="wrap">
       <div class="section-head">
         <h2>Цвета — {n_colors} {plural(n_colors, 'вариант', 'варианта', 'вариантов')}</h2>
