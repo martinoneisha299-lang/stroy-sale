@@ -10,6 +10,7 @@ from openpyxl.utils import get_column_letter
 
 DATA = json.loads(Path("/Users/dm/Desktop/сайт/data/catalog.json").read_text())
 TILES = json.loads(Path("/Users/dm/Desktop/сайт/data/tiles.json").read_text())
+ROOF_IMG = json.loads(Path("/Users/dm/Desktop/сайт/data/roof_images.json").read_text())
 OUT = "/Users/dm/Desktop/сайт/КАТАЛОГ-ТАБЛИЦА.xlsx"
 
 products = DATA["products"]
@@ -177,6 +178,51 @@ for i, w in enumerate([10, 16, 30, 13, 11, 9, 9, 15, 7, 24], 1):
     tp.column_dimensions[get_column_letter(i)].width = w
 tp.freeze_panes = "D2"
 tp.auto_filter.ref = f"A1:{get_column_letter(len(TP_HEAD))}{tp_last}"
+
+# ── Лист «Кровля» ─────────────────────────────────────────────────────────────
+# Товары описаны в tools/build_roof.py (спеки руками) — здесь список для сверки.
+import importlib.util as _ilu
+_spec = _ilu.spec_from_file_location(
+    "build_roof_data", Path(__file__).parent / "build_roof.py")
+
+rf = wb.create_sheet("Кровля")
+RF_HEAD = ["ID", "Вид", "Название на сайте", "Коротко", "Цветов", "Фото",
+           "Чертёж", "Цена", "Поставщик (на сайт НЕ выводим)"]
+rf.append(RF_HEAD)
+for c in range(1, len(RF_HEAD) + 1):
+    cell = rf.cell(row=1, column=c)
+    cell.font = Font(name="Arial", bold=True, color="FFFFFF", size=10)
+    cell.fill = header_fill
+    cell.alignment = Alignment(vertical="center", wrap_text=True)
+
+# лёгкий парс товаров из build_roof.py без его запуска (он пишет страницы):
+import re as _re
+_src = (Path(__file__).parent / "build_roof.py").read_text()
+_ids = _re.findall(r'id="([a-z0-9-]+)", name="([^"]+)",\s*\n?\s*kind="([^"]+)"', _src)
+_meta = dict(_re.findall(
+    r'id="((?:mch|prof|sht|sid)-[a-z0-9-]+)".*?meta="([^"]+)"', _src, _re.S))
+for pid, name, kind in _ids:
+    imgs = ROOF_IMG["products"].get(pid, {})
+    rf.append([
+        f"krovlya-{pid}", kind, name, _meta.get(pid, ""),
+        len(ROOF_IMG["product_colors"].get(pid, [])),
+        len(imgs.get("gallery", [])),
+        "есть" if imgs.get("scheme") else "нет",
+        "по запросу",
+        "EURO-Профиль",
+    ])
+rf_last = rf.max_row
+for r in range(2, rf_last + 1):
+    for c in range(1, len(RF_HEAD) + 1):
+        cell = rf.cell(row=r, column=c)
+        cell.font = Font(name="Arial", size=10)
+        cell.border = thin
+    if rf.cell(row=r, column=6).value == 0 and rf.cell(row=r, column=7).value == "нет":
+        rf.cell(row=r, column=6).fill = nophoto_fill
+for i, w in enumerate([22, 16, 28, 30, 8, 7, 9, 12, 26], 1):
+    rf.column_dimensions[get_column_letter(i)].width = w
+rf.freeze_panes = "D2"
+rf.auto_filter.ref = f"A1:{get_column_letter(len(RF_HEAD))}{rf_last}"
 
 wb.save(OUT)
 print("OK →", OUT)
