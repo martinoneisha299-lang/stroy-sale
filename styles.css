@@ -2677,3 +2677,245 @@ a.p-card:focus-visible {
     animation-duration: 1ms !important;
   }
 }
+
+/* ——— Кирпич: плитки-мозаики коллекций + кружки цветов (макет 17.07) ——— */
+/* Свотчи и бюджет-чипы на странице категории — ссылки, не кнопки */
+a.swatch, a.budget-chip { text-decoration: none; }
+
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.tile { min-width: 0; }
+
+.tile .t-main {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tile .mosaic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;                       /* «шов» между фото, как в кладке */
+  background: var(--color-paper);
+  border: var(--rule-hair);
+  transition: border-color var(--dur-base) var(--ease-out);
+}
+
+.tile .cell {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-ph);
+}
+
+.tile .cell img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.tile:hover .cell img { transform: scale(1.04); }
+.tile:hover .mosaic { border-color: var(--color-ink); }
+
+.tile .more {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: var(--color-tint);
+  transition: background var(--dur-base) var(--ease-out);
+}
+
+.tile .more .plus {
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.tile .more .all {
+  font-size: var(--text-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.tile:hover .more { background: var(--color-btn); }
+.tile:hover .more .plus { color: var(--color-paper); }
+.tile:hover .more .all { color: var(--color-paper-soft); }
+
+.tile .t-main:focus-visible { outline: none; }
+.tile .t-main:focus-visible .mosaic {
+  box-shadow: 0 0 0 3px var(--color-paper), 0 0 0 5px var(--color-focus);
+}
+
+.tile .cap { display: block; padding: 14px 2px 0; }
+
+.tile .cap h3 {
+  margin: 0;
+  font: 600 var(--text-lg)/1.3 var(--font-sans);
+  letter-spacing: -0.005em;
+}
+
+.tile .cap .desc {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  max-width: 52ch;
+}
+
+/* кружки цветов: фото реального кирпича, тап-зона 44px */
+.cdots {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  margin: 6px 0 0 -5px;
+}
+
+.cdot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+.cdot img {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--color-paper), 0 0 0 3px var(--color-rule);
+  transition: box-shadow var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+
+.cdot:hover img,
+.cdot:focus-visible img {
+  box-shadow: 0 0 0 2px var(--color-paper), 0 0 0 4px var(--color-ink);
+  transform: scale(1.08);
+}
+
+.cdot:focus-visible { outline: none; }
+
+.cdot-tip {
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+  margin-left: 6px;
+}
+
+.tile .t-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: var(--text-base);
+  text-decoration: none;
+  color: inherit;
+}
+
+.tile .t-meta .cnt { color: var(--color-ink-faint); }
+.tile .t-meta .price { font-weight: 600; }
+.tile .t-meta .price-ask { font-weight: 500; color: var(--color-accent); }
+
+.tile .t-meta svg {
+  flex: none;
+  margin-left: auto;
+  color: var(--color-accent);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.tile:hover .t-meta svg { transform: translateX(4px); }
+.tile .t-meta:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+/* шестая плитка — «весь кирпич одной сеткой» */
+.tile-all {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: clamp(24px, 3vw, 36px) clamp(20px, 3vw, 34px);
+  border: var(--rule-hair);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  text-decoration: none;
+  transition: background var(--dur-base) var(--ease-out);
+}
+
+.tile-all .t-eyebrow {
+  font-size: var(--text-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-paper-soft);
+}
+
+.tile-all .t-title {
+  font: 700 clamp(1.3125rem, 2.4vw, 1.6875rem)/1.2 var(--font-sans);
+  letter-spacing: -0.01em;
+}
+
+.tile-all .t-note {
+  color: var(--color-paper-soft);
+  font-size: var(--text-sm);
+  max-width: 40ch;
+}
+
+.tile-all .go {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-weight: 600;
+  color: var(--color-amber-soft);
+}
+
+.tile-all:hover { background: oklch(26% 0.02 55); }
+.tile-all:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+
+/* метка «Новинка» на карточке товара */
+.p-card { position: relative; }
+
+.p-new {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+  padding: 3px 8px;
+  background: var(--color-btn);
+  color: var(--color-paper);
+  font: 600 var(--text-micro) var(--font-sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 719px) {
+  .tiles {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+/* ярлык ряда сортировки виден: без него пилюли читаются как ещё один фильтр */
+.pick-row--sort .pick-row-label {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  margin-right: var(--space-xs);
+}

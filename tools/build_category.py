@@ -3,11 +3,14 @@
 """catalog.json → страницы каталога облицовочного кирпича.
 
 Генерирует:
-- kirpich-oblitsovochnyy.html — категория: подбор по цвету + 5 лент коллекций;
-- collection-<slug>.html × 5 — полная сетка коллекции с фильтрами.
+- kirpich-oblitsovochnyy.html — категория: подбор по цвету + плитки-мозаики
+  коллекций (3 фото + «+N», кружки цветов, цена) — макет утверждён 17.07;
+- kirpich-ves.html — весь кирпич одной сеткой (фильтры цвет/бюджет/фактура);
+- collection-<slug>.html × 5 — полная сетка коллекции с фильтрами и сортировкой.
 
 Принцип «коллекций»: фото разных поставщиков никогда не смешиваются в одной
-сетке — даже при фильтре по цвету результаты идут группами по коллекциям.
+сетке — по умолчанию результаты идут группами по коллекциям (сортировка по
+цене смешивает группы, но это осознанный выбор пользователя).
 """
 
 import html
@@ -105,6 +108,42 @@ COLLECTIONS = {
 }
 COLL_ORDER = ["ekonom", "palitra", "klassika", "evropa", "formovka"]
 
+# ── Плитки-мозаики на странице категории (макет утверждён 17.07) ────────────
+# Описание в подписи плитки — продающее, простым языком (таглайны коллекций
+# остались на страницах коллекций).
+TILE_DESC = {
+    "ekonom": "Гладкий керамический без переплаты за фактуру — дом, забор, хозпостройки.",
+    "klassika": "Фактуры под старину — береста, сахара, скала антик. Самая большая линейка фактур.",
+    "palitra": "Самая широкая гамма: 7 цветов от абрикоса до графита, баварская кладка.",
+    "evropa": "Узкий длинный кирпич европейских форматов — фасад как в Амстердаме.",
+    "formovka": "Премиум: каждый кирпич со своим лицом, кладка выглядит столетней.",
+}
+# Тройка фото мозаики — подобраны глазами, чтобы не сливались по цвету.
+# КЛЮЧИ — name (не id: id сдвигаются при добавлении товаров).
+TILE_PICKS = {
+    "ekonom": ["Корица", "Золотистый", "Персик"],
+    "klassika": ["Вишня", "Баварский Классик береста", "Светлосерый"],
+    "palitra": ["Абрикос", "Грей", "Бежевая Кора"],
+    "evropa": ["Бостон", "Готик Руст", "Mokko Вт Руст"],
+    "formovka": ["Астра Modf", "Петерсен Modf", "Тиволи Modf"],
+}
+# подпись цвета в кружке/тайтле: «микс (бавария)» человеку не говорим
+DOT_LABEL = {"микс (бавария)": "Бавария (микс)"}
+
+# Новинки заводов 17.07.2026 — метка на карточке и чип «Новинки» в сортировке.
+# КЛЮЧИ — name (стабильны, как RAB_VIEW по factory_name).
+NOVINKI = {
+    # Донской, «Классика»
+    "Баварский Классик береста", "Баварский Светлый береста", "Булат",
+    "Винтаж Лайт", "Винтаж Премиум", "Коричневый Сахара",
+    "Коричневый Скала Антик", "Красный Сахара", "Красный Скала Антик",
+    "Светлый Береста", "Светлый Крафт", "Светлый Терра", "Солома Сахара",
+    "Темно-коричневый",
+    # Губский, «Палитра»
+    "СС-УС-01", "СС-УС-02", "СС-УС-03.2", "СС-УС-04", "СС-УС-05", "СС-УС-06",
+    "УС-01.04", "Арес", "Марс 01", "Марс 02", "Марс 03",
+}
+
 # подписи форматов простым языком: частник не обязан знать «1НФ»
 FMT_SHORT = {
     "1НФ (одинарный)": "одинарный", "1,4НФ (полуторный)": "полуторный",
@@ -171,17 +210,23 @@ def card(p, feat_hidden=None, root=""):
         price = '<span class="p-ask">Узнать цену</span>'
     hidden = " hidden" if feat_hidden else ""
     fmt = FMT_SHORT.get(p["format"], p["format"])
+    is_new = p["name"] in NOVINKI
+    new_attr = ' data-new="1"' if is_new else ""
     attrs = (f'data-color="{esc(p["color_group"])}" '
-             f'data-texture="{esc(p["texture"])}" data-format="{esc(fmt)}"{hidden}')
-    
+             f'data-texture="{esc(p["texture"])}" data-format="{esc(fmt)}" '
+             f'data-coll="{esc(p.get("collection") or "")}" '
+             f'data-price="{p["price"] if p.get("price") else ""}"'
+             f'{new_attr}{hidden}')
+    badge = '<span class="p-new" aria-label="Новинка завода">Новинка</span>' if is_new else ""
+
     meta_parts = []
     if p.get("kind"):
         meta_parts.append(p["kind"])
     meta_parts.append(p["texture"])
     meta_parts.append(fmt)
     meta_text = " · ".join(meta_parts)
-    
-    inner = (f'{img}<h3 class="p-name">{esc(p["name"])}</h3>'
+
+    inner = (f'{badge}{img}<h3 class="p-name">{esc(p["name"])}</h3>'
              f'<p class="p-meta">{esc(meta_text)}</p>{price}')
     return f'<a class="p-card" href="{root}tovar/kirpich-{p["id"]}.html" {attrs}>{inner}</a>'
 
@@ -307,7 +352,7 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=18">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=22">{extra_head}
 </head>
 <body>
 
@@ -392,65 +437,134 @@ def coll_stats(slug):
 
 # ── Категория: kirpich-oblitsovochnyy.html ───────────────────────────────────
 
+ARROW = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" '
+         'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+         'stroke-linejoin="round" aria-hidden="true">'
+         '<path d="M5 12h14M13 6l6 6-6 6"/></svg>')
+
+
+def swatch_link(label, dot_class, href, aria=""):
+    """Круг-образец как ссылка (страница категории — там свотч не фильтр,
+    а вход в общую сетку с пресетом цвета)."""
+    aria_attr = f' aria-label="{aria}"' if aria else ''
+    if dot_class is None:
+        return (f'<a class="swatch sw-all-btn" href="{href}"{aria_attr}>'
+                f'<span class="swatch-dot sw-all">{label}</span></a>')
+    return (f'<a class="swatch" href="{href}"{aria_attr}>'
+            f'<span class="swatch-dot {dot_class}" aria-hidden="true"></span>'
+            f'<span class="sw-name">{label}</span></a>')
+
+
+def mosaic_tile(slug):
+    """Плитка-мозаика коллекции: 3 фото + «+N», подпись, кружки цветов, цена."""
+    items, lo = coll_stats(slug)
+    meta = COLLECTIONS[slug]
+    items_sorted = sorted(items, key=sort_key)
+    n = len(items)
+    kinds = plural(n, "вид", "вида", "видов")
+
+    # тройка фото: подобранные глазами имена, фолбэк — pick_featured
+    by_name = {p["name"]: p for p in items if p["_thumb"]}
+    picks = [by_name[nm] for nm in TILE_PICKS.get(slug, []) if nm in by_name]
+    if len(picks) < 3:
+        for p in pick_featured(items, 3):
+            if p not in picks:
+                picks.append(p)
+            if len(picks) == 3:
+                break
+    cells = "\n".join(
+        f'          <span class="cell"><img src="img/catalog/{p["id"]}.jpg?v=7" '
+        f'alt="{esc(p["name"])}" width="640" height="480" loading="lazy"></span>'
+        for p in picks[:3])
+
+    # кружки цветов: реальное фото первого товара цвета; тап = коллекция
+    # с включённым фильтром этого цвета (?color= уже работает)
+    dots = []
+    colors_here = [c for c in COLOR_ORDER
+                   if any(p["color_group"] == c for p in items)]
+    for color in colors_here[:7]:  # максимум один ряд, редкие цвета не теряются — плитка ведёт в коллекцию целиком
+        with_photo = [p for p in items_sorted
+                      if p["color_group"] == color and p["_thumb"]]
+        if not with_photo:
+            continue
+        cn = sum(1 for p in items if p["color_group"] == color)
+        lbl = DOT_LABEL.get(color, color.capitalize())
+        tip = f"{lbl} — {cn} {plural(cn, 'вид', 'вида', 'видов')}"
+        dots.append(
+            f'<a class="cdot" href="collection-{slug}.html?color={quote(color)}" '
+            f'title="{esc(tip)}" aria-label="{esc(tip)}">'
+            f'<img src="img/catalog/{with_photo[0]["id"]}.jpg?v=7" alt="" '
+            f'width="34" height="34" loading="lazy"></a>')
+    nc = len(colors_here)
+    dots_html = ""
+    if len(dots) > 1:
+        dots_html = (f'\n      <div class="cdots" aria-label="Цвета коллекции «{esc(meta["name"])}»">'
+                     f'{"".join(dots)}'
+                     f'<span class="cdot-tip">{nc} {plural(nc, "цвет", "цвета", "цветов")}</span></div>')
+
+    price_note = (f'<span class="price">от {rub(lo)} ₽/шт</span>' if lo
+                  else '<span class="price price-ask">цена по запросу</span>')
+    return f"""
+      <div class="tile">
+        <a class="t-main" href="collection-{slug}.html" aria-label="Коллекция «{esc(meta['name'])}» — все {n} {kinds}">
+          <span class="mosaic">
+{cells}
+          <span class="more"><span class="plus">+{n - len(picks[:3])}</span><span class="all">все {n} {kinds}</span></span>
+          </span>
+          <div class="cap">
+            <h3>{esc(meta['name'])}</h3>
+            <span class="desc">{esc(TILE_DESC[slug])}</span>
+          </div>
+        </a>{dots_html}
+        <a class="t-meta" href="collection-{slug}.html" aria-label="Открыть коллекцию «{esc(meta['name'])}»">
+          <span class="cnt">{n} {kinds}</span>{price_note}{ARROW}
+        </a>
+      </div>"""
+
+
 def build_category():
     total = len(PRODUCTS)
     all_min = min(p["price"] for p in PRODUCTS if p.get("price"))
 
-    # свотчи цветов
+    # свотчи цветов — ссылки в общую сетку с пресетом цвета
     color_counts = {}
     for p in PRODUCTS:
         color_counts[p["color_group"]] = color_counts.get(p["color_group"], 0) + 1
-    swatches = [swatch_btn("Все", None, 'data-color=""',
-                           is_on=True, aria="Все цвета")]
+    swatches = [swatch_link("Все", None, "kirpich-ves.html",
+                            aria="Весь кирпич одной сеткой")]
     for color in COLOR_ORDER:
         if color not in SWATCH_CLASS or not color_counts.get(color):
             continue
         n = color_counts[color]
-        swatches.append(swatch_btn(
+        swatches.append(swatch_link(
             esc(SW_LABEL.get(color, color)), SWATCH_CLASS[color],
-            f'data-color="{esc(color)}"',
-            aria=f"{esc(color)} — {n} {plural(n, 'вид', 'вида', 'видов')}"))
+            f"kirpich-ves.html?color={quote(color)}",
+            aria=f"{esc(color)} — {n} {plural(n, 'вид', 'вида', 'видов')} во всех коллекциях"))
 
-    # ленты в порядке цены: дешёвые первыми, «цена по запросу» в конце
+    # плитки в порядке цены: дешёвые первыми, «цена по запросу» в конце
     lane_order = sorted(COLL_ORDER,
                         key=lambda sl: coll_stats(sl)[1] or 10**9)
 
-    # чипы бюджета — фильтр по коллекции (кнопки, не якоря)
-    budget_chips = ['<button class="budget-chip is-on" data-coll="" aria-pressed="true">Все</button>']
+    # чипы бюджета — ссылки в коллекции (та же цель, что плитки: быстрый ход
+    # с телефона, пока плитки ниже экрана)
+    budget_chips = [f'<a class="budget-chip" href="kirpich-ves.html">Все '
+                    f'<small>{total} видов</small></a>']
     for slug in lane_order:
         items, lo = coll_stats(slug)
         meta = COLLECTIONS[slug]
         tail = f"<small>от {rub(lo)} ₽</small>" if lo else "<small>по запросу</small>"
         budget_chips.append(
-            f'<button class="budget-chip" data-coll="{slug}" aria-pressed="false">'
-            f'{esc(meta["name"])} {tail}</button>')
+            f'<a class="budget-chip" href="collection-{slug}.html">'
+            f'{esc(meta["name"])} {tail}</a>')
 
-    lanes = []
-    for slug in lane_order:
-        items, lo = coll_stats(slug)
-        meta = COLLECTIONS[slug]
-        featured = pick_featured(items)
-        feat_ids = {p["id"] for p in featured}
-        items_sorted = sorted(items, key=sort_key)
-        cards = "\n".join(
-            card(p, feat_hidden=(p["id"] not in feat_ids))
-            for p in items_sorted)
-        n = len(items)
-        kinds = plural(n, "вид", "вида", "видов")
-        price_note = f"от {rub(lo)} ₽/шт" if lo else "цена по запросу"
-        lanes.append(f"""
-      <section class="lane" id="lane-{slug}" data-coll="{slug}" data-page="collection-{slug}.html" aria-label="Коллекция «{esc(meta['name'])}»">
-        <div class="lane-head">
-          <div class="lane-head-main">
-            <h2>{esc(meta['name'])}</h2>
-            <p class="lane-meta">{n} {kinds} · {price_note}</p>
-          </div>
-          <a class="lane-all" href="collection-{slug}.html">Смотреть все {n}&nbsp;→</a>
-        </div>
-        <div class="p-grid">
-{cards}
-        </div>
-      </section>""")
+    tiles = [mosaic_tile(slug) for slug in lane_order]
+    tiles.append(f"""
+      <a class="tile-all" href="kirpich-ves.html">
+        <span class="t-eyebrow">Не хочется выбирать коллекцию?</span>
+        <span class="t-title">Весь кирпич одной сеткой — {total} {plural(total, 'вид', 'вида', 'видов')}</span>
+        <span class="t-note">Фильтры по цвету, бюджету и фактуре, как на маркетплейсе.</span>
+        <span class="go">Показать всё {ARROW}</span>
+      </a>""")
 
     body = f"""
   <main>
@@ -463,7 +577,7 @@ def build_category():
       </div>
     </section>
 
-    <!-- Фильтр-бар: цвет и бюджет работают вместе -->
+    <!-- Подбор: свотч цвета и чип бюджета — входы в сетку/коллекцию, не фильтры -->
     <section class="pick-bar" aria-label="Подбор кирпича">
       <div class="wrap">
         <div class="pick-row pick-row--color">
@@ -476,13 +590,15 @@ def build_category():
             {"".join(budget_chips)}
           </div>
         </div>
-        <p class="pick-count" id="pickNote" aria-live="polite"></p>
       </div>
     </section>
 
-    <div class="wrap lanes" id="lanes">
-{chr(10).join(lanes)}
-    </div>
+    <!-- Коллекции плитками-мозаиками: 3 фото + «+N», кружки цветов, цена -->
+    <section class="section" aria-label="Коллекции кирпича">
+      <div class="wrap tiles">
+{chr(10).join(tiles)}
+      </div>
+    </section>
 
     <!-- Калькулятор: расход 51,4 шт/м² — из спеков каталога (1НФ, 250×65,
          шов 10 мм); 1,4НФ — по габаритам ГОСТ из тех же спеков -->
@@ -530,92 +646,8 @@ def build_category():
 
     js = """
   <script>
-    // Фильтр каталога: цвет и бюджет работают вместе. Карточки уже в DOM,
-    // фильтруем показом/скрытием. Результат всегда группами по коллекциям —
-    // стили фото разных заводов не смешиваем. Инлайн-лимит на ленту, полный
-    // список — по ссылке «Смотреть все N».
-    var LANE_LIMIT = 8;
-    var swatches = Array.prototype.slice.call(document.querySelectorAll('.swatch'));
-    var chips = Array.prototype.slice.call(document.querySelectorAll('.budget-chip'));
-    var lanes = Array.prototype.slice.call(document.querySelectorAll('.lane'));
-    var note = document.getElementById('pickNote');
-    var state = { color: '', coll: '' };
-
-    function plural(n, one, few, many) {
-      var m10 = n % 10, m100 = n % 100;
-      if (m10 === 1 && m100 !== 11) return one;
-      if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
-      return many;
-    }
-
-    // featured-карточки помечаем по стартовому состоянию разметки
-    lanes.forEach(function (lane) {
-      Array.prototype.slice.call(lane.querySelectorAll('.p-card')).forEach(function (c) {
-        c.dataset.feat = c.hidden ? '0' : '1';
-      });
-    });
-
-    function apply() {
-      var filtered = !!(state.color || state.coll);
-      var totalMatch = 0;
-      lanes.forEach(function (lane) {
-        // фильтр коллекции: показываем только выбранную ленту
-        if (state.coll && lane.dataset.coll !== state.coll) {
-          lane.hidden = true;
-          return;
-        }
-        var cards = Array.prototype.slice.call(lane.querySelectorAll('.p-card'));
-        var shown = 0, match = 0;
-        cards.forEach(function (c) {
-          var colorOk = !state.color || c.dataset.color === state.color;
-          if (colorOk) match++;
-          var show = filtered ? (colorOk && shown < LANE_LIMIT) : (c.dataset.feat === '1');
-          c.hidden = !show;
-          if (show) shown++;
-        });
-        var hide = filtered && match === 0;
-        lane.hidden = hide;
-        if (!hide) totalMatch += match;
-        var all = lane.querySelector('.lane-all');
-        if (all) {
-          all.href = lane.dataset.page +
-            (state.color ? '?color=' + encodeURIComponent(state.color) : '');
-        }
-      });
-      if (!state.color) { note.textContent = ''; return; }
-      note.textContent = totalMatch
-        ? 'Нашлось ' + totalMatch + ' ' + plural(totalMatch, 'вид', 'вида', 'видов') + ' — ' + state.color
-        : 'Такого цвета сейчас нет — сбросьте фильтр';
-    }
-
-    swatches.forEach(function (s) {
-      s.addEventListener('click', function () {
-        state.color = s.dataset.color;
-        swatches.forEach(function (x) {
-          var on = x === s;
-          x.classList.toggle('is-on', on);
-          x.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        apply();
-      });
-    });
-
-    chips.forEach(function (ch) {
-      ch.addEventListener('click', function () {
-        state.coll = ch.dataset.coll;
-        chips.forEach(function (x) {
-          var on = x === ch;
-          x.classList.toggle('is-on', on);
-          x.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        apply();
-        if (state.coll) {
-          var lane = document.getElementById('lane-' + state.coll);
-          if (lane) lane.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
+    // Свотчи и чипы на этой странице — ссылки (в общую сетку и коллекции),
+    // фильтровать здесь нечего: коллекции показаны плитками целиком.
 """ + CAROUSEL_JS + """
     // Калькулятор: площадь × расход, запас 5%, округление до десятка
     var cWall = document.getElementById('cWall');
@@ -661,6 +693,62 @@ def build_category():
 
 # первая пилюля ряда описывает сам ряд — ярлыки-колонки не нужны
 CHIP_ALL = {"Фактура": "Любая фактура", "Формат": "Любой формат"}
+
+
+def sort_row(has_new, default_label="По цвету"):
+    """Ряд чипов сортировки (макет утверждён 17.07): не выпадашка — выбор
+    виден сразу, один тап. «Узнать цену» при сортировке по цене — в конце."""
+    chips = [
+        f'<button class="chip is-on" data-sort="default" aria-pressed="true">{default_label}</button>',
+        '<button class="chip" data-sort="cheap" aria-pressed="false">Сначала недорогие</button>',
+        '<button class="chip" data-sort="exp" aria-pressed="false">Сначала дорогие</button>',
+    ]
+    if has_new:
+        chips.append('<button class="chip" data-sort="new" aria-pressed="false">Новинки</button>')
+    return ('<div class="pick-row pick-row--sort"><span class="pick-row-label">Сортировка</span>'
+            '<div class="pick-scroll pick-scroll--slide" role="group" '
+            f'aria-label="Сортировка">{"".join(chips)}</div></div>')
+
+
+# сортировка карточек в сетке; initial — порядок вёрстки (наш ручной)
+SORT_JS = """
+    // Сортировка: перекладываем карточки в #grid; фильтры (hidden) не трогаем
+    var grid = document.getElementById('grid');
+    var initial = Array.prototype.slice.call(grid.querySelectorAll('.p-card'));
+    function priceOf(c) {
+      var v = parseFloat(c.dataset.price);
+      return isNaN(v) ? Infinity : v; // «Узнать цену» — всегда в конце
+    }
+    var sorts = {
+      cheap: function (a, b) {
+        return priceOf(a) - priceOf(b) || initial.indexOf(a) - initial.indexOf(b);
+      },
+      exp: function (a, b) {
+        var pa = priceOf(a), pb = priceOf(b);
+        if (pa === Infinity && pb === Infinity) return initial.indexOf(a) - initial.indexOf(b);
+        if (pa === Infinity) return 1;
+        if (pb === Infinity) return -1;
+        return pb - pa;
+      },
+      new: function (a, b) {
+        return (b.dataset.new ? 1 : 0) - (a.dataset.new ? 1 : 0) ||
+               initial.indexOf(a) - initial.indexOf(b);
+      }
+    };
+    var sortChips = Array.prototype.slice.call(document.querySelectorAll('.chip[data-sort]'));
+    sortChips.forEach(function (ch) {
+      ch.addEventListener('click', function () {
+        sortChips.forEach(function (x) {
+          var on = x === ch;
+          x.classList.toggle('is-on', on);
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        var mode = ch.dataset.sort;
+        var order = mode === 'default' ? initial : initial.slice().sort(sorts[mode]);
+        order.forEach(function (c) { grid.appendChild(c); });
+      });
+    });
+"""
 
 
 def chip_row(label, values, group):
@@ -710,6 +798,7 @@ def build_collection(slug):
         filters.append(chip_row("Фактура", textures, "texture"))
     if len(formats) > 1:
         filters.append(chip_row("Формат", formats, "format"))
+    filters.append(sort_row(has_new=any(p["name"] in NOVINKI for p in items)))
 
     cards = "\n".join(card(p) for p in items_sorted)
 
@@ -801,7 +890,7 @@ def build_collection(slug):
       state.color = pre;
     }
     paint();
-""" + CAROUSEL_JS + """
+""" + SORT_JS + CAROUSEL_JS + """
   </script>"""
 
     out = page_shell(
@@ -810,6 +899,152 @@ def build_collection(slug):
         body, js)
     (BASE / f"collection-{slug}.html").write_text(out)
     print(f"collection-{slug}.html:", n, "товаров |", price_note)
+
+
+# ── Весь облицовочный одной сеткой: kirpich-ves.html ─────────────────────────
+# Дорожка «показать всё» по Baymard: примерно половина покупателей не хочет
+# выбирать коллекцию. По умолчанию карточки идут ГРУППАМИ по коллекциям
+# (принцип «фото разных заводов не смешиваются»); сортировка по цене смешивает
+# группы — но это осознанное действие пользователя.
+
+def build_ves():
+    lane_order = sorted(COLL_ORDER,
+                        key=lambda sl: coll_stats(sl)[1] or 10**9)
+    items_sorted = []
+    for slug in lane_order:
+        items, _ = coll_stats(slug)
+        items_sorted += sorted(items, key=sort_key)
+    total = len(items_sorted)
+    all_min = min(p["price"] for p in items_sorted if p.get("price"))
+    kinds = plural(total, "вид", "вида", "видов")
+
+    colors = [c for c in COLOR_ORDER
+              if any(p["color_group"] == c for p in items_sorted)]
+    textures = sorted({p["texture"] for p in items_sorted})
+
+    coll_chips = [f'<button class="budget-chip is-on" data-group="coll" data-val="" '
+                  f'aria-pressed="true">Все <small>{total} {kinds}</small></button>']
+    for slug in lane_order:
+        items, lo = coll_stats(slug)
+        meta = COLLECTIONS[slug]
+        tail = f"<small>от {rub(lo)} ₽</small>" if lo else "<small>по запросу</small>"
+        coll_chips.append(
+            f'<button class="budget-chip" data-group="coll" data-val="{slug}" '
+            f'aria-pressed="false">{esc(meta["name"])} {tail}</button>')
+
+    filters = [
+        chip_row("Цвет", colors, "color"),
+        ('<div class="pick-row"><span class="pick-row-label">Бюджет</span>'
+         '<div class="pick-scroll pick-scroll--slide" role="group" '
+         f'aria-label="Коллекция по цене">{"".join(coll_chips)}</div></div>'),
+        chip_row("Фактура", textures, "texture"),
+        sort_row(has_new=True, default_label="По коллекциям"),
+    ]
+
+    cards = "\n".join(card(p) for p in items_sorted)
+
+    body = f"""
+  <main>
+    <section class="page-head">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Вы здесь"><a href="index.html">Главная</a>
+          <span aria-hidden="true">/</span> <a href="kirpich-oblitsovochnyy.html">Облицовочный кирпич</a>
+          <span aria-hidden="true">/</span> <span>Вся сетка</span></nav>
+        <h1>Весь облицовочный кирпич</h1>
+        <p class="page-sub">{total} {kinds} из 5 коллекций, от {rub(all_min)} ₽/шт.
+          Удобно сравнивать один цвет между коллекциями.</p>
+      </div>
+    </section>
+
+    <section class="pick-bar" aria-label="Подбор кирпича">
+      <div class="wrap">
+{chr(10).join(filters)}
+        <p class="pick-count" id="countNote" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="section coll" aria-label="Все товары">
+      <div class="wrap">
+        <div class="p-grid" id="grid">
+{cards}
+        </div>
+        <div class="empty-note" id="emptyNote" hidden>
+          <p>С такими фильтрами ничего не нашлось — снимите один из них.</p>
+          <button class="btn btn-ghost" id="resetBtn" type="button">Сбросить фильтры</button>
+        </div>
+      </div>
+    </section>
+  </main>"""
+
+    js = """
+  <script>
+    var state = { color: '', coll: '', texture: '' };
+    var chips = Array.prototype.slice.call(document.querySelectorAll('[data-group]'));
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.p-card'));
+    var note = document.getElementById('countNote');
+    var empty = document.getElementById('emptyNote');
+
+    function plural(n, one, few, many) {
+      var m10 = n % 10, m100 = n % 100;
+      if (m10 === 1 && m100 !== 11) return one;
+      if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+      return many;
+    }
+
+    function paint() {
+      chips.forEach(function (c) {
+        var on = state[c.dataset.group] === c.dataset.val;
+        c.classList.toggle('is-on', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      var shown = 0;
+      cards.forEach(function (c) {
+        var ok = (!state.color || c.dataset.color === state.color) &&
+                 (!state.coll || c.dataset.coll === state.coll) &&
+                 (!state.texture || c.dataset.texture === state.texture);
+        c.hidden = !ok;
+        if (ok) shown++;
+      });
+      var active = state.color || state.coll || state.texture;
+      note.textContent = active
+        ? 'Показано ' + shown + ' из ' + cards.length + ' ' + plural(cards.length, 'вида', 'видов', 'видов')
+        : '';
+      empty.hidden = shown !== 0;
+    }
+
+    chips.forEach(function (c) {
+      c.addEventListener('click', function () {
+        var g = c.dataset.group;
+        state[g] = (state[g] === c.dataset.val) ? '' : c.dataset.val;
+        paint();
+      });
+    });
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      state = { color: '', coll: '', texture: '' };
+      paint();
+    });
+
+    // предустановки из ссылок страницы категории (свотч цвета / чип «Все»)
+    var qs = new URLSearchParams(location.search);
+    var preColor = qs.get('color');
+    if (preColor && cards.some(function (c) { return c.dataset.color === preColor; })) {
+      state.color = preColor;
+    }
+    var preColl = qs.get('coll');
+    if (preColl && cards.some(function (c) { return c.dataset.coll === preColl; })) {
+      state.coll = preColl;
+    }
+    paint();
+""" + SORT_JS + CAROUSEL_JS + """
+  </script>"""
+
+    out = page_shell(
+        f"Весь облицовочный кирпич — {total} {kinds} в одной сетке | Строй-Сейл Краснодар",
+        f"Весь облицовочный кирпич без деления на коллекции: {total} {kinds}, "
+        f"от {rub(all_min)} ₽/шт. Фильтры по цвету, бюджету и фактуре.",
+        body, js)
+    (BASE / "kirpich-ves.html").write_text(out)
+    print(f"kirpich-ves.html: {total} товаров")
 
 
 # ── Забутовочный кирпич: подбор по задаче, пока без цен ─────────────────────
@@ -1430,6 +1665,7 @@ def build_brick_products():
 
 if __name__ == "__main__":
     build_category()
+    build_ves()
     for slug in COLL_ORDER:
         build_collection(slug)
     build_zabutovka()
