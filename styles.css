@@ -2447,6 +2447,33 @@ a.p-card:focus-visible {
   hyphens: auto;
 }
 
+/* Две ключевые цифры на карточке товара (как «ширина/высота» у конкурента):
+   карточка сразу читается как размерная, а не пустая */
+.cat-specs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.cat-specs li {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cat-specs span {
+  font-size: var(--text-micro);
+  color: var(--color-ink-soft);
+}
+
+.cat-specs b {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Компактный тизер палитры «один цвет — на всё»: одна строка образцов */
 .color-strip {
   display: flex;
@@ -2593,8 +2620,19 @@ a.p-card:focus-visible {
   .duo { grid-template-columns: 6fr 5fr; gap: var(--space-2xl); }
 }
 
-/* Всё для крыши сразу: тихие списки доборных, водостока, безопасности */
-.kit { display: grid; gap: var(--space-lg); }
+/* Всё для крыши сразу: фото + тихие списки доборных, водостока, безопасности */
+.kit { display: grid; gap: var(--space-xl); }
+
+.kit-col { display: flex; flex-direction: column; }
+
+.kit-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  margin-bottom: var(--space-sm);
+}
 
 .kit h3 {
   font-size: var(--text-md);

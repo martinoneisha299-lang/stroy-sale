@@ -211,6 +211,27 @@ manifest["sections"] = {
     "sayding": "sec-sayding.jpg",
 }
 
+# ---- обложки категорий и «кита»: чистые lifestyle-кадры (превью категорий
+# со страницы каталога поставщика — без водяного знака, проверены глазами).
+# Источники небольшие (261–400 px), поэтому обложки держим 480², чтобы не
+# гнать сильный апскейл. ----
+CAT_SRC = SRC / "_категории-17.07"
+CAT_COVERS = {
+    "cat-metallocherepitsa.jpg": ("cover-cat-mch.jpg", 480, 480),
+    "cat-profnastil.jpg":        ("cover-cat-prof.jpg", 480, 480),
+    "cat-shtaketnik.jpg":        ("cover-cat-sht.jpg", 480, 480),
+    "cat-sayding.jpg":           ("cover-cat-sid.jpg", 480, 480),
+    "kit-dobornye.jpg":          ("kit-dobornye.jpg", 560, 420),
+    "kit-vodostok.jpg":          ("kit-vodostok.jpg", 560, 420),
+    "kit-safety.jpg":            ("kit-safety.jpg", 560, 420),
+}
+for src_name, (dest, w, h) in CAT_COVERS.items():
+    src = CAT_SRC / src_name
+    if not src.exists():
+        print(f"!! нет обложки категории {src_name}")
+        continue
+    save(cover_crop(Image.open(src), w, h), OUT / dest, 84)
+
 # примеры покрытия Printech вживую (для страниц сайдинга/штакетника)
 PRINTECH_LIVE = ["sayding-oak", "sayding-walnut", "sayding-light", "sayding-white"]
 manifest["printech_live"] = []
