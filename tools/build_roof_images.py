@@ -30,6 +30,7 @@ BASE = Path("/Users/dm/Desktop/сайт")
 SRC = Path("/Users/dm/Desktop/фото/кровля")
 GAL = SRC / "_с-сайта-17.07" / "галерея-изделий"
 TEX = SRC / "_с-сайта-17.07" / "текстуры-покрытий"
+PROF_GAL = SRC / "_с-сайта-17.07" / "профнастил-фото"
 OUT = BASE / "img" / "roof"
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -119,6 +120,32 @@ for h, key in G.items():
     else:
         print(f"!! нет кадра галереи {key} ({h})")
 
+# Профнастил: фото ЕСТЬ ТОЛЬКО у поставщика, все под тайловым водяным знаком
+# по всему кадру (кроп не спасает — проверено). По решению пользователя
+# (17.07.2026) грузим как есть — временная мера, до появления чистых фото.
+PROF_G = {
+    "09adc01207b89d00c24ede84fab8a5ef": "s8-1",
+    "f45fd7ce52023363a8a814356e064d41": "s8-2",
+    "778098753bd9d089adb99b3a84506c86": "s8-3",
+    "1d0c1365aeb94edfd7109b16a9b8b7cc": "s10-1",
+    "320c8e7b4416bad26cc276e90911a148": "s10-2",
+    "263811f395be29e805823c252face073": "mp20-1",
+    "5c16994910d84e2b105f1d3197e75b3d": "mp20-2",
+    "83c032aa81cd4b1a94c7663a54a2fb58": "s21-1",
+    "df9a4cc8bb8d85620d2f0bda390ee24c": "s21-2",
+    "0eb15032566317244de9d7f65613515a": "ns35-1",
+    "a1a9b10c1b22082e5a44ec8368ac6a34": "ns35-2",
+    "39cc75ff369c64e640be135bdd125f2f": "n60-1",
+    "7f06db8bd26aeb4173d9f145f3d41a13": "n60-2",
+}
+prof_gal = {}
+for h, key in PROF_G.items():
+    p = PROF_GAL / f"{h}.jpg"
+    if p.exists():
+        prof_gal[key] = p
+    else:
+        print(f"!! нет фото профнастила {key} ({h})")
+
 manifest = {"products": {}, "colors": {}, "sections": {}}
 
 # герой: мокрая тёмная металлочерепица (16:9 для десктопного hero)
@@ -133,12 +160,18 @@ PRODUCTS = [
      ["supermonterrey-graphite", "supermonterrey-wet", "supermonterrey-green"]),
     ("mch-dyuna", "Металлочерепица/Испанская дюна",
      ["dyuna-brown", "dyuna-terracotta"]),
-    ("prof-s8", "Профнастил/Профилированный лист С-8", []),
-    ("prof-s10", "Профнастил/Профилированный лист С-10", []),
-    ("prof-s21", "Профнастил/Профилированный лист С-21", []),
-    ("prof-mp20", "Профнастил/Профилированный лист МП-20", []),
-    ("prof-ns35", "Профнастил/Профилированный лист НС-35", []),
-    ("prof-n60", "Профнастил/Профилированный лист Н-60", []),
+    ("prof-s8", "Профнастил/Профилированный лист С-8",
+     ["s8-1", "s8-2", "s8-3"]),
+    ("prof-s10", "Профнастил/Профилированный лист С-10",
+     ["s10-1", "s10-2"]),
+    ("prof-s21", "Профнастил/Профилированный лист С-21",
+     ["s21-1", "s21-2"]),
+    ("prof-mp20", "Профнастил/Профилированный лист МП-20",
+     ["mp20-1", "mp20-2"]),
+    ("prof-ns35", "Профнастил/Профилированный лист НС-35",
+     ["ns35-1", "ns35-2"]),
+    ("prof-n60", "Профнастил/Профилированный лист Н-60",
+     ["n60-1", "n60-2"]),
     ("sht-kruglyy", "Штакетник/EURO-штакетник круглый",
      ["shtaketnik-chocolate", "shtaketnik-graphite", "shtaketnik-cherry",
       "shtaketnik-pine"]),
@@ -156,7 +189,7 @@ for pid, rel, photos in PRODUCTS:
     entry = {"gallery": [], "scheme": None}
     for i, key in enumerate(photos):
         name = f"roof-{pid}.jpg" if i == 0 else f"roof-{pid}-{i + 1}.jpg"
-        photo(gal[key], name)
+        photo(gal.get(key) or prof_gal[key], name)
         entry["gallery"].append(name)
     schemes = [f for f in pdir.iterdir()
                if "_схема" in f.name and f.suffix.lower() in (".jpg", ".jpeg", ".png")]

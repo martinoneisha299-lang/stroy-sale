@@ -16,27 +16,46 @@
    "scheme": "roof-mch-dyuna-scheme.jpg"
   },
   "prof-s8": {
-   "gallery": [],
+   "gallery": [
+    "roof-prof-s8.jpg",
+    "roof-prof-s8-2.jpg",
+    "roof-prof-s8-3.jpg"
+   ],
    "scheme": "roof-prof-s8-scheme.jpg"
   },
   "prof-s10": {
-   "gallery": [],
+   "gallery": [
+    "roof-prof-s10.jpg",
+    "roof-prof-s10-2.jpg"
+   ],
    "scheme": "roof-prof-s10-scheme.jpg"
   },
   "prof-s21": {
-   "gallery": [],
+   "gallery": [
+    "roof-prof-s21.jpg",
+    "roof-prof-s21-2.jpg"
+   ],
    "scheme": "roof-prof-s21-scheme.jpg"
   },
   "prof-mp20": {
-   "gallery": [],
+   "gallery": [
+    "roof-prof-mp20.jpg",
+    "roof-prof-mp20-2.jpg"
+   ],
    "scheme": "roof-prof-mp20-scheme.jpg"
   },
   "prof-ns35": {
-   "gallery": [],
+   "gallery": [
+    "roof-prof-ns35.jpg",
+    "roof-prof-ns35-2.jpg"
+   ],
    "scheme": "roof-prof-ns35-scheme.jpg"
   },
   "prof-n60": {
-   "gallery": [],
+   "gallery": [
+    "roof-prof-n60.jpg",
+    "roof-prof-n60-2.jpg"
+   ],
    "scheme": "roof-prof-n60-scheme.jpg"
   },
   "sht-kruglyy": {
