@@ -31,6 +31,10 @@ SRC = Path("/Users/dm/Desktop/фото/кровля")
 GAL = SRC / "_с-сайта-17.07" / "галерея-изделий"
 TEX = SRC / "_с-сайта-17.07" / "текстуры-покрытий"
 PROF_GAL = SRC / "_с-сайта-17.07" / "профнастил-фото"
+# Готовые галереи товаров: у каждого товара своя папка photo-NN.* + scheme.*
+# (собрана из чистых студийных кадров + полных галерей с сайта конкурента —
+# ВСЕ фото товара в порядке витрины конкурента, последний кадр — чертёж).
+FINAL = SRC / "_галереи-финал-17.07"
 OUT = BASE / "img" / "roof"
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -184,17 +188,22 @@ PRODUCTS = [
     ("sid-sofit", "Сайдинг и доборные элементы/Софит EURO-Брус перфорированный", []),
 ]
 
-for pid, rel, photos in PRODUCTS:
-    pdir = SRC / rel
+for pid, rel, _old in PRODUCTS:
+    # чистим старые кадры этого товара, чтобы не осталось хвостов на диске
+    for f in list(OUT.glob(f"roof-{pid}.jpg")) + list(OUT.glob(f"roof-{pid}-*.jpg")):
+        f.unlink()
+    fdir = FINAL / pid
     entry = {"gallery": [], "scheme": None}
-    for i, key in enumerate(photos):
+    photos = sorted(fdir.glob("photo-*")) if fdir.exists() else []
+    for i, src in enumerate(photos):
         name = f"roof-{pid}.jpg" if i == 0 else f"roof-{pid}-{i + 1}.jpg"
-        photo(gal.get(key) or prof_gal[key], name)
+        photo(src, name)
         entry["gallery"].append(name)
-    schemes = [f for f in pdir.iterdir()
-               if "_схема" in f.name and f.suffix.lower() in (".jpg", ".jpeg", ".png")]
+    schemes = sorted(fdir.glob("scheme.*")) if fdir.exists() else []
     if schemes:
         entry["scheme"] = scheme(schemes[0], f"roof-{pid}-scheme.jpg")
+    if not photos:
+        print(f"!! {pid}: нет фото в {fdir}")
     manifest["products"][pid] = entry
 
 # обложки карточек металлочерепицы и секций на странице категории

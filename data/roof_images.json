@@ -6,7 +6,7 @@
     "roof-mch-monterrey-2.jpg",
     "roof-mch-monterrey-3.jpg"
    ],
-   "scheme": "roof-mch-monterrey-scheme.jpg"
+   "scheme": null
   },
   "mch-dyuna": {
    "gallery": [
@@ -68,31 +68,52 @@
    "scheme": "roof-sht-kruglyy-scheme.jpg"
   },
   "sht-trapetsiya": {
-   "gallery": [],
+   "gallery": [
+    "roof-sht-trapetsiya.jpg",
+    "roof-sht-trapetsiya-2.jpg",
+    "roof-sht-trapetsiya-3.jpg"
+   ],
    "scheme": "roof-sht-trapetsiya-scheme.jpg"
   },
   "sht-pryamoy": {
-   "gallery": [],
+   "gallery": [
+    "roof-sht-pryamoy.jpg"
+   ],
    "scheme": null
   },
   "sid-korabelnaya": {
-   "gallery": [],
-   "scheme": "roof-sid-korabelnaya-scheme.jpg"
+   "gallery": [
+    "roof-sid-korabelnaya.jpg",
+    "roof-sid-korabelnaya-2.jpg"
+   ],
+   "scheme": null
   },
   "sid-korabelnaya-evro": {
-   "gallery": [],
+   "gallery": [
+    "roof-sid-korabelnaya-evro.jpg"
+   ],
    "scheme": null
   },
   "sid-brus-klassik": {
-   "gallery": [],
-   "scheme": "roof-sid-brus-klassik-scheme.jpg"
+   "gallery": [
+    "roof-sid-brus-klassik.jpg",
+    "roof-sid-brus-klassik-2.jpg",
+    "roof-sid-brus-klassik-3.jpg"
+   ],
+   "scheme": null
   },
   "sid-brus-riflenyy": {
-   "gallery": [],
+   "gallery": [
+    "roof-sid-brus-riflenyy.jpg"
+   ],
    "scheme": null
   },
   "sid-sofit": {
-   "gallery": [],
+   "gallery": [
+    "roof-sid-sofit.jpg",
+    "roof-sid-sofit-2.jpg",
+    "roof-sid-sofit-3.jpg"
+   ],
    "scheme": null
   }
  },
