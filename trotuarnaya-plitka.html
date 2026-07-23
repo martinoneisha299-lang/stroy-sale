@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=17">
+  <link rel="stylesheet" href="styles.css?v=26">
 </head>
 <body>
 
-<a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-07-20"><b>−15%</b> на плитку «Старый город» — до 20 июля<span class="promo-bar-go"> · Выбрать</span></a>
+<a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-08-03" hidden><b>−15%</b> на плитку «Старый город» — до 3 августа<span class="promo-bar-go"> · Выбрать</span></a>
 
   <header class="masthead">
     <div class="wrap masthead-in">
@@ -43,12 +43,12 @@
           <span>Тротуарная плитка</span>
         </nav>
         <h1>Тротуарная плитка</h1>
-        <p class="page-sub">172 варианта в 7 формах — с завода-производителя.
+        <p class="page-sub">Купить тротуарную плитку в Краснодаре: 172 варианта в 7 формах с завода-производителя.
           Привезём на объект, разгрузим, оплата при получении.</p>
         <ul class="tile-facts">
           <li><strong>от 650 ₽/м²</strong> заводская цена</li>
           <li><strong>40 мм</strong> — держит легковую машину</li>
-          <li><strong>F200</strong> — 200 зим без трещин</li>
+          <li><strong>F200</strong> — 200 циклов заморозки</li>
           <li><strong>B30</strong> — дорожная прочность</li>
         </ul>
         <div class="hero-cta">
@@ -307,11 +307,12 @@
               <input id="cfPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
             </div>
             <button class="btn" type="submit">Оставить заявку</button>
+            <p class="form-err" id="ctaErr" hidden>Проверьте номер — в нём не хватает цифр.</p>
             <p class="caption form-note">Нажимая кнопку, вы соглашаетесь с
               <a href="policy.html">политикой конфиденциальности</a>.
               Номер не передаём третьим лицам.</p>
           </form>
-          <p class="form-ok" id="ctaOk" hidden>Заявка принята — скоро перезвоним (демо)</p>
+          <p class="form-ok" id="ctaOk" role="status" hidden>Заявка принята — скоро перезвоним.</p>
         </div>
       </div>
     </div>
@@ -323,6 +324,7 @@
       <a href="tel:+79000000000">+7 (900) 000-00-00</a>
       <span class="caption footer-addr">Краснодар, ул. Ореховая, 182</span>
       <span class="caption">Работаем с частными застройщиками, прорабами и бригадами</span>
+      <span class="caption">Цены на сайте не являются публичной офертой</span>
       <a class="footer-policy caption" href="policy.html">Политика конфиденциальности</a>
     </div>
   </footer>
@@ -348,7 +350,14 @@
         f.addEventListener('submit', function (e) {
           e.preventDefault();
           var ph = document.getElementById('cfPhone');
-          if (!ph.value.trim()) { ph.focus(); return; }
+          var err = document.getElementById('ctaErr');
+          var digits = (ph.value.match(/\d/g) || []).length;
+          if (digits < 10) {
+            if (err) { err.hidden = false; ph.setAttribute('aria-describedby', 'ctaErr'); }
+            ph.focus();
+            return;
+          }
+          if (err) err.hidden = true;
           f.hidden = true;
           document.getElementById('ctaOk').hidden = false;
         });
@@ -356,7 +365,7 @@
       var promo = document.querySelector('.promo-bar');
       if (promo && promo.dataset.until) {
         var end = new Date(promo.dataset.until + 'T23:59:59');
-        if (new Date() > end) promo.remove();
+        if (new Date() > end) { promo.remove(); } else { promo.hidden = false; }
       }
     })();
   </script>

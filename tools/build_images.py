@@ -60,7 +60,8 @@ def main():
     # Чистим и базовый {id}.jpg: при добавлении товаров id сдвигаются, и
     # товар без фото иначе унаследует «чужой» кадр со старого номера.
     for pid in brick_ids:
-        for f in [OUT / f"{pid}.jpg"] + [OUT / f"{pid}-{s}.jpg" for s in (2, 3, 4, 5)]:
+        for f in ([OUT / f"{pid}.jpg", OUT / f"cdot-{pid}.jpg"]
+                  + [OUT / f"{pid}-{s}.jpg" for s in (2, 3, 4, 5)]):
             if f.exists():
                 f.unlink()
 
@@ -90,7 +91,17 @@ def main():
                 out = fit_on_paper(img)
             else:
                 out = cover_crop(img)
-            out.save(dst, "JPEG", quality=92, optimize=True, progressive=True)
+            out.save(dst, "JPEG", quality=80, optimize=True, progressive=True)
+            if idx == 0:
+                # мини-кружок 68×68 для .cdot/свотчей: кружок 34px не должен
+                # тянуть полноразмерный кадр (это давало ~3 МБ на категорию)
+                w, h = out.size
+                side = min(w, h)
+                sq = out.crop(((w - side) // 2, (h - side) // 2,
+                               (w + side) // 2, (h + side) // 2))
+                sq = sq.resize((68, 68), Image.LANCZOS)
+                sq.save(OUT / f"cdot-{p['id']}.jpg", "JPEG",
+                        quality=82, optimize=True)
             done += 1
     total_kb = sum(f.stat().st_size for f in OUT.glob("*.jpg")) // 1024
     print(f"готово: {done}, пропущено: {skipped}, всего {total_kb} КБ")

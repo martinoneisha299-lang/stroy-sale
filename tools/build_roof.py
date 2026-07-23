@@ -24,6 +24,9 @@ from urllib.parse import quote
 from pathlib import Path
 
 BASE = Path("/Users/dm/Desktop/сайт")
+
+# Абсолютный адрес сайта — для JSON-LD (относительные пути из /tovar/ бьются)
+SITE_URL = "https://martinoneisha299-lang.github.io/stroy-sale/"
 TOVAR = BASE / "tovar"
 TOVAR.mkdir(exist_ok=True)
 
@@ -32,8 +35,8 @@ COLORS = IMG["colors"]
 P_COLORS = IMG["product_colors"]
 P_IMAGES = IMG["products"]
 
-STYLES_V = 23
-IMG_V = 3
+STYLES_V = 26
+IMG_V = 4
 
 
 def esc(s):
@@ -69,8 +72,8 @@ def callbar(root=""):
 
 
 def promo_bar(root=""):
-    return (f'<a class="promo-bar" href="{root}plitka-staryy-gorod.html" data-until="2026-07-20">'
-            f'<b>−15%</b> на плитку «Старый город» — до 20 июля'
+    return (f'<a class="promo-bar" href="{root}plitka-staryy-gorod.html" data-until="2026-08-03" hidden>'
+            f'<b>−15%</b> на плитку «Старый город» — до 3 августа'
             f'<span class="promo-bar-go"> · Выбрать</span></a>')
 
 
@@ -103,7 +106,14 @@ SHELL_JS = """
         f.addEventListener('submit', function (e) {
           e.preventDefault();
           var ph = document.getElementById('cfPhone');
-          if (!ph.value.trim()) { ph.focus(); return; }
+          var err = document.getElementById('ctaErr');
+          var digits = (ph.value.match(/\\d/g) || []).length;
+          if (digits < 10) {
+            if (err) { err.hidden = false; ph.setAttribute('aria-describedby', 'ctaErr'); }
+            ph.focus();
+            return;
+          }
+          if (err) err.hidden = true;
           f.hidden = true;
           document.getElementById('ctaOk').hidden = false;
         });
@@ -111,7 +121,7 @@ SHELL_JS = """
       var promo = document.querySelector('.promo-bar');
       if (promo && promo.dataset.until) {
         var end = new Date(promo.dataset.until + 'T23:59:59');
-        if (new Date() > end) promo.remove();
+        if (new Date() > end) { promo.remove(); } else { promo.hidden = false; }
       }
     })();
   </script>"""
@@ -203,11 +213,12 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
               <input id="cfPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
             </div>
             <button class="btn" type="submit">Оставить заявку</button>
+            <p class="form-err" id="ctaErr" hidden>Проверьте номер — в нём не хватает цифр.</p>
             <p class="caption form-note">Нажимая кнопку, вы соглашаетесь с
               <a href="{root}policy.html">политикой конфиденциальности</a>.
               Номер не передаём третьим лицам.</p>
           </form>
-          <p class="form-ok" id="ctaOk" hidden>Заявка принята — скоро перезвоним (демо)</p>
+          <p class="form-ok" id="ctaOk" role="status" hidden>Заявка принята — скоро перезвоним.</p>
         </div>
       </div>
     </div>
@@ -219,6 +230,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
       <a href="tel:+79000000000">+7 (900) 000-00-00</a>
       <span class="caption footer-addr">Краснодар, ул. Ореховая, 182</span>
       <span class="caption">Работаем с частными застройщиками, прорабами и бригадами</span>
+      <span class="caption">Цены на сайте не являются публичной офертой</span>
       <a class="footer-policy caption" href="{root}policy.html">Политика конфиденциальности</a>
     </div>
   </footer>
@@ -537,7 +549,7 @@ FAMILIES = [
         kind="Штакетник", tag="Для забора", layout="grid",
         products=SHT,
         sub="Металлические планки с просветом: двор проветривается, "
-            "забор не парусит. Три формы верха, 40 цветов и рисунки под дерево.",
+            "забор не парусит. Три формы верха, 12 цветов и рисунки под дерево.",
         card="3 формы верха · для забора",
         cover="sec-shtaketnik.jpg", cover_scheme=False,
         cover_alt="Забор из графитового евроштакетника на фоне зелени",
@@ -632,10 +644,12 @@ def gallery_html(pid, name, kind, root=""):
             on = " is-on" if i == 0 else ""
             pressed = "true" if i == 0 else "false"
             aria = label or f"Фото {i + 1}"
+            tag = f'<span class="pd-thumb-tag">{esc(label)}</span>' if label else ""
+            cls = "pd-thumb pd-thumb--scheme" if label else "pd-thumb"
             thumbs.append(
-                f'<button class="pd-thumb{on}" type="button" data-src="{src}" '
+                f'<button class="{cls}{on}" type="button" data-src="{src}" '
                 f'data-alt="{esc(alt)}" aria-pressed="{pressed}" aria-label="{esc(aria)}">'
-                f'<img src="{src}" alt="" width="960" height="720" loading="lazy"></button>')
+                f'{tag}<img src="{src}" alt="" width="960" height="720" loading="lazy"></button>')
         out.append(f'<div class="pd-thumbs">{"".join(thumbs)}</div>')
     out.append("</div>")
     return "".join(out)
@@ -694,6 +708,22 @@ def swatch_preview(pid, root=""):
             f'<span class="pd-sw-row">{dots}{more}</span>'
             f'<span class="pd-sw-label">{n} {plural(n, "цвет", "цвета", "цветов")} '
             f'и рисунков — посмотреть все</span></a>')
+
+
+def card_colors(pid, root=""):
+    """Кластер реальных кружков-образцов + счётчик прямо на карточке в сетке —
+    клиент сразу видит, что палитра большая, не открывая товар."""
+    slugs = P_COLORS.get(pid, [])
+    if not slugs:
+        return ""
+    cap = 5
+    dots = "".join(
+        f'<img class="cc-dot" src="{root}img/roof/{COLORS[s]["sw"]}?v={IMG_V}" '
+        f'alt="" width="28" height="28" loading="lazy">'
+        for s in slugs[:cap])
+    n = len(slugs)
+    return (f'<p class="cat-colors"><span class="cc-row">{dots}</span>'
+            f'<span class="cc-label">{n} {plural(n, "цвет", "цвета", "цветов")}</span></p>')
 
 
 def product_card(p, root=""):
@@ -762,7 +792,8 @@ def product_cat_card(p, root=""):
                '<path d="M7 11h.01M12 11h.01M17 11h.01"/></svg>'
                '<span>Фото пришлём по запросу</span></div>')
     return cat_card(f'{root}tovar/krovlya-{p["id"]}.html', img,
-                    p["name"], p["meta"], extra=card_specs_html(p["id"]))
+                    p["name"], p["meta"],
+                    extra=card_specs_html(p["id"]) + card_colors(p["id"], root))
 
 
 def duo_rows(products, root=""):
@@ -783,8 +814,10 @@ def color_strip(root=""):
     return f'<div class="color-strip">{dots}</div>'
 
 
-def color_section(root=""):
-    """Компактный тизер «один цвет — на всё». Полная палитра — в карточке товара."""
+def color_section(root="", n=40,
+                  series="глянцевый полиэстер, матовый Granite, Printech под дерево и цинк"):
+    """Компактный тизер «один цвет — на всё». Полная палитра — в карточке товара.
+    n и series — по семейству: у штакетника 12 цветов, у сайдинга 22, не 40."""
     return f"""
   <section class="section" id="tsveta">
     <div class="wrap">
@@ -792,8 +825,7 @@ def color_section(root=""):
         <span class="tag">Палитра</span>
         <h2>Один цвет — на&nbsp;всё</h2>
         <p class="caption">Лист, конёк, планки, водосток и саморезы красим в один тон —
-          крыша выглядит целой. 40 оттенков: глянцевый полиэстер, матовый Granite,
-          Printech под дерево и цинк.</p>
+          крыша выглядит целой. {n} {plural(n, "оттенок", "оттенка", "оттенков")}: {series}.</p>
       </div>
       {color_strip(root)}
       <p class="caption cats-note">Полную палитру под каждый материал показываем
@@ -902,7 +934,7 @@ CALC_SECTION = f"""
               <span class="line-calc-val val-accent" id="rcArea">—</span>
             </div>
           </div>
-          <a class="line-calc-btn" href="#lead">Получить точный расчёт
+          <a class="btn line-calc-btn" href="#lead">Получить точный расчёт
             {ARR_SVG}</a>
         </div>
         <p class="caption line-calc-note">Оценка по размерам дома со свесами —
@@ -920,7 +952,8 @@ def build_hub():
         img = cat_img(f.get("hub_cover", f["cover"]),
                       f.get("hub_alt", f["cover_alt"]), False)
         cards.append(cat_card(f'krovlya-{f["slug"]}.html', img,
-                              f["short"], f["card"], price=None))
+                              f["short"], f["card"], price=None,
+                              extra=card_colors(f["products"][0]["id"])))
 
     body = f"""
   <!-- Шапка раздела: в одном ключе с шапкой плитки — текст поверх парящего
@@ -932,9 +965,9 @@ def build_hub():
           <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
           <span>Кровля</span>
         </nav>
-        <h1>Кровля и&nbsp;всё для крыши</h1>
-        <p class="page-sub">Четыре материала с одного завода. Режем в размер
-          вашей крыши — без стыков и обрезков, цвет и покрытие общие.</p>
+        <h1>Кровля: металлочерепица и&nbsp;профнастил</h1>
+        <p class="page-sub">Купить кровлю в Краснодаре: четыре материала с одного
+          завода. Режем в размер крыши — без стыков, цвет и покрытие общие.</p>
         <ul class="tile-facts">
           <li><strong>до 8 м</strong> лист целиком, без стыков</li>
           <li><strong>40 цветов</strong> и покрытий на выбор</li>
@@ -957,8 +990,7 @@ def build_hub():
     <div class="wrap">
       <div class="section-head">
         <h2>Выберите материал</h2>
-        <p class="caption">Внутри каждой — товары и цвета. Не знаете, что нужно, —
-          позвоните, подскажем по задаче.</p>
+        <p class="caption">Внутри — товары, все размеры и 40&nbsp;цветов.</p>
       </div>
       <div class="cats cats-roof">{''.join(cards)}</div>
     </div>
@@ -998,14 +1030,14 @@ def build_hub():
 def build_family(f):
     slug = f["slug"]
     head = f"""
-  <section class="section">
+  <section class="page-head">
     <div class="wrap">
       <nav class="crumbs" aria-label="Хлебные крошки">
         <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
         <a href="krovlya.html">Кровля</a> <span aria-hidden="true">/</span>
         <span>{esc(f['title'])}</span>
       </nav>
-      <div class="page-head"><h1>{esc(f['title'])}</h1></div>
+      <h1>{esc(f['title'])}</h1>
       <p class="page-sub">{esc(f['sub'])}</p>
     </div>
   </section>"""
@@ -1036,7 +1068,12 @@ def build_family(f):
   </section>"""
 
     live = printech_live_section() if f.get("printech_live") else ""
-    body = head + main + live + color_section()
+    # палитра честная по семейству: МЧ/профнастил 40, штакетник 12, сайдинг 22
+    first_pid = f["products"][0]["id"] if f.get("products") else None
+    n_col = len(P_COLORS.get(first_pid, [])) or 40
+    col_series = ("глянцевый полиэстер, матовый Granite, Printech под дерево и цинк"
+                  if n_col >= 40 else "глянцевые, матовые и Printech под дерево")
+    body = head + main + live + color_section(n=n_col, series=col_series)
 
     out = page_shell(
         f"{f['title']} в Краснодаре — цена с завода | Строй-Сейл",
@@ -1117,7 +1154,7 @@ def build_product(p):
   </section>"""
 
     body = f"""
-  <section class="section pd-crumbs" aria-label="Навигация">
+  <section class="page-head">
     <div class="wrap">
       <nav class="crumbs" aria-label="Хлебные крошки">
         <a href="{root}index.html">Главная</a> <span aria-hidden="true">/</span>
@@ -1138,6 +1175,8 @@ def build_product(p):
         <p class="pd-price pd-price-ask">Цена по запросу</p>
         <p class="caption pd-price-note">Цена зависит от покрытия и толщины стали.
           Назовите размеры — посчитаем и пришлём в WhatsApp за 5 минут.</p>
+        <p class="caption pd-m2">Гарантия на покрытие — до 15 лет, точный срок
+          зависит от серии цвета.</p>
         {swatch_preview(pid, root)}
         {order_btns()}
         <dl class="pd-specs">{specs}</dl>
@@ -1166,7 +1205,7 @@ def build_product(p):
     }
     entry = P_IMAGES[pid]
     if entry["gallery"]:
-        ld["image"] = f"img/roof/{entry['gallery'][0]}"
+        ld["image"] = f"{SITE_URL}img/roof/{entry['gallery'][0]}"
     extra_head = ('\n  <script type="application/ld+json">'
                   + json.dumps(ld, ensure_ascii=False) + "</script>")
 

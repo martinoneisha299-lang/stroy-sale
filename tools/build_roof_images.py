@@ -78,22 +78,35 @@ def photo(src, dest, w=960, h=720, q=82, centering=(0.5, 0.5)):
     return dest
 
 
+# Чертёж рисуем как техпаспорт: тёмные линии на тёплой «бумажной» подложке —
+# читается даже в миниатюре, а не бледный серый рисунок, тонущий на белом.
+SCHEME_INK = (46, 41, 37)      # ≈ --color-ink
+SCHEME_TINT = (236, 233, 227)  # ≈ тёплая подложка (--color-ph)
+
+
 def scheme(src, dest, w=960, h=720):
-    """Чертёж: автокроп белых полей, вписать на белый холст с воздухом."""
-    im = Image.open(src).convert("RGB")
-    gray = im.convert("L")
-    # маска «не-белого» с запасом на антиалиасинг
-    bbox = gray.point(lambda p: 0 if p > 246 else 255).getbbox()
+    """Чертёж профиля: автокроп полей, усиление контраста линий, тёмные линии
+    в цвет чернил на тёплой подложке. Рисунок широкий-низкий — воздух сверху
+    и снизу делаем «паспортным», подложкой, а не пустым белым."""
+    im = Image.open(src).convert("L")
+    # маска «не-белого» → рамка самого рисунка
+    bbox = im.point(lambda p: 0 if p > 246 else 255).getbbox()
     if bbox:
-        pad = 8
+        pad = 6
         bbox = (max(0, bbox[0] - pad), max(0, bbox[1] - pad),
                 min(im.width, bbox[2] + pad), min(im.height, bbox[3] + pad))
         im = im.crop(bbox)
-    margin = 0.10
+    # фон (светлее 232) → белый, линии (темнее) → к чернилам: контраст вверх
+    im = im.point(lambda p: 255 if p > 232 else int(p * 0.42))
+    margin = 0.07
     box_w, box_h = int(w * (1 - margin * 2)), int(h * (1 - margin * 2))
     im.thumbnail((box_w, box_h), Image.LANCZOS)
-    canvas = Image.new("RGB", (w, h), WHITE)
-    canvas.paste(im, ((w - im.width) // 2, (h - im.height) // 2))
+    # линии → цвет чернил, фон → тёплая подложка (мягкий блендинг по краям)
+    ink_alpha = ImageOps.invert(im)
+    drawing = Image.composite(Image.new("RGB", im.size, SCHEME_INK),
+                              Image.new("RGB", im.size, SCHEME_TINT), ink_alpha)
+    canvas = Image.new("RGB", (w, h), SCHEME_TINT)
+    canvas.paste(drawing, ((w - im.width) // 2, (h - im.height) // 2))
     save(canvas, OUT / dest, 88)
     return dest
 

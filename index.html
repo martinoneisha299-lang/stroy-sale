@@ -4,15 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Строй-Сейл — кирпич, плитка и кровля с доставкой на объект, Краснодар</title>
+  <meta name="description" content="Кирпич, тротуарная плитка и кровля с заводов Юга — 470+ товаров с доставкой по Краснодару и краю. Перезвоним за 5 минут, оплата при получении.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=19">
+  <link rel="stylesheet" href="styles.css?v=26">
 </head>
 <body>
 
-  <a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-07-20">
-    <b>−15%</b> на плитку «Старый город» — до 20 июля<span class="promo-bar-go"> · Выбрать</span></a>
+  <a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-08-03" hidden>
+    <b>−15%</b> на плитку «Старый город» — до 3 августа<span class="promo-bar-go"> · Выбрать</span></a>
 
   <!-- Шапка -->
   <header class="masthead">
@@ -34,7 +36,7 @@
     </div>
   </header>
 
-  <!-- Hero: интерактивный дом — видно, где какой материал -->
+  <!-- Hero: фото дома фоном, текст поверх -->
   <section class="hero">
     <div class="wrap">
       <div class="hero-head">
@@ -46,41 +48,9 @@
         </p>
         <div class="hero-cta">
           <a class="btn" href="#catalog">Смотреть каталог</a>
-          <span class="hero-hint">4 раздела · 440+ товаров</span>
+          <span class="hero-hint">4 раздела · 470+ товаров</span>
         </div>
       </div>
-
-      <div class="hero-stage">
-        <img class="hero-img" src="img/hero-03.jpg"
-             alt="Кирпичный дом: облицовочный кирпич, тёмная кровля, тротуарная плитка во дворе"
-             width="1760" height="990" fetchpriority="high">
-
-        <!-- Маркеры: ссылки в категории. --x/--y — положение над фото -->
-        <a class="spot" href="krovlya.html" style="--x: 44%; --y: 22%;" aria-label="Кровля — на крыше">
-          <span class="spot-dot"></span>
-          <span class="spot-label">Кровля</span>
-        </a>
-        <a class="spot" href="kirpich-oblitsovochnyy.html" style="--x: 56%; --y: 62%;" aria-label="Облицовочный кирпич — стены дома">
-          <span class="spot-dot"></span>
-          <span class="spot-label">Облицовочный кирпич</span>
-        </a>
-        <a class="spot" href="kirpich-zabutovochnyy.html" style="--x: 30%; --y: 81%;" aria-label="Забутовочный кирпич — цоколь и несущие стены">
-          <span class="spot-dot"></span>
-          <span class="spot-label">Забутовочный кирпич</span>
-        </a>
-        <a class="spot" href="trotuarnaya-plitka.html" style="--x: 20%; --y: 97%;" aria-label="Тротуарная плитка — дорожки во дворе">
-          <span class="spot-dot"></span>
-          <span class="spot-label">Тротуарная плитка</span>
-        </a>
-      </div>
-
-      <!-- Легенда — основные кнопки на телефоне -->
-      <ul class="hero-legend" aria-label="Материалы на фото">
-        <li><a href="kirpich-oblitsovochnyy.html"><span class="dot"></span>Облицовочный кирпич</a></li>
-        <li><a href="kirpich-zabutovochnyy.html"><span class="dot"></span>Забутовочный кирпич</a></li>
-        <li><a href="trotuarnaya-plitka.html"><span class="dot"></span>Тротуарная плитка</a></li>
-        <li><a href="krovlya.html"><span class="dot"></span>Кровля</a></li>
-      </ul>
     </div>
   </section>
 
@@ -111,7 +81,7 @@
         <h2>Что нужно для дома и&nbsp;двора</h2>
       </div>
       <div class="cats">
-        <a class="cat" id="cat-oblic" href="kirpich-oblitsovochnyy.html">
+        <a class="cat" href="kirpich-oblitsovochnyy.html">
           <img class="cat-img" src="img/cat-oblic.jpg" alt="Кладка облицовочного кирпича «Бромо» — фактурная, тёмно-красная" width="950" height="950" loading="lazy">
           <div class="cat-row">
             <h3>Облицовочный кирпич</h3>
@@ -120,7 +90,7 @@
           <p class="caption">Лицо дома и забора — 5 коллекций, 250+ цветов и фактур</p>
           <p class="cat-price">от 18,50 ₽/шт</p>
         </a>
-        <a class="cat" id="cat-brick" href="kirpich-zabutovochnyy.html">
+        <a class="cat" href="kirpich-zabutovochnyy.html">
           <img class="cat-img" src="img/cat-brick.jpg" alt="Кладка рядового керамического кирпича" width="1000" height="1000" loading="lazy">
           <div class="cat-row">
             <h3>Забутовочный кирпич</h3>
@@ -129,7 +99,7 @@
           <p class="caption">Фундамент, стены и перегородки — рабочая основа стройки</p>
           <p class="cat-price">цена по запросу</p>
         </a>
-        <a class="cat" id="cat-tile" href="trotuarnaya-plitka.html">
+        <a class="cat" href="trotuarnaya-plitka.html">
           <img class="cat-img" src="img/cat-tile.jpg" alt="Тротуарная плитка «цветной микс» — серо-графитовая мозаика" width="1000" height="1000" loading="lazy">
           <div class="cat-row">
             <h3>Тротуарная плитка</h3>
@@ -138,7 +108,7 @@
           <p class="caption">172 варианта в 7 формах — дорожки, двор и парковка</p>
           <p class="cat-price">от 650 ₽/м²</p>
         </a>
-        <a class="cat" id="cat-roof" href="krovlya.html">
+        <a class="cat" href="krovlya.html">
           <img class="cat-img" src="img/cat-roof.jpg" alt="Крыша из тёмной металлочерепицы на кирпичном доме" width="1000" height="1000" loading="lazy">
           <div class="cat-row">
             <h3>Кровля</h3>
@@ -171,8 +141,8 @@
     <div class="wrap">
       <div class="section-head">
         <span class="tag">Наши работы</span>
-        <h2>Наши объекты</h2>
-        <p class="caption">Дворы, дорожки и парковки, выложенные нашей плиткой.</p>
+        <h2>Дворы и&nbsp;дорожки, которые мы&nbsp;выложили</h2>
+        <p class="caption">Реальные объекты — плитка из этого каталога.</p>
       </div>
       <div class="works-grid-4">
         <img src="img/plitka/work-02.jpg" alt="Дом: кирпич и тротуарная плитка вместе" width="800" height="600" loading="lazy">
@@ -220,9 +190,10 @@
       <div class="lead-grid">
         <div>
           <h2>Посчитаем материал и&nbsp;назовём цену</h2>
-          <p class="caption" style="max-width: 40ch;">
+          <p class="caption lead-caption">
             Оставьте номер — перезвоним за 5 минут, уточним размеры
-            и пришлём расчёт с доставкой. Без навязчивых продаж.
+            и пришлём расчёт с доставкой. Газоблок, песок и щебень
+            тоже привезём. Без навязчивых продаж.
           </p>
         </div>
         <form class="lead-form" id="leadForm">
@@ -235,10 +206,11 @@
             <input id="fphone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" required>
           </div>
           <button class="btn" type="submit">Получить расчёт</button>
+          <p class="form-err" id="leadErr" hidden>Проверьте номер — в нём не хватает цифр.</p>
           <p class="form-note">Нажимая кнопку, вы соглашаетесь с
             <a href="policy.html">политикой конфиденциальности</a>.
             Номер не передаём третьим лицам.</p>
-          <p class="form-ok">Заявка принята — скоро перезвоним (демо)</p>
+          <p class="form-ok" role="status">Заявка принята — скоро перезвоним.</p>
         </form>
       </div>
 
@@ -259,22 +231,34 @@
       <a href="tel:+79000000000">+7 (900) 000-00-00</a>
       <span class="caption footer-addr">Краснодар, ул. Ореховая, 182</span>
       <span class="caption">Работаем с частными застройщиками, прорабами и бригадами</span>
+      <span class="caption">Цены на сайте не являются публичной офертой</span>
       <a class="footer-policy caption" href="policy.html">Политика конфиденциальности</a>
     </div>
   </footer>
 
   <script>
-    // Демо-отправка формы (в боевой версии — Telegram + amoCRM)
+    // Отправка формы: пока приём заявок не подключён (Telegram + amoCRM — по ТЗ),
+    // валидируем телефон и показываем подтверждение.
     document.getElementById('leadForm').addEventListener('submit', function (e) {
       e.preventDefault();
+      var ph = document.getElementById('fphone');
+      var err = document.getElementById('leadErr');
+      var digits = (ph.value.match(/\d/g) || []).length;
+      if (digits < 10) {
+        err.hidden = false;
+        ph.setAttribute('aria-describedby', 'leadErr');
+        ph.focus();
+        return;
+      }
+      err.hidden = true;
       this.classList.add('is-sent');
     });
 
-    // Сезонная полоска: сама исчезает после даты в data-until
+    // Сезонная полоска: скрыта по умолчанию, JS показывает только до даты в data-until
     var promo = document.querySelector('.promo-bar');
     if (promo && promo.dataset.until) {
       var end = new Date(promo.dataset.until + 'T23:59:59');
-      if (new Date() > end) promo.remove();
+      if (new Date() > end) { promo.remove(); } else { promo.hidden = false; }
     }
   </script>
 

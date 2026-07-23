@@ -14,10 +14,14 @@
 
 import html
 import json
+import re
 from urllib.parse import quote
 from pathlib import Path
 
 BASE = Path("/Users/dm/Desktop/сайт")
+
+# Абсолютный адрес сайта — для JSON-LD (относительные пути из /tovar/ бьются)
+SITE_URL = "https://martinoneisha299-lang.github.io/stroy-sale/"
 TOVAR = BASE / "tovar"
 TOVAR.mkdir(exist_ok=True)
 DATA = json.loads((BASE / "data" / "tiles.json").read_text())
@@ -116,8 +120,8 @@ def callbar(root=""):
 def promo_bar(root=""):
     """Сезонное предложение: тонкая полоска над шапкой. data-until — дата
     окончания; после неё полоска скрывается сама (скрипт в page_shell)."""
-    return (f'<a class="promo-bar" href="{root}plitka-staryy-gorod.html" data-until="2026-07-20">'
-            f'<b>−15%</b> на плитку «Старый город» — до 20 июля'
+    return (f'<a class="promo-bar" href="{root}plitka-staryy-gorod.html" data-until="2026-08-03" hidden>'
+            f'<b>−15%</b> на плитку «Старый город» — до 3 августа'
             f'<span class="promo-bar-go"> · Выбрать</span></a>')
 
 
@@ -145,7 +149,8 @@ def order_btns(root="", product=""):
         </div>"""
 
 
-# Скрипты каркаса: форма заявки (демо) + срок промо-полоски
+# Скрипты каркаса: форма заявки (приём заявок подключается по ТЗ: Telegram + amoCRM)
+# + промо-полоска (показывается только до даты data-until)
 SHELL_JS = """
   <script>
     (function () {
@@ -154,7 +159,14 @@ SHELL_JS = """
         f.addEventListener('submit', function (e) {
           e.preventDefault();
           var ph = document.getElementById('cfPhone');
-          if (!ph.value.trim()) { ph.focus(); return; }
+          var err = document.getElementById('ctaErr');
+          var digits = (ph.value.match(/\\d/g) || []).length;
+          if (digits < 10) {
+            if (err) { err.hidden = false; ph.setAttribute('aria-describedby', 'ctaErr'); }
+            ph.focus();
+            return;
+          }
+          if (err) err.hidden = true;
           f.hidden = true;
           document.getElementById('ctaOk').hidden = false;
         });
@@ -162,7 +174,7 @@ SHELL_JS = """
       var promo = document.querySelector('.promo-bar');
       if (promo && promo.dataset.until) {
         var end = new Date(promo.dataset.until + 'T23:59:59');
-        if (new Date() > end) promo.remove();
+        if (new Date() > end) { promo.remove(); } else { promo.hidden = false; }
       }
     })();
   </script>"""
@@ -277,7 +289,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=17">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=26">{extra_head}
 </head>
 <body>
 
@@ -328,11 +340,12 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
               <input id="cfPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
             </div>
             <button class="btn" type="submit">Оставить заявку</button>
+            <p class="form-err" id="ctaErr" hidden>Проверьте номер — в нём не хватает цифр.</p>
             <p class="caption form-note">Нажимая кнопку, вы соглашаетесь с
               <a href="{root}policy.html">политикой конфиденциальности</a>.
               Номер не передаём третьим лицам.</p>
           </form>
-          <p class="form-ok" id="ctaOk" hidden>Заявка принята — скоро перезвоним (демо)</p>
+          <p class="form-ok" id="ctaOk" role="status" hidden>Заявка принята — скоро перезвоним.</p>
         </div>
       </div>
     </div>
@@ -344,6 +357,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
       <a href="tel:+79000000000">+7 (900) 000-00-00</a>
       <span class="caption footer-addr">Краснодар, ул. Ореховая, 182</span>
       <span class="caption">Работаем с частными застройщиками, прорабами и бригадами</span>
+      <span class="caption">Цены на сайте не являются публичной офертой</span>
       <a class="footer-policy caption" href="{root}policy.html">Политика конфиденциальности</a>
     </div>
   </footer>
@@ -358,7 +372,7 @@ def tile_card(p, root=""):
     """Карточка товара в сетке — вся карточка это ссылка на страницу товара."""
     alt = f"Тротуарная плитка «{p['name']}» — {SHAPES[p['shape']]['name']}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="{root}{p["_gallery"][0]}?v=3" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="{root}{p["_gallery"][0]}?v=4" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -439,7 +453,7 @@ GALLERY_JS = """
       
       // Смена изображений с плавным затуханием (fade)
       function switchMain(src, activeThumb) {
-        if (main.src === src) return;
+        if (main.src === new URL(src, location.href).href) return;
         main.classList.add('is-fading');
         setTimeout(function() {
           main.src = src;
@@ -686,12 +700,12 @@ def build_category():
           <span>Тротуарная плитка</span>
         </nav>
         <h1>Тротуарная плитка</h1>
-        <p class="page-sub">{total} {plural(total, 'вариант', 'варианта', 'вариантов')} в 7 формах — с завода-производителя.
+        <p class="page-sub">Купить тротуарную плитку в Краснодаре: {total} {plural(total, 'вариант', 'варианта', 'вариантов')} в 7 формах с завода-производителя.
           Привезём на объект, разгрузим, оплата при получении.</p>
         <ul class="tile-facts">
           <li><strong>от {rub(all_min)} ₽/м²</strong> заводская цена</li>
           <li><strong>40 мм</strong> — держит легковую машину</li>
-          <li><strong>F200</strong> — 200 зим без трещин</li>
+          <li><strong>F200</strong> — 200 циклов заморозки</li>
           <li><strong>B30</strong> — дорожная прочность</li>
         </ul>
         <div class="hero-cta">
@@ -806,7 +820,7 @@ def build_shape(slug):
           <div class="pick-scroll pick-scroll--slide" id="kindChips" role="group" aria-label="Тип окраски">
             <button class="chip is-on" data-kind="" aria-pressed="true">Все · {n}</button>
             <button class="chip" data-kind="mix" aria-pressed="false">Колормиксы · {n_mix}</button>
-            <button class="chip" data-kind="mono" aria-pressed="false">Однотонные · {n_mono}</button>
+            <button class="chip" data-kind="mono" aria-pressed="false">Однотонные · {n_mono} — от {rub(m['min_price'])} ₽</button>
           </div>
         </div>
         <p class="pick-count" id="shownNote">Показано {n} из {n}</p>
@@ -876,8 +890,8 @@ def build_shape(slug):
           <input type="hidden" id="cShape" value="{m['min_price']}">""")
 
     out = page_shell(
-        f"Плитка «{m['name']}» — {n} расцветок от {rub(m['min_price'])} ₽/м² | Строй-Сейл",
-        f"Тротуарная плитка «{m['name']}» в Краснодаре: {n} расцветок, 40 мм, F200, "
+        f"Плитка «{m['name']}» — {n} {plural(n, 'расцветка', 'расцветки', 'расцветок')} от {rub(m['min_price'])} ₽/м² | Строй-Сейл",
+        f"Тротуарная плитка «{m['name']}» в Краснодаре: {n} {plural(n, 'расцветка', 'расцветки', 'расцветок')}, 40 мм, F200, "
         f"от {rub(m['min_price'])} ₽/м². Доставка, оплата при получении.",
         body,
         "Поможем выбрать расцветку",
@@ -933,12 +947,25 @@ def build_product(p):
             on = " is-on" if i == 0 else ""
             pressed = "true" if i == 0 else "false"
             btns.append(
-                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=3" '
+                f'<button class="pd-thumb{on}" type="button" data-src="{root}{src}?v=4" '
                 f'aria-pressed="{pressed}" aria-label="Фото {i + 1}">'
-                f'<img src="{root}{src}?v=3" alt="" width="640" height="480" loading="lazy"></button>')
+                f'<img src="{root}{src}?v=4" alt="" width="640" height="480" loading="lazy"></button>')
         thumbs = f'\n      <div class="pd-thumbs">{"".join(btns)}</div>'
 
-    price_html = (f'<p class="pd-price">{rub(p["price"])} ₽<span class="pd-price-unit">/м²</span></p>'
+    # поддон 15 м² — вторая цена (паттерн Bradstone: юнит-экономика без калькулятора)
+    pallet_line = ""
+    if p["price"]:
+        sp = p.get("specs") or {}
+        pm = re.search(r"([\d,.]+)", str(sp.get("pallet_m2", "")))
+        if pm:
+            try:
+                pallet_m2 = float(pm.group(1).replace(",", "."))
+                pallet_rub = round(p["price"] * pallet_m2 / 100) * 100
+                pallet_line = (f'<p class="caption pd-m2">поддон {pm.group(1)} м² '
+                               f'≈ {rub(pallet_rub)} ₽</p>')
+            except ValueError:
+                pass
+    price_html = (f'<p class="pd-price">{rub(p["price"])} ₽<span class="pd-price-unit">/м²</span></p>{pallet_line}'
                   if p["price"] else
                   f'<p class="pd-price pd-price-ask">Цена по запросу</p>')
 
@@ -958,7 +985,7 @@ def build_product(p):
     <div class="wrap pd-grid">
       <div class="pd-gallery">
         <div class="pd-main-wrap" id="pdMainWrap">
-          <img class="pd-main" id="pdMain" src="{root}{p['_gallery'][0]}?v=3"
+          <img class="pd-main" id="pdMain" src="{root}{p['_gallery'][0]}?v=4"
             alt="Тротуарная плитка «{name}», форма «{shape_name}» — фактура укладки"
             width="640" height="480">
           <button class="pd-zoom-trigger" id="pdZoomTrigger" type="button" aria-label="Открыть во весь экран">
@@ -1013,7 +1040,7 @@ def build_product(p):
         "@context": "https://schema.org",
         "@type": "Product",
         "name": f"Тротуарная плитка «{p['name']}» ({m['name']})",
-        "image": p["_gallery"][0],
+        "image": SITE_URL + p["_gallery"][0],
         "description": f"Тротуарная плитка «{p['name']}», форма «{m['name']}». "
                        "Толщина 40 мм, морозостойкость F200, прочность B30.",
         "offers": {
@@ -1061,7 +1088,7 @@ def build_border(b):
     <div class="wrap pd-grid">
       <div class="pd-gallery">
         <div class="pd-main-wrap">
-          <img class="pd-main" src="{root}img/catalog/{b['id']}.jpg?v=3"
+          <img class="pd-main" src="{root}img/catalog/{b['id']}.jpg?v=4"
             alt="{name} к тротуарной плитке" width="640" height="480">
         </div>
       </div>

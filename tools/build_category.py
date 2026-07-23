@@ -15,11 +15,15 @@
 
 import html
 import json
+import re
 from pathlib import Path
 from urllib.parse import quote
 
 BASE = Path("/Users/dm/Desktop/сайт")
 DATA = json.loads((BASE / "data" / "catalog.json").read_text())
+
+# Абсолютный адрес сайта — для JSON-LD (относительные пути из /tovar/ бьются)
+SITE_URL = "https://martinoneisha299-lang.github.io/stroy-sale/"
 
 COLOR_ORDER = ["красный", "коричневый", "персиковый", "бежевый", "серый",
                "графит", "микс (бавария)", "зелёный", "разное"]
@@ -91,7 +95,7 @@ COLLECTIONS = {
     },
     "palitra": {
         "name": "Палитра",
-        "tagline": "54 цвета — от белого до графита. Если ищете «тот самый» оттенок, он здесь.",
+        "tagline": "Самая широкая палитра оттенков — от абрикоса до тёмного шоколада. Если ищете «тот самый», он здесь.",
     },
     "klassika": {
         "name": "Классика",
@@ -189,13 +193,35 @@ def sort_key(p):
             FMT_RANK.get(p["format"], 9))
 
 
+def m2_price(p):
+    """≈ цена за м² кладки: цена/шт × расход шт/м² (паттерн Славдом/Кирпич.ру —
+    прораб сравнивает форматы без калькулятора). Округление до 10 ₽."""
+    if not p.get("price"):
+        return None
+    cons = p.get("consumption_per_m2")
+    if cons:
+        try:
+            cons = float(str(cons).replace(",", "."))
+        except ValueError:
+            cons = None
+    if not cons:
+        f = p.get("format") or ""
+        if "1,4НФ" in f:
+            cons = 39.2
+        elif "1НФ" in f or "0,7НФ" in f:
+            cons = 51.4
+    if not cons:
+        return None
+    return round(p["price"] * cons / 10) * 10
+
+
 def card(p, feat_hidden=None, root=""):
     """Карточка кирпича — вся карточка ссылка на страницу товара.
     feat_hidden: None — всегда видна (страница коллекции);
     True/False — лента категории, hidden если не featured."""
     alt = f"Кирпич «{p['name']}» — {p['color_group']}, {p['texture']}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="{root}img/catalog/{p["id"]}.jpg?v=7" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="{root}img/catalog/{p["id"]}.jpg?v=8" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -205,7 +231,9 @@ def card(p, feat_hidden=None, root=""):
                '<path d="M7 11h.01M12 11h.01M17 11h.01"/></svg>'
                '<span>Фото пришлём по запросу</span></div>')
     if p.get("price"):
-        price = f'<p class="p-price">{rub(p["price"])} ₽/шт</p>'
+        m2 = m2_price(p)
+        m2_html = f' <span class="p-m2">≈ {rub(m2)} ₽/м²</span>' if m2 else ""
+        price = f'<p class="p-price">{rub(p["price"])} ₽/шт{m2_html}</p>'
     else:
         price = '<span class="p-ask">Узнать цену</span>'
     hidden = " hidden" if feat_hidden else ""
@@ -284,10 +312,11 @@ def callbar(root=""):
 
 
 def promo_bar(root=""):
-    """Сезонное предложение: тонкая полоска над шапкой. data-until — дата
-    окончания; после неё полоска скрывается сама (скрипт в page_shell)."""
-    return (f'<a class="promo-bar" href="{root}plitka-staryy-gorod.html" data-until="2026-07-20">'
-            f'<b>−15%</b> на плитку «Старый город» — до 20 июля'
+    """Сезонное предложение: тонкая полоска над шапкой. Скрыта по умолчанию
+    (hidden) — скрипт в page_shell ПОКАЗЫВАЕТ её только до даты data-until,
+    так просроченная акция не мигает даже на медленной сети и не видна роботам."""
+    return (f'<a class="promo-bar" href="{root}plitka-staryy-gorod.html" data-until="2026-08-03" hidden>'
+            f'<b>−15%</b> на плитку «Старый город» — до 3 августа'
             f'<span class="promo-bar-go"> · Выбрать</span></a>')
 
 
@@ -315,7 +344,8 @@ def order_btns(root="", product=""):
         </div>"""
 
 
-# Скрипты каркаса: форма заявки (демо) + срок промо-полоски
+# Скрипты каркаса: форма заявки (приём заявок подключается по ТЗ: Telegram + amoCRM)
+# + промо-полоска (показывается только до даты data-until)
 SHELL_JS = """
   <script>
     (function () {
@@ -324,7 +354,14 @@ SHELL_JS = """
         f.addEventListener('submit', function (e) {
           e.preventDefault();
           var ph = document.getElementById('cfPhone');
-          if (!ph.value.trim()) { ph.focus(); return; }
+          var err = document.getElementById('ctaErr');
+          var digits = (ph.value.match(/\\d/g) || []).length;
+          if (digits < 10) {
+            if (err) { err.hidden = false; ph.setAttribute('aria-describedby', 'ctaErr'); }
+            ph.focus();
+            return;
+          }
+          if (err) err.hidden = true;
           f.hidden = true;
           document.getElementById('ctaOk').hidden = false;
         });
@@ -332,7 +369,7 @@ SHELL_JS = """
       var promo = document.querySelector('.promo-bar');
       if (promo && promo.dataset.until) {
         var end = new Date(promo.dataset.until + 'T23:59:59');
-        if (new Date() > end) promo.remove();
+        if (new Date() > end) { promo.remove(); } else { promo.hidden = false; }
       }
     })();
   </script>"""
@@ -352,7 +389,7 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=22">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=26">{extra_head}
 </head>
 <body>
 
@@ -403,11 +440,12 @@ def page_shell(title, descr, body, extra_js="", root="",
               <input id="cfPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
             </div>
             <button class="btn" type="submit">Оставить заявку</button>
+            <p class="form-err" id="ctaErr" hidden>Проверьте номер — в нём не хватает цифр.</p>
             <p class="caption form-note">Нажимая кнопку, вы соглашаетесь с
               <a href="{root}policy.html">политикой конфиденциальности</a>.
               Номер не передаём третьим лицам.</p>
           </form>
-          <p class="form-ok" id="ctaOk" hidden>Заявка принята — скоро перезвоним (демо)</p>
+          <p class="form-ok" id="ctaOk" role="status" hidden>Заявка принята — скоро перезвоним.</p>
         </div>
       </div>
     </div>
@@ -419,6 +457,7 @@ def page_shell(title, descr, body, extra_js="", root="",
       <a href="tel:+79000000000">+7 (900) 000-00-00</a>
       <span class="caption footer-addr">Краснодар, ул. Ореховая, 182</span>
       <span class="caption">Работаем с частными застройщиками, прорабами и бригадами</span>
+      <span class="caption">Цены на сайте не являются публичной офертой</span>
       <a class="footer-policy caption" href="{root}policy.html">Политика конфиденциальности</a>
     </div>
   </footer>
@@ -455,8 +494,9 @@ def swatch_link(label, dot_class, href, aria=""):
             f'<span class="sw-name">{label}</span></a>')
 
 
-def mosaic_tile(slug):
-    """Плитка-мозаика коллекции: 3 фото + «+N», подпись, кружки цветов, цена."""
+def mosaic_tile(slug, eager=False):
+    """Плитка-мозаика коллекции: 3 фото + «+N», подпись, кружки цветов, цена.
+    eager=True — для первой плитки страницы (LCP): без lazy, с приоритетом."""
     items, lo = coll_stats(slug)
     meta = COLLECTIONS[slug]
     items_sorted = sorted(items, key=sort_key)
@@ -472,9 +512,11 @@ def mosaic_tile(slug):
                 picks.append(p)
             if len(picks) == 3:
                 break
+    load_attr = ('loading="eager" fetchpriority="high"' if eager
+                 else 'loading="lazy"')
     cells = "\n".join(
-        f'          <span class="cell"><img src="img/catalog/{p["id"]}.jpg?v=7" '
-        f'alt="{esc(p["name"])}" width="640" height="480" loading="lazy"></span>'
+        f'          <span class="cell"><img src="img/catalog/{p["id"]}.jpg?v=8" '
+        f'alt="{esc(p["name"])}" width="640" height="480" {load_attr}></span>'
         for p in picks[:3])
 
     # кружки цветов: реальное фото первого товара цвета; тап = коллекция
@@ -493,7 +535,7 @@ def mosaic_tile(slug):
         dots.append(
             f'<a class="cdot" href="collection-{slug}.html?color={quote(color)}" '
             f'title="{esc(tip)}" aria-label="{esc(tip)}">'
-            f'<img src="img/catalog/{with_photo[0]["id"]}.jpg?v=7" alt="" '
+            f'<img src="img/catalog/cdot-{with_photo[0]["id"]}.jpg?v=8" alt="" '
             f'width="34" height="34" loading="lazy"></a>')
     nc = len(colors_here)
     dots_html = ""
@@ -502,22 +544,25 @@ def mosaic_tile(slug):
                      f'{"".join(dots)}'
                      f'<span class="cdot-tip">{nc} {plural(nc, "цвет", "цвета", "цветов")}</span></div>')
 
-    price_note = (f'<span class="price">от {rub(lo)} ₽/шт</span>' if lo
-                  else '<span class="price price-ask">цена по запросу</span>')
+    head_meta = (f"{n} {kinds} · от {rub(lo)} ₽/шт" if lo
+                 else f"{n} {kinds} · цена по запросу")
     return f"""
       <div class="tile">
+        <a class="t-head" href="collection-{slug}.html">
+          <h3>{esc(meta['name'])}</h3>
+          <span class="t-head-meta">{head_meta}</span>
+        </a>
         <a class="t-main" href="collection-{slug}.html" aria-label="Коллекция «{esc(meta['name'])}» — все {n} {kinds}">
           <span class="mosaic">
 {cells}
           <span class="more"><span class="plus">+{n - len(picks[:3])}</span><span class="all">все {n} {kinds}</span></span>
           </span>
           <div class="cap">
-            <h3>{esc(meta['name'])}</h3>
             <span class="desc">{esc(TILE_DESC[slug])}</span>
           </div>
         </a>{dots_html}
         <a class="t-meta" href="collection-{slug}.html" aria-label="Открыть коллекцию «{esc(meta['name'])}»">
-          <span class="cnt">{n} {kinds}</span>{price_note}{ARROW}
+          <span class="cnt">Смотреть все {n} {kinds}</span>{ARROW}
         </a>
       </div>"""
 
@@ -548,7 +593,7 @@ def build_category():
     # чипы бюджета — ссылки в коллекции (та же цель, что плитки: быстрый ход
     # с телефона, пока плитки ниже экрана)
     budget_chips = [f'<a class="budget-chip" href="kirpich-ves.html">Все '
-                    f'<small>{total} видов</small></a>']
+                    f'<small>{total} {plural(total, "вид", "вида", "видов")}</small></a>']
     for slug in lane_order:
         items, lo = coll_stats(slug)
         meta = COLLECTIONS[slug]
@@ -557,7 +602,8 @@ def build_category():
             f'<a class="budget-chip" href="collection-{slug}.html">'
             f'{esc(meta["name"])} {tail}</a>')
 
-    tiles = [mosaic_tile(slug) for slug in lane_order]
+    tiles = [mosaic_tile(slug, eager=(i == 0))
+             for i, slug in enumerate(lane_order)]
     tiles.append(f"""
       <a class="tile-all" href="kirpich-ves.html">
         <span class="t-eyebrow">Не хочется выбирать коллекцию?</span>
@@ -573,7 +619,7 @@ def build_category():
         <nav class="crumbs" aria-label="Вы здесь"><a href="index.html">Главная</a>
           <span aria-hidden="true">/</span> <span>Облицовочный кирпич</span></nav>
         <h1>Облицовочный кирпич</h1>
-        <p class="page-sub">{total} видов, от {rub(all_min)} ₽/шт. Доставка на объект, оплата при получении.</p>
+        <p class="page-sub">Купить облицовочный кирпич в Краснодаре: {total} {plural(total, "вид", "вида", "видов")} от {rub(all_min)} ₽/шт с заводов Юга. Доставка на объект, оплата при получении.</p>
       </div>
     </section>
 
@@ -590,6 +636,11 @@ def build_category():
             {"".join(budget_chips)}
           </div>
         </div>
+        <p class="caption often">Часто ищут:
+          <a href="kirpich-ves.html?color={quote("микс (бавария)")}">баварская кладка</a> ·
+          <a href="kirpich-ves.html?color={quote("графит")}">графит</a> ·
+          <a href="kirpich-ves.html?color={quote("бежевый")}">слоновая кость</a> ·
+          <a href="kirpich-ves.html?color={quote("красный")}">красный</a></p>
       </div>
     </section>
 
@@ -604,6 +655,11 @@ def build_category():
          шов 10 мм); 1,4НФ — по габаритам ГОСТ из тех же спеков -->
     <section class="section" id="calc" aria-label="Калькулятор кирпича">
       <div class="wrap">
+        <div class="section-head">
+          <span class="tag">Калькулятор</span>
+          <h2>Сколько кирпича понадобится?</h2>
+          <p class="caption">Введите площадь стен — посчитаем количество со&nbsp;складским запасом.</p>
+        </div>
         <div class="line-calc" id="calcContainer">
           <div class="line-calc-wrap">
             <label class="line-calc-group" for="cWall">
@@ -682,7 +738,7 @@ def build_category():
 
     out = page_shell(
         "Облицовочный кирпич — 5 коллекций, подбор по цвету | Строй-Сейл Краснодар",
-        f"Облицовочный кирпич в Краснодаре: {total} видов, от {rub(all_min)} ₽/шт. "
+        f"Купить облицовочный кирпич в Краснодаре: {total} {plural(total, 'вид', 'вида', 'видов')} от {rub(all_min)} ₽/шт с заводов Юга. "
         "Подбор по цвету, доставка на объект, оплата при получении.",
         body, js)
     (BASE / "kirpich-oblitsovochnyy.html").write_text(out)
@@ -1132,7 +1188,7 @@ def card_z(p):
     name, meta, tasks = rab_view(p)
     alt = f"Забутовочный кирпич: {name}"
     if p["_thumb"]:
-        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=7" alt="{esc(alt)}" '
+        img = (f'<img class="p-img" src="img/catalog/{p["id"]}.jpg?v=8" alt="{esc(alt)}" '
                f'width="640" height="480" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -1180,9 +1236,9 @@ def build_zabutovka():
         <nav class="crumbs" aria-label="Вы здесь"><a href="index.html">Главная</a>
           <span aria-hidden="true">/</span> <span>Забутовочный кирпич</span></nav>
         <h1>Забутовочный кирпич</h1>
-        <p class="page-sub">Рабочий кирпич, который прячется под облицовкой
-          и штукатуркой. Главное в нём — марка прочности, а не красота.
-          {n} видов, с заводов Юга.</p>
+        <p class="page-sub">Купить забутовочный кирпич в Краснодаре — {n} {plural(n, "вид", "вида", "видов")} с заводов Юга.
+          Рабочий кирпич, который прячется под облицовкой и штукатуркой:
+          главное в нём — марка прочности, а не красота.</p>
       </div>
     </section>
 
@@ -1253,7 +1309,7 @@ def build_zabutovka():
 
     out = page_shell(
         f"Забутовочный кирпич — подбор по задаче | Строй-Сейл Краснодар",
-        f"Забутовочный (рабочий) кирпич в Краснодаре: {n} видов под фундамент, "
+        f"Купить забутовочный (рабочий) кирпич в Краснодаре: {n} {plural(n, 'вид', 'вида', 'видов')} под фундамент, "
         "стены и перегородки. Доставка на объект, оплата при получении.",
         body, js)
     (BASE / "kirpich-zabutovochnyy.html").write_text(out)
@@ -1283,7 +1339,10 @@ def brick_specs_rows(p):
     """Характеристики простым языком: только то, что есть в данных."""
     sp = p.get("specs") or {}
     fmt = FMT_SHORT.get(p["format"], p["format"])
-    size = sp.get("Габариты", "").replace(" см", "").replace("х", "×").strip()
+    # срезаем любую единицу из данных (у Донских « см», у Губских « мм») —
+    # « мм» дописывается ниже один раз; латинскую x приводим к «×»
+    size = re.sub(r"\s*(мм|см)\s*$", "", sp.get("Габариты", "").strip())
+    size = size.replace("х", "×").replace("x", "×").strip()
     if not size:
         size = FMT_MM.get(p["format"], "")
     rows = []
@@ -1304,8 +1363,10 @@ def brick_specs_rows(p):
         w = str(w).strip()
         if w.lower().startswith("кг"):  # у поставщика «кг 2,6-2,7»
             w = w[2:].strip() + " кг"
-        w = w.replace("-", "–")
-        rows.append(("Вес штуки", w))
+        w = w.replace("-", "–").replace(".", ",")
+        # у 16 товаров «Европы» в данных обрезок «упаковки» — мусор без цифр не выводим
+        if any(ch.isdigit() for ch in w):
+            rows.append(("Вес штуки", w))
     cons = p.get("consumption_per_m2")
     if cons:
         rows.append(("Расход", f"{str(cons).replace('.', ',')} шт на 1 м² кладки"))
@@ -1349,7 +1410,8 @@ GALLERY_JS = """
       
       // Смена изображений с плавным затуханием (fade)
       function switchMain(src, activeThumb) {
-        if (main.src === src) return;
+        // сравниваем абсолютные URL: main.src всегда абсолютный, data-src — относительный
+        if (main.src === new URL(src, location.href).href) return;
         main.classList.add('is-fading');
         setTimeout(function() {
           main.src = src;
@@ -1527,9 +1589,25 @@ def build_brick_product(p, is_rab=False):
                  '<path d="M7 11h.01M12 11h.01M17 11h.01"/></svg>'
                  '<span>Пришлём живые фото в мессенджер — напишите нам</span></div>')
 
-    # цена: базовая + цены форматов, либо «по запросу»
-    if p.get("price"):
-        price_html = f'<p class="pd-price">{rub(p["price"])} ₽<span class="pd-price-unit">/шт</span></p>'
+    # Честный дисклеймер + действие (паттерн Randers/Wienerberger: наш аналог
+    # «заказать образец» — живые фото в WhatsApp). Только у товаров с фото.
+    if p["_thumb"]:
+        wa_tone = ("https://wa.me/79000000000?text=" + quote(
+            f"Здравствуйте! Пришлите живые фото кирпича «{disp_name}» (пишу с сайта Строй-Сейл)"))
+        tone_note = (f'<p class="caption pd-tone-note">Оттенок на экране может отличаться — '
+                     f'<a href="{wa_tone}" target="_blank" rel="noopener">пришлём живые фото и видео в WhatsApp</a>.</p>')
+    else:
+        tone_note = ""
+
+    # цена: базовая + цены форматов, либо «по запросу».
+    # Забутовка (is_rab): цены скрыты по решению пользователя до нового прайса —
+    # каталог показывает «Узнать цену», карточка не должна их светить.
+    if p.get("price") and not is_rab:
+        m2 = m2_price(p)
+        m2_line = (f'<p class="caption pd-m2">≈ {rub(m2)} ₽ за м² кладки</p>'
+                   if m2 else "")
+        price_html = (f'<p class="pd-price">{rub(p["price"])} ₽<span class="pd-price-unit">/шт</span></p>'
+                      + m2_line)
         fmts = p.get("formats_prices") or {}
         fmt_lines = []
         for f_name, f_price in fmts.items():
@@ -1604,6 +1682,7 @@ def build_brick_product(p, is_rab=False):
     <div class="wrap pd-grid">
       <div class="pd-gallery">
         {photo}
+        {tone_note}
       </div>
       <div class="pd-info">
         <p class="tag">{title_kind}</p>
@@ -1628,15 +1707,16 @@ def build_brick_product(p, is_rab=False):
         "description": f"{title_kind} «{disp_name}». {use_note}",
     }
     if p["_thumb"]:
-        ld["image"] = f"img/catalog/{p['id']}.jpg"
-    if p.get("price"):
+        ld["image"] = f"{SITE_URL}img/catalog/{p['id']}.jpg"
+    if p.get("price") and not is_rab:
         ld["offers"] = {"@type": "Offer", "priceCurrency": "RUB",
                         "price": p["price"],
                         "availability": "https://schema.org/InStock"}
     extra_head = ('\n  <script type="application/ld+json">'
                   + json.dumps(ld, ensure_ascii=False) + "</script>")
 
-    price_str = f"{rub(p['price'])} ₽/шт" if p.get("price") else "цена по запросу"
+    price_str = (f"{rub(p['price'])} ₽/шт"
+                 if p.get("price") and not is_rab else "цена по запросу")
     out = page_shell(
         f"{title_kind} «{disp_name}» — {price_str} | Строй-Сейл Краснодар",
         f"{title_kind} «{disp_name}»: {price_str}. {use_note} "

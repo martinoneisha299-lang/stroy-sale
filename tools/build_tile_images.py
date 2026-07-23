@@ -26,7 +26,7 @@ PLITKA.mkdir(parents=True, exist_ok=True)
 DATA = json.loads((SITE / "data" / "tiles.json").read_text())
 
 
-def save(img, dst, q=92):
+def save(img, dst, q=80):
     img.save(dst, "JPEG", quality=q, optimize=True, progressive=True)
 
 
