@@ -26,6 +26,7 @@
   --color-paper-dim: oklch(60% 0.01 80);   /* линии и плейсхолдеры на тёмном */
   --color-paper-mute: oklch(65% 0.008 80); /* мелкий текст на тёмном */
   --color-amber-soft: oklch(78% 0.1 45);   /* тёплый акцент на тёмном (промо, фокус) */
+  --color-amber: oklch(87% 0.1 58);        /* яркий янтарь поверх фотографии (шапка-обложка) */
   --color-wa-hover: oklch(60% 0.16 155);
   --color-tg-hover: oklch(58% 0.13 240);
   --color-max-hover: oklch(44% 0.26 275);

@@ -1,12 +1,22 @@
 # -*- coding: utf-8 -*-
-"""Шапка-кинолента категории — общая для build_tiles / build_category / build_roof.
+"""Шапка-обложка категории — общая для build_tiles / build_category / build_roof.
 
-Тёмная лента = шапка категории: сверху статичная строка (крошки, h1
-с терракотовым «кирпичиком», живые цифры), ниже крутятся акции.
-Механика: автолистание 5 с, пауза при наведении/касании, свайп на телефоне,
-стрелки на десктопе, слайд с истёкшей data-until исчезает сам (как промо-полоса).
-ВАЖНО: на страницах с лентой промо-полосу .promo-bar не выводим (promo=False
-в page_shell) — две акции друг над другом спорят.
+Макет «Обложка» (выбран пользователем 24.07.2026 из четырёх): фотография
+во всю ширину без полей и скруглений, поверх неё — строка возврата
+«← Каталог», имя категории и живые цифры; снизу — акция (этикетка,
+заголовок, кнопка). Кадры сами меняются каждые 4 секунды, активный
+медленно наезжает; под фото — полоска кирпичиков-прогресса.
+
+Почему так: фотография и есть шапка (ДНК сайта — Petersen/Fireclay),
+имя категории не тратит отдельную высоту, надпись читается за счёт
+скрима сверху и снизу. Прежний «кирпичик» у h1 заменён на стрелку
+возврата: это кнопка, а не украшение.
+
+Механика: автолистание 4 с (и на телефоне тоже), пауза при наведении,
+фокусе и уходе вкладки в фон, свайп пальцем, стрелки и счётчик на
+десктопе, слайд с истёкшей data-until исчезает сам (как промо-полоса).
+ВАЖНО: на страницах с обложкой промо-полосу .promo-bar не выводим
+(promo=False в page_shell) — две акции друг над другом спорят.
 
 Слайд — dict: eyebrow, title (HTML, акцент в <b>), sub, cta, href, img,
 опционально until="ГГГГ-ММ-ДД".
@@ -18,50 +28,65 @@ ARR_PREV = ('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" '
 ARR_NEXT = ('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" '
             'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
             'stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>')
+ARR_BACK = ('<svg width="17" height="17" viewBox="0 0 24 24" fill="none" '
+            'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+            'stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>')
 
 
-def _slide(s, first, root=""):
-    until = f' data-until="{s["until"]}"' if s.get("until") else ""
-    sub = f'\n              <p class="pbH-sub">{s["sub"]}</p>' if s.get("sub") else ""
-    # первый слайд — LCP страницы: качаем сразу и с приоритетом
+def _frame(s, first, root=""):
+    """Кадр — только фотография с вуалью. Лежит под строкой категории."""
+    # первый кадр — LCP страницы: качаем сразу и с приоритетом
     load = ('loading="eager" fetchpriority="high"' if first else 'loading="lazy"')
     return f"""
-          <a class="pb-slide" href="{s['href']}"{until}>
-            <div class="pbH-copy">
-              <p class="pbH-eyebrow">{s['eyebrow']}</p>
-              <p class="pbH-title">{s['title']}</p>{sub}
-              <span class="pbH-go">{s['cta']}</span>
-            </div>
-            <div class="pbH-media"><img src="{root}{s['img']}" alt="" {load}></div>
-          </a>"""
+        <div class="pb-frame">
+          <img class="pb-photo" src="{root}{s['img']}" alt="" {load}>
+          <div class="pb-veil"></div>
+        </div>"""
+
+
+def _slide(s):
+    """Текст акции. Живёт во втором ряду сетки — под строкой категории,
+    поэтому надписи не могут наехать друг на друга ни при каком шрифте."""
+    until = f' data-until="{s["until"]}"' if s.get("until") else ""
+    sub = f'\n            <p class="pb-sub">{s["sub"]}</p>' if s.get("sub") else ""
+    return f"""
+        <a class="pb-slide" href="{s['href']}"{until}><span class="wrap">
+            <span class="pb-eyebrow">{s['eyebrow']}</span>
+            <span class="pb-title">{s['title']}</span>{sub}
+            <span class="pb-go">{s['cta']}</span>
+        </span></a>"""
 
 
 def banner(h1, facts, slides, root="", crumb=None):
-    """Лента-шапка категории. h1 — имя категории (HTML), facts — строка
+    """Шапка-обложка категории. h1 — имя категории (HTML), facts — строка
     цифр (HTML, акцент в <b>), slides — список слайдов-акций."""
     crumb = crumb or h1
-    slides_html = "".join(_slide(s, i == 0, root) for i, s in enumerate(slides))
+    frames_html = "".join(_frame(s, i == 0, root) for i, s in enumerate(slides))
+    slides_html = "".join(_slide(s) for s in slides)
     return f"""
-  <!-- Шапка-кинолента: имя категории статично, акции крутятся (BANNER_JS) -->
-  <section class="pb pbH" aria-label="{crumb} — акции и предложения">
-    <div class="pbH-top">
-      <div class="wrap">
-        <div class="pbH-name">
-          <nav class="pbH-crumbs" aria-label="Хлебные крошки"><a href="{root}index.html">Главная</a> / {crumb}</nav>
+  <!-- Шапка-обложка: фото во всю ширину, акции сменяют друг друга (BANNER_JS) -->
+  <section class="pb" aria-label="{crumb} — акции и предложения">
+    <div class="pb-stage">
+      <div class="pb-stack">{frames_html}
+      </div>
+
+      <div class="pb-head">
+        <div class="wrap">
+          <nav aria-label="Хлебные крошки">
+            <a class="pb-back" href="{root}index.html#catalog">{ARR_BACK}Каталог</a>
+          </nav>
           <h1>{h1}</h1>
+          <p class="pb-facts">{facts}</p>
         </div>
-        <p class="pbH-facts">{facts}</p>
+      </div>
+
+      <div class="pb-deck">{slides_html}
       </div>
     </div>
 
-    <div class="wrap">
-      <div class="pb-stack">{slides_html}
-      </div>
-    </div>
-
-    <div class="pbH-ui">
+    <div class="pb-ui">
       <div class="wrap">
-        <div class="pb-dots" role="tablist" aria-label="Переключение акций"></div>
+        <div class="pb-dots" aria-label="Переключение акций"></div>
         <span class="pb-count">01 / 0{len(slides)}</span>
         <button class="pb-arr pb-prev" type="button" aria-label="Предыдущая акция">{ARR_PREV}</button>
         <button class="pb-arr pb-next" type="button" aria-label="Следующая акция">{ARR_NEXT}</button>
@@ -73,51 +98,61 @@ def banner(h1, facts, slides, root="", crumb=None):
 BANNER_JS = """
   <script>
     (function () {
-      // Два режима (разведка WB/Ozon/ЯМаркет + Baymard):
-      // десктоп — fade на месте с автолистанием 5 с (пауза при наведении);
-      // мобайл — полка-карусель со scroll-snap, БЕЗ автолистания (на таче
-      // слайд уезжает из-под пальца), точки синхронятся со скроллом.
-      var DUR = 5000;
+      // Обложка категории: кадры меняются сами каждые 4 с — и на телефоне
+      // тоже (просьба заказчика). Пауза при наведении, фокусе и когда
+      // вкладка ушла в фон; палец листает свайпом. DUR держать равным
+      // --pb-dur в styles.css — по нему заливается кирпичик-прогресс.
+      var DUR = 4000;
       var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var mq = matchMedia('(max-width: 45em)');
 
       document.querySelectorAll('.pb').forEach(function (root) {
-        var now = new Date();
-        root.querySelectorAll('.pb-slide[data-until]').forEach(function (s) {
-          if (new Date(s.dataset.until + 'T23:59:59') < now) s.remove();
-        });
         var stack = root.querySelector('.pb-stack');
+        var frames = Array.prototype.slice.call(root.querySelectorAll('.pb-frame'));
         var slides = Array.prototype.slice.call(root.querySelectorAll('.pb-slide'));
         var dotsWrap = root.querySelector('.pb-dots');
         var counter = root.querySelector('.pb-count');
-        var ui = root.querySelector('.pbH-ui');
-        if (!slides.length) { stack.hidden = true; if (ui) ui.hidden = true; return; }
-        if (slides.length === 1) { slides[0].classList.add('is-on'); if (ui) ui.hidden = true; return; }
+        var ui = root.querySelector('.pb-ui');
+
+        // акция с истёкшей датой убирается сама — вместе со своим кадром
+        var now = new Date();
+        for (var k = slides.length - 1; k >= 0; k--) {
+          var till = slides[k].dataset.until;
+          if (till && new Date(till + 'T23:59:59') < now) {
+            slides[k].remove(); if (frames[k]) frames[k].remove();
+            slides.splice(k, 1); frames.splice(k, 1);
+          }
+        }
+
+        if (!slides.length) { if (stack) stack.hidden = true; if (ui) ui.hidden = true; return; }
+        slides[0].classList.add('is-on');
+        if (frames[0]) frames[0].classList.add('is-on');
+        if (slides.length === 1) { if (ui) ui.hidden = true; return; }
 
         var i = 0, timer = null;
         var dots = slides.map(function (_, n) {
           var b = document.createElement('button');
           b.type = 'button'; b.className = 'pb-dot';
           b.setAttribute('aria-label', 'Акция ' + (n + 1) + ' из ' + slides.length);
-          b.addEventListener('click', function () {
-            if (mq.matches) {
-              slides[n].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-            } else { go(n); start(); }
-          });
+          b.addEventListener('click', function () { go(n); start(); });
           dotsWrap.appendChild(b);
           return b;
         });
 
         function pad(n) { return (n < 10 ? '0' : '') + n; }
-        function mark(n) {
+        function go(n) {
           slides[i].classList.remove('is-on'); dots[i].classList.remove('is-on');
+          if (frames[i]) frames[i].classList.remove('is-on');
           i = (n + slides.length) % slides.length;
-          slides[i].classList.add('is-on'); dots[i].classList.add('is-on');
+          slides[i].classList.add('is-on');
+          if (frames[i]) frames[i].classList.add('is-on');
+          // перезапуск заливки полоски: снять класс, дать браузеру
+          // пересчитать элемент, вернуть — иначе анимация не стартует заново
+          void dots[i].offsetWidth;
+          dots[i].classList.add('is-on');
           if (counter) counter.textContent = pad(i + 1) + ' / ' + pad(slides.length);
         }
-        function go(n) { mark(n); }
         function start() {
-          if (reduced || mq.matches) return;
+          if (reduced) return;
           stop(); timer = setInterval(function () { go(i + 1); }, DUR);
           root.classList.add('is-play');
         }
@@ -133,31 +168,25 @@ BANNER_JS = """
         root.addEventListener('focusout', start);
         document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
 
-        // мобайл: активная точка = карта, ближайшая к центру видимой области
-        // (троттлинг на setTimeout, не rAF — rAF замирает в вебвью/фоне)
-        var pending = null;
-        stack.addEventListener('scroll', function () {
-          if (!mq.matches || pending) return;
-          pending = setTimeout(function () {
-            pending = null;
-            var pad0 = parseFloat(getComputedStyle(stack).paddingLeft) || 0;
-            var base = slides[0].offsetLeft;
-            var mid = stack.scrollLeft + stack.clientWidth / 2;
-            var best = 0, bd = Infinity;
-            slides.forEach(function (s, n) {
-              var c = s.offsetLeft - base + pad0 + s.offsetWidth / 2;
-              var d = Math.abs(c - mid);
-              if (d < bd) { bd = d; best = n; }
-            });
-            if (best !== i) mark(best);
-          }, 120);
+        // свайп пальцем: горизонтальный жест листает, вертикальный — скролл
+        var stage = root.querySelector('.pb-stage');
+        var x0 = null, y0 = null;
+        stage.addEventListener('touchstart', function (e) {
+          x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; stop();
         }, { passive: true });
-
-        mq.addEventListener('change', function () {
-          if (mq.matches) { stop(); } else { start(); }
+        stage.addEventListener('touchend', function (e) {
+          if (x0 === null) return;
+          var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+            e.preventDefault();
+            go(i + (dx < 0 ? 1 : -1));
+          }
+          x0 = null; start();
         });
 
-        mark(0); start();
+        dots[0].classList.add('is-on');
+        if (counter) counter.textContent = '01 / ' + pad(slides.length);
+        start();
       });
     })();
   </script>"""

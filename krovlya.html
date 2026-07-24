@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=33">
+  <link rel="stylesheet" href="styles.css?v=34">
 </head>
 <body>
 
@@ -35,62 +35,69 @@
 
 
 
-  <!-- Шапка-кинолента: имя категории статично, акции крутятся (BANNER_JS) -->
-  <section class="pb pbH" aria-label="Кровля — акции и предложения">
-    <div class="pbH-top">
-      <div class="wrap">
-        <div class="pbH-name">
-          <nav class="pbH-crumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a> / Кровля</nav>
-          <h1>Кровля: металлочерепица и&nbsp;профнастил</h1>
-        </div>
-        <p class="pbH-facts"><b>лист до 8 м</b> · 40 цветов · гарантия до 15 лет</p>
-      </div>
-    </div>
-
-    <div class="wrap">
+  <!-- Шапка-обложка: фото во всю ширину, акции сменяют друг друга (BANNER_JS) -->
+  <section class="pb" aria-label="Кровля — акции и предложения">
+    <div class="pb-stage">
       <div class="pb-stack">
-          <a class="pb-slide" href="#calc">
-            <div class="pbH-copy">
-              <p class="pbH-eyebrow">Расчёт</p>
-              <p class="pbH-title">Посчитаем крышу по размерам <b>за 10 минут</b></p>
-              <p class="pbH-sub">Раскрой листов до 8 м без стыков, доборные и цена с доставкой.</p>
-              <span class="pbH-go">Посчитать крышу</span>
-            </div>
-            <div class="pbH-media"><img src="img/roof/hero-roof.jpg?v=4" alt="" loading="eager" fetchpriority="high"></div>
-          </a>
-          <a class="pb-slide" href="krovlya-metallocherepitsa.html">
-            <div class="pbH-copy">
-              <p class="pbH-eyebrow">Металлочерепица</p>
-              <p class="pbH-title">Гарантия на покрытие <b>до 15 лет</b></p>
-              <p class="pbH-sub">Супермонтеррей и Испанская дюна — с завода, режем в размер.</p>
-              <span class="pbH-go">Выбрать черепицу</span>
-            </div>
-            <div class="pbH-media"><img src="img/roof/cover-mch-monterrey.jpg?v=4" alt="" loading="lazy"></div>
-          </a>
-          <a class="pb-slide" href="#tsveta">
-            <div class="pbH-copy">
-              <p class="pbH-eyebrow">Один цвет — на всё</p>
-              <p class="pbH-title"><b>40 цветов</b>: кровля, забор и фасад в тон</p>
-              <p class="pbH-sub">Полиэстер, Granite и Printech — покрытие общее для всех материалов.</p>
-              <span class="pbH-go">Смотреть цвета</span>
-            </div>
-            <div class="pbH-media"><img src="img/roof/printech-live-1.jpg?v=4" alt="" loading="lazy"></div>
-          </a>
-          <a class="pb-slide" href="#lead">
-            <div class="pbH-copy">
-              <p class="pbH-eyebrow">Доставка</p>
-              <p class="pbH-title">Доставим на объект — <b>оплата при получении</b></p>
-              <p class="pbH-sub">Листы до 8 м возим аккуратно, разгрузка на месте.</p>
-              <span class="pbH-go">Как заказать</span>
-            </div>
-            <div class="pbH-media"><img src="img/roof/cover-cat-prof.jpg?v=4" alt="" loading="lazy"></div>
-          </a>
+        <div class="pb-frame">
+          <img class="pb-photo" src="img/roof/hero-roof.jpg?v=4" alt="" loading="eager" fetchpriority="high">
+          <div class="pb-veil"></div>
+        </div>
+        <div class="pb-frame">
+          <img class="pb-photo" src="img/roof/cover-mch-monterrey.jpg?v=4" alt="" loading="lazy">
+          <div class="pb-veil"></div>
+        </div>
+        <div class="pb-frame">
+          <img class="pb-photo" src="img/roof/printech-live-1.jpg?v=4" alt="" loading="lazy">
+          <div class="pb-veil"></div>
+        </div>
+        <div class="pb-frame">
+          <img class="pb-photo" src="img/roof/cover-cat-prof.jpg?v=4" alt="" loading="lazy">
+          <div class="pb-veil"></div>
+        </div>
+      </div>
+
+      <div class="pb-head">
+        <div class="wrap">
+          <nav aria-label="Хлебные крошки">
+            <a class="pb-back" href="index.html#catalog"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Каталог</a>
+          </nav>
+          <h1>Кровля: металлочерепица и&nbsp;профнастил</h1>
+          <p class="pb-facts"><b>лист до 8 м</b> · 40 цветов · гарантия до 15 лет</p>
+        </div>
+      </div>
+
+      <div class="pb-deck">
+        <a class="pb-slide" href="#calc"><span class="wrap">
+            <span class="pb-eyebrow">Расчёт</span>
+            <span class="pb-title">Посчитаем крышу по размерам <b>за 10 минут</b></span>
+            <p class="pb-sub">Раскрой листов до 8 м без стыков, доборные и цена с доставкой.</p>
+            <span class="pb-go">Посчитать крышу</span>
+        </span></a>
+        <a class="pb-slide" href="krovlya-metallocherepitsa.html"><span class="wrap">
+            <span class="pb-eyebrow">Металлочерепица</span>
+            <span class="pb-title">Гарантия на покрытие <b>до 15 лет</b></span>
+            <p class="pb-sub">Супермонтеррей и Испанская дюна — с завода, режем в размер.</p>
+            <span class="pb-go">Выбрать черепицу</span>
+        </span></a>
+        <a class="pb-slide" href="#tsveta"><span class="wrap">
+            <span class="pb-eyebrow">Один цвет — на всё</span>
+            <span class="pb-title"><b>40 цветов</b>: кровля, забор и фасад в тон</span>
+            <p class="pb-sub">Полиэстер, Granite и Printech — покрытие общее для всех материалов.</p>
+            <span class="pb-go">Смотреть цвета</span>
+        </span></a>
+        <a class="pb-slide" href="#lead"><span class="wrap">
+            <span class="pb-eyebrow">Доставка</span>
+            <span class="pb-title">Доставим на объект — <b>оплата при получении</b></span>
+            <p class="pb-sub">Листы до 8 м возим аккуратно, разгрузка на месте.</p>
+            <span class="pb-go">Как заказать</span>
+        </span></a>
       </div>
     </div>
 
-    <div class="pbH-ui">
+    <div class="pb-ui">
       <div class="wrap">
-        <div class="pb-dots" role="tablist" aria-label="Переключение акций"></div>
+        <div class="pb-dots" aria-label="Переключение акций"></div>
         <span class="pb-count">01 / 04</span>
         <button class="pb-arr pb-prev" type="button" aria-label="Предыдущая акция"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
         <button class="pb-arr pb-next" type="button" aria-label="Следующая акция"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -295,51 +302,61 @@
   </script>
   <script>
     (function () {
-      // Два режима (разведка WB/Ozon/ЯМаркет + Baymard):
-      // десктоп — fade на месте с автолистанием 5 с (пауза при наведении);
-      // мобайл — полка-карусель со scroll-snap, БЕЗ автолистания (на таче
-      // слайд уезжает из-под пальца), точки синхронятся со скроллом.
-      var DUR = 5000;
+      // Обложка категории: кадры меняются сами каждые 4 с — и на телефоне
+      // тоже (просьба заказчика). Пауза при наведении, фокусе и когда
+      // вкладка ушла в фон; палец листает свайпом. DUR держать равным
+      // --pb-dur в styles.css — по нему заливается кирпичик-прогресс.
+      var DUR = 4000;
       var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var mq = matchMedia('(max-width: 45em)');
 
       document.querySelectorAll('.pb').forEach(function (root) {
-        var now = new Date();
-        root.querySelectorAll('.pb-slide[data-until]').forEach(function (s) {
-          if (new Date(s.dataset.until + 'T23:59:59') < now) s.remove();
-        });
         var stack = root.querySelector('.pb-stack');
+        var frames = Array.prototype.slice.call(root.querySelectorAll('.pb-frame'));
         var slides = Array.prototype.slice.call(root.querySelectorAll('.pb-slide'));
         var dotsWrap = root.querySelector('.pb-dots');
         var counter = root.querySelector('.pb-count');
-        var ui = root.querySelector('.pbH-ui');
-        if (!slides.length) { stack.hidden = true; if (ui) ui.hidden = true; return; }
-        if (slides.length === 1) { slides[0].classList.add('is-on'); if (ui) ui.hidden = true; return; }
+        var ui = root.querySelector('.pb-ui');
+
+        // акция с истёкшей датой убирается сама — вместе со своим кадром
+        var now = new Date();
+        for (var k = slides.length - 1; k >= 0; k--) {
+          var till = slides[k].dataset.until;
+          if (till && new Date(till + 'T23:59:59') < now) {
+            slides[k].remove(); if (frames[k]) frames[k].remove();
+            slides.splice(k, 1); frames.splice(k, 1);
+          }
+        }
+
+        if (!slides.length) { if (stack) stack.hidden = true; if (ui) ui.hidden = true; return; }
+        slides[0].classList.add('is-on');
+        if (frames[0]) frames[0].classList.add('is-on');
+        if (slides.length === 1) { if (ui) ui.hidden = true; return; }
 
         var i = 0, timer = null;
         var dots = slides.map(function (_, n) {
           var b = document.createElement('button');
           b.type = 'button'; b.className = 'pb-dot';
           b.setAttribute('aria-label', 'Акция ' + (n + 1) + ' из ' + slides.length);
-          b.addEventListener('click', function () {
-            if (mq.matches) {
-              slides[n].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-            } else { go(n); start(); }
-          });
+          b.addEventListener('click', function () { go(n); start(); });
           dotsWrap.appendChild(b);
           return b;
         });
 
         function pad(n) { return (n < 10 ? '0' : '') + n; }
-        function mark(n) {
+        function go(n) {
           slides[i].classList.remove('is-on'); dots[i].classList.remove('is-on');
+          if (frames[i]) frames[i].classList.remove('is-on');
           i = (n + slides.length) % slides.length;
-          slides[i].classList.add('is-on'); dots[i].classList.add('is-on');
+          slides[i].classList.add('is-on');
+          if (frames[i]) frames[i].classList.add('is-on');
+          // перезапуск заливки полоски: снять класс, дать браузеру
+          // пересчитать элемент, вернуть — иначе анимация не стартует заново
+          void dots[i].offsetWidth;
+          dots[i].classList.add('is-on');
           if (counter) counter.textContent = pad(i + 1) + ' / ' + pad(slides.length);
         }
-        function go(n) { mark(n); }
         function start() {
-          if (reduced || mq.matches) return;
+          if (reduced) return;
           stop(); timer = setInterval(function () { go(i + 1); }, DUR);
           root.classList.add('is-play');
         }
@@ -355,31 +372,25 @@
         root.addEventListener('focusout', start);
         document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
 
-        // мобайл: активная точка = карта, ближайшая к центру видимой области
-        // (троттлинг на setTimeout, не rAF — rAF замирает в вебвью/фоне)
-        var pending = null;
-        stack.addEventListener('scroll', function () {
-          if (!mq.matches || pending) return;
-          pending = setTimeout(function () {
-            pending = null;
-            var pad0 = parseFloat(getComputedStyle(stack).paddingLeft) || 0;
-            var base = slides[0].offsetLeft;
-            var mid = stack.scrollLeft + stack.clientWidth / 2;
-            var best = 0, bd = Infinity;
-            slides.forEach(function (s, n) {
-              var c = s.offsetLeft - base + pad0 + s.offsetWidth / 2;
-              var d = Math.abs(c - mid);
-              if (d < bd) { bd = d; best = n; }
-            });
-            if (best !== i) mark(best);
-          }, 120);
+        // свайп пальцем: горизонтальный жест листает, вертикальный — скролл
+        var stage = root.querySelector('.pb-stage');
+        var x0 = null, y0 = null;
+        stage.addEventListener('touchstart', function (e) {
+          x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; stop();
         }, { passive: true });
-
-        mq.addEventListener('change', function () {
-          if (mq.matches) { stop(); } else { start(); }
+        stage.addEventListener('touchend', function (e) {
+          if (x0 === null) return;
+          var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+            e.preventDefault();
+            go(i + (dx < 0 ? 1 : -1));
+          }
+          x0 = null; start();
         });
 
-        mark(0); start();
+        dots[0].classList.add('is-on');
+        if (counter) counter.textContent = '01 / ' + pad(slides.length);
+        start();
       });
     })();
   </script>
