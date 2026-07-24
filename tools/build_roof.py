@@ -25,6 +25,7 @@ from pathlib import Path
 
 import sys
 sys.path.insert(0, str(Path(__file__).parent))
+from nbsp import typo
 from banner_common import banner, BANNER_JS, SLIDE_SALE_TILE, SLIDE_DELIVERY
 
 BASE = Path("/Users/dm/Desktop/сайт")
@@ -726,7 +727,7 @@ def swatch_preview(pid, root=""):
     return (f'<a class="pd-swatches" href="#tsveta">'
             f'<span class="pd-sw-row">{dots}{more}</span>'
             f'<span class="pd-sw-label">{n} {plural(n, "цвет", "цвета", "цветов")} '
-            f'и рисунков — посмотреть все</span></a>')
+            f'и {plural(n, "рисунок", "рисунка", "рисунков")} — посмотреть все</span></a>')
 
 
 def card_colors(pid, root=""):
@@ -868,7 +869,7 @@ ROOF_CALC_JS = """
         var l = parseFloat(len.value), w = parseFloat(wid.value);
         if (!l || !w || l <= 0 || w <= 0) { area.textContent = '—'; return; }
         var k = parseFloat(typ.value);
-        area.textContent = Math.ceil(l * w * k) + ' м²';
+        area.textContent = Math.ceil(l * w * k) + '\u00A0м²';
       }
       len.addEventListener('input', recalc);
       wid.addEventListener('input', recalc);
@@ -1022,7 +1023,7 @@ def build_hub():
                  "количество доборных и цену с доставкой.",
         extra_js=ROOF_CALC_JS + BANNER_JS,
         product="кровля", promo=False)
-    (BASE / "krovlya.html").write_text(out)
+    (BASE / "krovlya.html").write_text(typo(out))
 
 
 # ─────────────────────────────── страницы семейств ─────────────────────
@@ -1082,7 +1083,7 @@ def build_family(f):
         cta_h2=f["cta_h2"],
         cta_note=f["cta_note"],
         product=f["title"].lower())
-    (BASE / f"krovlya-{slug}.html").write_text(out)
+    (BASE / f"krovlya-{slug}.html").write_text(typo(out))
 
 
 # ─────────────────────────────── товарные страницы ─────────────────────
@@ -1220,7 +1221,7 @@ def build_product(p):
         extra_js=GALLERY_JS, root=root,
         product=f"{p['kind'].lower()} «{p['name']}»",
         extra_head=extra_head)
-    (TOVAR / f"krovlya-{pid}.html").write_text(out)
+    (TOVAR / f"krovlya-{pid}.html").write_text(typo(out))
 
 
 build_hub()

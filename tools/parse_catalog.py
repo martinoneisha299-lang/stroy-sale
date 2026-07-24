@@ -189,13 +189,19 @@ def videos_in(d: Path):
 
 
 def nice_title(s: str) -> str:
-    """'ВИШНЯ "БЕРЕСТА"' → 'Вишня Береста'"""
+    """'ВИШНЯ "БЕРЕСТА"' → 'Вишня Береста'; 'Благодать Ретро Ретро' → 'Благодать Ретро'
+
+    Слово, повторённое подряд, — опечатка в исходных данных поставщика
+    (у Тандема так пришли «Благодать Ретро Ретро» и «Данилово Ретро Ретро»).
+    """
     s = re.sub(r'["«»„“”]', "", s)
     def cap(w):
         if any(ch.isdigit() for ch in w):   # 0,5WDF, MODF и т.п. — не трогаем регистр цифро-кодов
             return w.upper()
         return w if (len(w) <= 3 and w.isupper() and not w.isalpha()) else w.capitalize()
-    return " ".join(cap(w) for w in s.split())
+    words = [cap(w) for w in s.split()]
+    out = [w for i, w in enumerate(words) if i == 0 or w.lower() != words[i - 1].lower()]
+    return " ".join(out)
 
 
 def mark_of(raw: str) -> str:
@@ -684,6 +690,45 @@ for p in sorted(products, key=lambda x: (x["collection"] or "z-obychnyy",
     pref = (p["collection"] or "rab")[:3]
     counters[pref] = counters.get(pref, 0) + 1
     p["id"] = f"{pref}-{counters[pref]:03d}"
+
+# ─── Чистка «латиницы среди кириллицы» ───────────────────────────────────────
+# В данных заводов встречаются похожие латинские буквы: «Классик Еврo» (o
+# латинская), «M150» вместо «М150». На сайте это видно в имени товара и в
+# характеристиках, а поиск по сайту такие слова не находит.
+LAT2CYR = str.maketrans({
+    "A": "А", "B": "В", "C": "С", "E": "Е", "H": "Н", "K": "К", "M": "М",
+    "O": "О", "P": "Р", "T": "Т", "X": "Х",
+    "a": "а", "c": "с", "e": "е", "o": "о", "p": "р", "x": "х", "y": "у",
+})
+
+
+def fix_latin(s: str) -> str:
+    """«Классик Еврo» → «Классик Евро», «M150» → «М150». Чистая латиница (WDF,
+    RAL, F200) не трогается — правится только буквенный кусок, где латиница
+    смешана с кириллицей."""
+    def chunk(m):
+        w = m.group()
+        if re.search(r"[а-яё]", w, re.I) and re.search(r"[a-z]", w, re.I):
+            return w.translate(LAT2CYR)
+        return w
+    s = re.sub(r"[^\W\d_]+", chunk, s)          # буквенные куски слов
+    s = re.sub(r"\bM(?=\d{2,3}\b)", "М", s)     # марка прочности
+    # габариты одним видом: «250 × 120 × 65», «250x120x65», «250х120х65» → 250×120×65
+    return re.sub(r"(?<=\d)\s*[x×х]\s*(?=\d)", "×", s, flags=re.I)
+
+
+def clean_strings(o):
+    if isinstance(o, dict):
+        return {clean_strings(k): clean_strings(v) for k, v in o.items()}
+    if isinstance(o, list):
+        return [clean_strings(v) for v in o]
+    return fix_latin(o) if isinstance(o, str) else o
+
+
+for p in products:
+    keep = {k: p[k] for k in ("photos", "factory_name", "video") if k in p}
+    p.update(clean_strings({k: v for k, v in p.items() if k not in keep}))
+    p.update(keep)  # пути к файлам и заводское имя-путь оставляем как есть
 
 data = {
     "generated": str(date.today()),

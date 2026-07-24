@@ -21,6 +21,7 @@ from urllib.parse import quote
 
 import sys
 sys.path.insert(0, str(Path(__file__).parent))
+from nbsp import typo
 from banner_common import banner, BANNER_JS, SLIDE_SALE_TILE, SLIDE_NEW_BRICK, SLIDE_DELIVERY
 
 BASE = Path("/Users/dm/Desktop/сайт")
@@ -750,7 +751,7 @@ def build_category():
       var reserve = Math.ceil(rawQty * 0.05);
       var totalQty = Math.ceil((rawQty + reserve) / 10) * 10;
       
-      calcQty.textContent = totalQty.toLocaleString('ru-RU') + ' шт';
+      calcQty.textContent = totalQty.toLocaleString('ru-RU') + '\u00A0шт';
     }
 
     [cWall, cOpen, cFmt].forEach(function (el) {
@@ -767,7 +768,7 @@ def build_category():
         f"Купить облицовочный кирпич в Краснодаре: {total} {plural(total, 'вид', 'вида', 'видов')} от {rub(all_min)} ₽/шт с заводов Юга. "
         "Подбор по цвету, доставка на объект, оплата при получении.",
         body, js + BANNER_JS, promo=False)
-    (BASE / "kirpich-oblitsovochnyy.html").write_text(out)
+    (BASE / "kirpich-oblitsovochnyy.html").write_text(typo(out))
     print("kirpich-oblitsovochnyy.html:", total, "товаров")
 
 
@@ -949,7 +950,7 @@ def build_collection(slug):
       });
       var active = state.color || state.texture || state.format;
       note.textContent = active
-        ? 'Показано ' + shown + ' из ' + cards.length + ' ' + plural(cards.length, 'вида', 'видов', 'видов')
+        ? 'Показано\u00A0' + shown + ' из\u00A0' + cards.length + '\u00A0' + plural(cards.length, 'вида', 'видов', 'видов')
         : '';
       empty.hidden = shown !== 0;
     }
@@ -979,7 +980,7 @@ def build_collection(slug):
         f"Облицовочный кирпич «{meta['name']}» — {n} {kinds} | Строй-Сейл Краснодар",
         f"Коллекция «{meta['name']}»: {meta['tagline']} {n} {kinds}, {price_note}.",
         body, js)
-    (BASE / f"collection-{slug}.html").write_text(out)
+    (BASE / f"collection-{slug}.html").write_text(typo(out))
     print(f"collection-{slug}.html:", n, "товаров |", price_note)
 
 
@@ -1089,7 +1090,7 @@ def build_ves():
       });
       var active = state.color || state.coll || state.texture;
       note.textContent = active
-        ? 'Показано ' + shown + ' из ' + cards.length + ' ' + plural(cards.length, 'вида', 'видов', 'видов')
+        ? 'Показано\u00A0' + shown + ' из\u00A0' + cards.length + '\u00A0' + plural(cards.length, 'вида', 'видов', 'видов')
         : '';
       empty.hidden = shown !== 0;
     }
@@ -1125,7 +1126,7 @@ def build_ves():
         f"Весь облицовочный кирпич без деления на коллекции: {total} {kinds}, "
         f"от {rub(all_min)} ₽/шт. Фильтры по цвету, бюджету и фактуре.",
         body, js)
-    (BASE / "kirpich-ves.html").write_text(out)
+    (BASE / "kirpich-ves.html").write_text(typo(out))
     print(f"kirpich-ves.html: {total} товаров")
 
 
@@ -1324,7 +1325,7 @@ def build_zabutovka():
         total += shown;
       });
       note.textContent = task
-        ? 'Подходит ' + total + ' ' + plural(total, 'вид', 'вида', 'видов') + ':'
+        ? 'Подходит ' + total + '\u00A0' + plural(total, 'вид', 'вида', 'видов') + ':'
         : '';
     }
 
@@ -1344,7 +1345,7 @@ def build_zabutovka():
         f"Купить забутовочный (рабочий) кирпич в Краснодаре: {n} {plural(n, 'вид', 'вида', 'видов')} под фундамент, "
         "стены и перегородки. Доставка на объект, оплата при получении.",
         body, js + BANNER_JS, promo=False)
-    (BASE / "kirpich-zabutovochnyy.html").write_text(out)
+    (BASE / "kirpich-zabutovochnyy.html").write_text(typo(out))
     print(f"kirpich-zabutovochnyy.html: {n} товаров (цены скрыты)")
 
 
@@ -1758,7 +1759,7 @@ def build_brick_product(p, is_rab=False):
         cta_note="Пришлём живые фото этого кирпича, посчитаем количество на дом и скажем цену с доставкой.",
         product=f"кирпич «{disp_name}»",
         extra_head=extra_head)
-    (BASE / "tovar" / f"kirpich-{p['id']}.html").write_text(out)
+    (BASE / "tovar" / f"kirpich-{p['id']}.html").write_text(typo(out))
 
 
 def build_brick_products():

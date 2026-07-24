@@ -20,6 +20,7 @@ from pathlib import Path
 
 import sys
 sys.path.insert(0, str(Path(__file__).parent))
+from nbsp import typo
 from banner_common import banner, BANNER_JS, SLIDE_SALE_TILE, SLIDE_NEW_BRICK, SLIDE_DELIVERY
 
 BASE = Path("/Users/dm/Desktop/сайт")
@@ -439,7 +440,7 @@ CALC_JS = """
         var m2 = Math.ceil(need);
         var pCount = Math.ceil(need / palletSize);
         
-        qty.textContent = m2 + ' м²';
+        qty.textContent = m2 + '\u00A0м²';
         
         var palletsText = pCount + ' ' +
           (pCount % 10 === 1 && pCount % 100 !== 11 ? 'поддон' :
@@ -449,7 +450,7 @@ CALC_JS = """
         if (activePrice) {
           if (priceBlock) priceBlock.style.display = '';
           if (priceDivider) priceDivider.style.display = '';
-          if (price) price.textContent = 'от ' + (m2 * activePrice).toLocaleString('ru-RU') + ' ₽';
+          if (price) price.textContent = 'от\u00A0' + (m2 * activePrice).toLocaleString('ru-RU') + '\u00A0₽';
         } else {
           if (priceBlock) priceBlock.style.display = 'none';
           if (priceDivider) priceDivider.style.display = 'none';
@@ -798,7 +799,7 @@ def build_category():
         "Не знаете, какую форму выбрать?",
         "Позвоните — подберём форму и цвет под дом, посчитаем площадь по плану участка и скажем точную цену с доставкой.",
         CALC_JS + VIDEO_BUBBLE_JS + BANNER_JS, promo=False)
-    (BASE / "trotuarnaya-plitka.html").write_text(out)
+    (BASE / "trotuarnaya-plitka.html").write_text(typo(out))
     print(f"trotuarnaya-plitka.html: {total} товаров, 7 форм, от {all_min} ₽/м²")
 
 
@@ -859,7 +860,7 @@ def build_shape(slug):
             card.hidden = !ok;
             if (ok) shown++;
           });
-          note.textContent = 'Показано ' + shown + ' из ' + cards.length;
+          note.textContent = 'Показано\u00A0' + shown + ' из\u00A0' + cards.length;
         });
       });
     })();
@@ -914,7 +915,7 @@ def build_shape(slug):
         "Поможем выбрать расцветку",
         "Пришлём живые фото плитки в мессенджер, посчитаем количество и скажем цену с доставкой до вашего участка.",
         CALC_JS + filter_js)
-    (BASE / f"plitka-{slug}.html").write_text(out)
+    (BASE / f"plitka-{slug}.html").write_text(typo(out))
     print(f"plitka-{slug}.html: {n} расцветок (моно {n_mono} / микс {n_mix})")
 
 
@@ -1079,7 +1080,7 @@ def build_product(p):
         "Пришлём живые фото этой расцветки, посчитаем количество по вашему плану и скажем цену с доставкой.",
         CALC_JS + GALLERY_JS, root=root, extra_head=extra_head,
         product=f"плитка «{p['name']}» ({m['name']})")
-    (TOVAR / f"{p['slug']}.html").write_text(out)
+    (TOVAR / f"{p['slug']}.html").write_text(typo(out))
 
 
 def build_border(b):
@@ -1131,7 +1132,7 @@ def build_border(b):
         "Посчитаем бордюр вместе с плиткой",
         "Пришлите план или размеры участка — скажем, сколько нужно бордюра и плитки, и назовём цену с доставкой.",
         root=root, product=b["name"].lower())
-    (TOVAR / f"{b['id']}.html").write_text(out)
+    (TOVAR / f"{b['id']}.html").write_text(typo(out))
 
 
 if __name__ == "__main__":
