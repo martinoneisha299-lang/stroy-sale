@@ -1,5 +1,5 @@
 /* Hallmark · macrostructure: Photographic · theme: studied-DNA — см. tokens.css */
-@import url("tokens.css?v=13");
+@import url("tokens.css?v=14");
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -398,6 +398,24 @@ a { color: inherit; }
 /* ——— Секции ——— */
 .section { padding-block: var(--space-section) 0; }
 
+/* Секция на серой плите во всю ширину экрана. Ставится на смысловые блоки
+   («Как заказать»), чтобы длинная страница делилась на части поверхностью,
+   а не только пустотой. Цвета не добавляет — та же нейтральная подложка. */
+.section--band {
+  background: var(--color-tint);
+  border-block: var(--rule-hair);
+  /* отбивка от предыдущей секции меньше обычного ритма: воздух перед плитой
+     даёт ещё и её собственный padding-top, иначе на границе зияет пустота */
+  margin-top: var(--space-lg);
+  padding-bottom: var(--space-section);
+}
+
+/* Светлая терракота на серой подложке даёт 4,4:1 — мелкому тексту мало.
+   Внутри плит берём глубокий оттенок кнопок (5,7:1). */
+.section--band .step::before,
+.lead-form .form-ok,
+.lead-form .form-err { color: var(--color-btn); }
+
 .section-head {
   display: flex;
   flex-direction: column;
@@ -414,7 +432,9 @@ a { color: inherit; }
 /* ——— Полоса доверия: типографская строка-тикер, пункты через терракотовые «кирпичики» ——— */
 .benefits {
   border-bottom: var(--rule-hair);
-  background: var(--color-paper);
+  /* серая плита сразу под шапкой-фото: страница начинает читаться ритмом
+     «бумага — серое — бумага», а не сплошным белым листом */
+  background: var(--color-tint);
   overflow: hidden;
 }
 
@@ -500,6 +520,7 @@ a { color: inherit; }
   aspect-ratio: 1;
   object-fit: cover;
   display: block;
+  border: var(--rule-hair);  /* волосяная рамка держит фото на бумаге */
   transition: opacity var(--dur-base) var(--ease-out);
 }
 
@@ -588,6 +609,7 @@ a { color: inherit; }
   text-decoration: none;
   font-size: var(--text-sm);
   color: var(--color-ink-soft);
+  background: var(--color-surface);
   border: 1px solid var(--color-rule);
   padding: var(--space-2xs) var(--space-sm);
 }
@@ -985,6 +1007,8 @@ a { color: inherit; }
 .cta-band .form-note { color: var(--color-paper-mute); }
 .cta-band .form-note a { color: var(--color-paper-mute); }
 .cta-band .form-ok { color: var(--color-amber-soft); }
+/* ошибка на тёмной панели: терракота давала 3,3:1 и почти не читалась */
+.cta-band .form-err { color: var(--color-amber-soft); }
 
 /* ——— Карта в контактах ——— */
 .lead-place {
@@ -1325,10 +1349,24 @@ a { color: inherit; }
 }
 
 /* ——— Футер ——— */
+/* Тёмное «основание» страницы: длинный белый лист больше не обрывается
+   в пустоту, а закрывается графитовой плитой. */
 .footer {
   margin-top: clamp(32px, 4vw, 48px);
-  border-top: var(--rule-hair);
-  padding-block: var(--space-lg);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding-block: var(--space-xl) var(--space-lg);
+}
+
+.footer a { color: var(--color-paper); }
+
+.footer .tag,
+.footer .caption,
+.footer .footer-addr { color: var(--color-paper-soft); }
+
+.footer a:focus-visible {
+  outline: 2px solid var(--color-amber-soft);
+  outline-offset: 3px;
 }
 
 .footer-in {
@@ -2641,7 +2679,13 @@ a.p-card:focus-visible {
   .pd-lightbox-close { top: 12px; right: 12px; }
 }
 
-.pd-info { min-width: 0; }
+/* Панель товара на серой плите: имя, цена, кнопки и характеристики читаются
+   одной группой, а не текстом, висящим в воздухе рядом с фотографией. */
+.pd-info {
+  min-width: 0;
+  background: var(--color-tint);
+  padding: var(--space-md) var(--space-md) var(--space-lg);
+}
 
 .pd-name {
   font-size: var(--text-2xl);
