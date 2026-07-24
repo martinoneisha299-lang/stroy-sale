@@ -35,7 +35,7 @@ COLORS = IMG["colors"]
 P_COLORS = IMG["product_colors"]
 P_IMAGES = IMG["products"]
 
-STYLES_V = 27
+STYLES_V = 29
 IMG_V = 4
 
 
@@ -174,7 +174,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
       <a class="wordmark" href="{root}index.html">
         <svg class="brand-mark" viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--color-logo)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
         <span class="wordmark-text"><strong>СТРОЙСЕЙЛ</strong>
-        <span>Стройматериалы · Краснодар</span></span>
+        <span><span class="wm-long">Стройматериалы · </span>Краснодар</span></span>
       </a>
       <nav class="masthead-nav" aria-label="Основное меню">
         <a href="{root}index.html#catalog">Каталог</a>
@@ -726,19 +726,22 @@ def card_colors(pid, root=""):
             f'<span class="cc-label">{n} {plural(n, "цвет", "цвета", "цветов")}</span></p>')
 
 
-def product_card(p, root=""):
-    """Карточка товара в сетке: фото или чертёж, «Узнать цену»."""
+def product_card(p, root="", rich=False):
+    """Карточка товара в сетке — та же, что у кирпича и плитки.
+    rich=True добавляет две ключевые цифры и кластер цветов (сетка семейства)."""
     entry = P_IMAGES[p["id"]]
+    cls = "p-img"
     if entry["gallery"]:
         src = f'{root}img/roof/{entry["gallery"][0]}?v={IMG_V}'
         alt = f'{p["kind"]} «{p["name"]}»'
     elif entry["scheme"]:
         src = f'{root}img/roof/{entry["scheme"]}?v={IMG_V}'
         alt = f'{p["kind"]} {p["name"]} — чертёж профиля'
+        cls = "p-img p-img-scheme"
     else:
         src = None
     if src:
-        img = (f'<img class="p-img" src="{src}" alt="{esc(alt)}" '
+        img = (f'<img class="{cls}" src="{src}" alt="{esc(alt)}" '
                f'width="960" height="720" loading="lazy">')
     else:
         img = ('<div class="p-img p-none" role="img" aria-label="Фото готовим">'
@@ -747,9 +750,10 @@ def product_card(p, root=""):
                '<rect x="3" y="8" width="18" height="9"/>'
                '<path d="M7 11h.01M12 11h.01M17 11h.01"/></svg>'
                '<span>Фото пришлём по запросу</span></div>')
+    extra = (card_specs_html(p["id"]) + card_colors(p["id"], root)) if rich else ""
     return (f'<a class="p-card" href="{root}tovar/krovlya-{p["id"]}.html">'
             f'{img}<h3 class="p-name">{esc(p["name"])}</h3>'
-            f'<p class="p-meta">{esc(p["meta"])}</p>'
+            f'<p class="p-meta">{esc(p["meta"])}</p>{extra}'
             f'<span class="p-ask">Узнать цену</span></a>')
 
 
@@ -774,26 +778,6 @@ def card_specs_html(pid):
         return ""
     lis = "".join(f'<li><span>{esc(k)}</span><b>{esc(v)}</b></li>' for k, v in specs)
     return f'<ul class="cat-specs">{lis}</ul>'
-
-
-def product_cat_card(p, root=""):
-    """Карточка товара в сетке семейства: фото (или чертёж) + имя + «Узнать цену»."""
-    entry = P_IMAGES[p["id"]]
-    if entry["gallery"]:
-        img = cat_img(entry["gallery"][0], f'{p["kind"]} «{p["name"]}»', False, root)
-    elif entry["scheme"]:
-        img = cat_img(entry["scheme"], f'{p["kind"]} {p["name"]} — чертёж профиля',
-                      True, root)
-    else:
-        img = ('<div class="cat-img p-none" role="img" aria-label="Фото пришлём по запросу">'
-               '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
-               'stroke-width="1.5" stroke-linecap="round" aria-hidden="true">'
-               '<rect x="3" y="8" width="18" height="9"/>'
-               '<path d="M7 11h.01M12 11h.01M17 11h.01"/></svg>'
-               '<span>Фото пришлём по запросу</span></div>')
-    return cat_card(f'{root}tovar/krovlya-{p["id"]}.html', img,
-                    p["name"], p["meta"],
-                    extra=card_specs_html(p["id"]) + card_colors(p["id"], root))
 
 
 def duo_rows(products, root=""):
@@ -1043,13 +1027,13 @@ def build_family(f):
   </section>"""
 
     if f["layout"] == "grid":
-        cards = "".join(product_cat_card(p) for p in f["products"])
-        n = len(f["products"])
-        ncls = " cats-n2" if n == 2 else " cats-n3" if n == 3 else ""
+        # карточки товара — ровно те же, что в кирпиче и плитке: один размер
+        # и один визуальный язык на всём сайте
+        cards = "".join(product_card(p, rich=True) for p in f["products"])
         main = f"""
   <section class="section">
     <div class="wrap">
-      <div class="cats cats-roof{ncls}">{cards}</div>
+      <div class="p-grid">{cards}</div>
       <p class="caption cats-note">{esc(f['note'])}</p>
     </div>
   </section>"""

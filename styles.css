@@ -193,11 +193,14 @@ a { color: inherit; }
   color: var(--color-ink-soft);
 }
 
-/* узкий телефон: телефон и вордмарк не должны распирать шапку */
+/* узкий телефон: логотип и телефон в одной строке —
+   длинная подпись сокращается до города, иначе телефон переносился
+   на вторую строку и шапка вырастала вдвое */
 @media (max-width: 37.4375em) {
   .masthead-in { gap: var(--space-2xs) var(--space-sm); }
   .brand-mark { width: 26px; height: 23px; }
   .wordmark strong { font-size: min(1.0625rem, 5.4vw); }
+  .wm-long { display: none; }
   .masthead-contact a { font-size: min(0.9375rem, 5vw); }
 }
 
@@ -468,6 +471,8 @@ a { color: inherit; }
 }
 
 /* ——— Сетка категорий ——— */
+/* Сетка навигационных плиток (разделы, формы плитки, материалы кровли):
+   на ступень крупнее карточки товара, но тоже одного размера везде. */
 .cats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -526,8 +531,8 @@ a { color: inherit; }
 
 .cat .caption { margin: 0; }
 
-@media (min-width: 56.25em) {
-  .cats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (min-width: 45em) {
+  .cats { grid-template-columns: repeat(auto-fill, minmax(var(--card-nav-min), 1fr)); }
 }
 
 /* Сноска о ценах под сеткой категорий */
@@ -1156,9 +1161,12 @@ a { color: inherit; }
 .chip-links a {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;          /* «Прямоугольник 910 ₽/м²» на узком экране
+                               переносит цену внутрь чипа, а не за край */
   gap: 6px;
+  max-width: 100%;
   min-height: 44px;
-  padding: 0 var(--space-sm);
+  padding: var(--space-2xs) var(--space-sm);
   border: var(--rule-hair);
   background: var(--color-surface);
   font-size: var(--text-sm);
@@ -1318,6 +1326,9 @@ a { color: inherit; }
 .lane-all:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ——— Сетка товаров ——— */
+/* Одна сетка товаров на весь сайт: карточка ≈ --card-min, число колонок
+   считает браузер. На 1280 — пять в ряд (~240px, привычный размер карточки
+   маркетплейса), на планшете три, на телефоне две. */
 .p-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1325,12 +1336,8 @@ a { color: inherit; }
 }
 
 @media (min-width: 45em) {
-  .p-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-@media (min-width: 64em) {
   .p-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--card-min), 1fr));
     gap: var(--space-xl) var(--space-md);   /* воздух вместо рамок разделяет карточки */
   }
 }
@@ -1393,7 +1400,10 @@ a { color: inherit; }
 .p-price, .p-ask {
   font-size: 0.9375rem;
   font-weight: 500;
-  margin: 6px 0 0;
+  /* цена прижата к низу карточки: в ряду цены стоят на одной линии, даже
+     если у соседа имя или описание в две строки */
+  margin: auto 0 0;
+  padding-top: 6px;
   color: var(--color-ink);
   font-variant-numeric: tabular-nums;
 }
@@ -1871,13 +1881,6 @@ a { color: inherit; }
 /* сетка форм: квадратные фактуры */
 .cats-tiles { row-gap: var(--space-lg); }
 
-/* бордюры: две карточки в ряд, без гигантских фото на десктопе */
-@media (min-width: 45em) {
-  .p-grid-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 880px;
-  }
-}
 
 /* ——— Наши работы ——— */
 .works-grid {
@@ -1960,6 +1963,19 @@ a.p-card:focus-visible {
 
 /* фото на белой подложке (бордюры) — волосяная рамка вместо «плавающего» белого */
 .p-img-line { border: var(--rule-hair); }
+
+/* чертёж профиля (кровля) в карточке товара: целиком, на тёплой подложке */
+.p-img-scheme {
+  object-fit: contain;
+  background: var(--color-ph);
+  padding: var(--space-sm);
+}
+
+/* Мини-строка цифр и кластер образцов цвета живут и в карточке товара —
+   кровля показывает их так же, как кирпич показывает цену */
+.p-card .cat-specs { margin-top: 6px; gap: var(--space-2xs) var(--space-md); }
+.p-card .cat-colors { margin-top: 6px; }
+.p-card .cc-dot { width: 20px; height: 20px; margin-left: -6px; }
 
 .cat-img-fit {
   object-fit: contain;
@@ -2587,10 +2603,6 @@ a.p-card:focus-visible {
 
 /* Сетка материалов/товаров: колонки по числу карточек, чтобы 2–3 товара
    не оставляли пустых столбцов на десктопе */
-@media (min-width: 56.25em) {
-  .cats-roof.cats-n2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cats-roof.cats-n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
 
 /* Кружки цветов сразу под товаром — клиент видит варианты, не листая */
 .pd-swatches {
@@ -2929,7 +2941,7 @@ a.swatch, a.budget-chip { text-decoration: none; }
 
 .tiles {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(var(--tile-min), 1fr));
   gap: var(--space-lg);
 }
 

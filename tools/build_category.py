@@ -389,7 +389,7 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=27">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=29">{extra_head}
 </head>
 <body>
 
@@ -400,7 +400,7 @@ def page_shell(title, descr, body, extra_js="", root="",
       <a class="wordmark" href="{root}index.html">
         <svg class="brand-mark" viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--color-logo)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
         <span class="wordmark-text"><strong>СТРОЙСЕЙЛ</strong>
-        <span>Стройматериалы · Краснодар</span></span>
+        <span><span class="wm-long">Стройматериалы · </span>Краснодар</span></span>
       </a>
       <nav class="masthead-nav" aria-label="Основное меню">
         <a href="{root}index.html#catalog">Каталог</a>
