@@ -35,7 +35,7 @@ COLORS = IMG["colors"]
 P_COLORS = IMG["product_colors"]
 P_IMAGES = IMG["products"]
 
-STYLES_V = 26
+STYLES_V = 27
 IMG_V = 4
 
 
