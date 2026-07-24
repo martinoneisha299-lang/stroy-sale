@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="stylesheet" href="styles.css?v=30">
 </head>
 <body>
 
-<a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-08-03" hidden><b>−15%</b> на плитку «Старый город» — до 3 августа<span class="promo-bar-go"> · Выбрать</span></a>
+
 
   <header class="masthead">
     <div class="wrap masthead-in">
@@ -34,31 +34,66 @@
   </header>
 
 
-  <!-- Шапка раздела: в одном ключе с шапкой плитки — текст поверх парящего
-       фото крыши на мобиле, фото справа на десктопе -->
-  <section class="tile-hero roof-hero" aria-label="Кровля">
-    <div class="wrap tile-hero-in">
-      <div class="tile-hero-copy">
-        <nav class="crumbs" aria-label="Хлебные крошки">
-          <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
-          <span>Кровля</span>
-        </nav>
-        <h1>Кровля: металлочерепица и&nbsp;профнастил</h1>
-        <p class="page-sub">Купить кровлю в Краснодаре: четыре материала с одного
-          завода. Режем в размер крыши — без стыков, цвет и покрытие общие.</p>
-        <ul class="tile-facts">
-          <li><strong>до 8 м</strong> лист целиком, без стыков</li>
-          <li><strong>40 цветов</strong> и покрытий на выбор</li>
-          <li><strong>0,4–0,5 мм</strong> сталь с полимером</li>
-          <li><strong>до 15 лет</strong> гарантия на покрытие</li>
-        </ul>
-        <div class="hero-cta">
-          <a class="btn" href="#materialy">Выбрать материал</a>
-          <a class="btn btn-ghost" href="#calc">Посчитать крышу</a>
+
+  <!-- Шапка-кинолента: имя категории статично, акции крутятся (BANNER_JS) -->
+  <section class="pb pbH" aria-label="Кровля — акции и предложения">
+    <div class="pbH-top">
+      <div class="wrap">
+        <div class="pbH-name">
+          <nav class="pbH-crumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a> / Кровля</nav>
+          <h1>Кровля: металлочерепица и&nbsp;профнастил</h1>
         </div>
+        <p class="pbH-facts"><b>лист до 8 м</b> · 40 цветов · гарантия до 15 лет</p>
       </div>
-      <div class="tile-hero-stage roof-hero-stage" aria-hidden="true">
-        <img class="roof-hero-photo" src="img/roof/hero-roof.jpg?v=4" alt="" width="1200" height="800" loading="eager" fetchpriority="high">
+    </div>
+
+    <div class="wrap">
+      <div class="pb-stack">
+          <a class="pb-slide" href="#calc">
+            <div class="pbH-copy">
+              <p class="pbH-eyebrow">Расчёт</p>
+              <p class="pbH-title">Посчитаем крышу по размерам <b>за 10 минут</b></p>
+              <p class="pbH-sub">Раскрой листов до 8 м без стыков, доборные и цена с доставкой.</p>
+              <span class="pbH-go">Посчитать крышу</span>
+            </div>
+            <div class="pbH-media"><img src="img/roof/hero-roof.jpg?v=4" alt="" loading="eager" fetchpriority="high"></div>
+          </a>
+          <a class="pb-slide" href="krovlya-metallocherepitsa.html">
+            <div class="pbH-copy">
+              <p class="pbH-eyebrow">Металлочерепица</p>
+              <p class="pbH-title">Гарантия на покрытие <b>до 15 лет</b></p>
+              <p class="pbH-sub">Супермонтеррей и Испанская дюна — с завода, режем в размер.</p>
+              <span class="pbH-go">Выбрать черепицу</span>
+            </div>
+            <div class="pbH-media"><img src="img/roof/cover-mch-monterrey.jpg?v=4" alt="" loading="lazy"></div>
+          </a>
+          <a class="pb-slide" href="#tsveta">
+            <div class="pbH-copy">
+              <p class="pbH-eyebrow">Один цвет — на всё</p>
+              <p class="pbH-title"><b>40 цветов</b>: кровля, забор и фасад в тон</p>
+              <p class="pbH-sub">Полиэстер, Granite и Printech — покрытие общее для всех материалов.</p>
+              <span class="pbH-go">Смотреть цвета</span>
+            </div>
+            <div class="pbH-media"><img src="img/roof/printech-live-1.jpg?v=4" alt="" loading="lazy"></div>
+          </a>
+          <a class="pb-slide" href="#lead">
+            <div class="pbH-copy">
+              <p class="pbH-eyebrow">Доставка</p>
+              <p class="pbH-title">Доставим на объект — <b>оплата при получении</b></p>
+              <p class="pbH-sub">Листы до 8 м возим аккуратно, разгрузка на месте.</p>
+              <span class="pbH-go">Как заказать</span>
+            </div>
+            <div class="pbH-media"><img src="img/roof/cover-cat-prof.jpg?v=4" alt="" loading="lazy"></div>
+          </a>
+      </div>
+    </div>
+
+    <div class="pbH-ui">
+      <div class="wrap">
+        <div class="pb-dots" role="tablist" aria-label="Переключение акций"></div>
+        <span class="pb-count">01 / 04</span>
+        <button class="pb-arr pb-prev" type="button" aria-label="Предыдущая акция"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+        <button class="pb-arr pb-next" type="button" aria-label="Следующая акция"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
     </div>
   </section>
@@ -68,7 +103,7 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Выберите материал</h2>
-        <p class="caption">Внутри — товары, все размеры и 40&nbsp;цветов.</p>
+        <p class="caption">Купить кровлю в Краснодаре: четыре материала с одного завода, режем в размер до 8 м без стыков. Внутри — товары, все размеры и 40&nbsp;цветов.</p>
       </div>
       <div class="cats cats-roof"><a class="cat" href="krovlya-metallocherepitsa.html"><img class="cat-img" src="img/roof/cover-cat-mch.jpg?v=4" alt="Красная глянцевая металлочерепица с каплями дождя" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Металлочерепица</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">2 профиля · для скатной крыши</p><p class="cat-colors"><span class="cc-row"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-3009.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-6020.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-7024.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8004.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8017.jpg?v=4" alt="" width="28" height="28" loading="lazy"></span><span class="cc-label">40 цветов</span></p></a><a class="cat" href="krovlya-profnastil.html"><img class="cat-img" src="img/roof/cover-cat-prof.jpg?v=4" alt="Профнастил серо-синего цвета крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Профнастил</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">6 профилей · крыша, забор, навес</p><p class="cat-colors"><span class="cc-row"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-3009.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-6020.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-7024.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8004.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8017.jpg?v=4" alt="" width="28" height="28" loading="lazy"></span><span class="cc-label">40 цветов</span></p></a><a class="cat" href="krovlya-shtaketnik.html"><img class="cat-img" src="img/roof/cover-cat-sht.jpg?v=4" alt="Планки графитового евроштакетника крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Штакетник</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">3 формы верха · для забора</p><p class="cat-colors"><span class="cc-row"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-6020.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-ral-3005-spelaya-vishnya.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-ral-6005-zele-nyi-moh.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-ral-7024-grafitovyi-seryi.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-ral-8017-shokolad.jpg?v=4" alt="" width="28" height="28" loading="lazy"></span><span class="cc-label">12 цветов</span></p></a><a class="cat" href="krovlya-sayding.html"><img class="cat-img" src="img/roof/cover-cat-sid.jpg?v=4" alt="Металлосайдинг с фотопечатью под серое дерево крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Металлосайдинг</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">5 профилей · для фасада и свесов</p><p class="cat-colors"><span class="cc-row"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-3009.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-6020.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-7024.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8004.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8017.jpg?v=4" alt="" width="28" height="28" loading="lazy"></span><span class="cc-label">22 цвета</span></p></a></div>
     </div>
@@ -256,6 +291,96 @@
       len.addEventListener('input', recalc);
       wid.addEventListener('input', recalc);
       typ.addEventListener('change', recalc);
+    })();
+  </script>
+  <script>
+    (function () {
+      // Два режима (разведка WB/Ozon/ЯМаркет + Baymard):
+      // десктоп — fade на месте с автолистанием 5 с (пауза при наведении);
+      // мобайл — полка-карусель со scroll-snap, БЕЗ автолистания (на таче
+      // слайд уезжает из-под пальца), точки синхронятся со скроллом.
+      var DUR = 5000;
+      var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var mq = matchMedia('(max-width: 45em)');
+
+      document.querySelectorAll('.pb').forEach(function (root) {
+        var now = new Date();
+        root.querySelectorAll('.pb-slide[data-until]').forEach(function (s) {
+          if (new Date(s.dataset.until + 'T23:59:59') < now) s.remove();
+        });
+        var stack = root.querySelector('.pb-stack');
+        var slides = Array.prototype.slice.call(root.querySelectorAll('.pb-slide'));
+        var dotsWrap = root.querySelector('.pb-dots');
+        var counter = root.querySelector('.pb-count');
+        var ui = root.querySelector('.pbH-ui');
+        if (!slides.length) { stack.hidden = true; if (ui) ui.hidden = true; return; }
+        if (slides.length === 1) { slides[0].classList.add('is-on'); if (ui) ui.hidden = true; return; }
+
+        var i = 0, timer = null;
+        var dots = slides.map(function (_, n) {
+          var b = document.createElement('button');
+          b.type = 'button'; b.className = 'pb-dot';
+          b.setAttribute('aria-label', 'Акция ' + (n + 1) + ' из ' + slides.length);
+          b.addEventListener('click', function () {
+            if (mq.matches) {
+              slides[n].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            } else { go(n); start(); }
+          });
+          dotsWrap.appendChild(b);
+          return b;
+        });
+
+        function pad(n) { return (n < 10 ? '0' : '') + n; }
+        function mark(n) {
+          slides[i].classList.remove('is-on'); dots[i].classList.remove('is-on');
+          i = (n + slides.length) % slides.length;
+          slides[i].classList.add('is-on'); dots[i].classList.add('is-on');
+          if (counter) counter.textContent = pad(i + 1) + ' / ' + pad(slides.length);
+        }
+        function go(n) { mark(n); }
+        function start() {
+          if (reduced || mq.matches) return;
+          stop(); timer = setInterval(function () { go(i + 1); }, DUR);
+          root.classList.add('is-play');
+        }
+        function stop() { clearInterval(timer); timer = null; root.classList.remove('is-play'); }
+
+        var prev = root.querySelector('.pb-prev'), next = root.querySelector('.pb-next');
+        if (prev) prev.addEventListener('click', function () { go(i - 1); start(); });
+        if (next) next.addEventListener('click', function () { go(i + 1); start(); });
+
+        root.addEventListener('mouseenter', stop);
+        root.addEventListener('mouseleave', start);
+        root.addEventListener('focusin', stop);
+        root.addEventListener('focusout', start);
+        document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+
+        // мобайл: активная точка = карта, ближайшая к центру видимой области
+        // (троттлинг на setTimeout, не rAF — rAF замирает в вебвью/фоне)
+        var pending = null;
+        stack.addEventListener('scroll', function () {
+          if (!mq.matches || pending) return;
+          pending = setTimeout(function () {
+            pending = null;
+            var pad0 = parseFloat(getComputedStyle(stack).paddingLeft) || 0;
+            var base = slides[0].offsetLeft;
+            var mid = stack.scrollLeft + stack.clientWidth / 2;
+            var best = 0, bd = Infinity;
+            slides.forEach(function (s, n) {
+              var c = s.offsetLeft - base + pad0 + s.offsetWidth / 2;
+              var d = Math.abs(c - mid);
+              if (d < bd) { bd = d; best = n; }
+            });
+            if (best !== i) mark(best);
+          }, 120);
+        }, { passive: true });
+
+        mq.addEventListener('change', function () {
+          if (mq.matches) { stop(); } else { start(); }
+        });
+
+        mark(0); start();
+      });
     })();
   </script>
 </body>

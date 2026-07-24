@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="stylesheet" href="styles.css?v=30">
 </head>
 <body>
 
-<a class="promo-bar" href="plitka-staryy-gorod.html" data-until="2026-08-03" hidden><b>−15%</b> на плитку «Старый город» — до 3 августа<span class="promo-bar-go"> · Выбрать</span></a>
+
 
   <header class="masthead">
     <div class="wrap masthead-in">
@@ -34,31 +34,66 @@
   </header>
 
 
-  <!-- Шапка категории: живая плитка -->
-  <section class="tile-hero" aria-label="Тротуарная плитка">
-    <div class="wrap tile-hero-in">
-      <div class="tile-hero-copy">
-        <nav class="crumbs" aria-label="Хлебные крошки">
-          <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
-          <span>Тротуарная плитка</span>
-        </nav>
-        <h1>Тротуарная плитка</h1>
-        <p class="page-sub">Купить тротуарную плитку в Краснодаре: 172 варианта в 7 формах с завода-производителя.
-          Привезём на объект, разгрузим, оплата при получении.</p>
-        <ul class="tile-facts">
-          <li><strong>от 650 ₽/м²</strong> заводская цена</li>
-          <li><strong>40 мм</strong> — держит легковую машину</li>
-          <li><strong>F200</strong> — 200 циклов заморозки</li>
-          <li><strong>B30</strong> — дорожная прочность</li>
-        </ul>
-        <div class="hero-cta">
-          <a class="btn" href="#shapes">Выбрать форму</a>
-          <a class="btn btn-ghost" href="#calc">Посчитать количество</a>
+
+  <!-- Шапка-кинолента: имя категории статично, акции крутятся (BANNER_JS) -->
+  <section class="pb pbH" aria-label="Тротуарная плитка — акции и предложения">
+    <div class="pbH-top">
+      <div class="wrap">
+        <div class="pbH-name">
+          <nav class="pbH-crumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a> / Тротуарная плитка</nav>
+          <h1>Тротуарная плитка</h1>
         </div>
+        <p class="pbH-facts"><b>172 варианта</b> · 7 форм · от 650 ₽/м²</p>
       </div>
-      <div class="tile-hero-stage" aria-hidden="true">
-        <img class="tile-drift-b" src="img/plitka/hero-tiles-red.webp" alt="" width="550" height="413" loading="eager">
-        <img class="tile-drift-a" src="img/plitka/hero-tiles-grey.webp" alt="" width="770" height="578" loading="eager">
+    </div>
+
+    <div class="wrap">
+      <div class="pb-stack">
+          <a class="pb-slide" href="plitka-staryy-gorod.html" data-until="2026-08-03">
+            <div class="pbH-copy">
+              <p class="pbH-eyebrow">Акция · до 3 августа</p>
+              <p class="pbH-title"><b>−15&nbsp;%</b> на плитку «Старый город»</p>
+              <p class="pbH-sub">Все 24 расцветки формы. Привезём на объект, оплата при получении.</p>
+              <span class="pbH-go">Выбрать плитку</span>
+            </div>
+            <div class="pbH-media"><img src="img/plitka/shape-staryy-gorod.jpg" alt="" loading="eager" fetchpriority="high"></div>
+          </a>
+          <a class="pb-slide" href="#calc">
+            <div class="pbH-copy">
+              <p class="pbH-eyebrow">Расчёт</p>
+              <p class="pbH-title">Посчитаем плитку по плану двора <b>за 10 минут</b></p>
+              <p class="pbH-sub">Пришлите размеры — посчитаем метры, поддоны и доставку.</p>
+              <span class="pbH-go">Получить расчёт</span>
+            </div>
+            <div class="pbH-media"><img src="img/plitka/work-03.jpg" alt="" loading="lazy"></div>
+          </a>
+          <a class="pb-slide" href="kirpich-ves.html">
+            <div class="pbH-copy">
+              <p class="pbH-eyebrow">Новинки завода</p>
+              <p class="pbH-title"><b>25 новых цветов</b> облицовочного кирпича</p>
+              <p class="pbH-sub">Баварская кладка, сахара, скала антик — уже в каталоге.</p>
+              <span class="pbH-go">Смотреть новинки</span>
+            </div>
+            <div class="pbH-media"><img src="img/cat-oblic.jpg" alt="" loading="lazy"></div>
+          </a>
+          <a class="pb-slide" href="#lead">
+            <div class="pbH-copy">
+              <p class="pbH-eyebrow">Доставка</p>
+              <p class="pbH-title">Доставим на объект — <b>оплата при получении</b></p>
+              <p class="pbH-sub">Разгрузка манипулятором. Фото и видео товара — в WhatsApp до отправки.</p>
+              <span class="pbH-go">Как заказать</span>
+            </div>
+            <div class="pbH-media"><img src="img/plitka/work-07.jpg" alt="" loading="lazy"></div>
+          </a>
+      </div>
+    </div>
+
+    <div class="pbH-ui">
+      <div class="wrap">
+        <div class="pb-dots" role="tablist" aria-label="Переключение акций"></div>
+        <span class="pb-count">01 / 04</span>
+        <button class="pb-arr pb-prev" type="button" aria-label="Предыдущая акция"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+        <button class="pb-arr pb-next" type="button" aria-label="Следующая акция"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
     </div>
   </section>
@@ -68,7 +103,7 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Выберите форму</h2>
-        <p class="caption">Цвет подберёте внутри — в каждой форме порядка 24 расцветок.</p>
+        <p class="caption">Купить тротуарную плитку в Краснодаре: 172 варианта в 7 формах с завода-производителя. Вся плитка 40 мм — держит легковую машину (F200, B30). Цвет подберёте внутри — в каждой форме порядка 24 расцветок.</p>
       </div>
       <div class="cats cats-tiles">
 
@@ -478,6 +513,96 @@
         sessionStorage.setItem('vbOff', '1');
         vb.classList.remove('vb-on');
         setTimeout(function () { vb.remove(); pop.remove(); }, 400);
+      });
+    })();
+  </script>
+  <script>
+    (function () {
+      // Два режима (разведка WB/Ozon/ЯМаркет + Baymard):
+      // десктоп — fade на месте с автолистанием 5 с (пауза при наведении);
+      // мобайл — полка-карусель со scroll-snap, БЕЗ автолистания (на таче
+      // слайд уезжает из-под пальца), точки синхронятся со скроллом.
+      var DUR = 5000;
+      var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var mq = matchMedia('(max-width: 45em)');
+
+      document.querySelectorAll('.pb').forEach(function (root) {
+        var now = new Date();
+        root.querySelectorAll('.pb-slide[data-until]').forEach(function (s) {
+          if (new Date(s.dataset.until + 'T23:59:59') < now) s.remove();
+        });
+        var stack = root.querySelector('.pb-stack');
+        var slides = Array.prototype.slice.call(root.querySelectorAll('.pb-slide'));
+        var dotsWrap = root.querySelector('.pb-dots');
+        var counter = root.querySelector('.pb-count');
+        var ui = root.querySelector('.pbH-ui');
+        if (!slides.length) { stack.hidden = true; if (ui) ui.hidden = true; return; }
+        if (slides.length === 1) { slides[0].classList.add('is-on'); if (ui) ui.hidden = true; return; }
+
+        var i = 0, timer = null;
+        var dots = slides.map(function (_, n) {
+          var b = document.createElement('button');
+          b.type = 'button'; b.className = 'pb-dot';
+          b.setAttribute('aria-label', 'Акция ' + (n + 1) + ' из ' + slides.length);
+          b.addEventListener('click', function () {
+            if (mq.matches) {
+              slides[n].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            } else { go(n); start(); }
+          });
+          dotsWrap.appendChild(b);
+          return b;
+        });
+
+        function pad(n) { return (n < 10 ? '0' : '') + n; }
+        function mark(n) {
+          slides[i].classList.remove('is-on'); dots[i].classList.remove('is-on');
+          i = (n + slides.length) % slides.length;
+          slides[i].classList.add('is-on'); dots[i].classList.add('is-on');
+          if (counter) counter.textContent = pad(i + 1) + ' / ' + pad(slides.length);
+        }
+        function go(n) { mark(n); }
+        function start() {
+          if (reduced || mq.matches) return;
+          stop(); timer = setInterval(function () { go(i + 1); }, DUR);
+          root.classList.add('is-play');
+        }
+        function stop() { clearInterval(timer); timer = null; root.classList.remove('is-play'); }
+
+        var prev = root.querySelector('.pb-prev'), next = root.querySelector('.pb-next');
+        if (prev) prev.addEventListener('click', function () { go(i - 1); start(); });
+        if (next) next.addEventListener('click', function () { go(i + 1); start(); });
+
+        root.addEventListener('mouseenter', stop);
+        root.addEventListener('mouseleave', start);
+        root.addEventListener('focusin', stop);
+        root.addEventListener('focusout', start);
+        document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+
+        // мобайл: активная точка = карта, ближайшая к центру видимой области
+        // (троттлинг на setTimeout, не rAF — rAF замирает в вебвью/фоне)
+        var pending = null;
+        stack.addEventListener('scroll', function () {
+          if (!mq.matches || pending) return;
+          pending = setTimeout(function () {
+            pending = null;
+            var pad0 = parseFloat(getComputedStyle(stack).paddingLeft) || 0;
+            var base = slides[0].offsetLeft;
+            var mid = stack.scrollLeft + stack.clientWidth / 2;
+            var best = 0, bd = Infinity;
+            slides.forEach(function (s, n) {
+              var c = s.offsetLeft - base + pad0 + s.offsetWidth / 2;
+              var d = Math.abs(c - mid);
+              if (d < bd) { bd = d; best = n; }
+            });
+            if (best !== i) mark(best);
+          }, 120);
+        }, { passive: true });
+
+        mq.addEventListener('change', function () {
+          if (mq.matches) { stop(); } else { start(); }
+        });
+
+        mark(0); start();
       });
     })();
   </script>

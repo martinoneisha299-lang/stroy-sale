@@ -1739,143 +1739,259 @@ a { color: inherit; }
   }
 }
 
-/* ——— Тротуарная плитка: шапка категории с «живой» плиткой ——— */
-.tile-hero {
+/* ——— Шапка-кинолента категории ———
+   Тёмная лента = шапка категории (вместо прежних hero): сверху статичная
+   строка — крошки, имя категории с терракотовым «кирпичиком», живые цифры;
+   ниже крутятся акции. Автолистание 5 с, пауза при наведении/касании,
+   свайп, стрелки на десктопе; слайд с истёкшей data-until убирает скрипт
+   (BANNER_JS в генераторах). Прогресс — кирпичики: активный заполняется. */
+.pb-stack { display: grid; }
+
+.pb-slide {
+  grid-area: 1 / 1;
+  min-width: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  pointer-events: none;
+  text-decoration: none;
+  color: inherit;
+  /* уходящий слайд гаснет быстро, новый приходит после — тексты не накладываются */
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s;
+}
+
+.pb-slide.is-on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity 0.5s var(--ease-out) 0.24s, transform 0.6s var(--ease-out) 0.24s, visibility 0s linear 0.24s;
+}
+
+.pb-dots { display: flex; gap: 8px; }
+
+.pb-dot {
+  width: 30px;
+  height: 6px;
+  flex: none;
   position: relative;
   overflow: hidden;
-  padding-top: var(--space-lg);
-}
-
-.tile-hero-in {
-  display: grid;
-  gap: var(--space-xl);
-}
-
-.tile-hero-copy {
-  position: relative;
-  z-index: 2;
-}
-
-.tile-hero h1 {
-  font-size: var(--text-display);
-  font-weight: 900;
-  line-height: 1.04;
-  letter-spacing: -0.015em;
-  margin: var(--space-sm) 0 var(--space-md);
-}
-
-.tile-facts {
-  list-style: none;
-  margin: var(--space-md) 0 var(--space-lg);
+  background: oklch(34% 0.012 60);
+  border: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-xs) var(--space-md);
+  cursor: pointer;
+  border-radius: 0;
 }
 
-.tile-facts li {
-  font-size: var(--text-sm);
-  color: var(--color-ink-soft);
+.pb-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
-.tile-facts strong {
-  display: block;
+.pb-dot.is-on::after { animation: pb-fill 5s linear forwards; animation-play-state: paused; }
+.pb.is-play .pb-dot.is-on::after { animation-play-state: running; }
+
+@keyframes pb-fill { to { transform: scaleX(1); } }
+
+.pb-dot:focus-visible { outline: 2px solid var(--color-amber-soft); outline-offset: 2px; }
+
+.pbH { background: var(--color-ink); color: var(--color-paper); }
+
+/* статичная строка категории */
+.pbH-top { border-bottom: 1px solid oklch(32% 0.012 60); }
+
+.pbH-top .wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 16px;
+  padding-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.pbH-crumbs { font-size: var(--text-micro); color: var(--color-paper-dim); margin: 0 0 4px; }
+.pbH-crumbs a { color: inherit; text-decoration: none; }
+.pbH-crumbs a:hover { color: var(--color-paper-soft); }
+
+.pbH-name { min-width: 0; }
+
+.pbH h1 {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   font-size: var(--text-lg);
   font-weight: 700;
-  color: var(--color-ink);
-  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  margin: 0;
+  color: var(--color-paper);
 }
 
-/* сцена: два кластера плитки, медленно «дышат» (как живая выкладка) */
-.tile-hero-stage {
+.pbH h1::before { content: ""; width: 16px; height: 9px; flex: none; background: var(--color-accent); margin-top: 0.42em; }
+
+.pbH-facts { margin: 0; font-size: var(--text-sm); color: var(--color-paper-soft); font-variant-numeric: tabular-nums; }
+.pbH-facts b { color: var(--color-amber-soft); font-weight: 600; }
+
+/* слайды */
+.pbH .pb-slide {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 44%);
+  align-items: center;
+  min-height: 224px;
   position: relative;
-  aspect-ratio: 16 / 10;
-  min-width: 0;
 }
 
-.tile-hero-stage img {
+.pbH-copy { padding: var(--space-lg) 0; min-width: 0; position: relative; z-index: 2; }
+
+.pbH-eyebrow {
+  font-size: var(--text-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-amber-soft);
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.pbH-title { font-size: var(--text-2xl); font-weight: 700; line-height: 1.12; margin: 0 0 8px; max-width: 24ch; }
+.pbH-title b { color: var(--color-amber-soft); font-weight: inherit; }
+
+.pbH-sub { color: var(--color-paper-soft); font-size: var(--text-base); margin: 0 0 16px; max-width: 46ch; }
+
+.pbH-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-btn);
+  color: #fff;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  padding: 12px 20px;
+  min-height: 44px;
+}
+
+.pbH .pb-slide:hover .pbH-go { background: var(--color-btn-hover); }
+
+.pbH-media { align-self: stretch; position: relative; }
+
+.pbH-media::before {
+  content: "";
   position: absolute;
-  height: auto;
-  filter: drop-shadow(0 18px 28px oklch(30% 0.02 60 / 0.18));
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, var(--color-ink) 0%, transparent 38%);
 }
 
-.tile-drift-a {
-  width: 74%;
-  right: 0;
-  top: 4%;
-  animation: tile-drift 11s var(--ease-in-out) infinite alternate;
+.pbH-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* нижняя строка управления */
+.pbH-ui .wrap { display: flex; align-items: center; gap: 16px; padding-top: 0; padding-bottom: 16px; }
+.pbH-ui .pb-count { margin-left: auto; }
+
+.pb-count { font-variant-numeric: tabular-nums; color: var(--color-paper-mute); font-size: var(--text-micro); letter-spacing: 0.12em; }
+
+.pb-arr {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid oklch(36% 0.012 60);
+  color: var(--color-paper-soft);
+  cursor: pointer;
+  padding: 0;
+  border-radius: 0;
 }
 
-.tile-drift-b {
-  width: 44%;
-  left: 0;
-  bottom: 0;
-  animation: tile-drift 14s var(--ease-in-out) 1.5s infinite alternate-reverse;
-}
+.pb-arr:hover { border-color: var(--color-paper-soft); color: var(--color-paper); }
+.pb-arr:focus-visible { outline: 2px solid var(--color-amber-soft); outline-offset: 2px; }
 
-@keyframes tile-drift {
-  from { transform: translateY(7px) rotate(0.35deg); }
-  to   { transform: translateY(-9px) rotate(-0.45deg); }
-}
+/* SEO-подводка «Купить … в Краснодаре» — тонкой строкой под лентой */
+.pick-intro { margin: 0 0 var(--space-xs); max-width: 78ch; }
 
-@media (min-width: 56.25em) {
-  .tile-hero-in {
-    grid-template-columns: 5fr 6fr;
-    align-items: center;
+/* Мобайл: карусель-полка как у маркетплейсов (разведка WB/Ozon/ЯМаркет,
+   Baymard): карты ~87% ширины, следующая «выглядывает» справа — peek вместо
+   автолистания (на таче его не делаем: слайд уезжает из-под пальца), нативный
+   свайп со scroll-snap, точки-кирпичики по центру, вся карта — ссылка.
+   Текст лежит на нижнем скриме карты. Радиус 12px — осознанное исключение
+   из radius-0: промо-карта, паттерн маркетплейсов, знакомый аудитории. */
+@media (max-width: 45em) {
+  .pbH-top .wrap { padding-top: 12px; padding-bottom: 10px; }
+  .pbH-crumbs { display: none; }
+  .pbH-facts { display: none; }
+  .pbH h1 { font-size: var(--text-base); }
+
+  .pbH > .wrap { width: 100%; }
+
+  .pb-stack {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    padding: 14px var(--space-md) 2px;
+    scroll-padding-inline: var(--space-md);
+    scrollbar-width: none;
   }
-  .tile-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pb-stack::-webkit-scrollbar { display: none; }
+
+  .pbH .pb-slide {
+    display: block;
+    flex: 0 0 calc(100% - 16px); /* % считается от контента трека (минус поля) → peek следующей ~26px */
+    scroll-snap-align: start;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  .pbH-media { position: absolute; inset: 0; }
+  .pbH-media::before {
+    background: linear-gradient(0deg,
+      oklch(21% 0.012 60 / 0.82) 0%,
+      oklch(21% 0.012 60 / 0.32) 52%,
+      oklch(21% 0.012 60 / 0.06) 100%);
+  }
+
+  .pbH-copy { position: absolute; inset: auto 0 0 0; padding: 0 14px 12px; }
+  .pbH-eyebrow { margin-bottom: 4px; }
+  .pbH-title { font-size: var(--text-md); margin-bottom: 4px; }
+  .pbH-sub { display: none; }
+
+  /* кнопка -> тихая текст-ссылка: вся карта и так кликабельна */
+  .pbH-go {
+    background: none;
+    padding: 0;
+    min-height: 0;
+    color: var(--color-amber-soft);
+    font-size: var(--text-xs);
+  }
+  .pbH-go::after { content: "→"; }
+  .pbH .pb-slide:hover .pbH-go { background: none; }
+
+  .pbH-ui .wrap { justify-content: center; padding-bottom: 12px; }
+  .pb-count, .pb-arr { display: none; }
+  .pb-dot { width: 22px; height: 5px; }
+  /* автолистания нет — активная точка просто залита */
+  .pb-dot.is-on::after { animation: none; transform: scaleX(1); }
+
+  /* без пустот: секция после ленты ближе, шапка секции компактнее */
+  .pbH + .section { padding-top: var(--space-lg); }
+  .pbH + .section .section-head { margin-bottom: var(--space-md); }
 }
 
-/* Мобайл: текст ложится ПОВЕРХ парящей плитки (как текст на фото в hero
-   главной) — плитка уходит фоновым слоем в правый верхний угол, слева её
-   прикрывает вуаль бумаги, чтобы заголовок читался. Экономит целый экран. */
-@media (max-width: 56.1875em) {
-  .tile-hero { padding-bottom: var(--space-md); }
-
-  .tile-hero-in { display: block; }
-
-  .tile-hero-stage {
-    position: absolute;
-    z-index: 0;
-    top: -3%;
-    right: -16%;
-    width: 82%;
-    aspect-ratio: 16 / 10;
-  }
-
-  /* один кластер вместо двух — фон, а не витрина */
-  .tile-drift-b { display: none; }
-  .tile-drift-a { width: 100%; top: 0; right: 0; }
-
-  .tile-hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(97deg,
-      var(--color-paper) 34%,
-      color-mix(in srgb, var(--color-paper) 62%, transparent) 58%,
-      transparent 82%);
-    pointer-events: none;
-  }
-
-  .tile-facts { margin-bottom: var(--space-md); }
-}
-
-/* На телефоне две кнопки hero кладём ровным столбиком во всю ширину —
-   иначе flex-wrap даёт две плиты разной ширины, «приклеенные» влево (криво).
-   Первая (терракота) — главное действие, вторая (ghost) — тише. */
-@media (max-width: 35.9375em) {
-  .tile-hero .hero-cta {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--space-sm);
-    width: 100%;
-  }
-  .tile-hero .hero-cta .btn {
-    width: 100%;
-    justify-content: center;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .pb-slide { transition: none; }
+  .pb-dot.is-on::after { animation: none; transform: scaleX(1); }
 }
 
 /* сетка форм: квадратные фактуры */
@@ -2520,85 +2636,6 @@ a.p-card:focus-visible {
 
 @media (min-width: 56.25em) {
   .vb, .vb-pop { display: none !important; }
-}
-
-/* ——— Кровля: шапка категории ——— */
-/* Кровля: шапка в одном ключе с шапкой плитки — базовую раскладку и вуаль
-   на мобиле даёт класс .tile-hero. Здесь только своё: фото крыши вместо
-   парящих PNG-плиток. */
-.roof-hero { border-bottom: var(--rule-hair); }
-
-.roof-hero-stage { aspect-ratio: 16 / 11; }
-
-.roof-hero-stage .roof-hero-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: none;
-  border: var(--rule-hair);
-  box-shadow: 0 20px 34px oklch(30% 0.02 60 / 0.16);
-}
-
-@media (max-width: 56.1875em) {
-  /* Шапка кровли на мобиле — кинематографичная: тёмное фото крыши на всю
-     ширину (edge-to-edge) как фон, светлый текст поверх, нижний скрим для
-     читаемости. Продукт — герой кадра, а не приглушённое пятно в углу.
-     (референсы: europrofil93 full-bleed фон, Ruukki/Vandersanden фото-сцена) */
-  .roof-hero { padding-top: 0; border-bottom: 0; }
-  .roof-hero .tile-hero-in { position: relative; }
-
-  .roof-hero-stage {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100vw;            /* edge-to-edge, вне полей .wrap */
-    height: 100%;
-    aspect-ratio: auto;
-    z-index: 0;
-    margin: 0;
-  }
-  .roof-hero-stage .roof-hero-photo { border: 0; box-shadow: none; }
-
-  /* нижний скрим: продукт ярче сверху, текст читается снизу (не глобальная вуаль) */
-  .roof-hero::after {
-    background: linear-gradient(180deg,
-      rgba(22, 18, 15, 0.42) 0%,
-      rgba(22, 18, 15, 0.32) 44%,
-      rgba(22, 18, 15, 0.80) 100%);
-  }
-
-  .roof-hero .tile-hero-copy {
-    padding: var(--space-md) var(--space-xs) var(--space-lg);
-  }
-
-  /* текст поверх фото — светлый */
-  .roof-hero .crumbs,
-  .roof-hero .crumbs a,
-  .roof-hero .crumbs span { color: rgba(255, 255, 255, 0.82); }
-  .roof-hero h1 { color: #fff; text-shadow: 0 1px 16px rgba(0, 0, 0, 0.45); }
-  .roof-hero .page-sub { color: rgba(255, 255, 255, 0.90); }
-  .roof-hero .tile-facts li { color: rgba(255, 255, 255, 0.80); }
-  .roof-hero .tile-facts strong { color: #fff; }
-  .roof-hero .btn-ghost { border-color: rgba(255, 255, 255, 0.9); color: #fff; }
-  .roof-hero .btn-ghost:hover { background: rgba(255, 255, 255, 0.12); }
-
-  /* «Наплыв»: следующая секция белой карточкой выезжает на тёмное фото со
-     скруглённым верхом — премиальная деталь и приглашение скроллить (приём
-     конкурента europrofil); заодно поднимает сетку материалов, чтобы верх
-     первых карточек выглядывал в первом экране. */
-  .roof-hero + .section {
-    position: relative;
-    z-index: 2;
-    margin-top: -22px;
-    border-radius: 20px 20px 0 0;
-    background: var(--color-paper);
-    padding-top: var(--space-lg);
-  }
-  .roof-hero + .section .section-head { margin-bottom: var(--space-md); }
 }
 
 /* Сетка материалов/товаров: колонки по числу карточек, чтобы 2–3 товара

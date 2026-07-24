@@ -19,6 +19,10 @@ import re
 from pathlib import Path
 from urllib.parse import quote
 
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
+from banner_common import banner, BANNER_JS, SLIDE_SALE_TILE, SLIDE_NEW_BRICK, SLIDE_DELIVERY
+
 BASE = Path("/Users/dm/Desktop/сайт")
 DATA = json.loads((BASE / "data" / "catalog.json").read_text())
 
@@ -376,6 +380,7 @@ SHELL_JS = """
 
 
 def page_shell(title, descr, body, extra_js="", root="",
+               promo=True,
                cta_h2="Сомневаетесь, какой подойдёт?",
                cta_note="Напишите в любой мессенджер или оставьте номер — подберём кирпич под дом и бюджет, посчитаем количество.",
                product="", extra_head=""):
@@ -389,11 +394,11 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=29">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=30">{extra_head}
 </head>
 <body>
 
-{promo_bar(root)}
+{promo_bar(root) if promo else ""}
 
   <header class="masthead">
     <div class="wrap masthead-in">
@@ -612,20 +617,26 @@ def build_category():
         <span class="go">Показать всё {ARROW}</span>
       </a>""")
 
+    hero = banner(
+        "Облицовочный кирпич",
+        f"<b>{total} {plural(total, 'вид', 'вида', 'видов')}</b> · {len(COLL_ORDER)} коллекций · от {rub(all_min)} ₽/шт",
+        [SLIDE_NEW_BRICK,
+         {"eyebrow": "Расчёт",
+          "title": "Посчитаем кирпич на дом <b>за 10 минут</b>",
+          "sub": "Площадь стен минус проёмы, запас на бой — и цена с доставкой.",
+          "cta": "Посчитать кирпич", "href": "#calc",
+          "img": "img/cat-brick.jpg"},
+         SLIDE_SALE_TILE,
+         SLIDE_DELIVERY])
+
     body = f"""
   <main>
-    <section class="page-head">
-      <div class="wrap">
-        <nav class="crumbs" aria-label="Вы здесь"><a href="index.html">Главная</a>
-          <span aria-hidden="true">/</span> <span>Облицовочный кирпич</span></nav>
-        <h1>Облицовочный кирпич</h1>
-        <p class="page-sub">Купить облицовочный кирпич в Краснодаре: {total} {plural(total, "вид", "вида", "видов")} от {rub(all_min)} ₽/шт с заводов Юга. Доставка на объект, оплата при получении.</p>
-      </div>
-    </section>
+{hero}
 
     <!-- Подбор: свотч цвета и чип бюджета — входы в сетку/коллекцию, не фильтры -->
     <section class="pick-bar" aria-label="Подбор кирпича">
       <div class="wrap">
+        <p class="caption pick-intro">Купить облицовочный кирпич в Краснодаре: {total} {plural(total, "вид", "вида", "видов")} от {rub(all_min)} ₽/шт с заводов Юга. Доставка на объект, оплата при получении.</p>
         <div class="pick-row pick-row--color">
           <span class="pick-row-label">Цвет</span>
           {color_track(chr(10).join(swatches))}
@@ -740,7 +751,7 @@ def build_category():
         "Облицовочный кирпич — 5 коллекций, подбор по цвету | Строй-Сейл Краснодар",
         f"Купить облицовочный кирпич в Краснодаре: {total} {plural(total, 'вид', 'вида', 'видов')} от {rub(all_min)} ₽/шт с заводов Юга. "
         "Подбор по цвету, доставка на объект, оплата при получении.",
-        body, js)
+        body, js + BANNER_JS, promo=False)
     (BASE / "kirpich-oblitsovochnyy.html").write_text(out)
     print("kirpich-oblitsovochnyy.html:", total, "товаров")
 
@@ -1229,21 +1240,26 @@ def build_zabutovka():
         </div>
       </section>""")
 
+    hero = banner(
+        "Забутовочный кирпич",
+        f"<b>{n} {plural(n, 'вид', 'вида', 'видов')}</b> · полнотелый и пустотелый · под фундамент и стены",
+        [{"eyebrow": "Подбор",
+          "title": "Подберём марку под задачу <b>за 5 минут</b>",
+          "sub": "Фундамент, несущие стены или перегородки — скажите, что строите.",
+          "cta": "Получить подбор", "href": "#lead",
+          "img": "img/cat-brick.jpg"},
+         SLIDE_NEW_BRICK,
+         SLIDE_SALE_TILE,
+         SLIDE_DELIVERY])
+
     body = f"""
   <main>
-    <section class="page-head">
-      <div class="wrap">
-        <nav class="crumbs" aria-label="Вы здесь"><a href="index.html">Главная</a>
-          <span aria-hidden="true">/</span> <span>Забутовочный кирпич</span></nav>
-        <h1>Забутовочный кирпич</h1>
-        <p class="page-sub">Купить забутовочный кирпич в Краснодаре — {n} {plural(n, "вид", "вида", "видов")} с заводов Юга.
-          Рабочий кирпич, который прячется под облицовкой и штукатуркой:
-          главное в нём — марка прочности, а не красота.</p>
-      </div>
-    </section>
+{hero}
 
     <section class="pick-bar" aria-label="Подбор по задаче">
       <div class="wrap">
+        <p class="caption pick-intro">Купить забутовочный кирпич в Краснодаре — {n} {plural(n, "вид", "вида", "видов")} с заводов Юга.
+          Рабочий кирпич прячется под облицовкой и штукатуркой: главное в нём — марка прочности, а не красота.</p>
         <div class="pick-row">
           <span class="pick-row-label">Задача</span>
           <div class="pick-scroll pick-scroll--slide" role="group" aria-label="Что будете строить">
@@ -1311,7 +1327,7 @@ def build_zabutovka():
         f"Забутовочный кирпич — подбор по задаче | Строй-Сейл Краснодар",
         f"Купить забутовочный (рабочий) кирпич в Краснодаре: {n} {plural(n, 'вид', 'вида', 'видов')} под фундамент, "
         "стены и перегородки. Доставка на объект, оплата при получении.",
-        body, js)
+        body, js + BANNER_JS, promo=False)
     (BASE / "kirpich-zabutovochnyy.html").write_text(out)
     print(f"kirpich-zabutovochnyy.html: {n} товаров (цены скрыты)")
 

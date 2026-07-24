@@ -18,6 +18,10 @@ import re
 from urllib.parse import quote
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
+from banner_common import banner, BANNER_JS, SLIDE_SALE_TILE, SLIDE_NEW_BRICK, SLIDE_DELIVERY
+
 BASE = Path("/Users/dm/Desktop/сайт")
 
 # Абсолютный адрес сайта — для JSON-LD (относительные пути из /tovar/ бьются)
@@ -277,7 +281,7 @@ VIDEO_BUBBLE_JS = """
 
 
 def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
-               extra_head="", product=""):
+               extra_head="", product="", promo=True):
     """Каркас страницы. root = префикс относительных ссылок ('' или '../')."""
     return f"""<!DOCTYPE html>
 <html lang="ru">
@@ -289,11 +293,11 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=29">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=30">{extra_head}
 </head>
 <body>
 
-{promo_bar(root)}
+{promo_bar(root) if promo else ""}
 
   <header class="masthead">
     <div class="wrap masthead-in">
@@ -690,42 +694,27 @@ def build_category():
             </select>
           </div>"""
 
+    hero = banner(
+        "Тротуарная плитка",
+        f"<b>{total} {plural(total, 'вариант', 'варианта', 'вариантов')}</b> · 7 форм · от {rub(all_min)} ₽/м²",
+        [SLIDE_SALE_TILE,
+         {"eyebrow": "Расчёт",
+          "title": "Посчитаем плитку по плану двора <b>за 10 минут</b>",
+          "sub": "Пришлите размеры — посчитаем метры, поддоны и доставку.",
+          "cta": "Получить расчёт", "href": "#calc",
+          "img": "img/plitka/work-03.jpg"},
+         SLIDE_NEW_BRICK,
+         dict(SLIDE_DELIVERY, img="img/plitka/work-07.jpg")])
+
     body = f"""
-  <!-- Шапка категории: живая плитка -->
-  <section class="tile-hero" aria-label="Тротуарная плитка">
-    <div class="wrap tile-hero-in">
-      <div class="tile-hero-copy">
-        <nav class="crumbs" aria-label="Хлебные крошки">
-          <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
-          <span>Тротуарная плитка</span>
-        </nav>
-        <h1>Тротуарная плитка</h1>
-        <p class="page-sub">Купить тротуарную плитку в Краснодаре: {total} {plural(total, 'вариант', 'варианта', 'вариантов')} в 7 формах с завода-производителя.
-          Привезём на объект, разгрузим, оплата при получении.</p>
-        <ul class="tile-facts">
-          <li><strong>от {rub(all_min)} ₽/м²</strong> заводская цена</li>
-          <li><strong>40 мм</strong> — держит легковую машину</li>
-          <li><strong>F200</strong> — 200 циклов заморозки</li>
-          <li><strong>B30</strong> — дорожная прочность</li>
-        </ul>
-        <div class="hero-cta">
-          <a class="btn" href="#shapes">Выбрать форму</a>
-          <a class="btn btn-ghost" href="#calc">Посчитать количество</a>
-        </div>
-      </div>
-      <div class="tile-hero-stage" aria-hidden="true">
-        <img class="tile-drift-b" src="img/plitka/hero-tiles-red.webp" alt="" width="550" height="413" loading="eager">
-        <img class="tile-drift-a" src="img/plitka/hero-tiles-grey.webp" alt="" width="770" height="578" loading="eager">
-      </div>
-    </div>
-  </section>
+{hero}
 
   <!-- Формы -->
   <section class="section" id="shapes" aria-label="Формы плитки">
     <div class="wrap">
       <div class="section-head">
         <h2>Выберите форму</h2>
-        <p class="caption">Цвет подберёте внутри — в каждой форме порядка 24 расцветок.</p>
+        <p class="caption">Купить тротуарную плитку в Краснодаре: {total} {plural(total, "вариант", "варианта", "вариантов")} в 7 формах с завода-производителя. Вся плитка 40 мм — держит легковую машину (F200, B30). Цвет подберёте внутри — в каждой форме порядка 24 расцветок.</p>
       </div>
       <div class="cats cats-tiles">
 {"".join(shape_cards)}
@@ -787,7 +776,7 @@ def build_category():
         body + VIDEO_BUBBLE,
         "Не знаете, какую форму выбрать?",
         "Позвоните — подберём форму и цвет под дом, посчитаем площадь по плану участка и скажем точную цену с доставкой.",
-        CALC_JS + VIDEO_BUBBLE_JS)
+        CALC_JS + VIDEO_BUBBLE_JS + BANNER_JS, promo=False)
     (BASE / "trotuarnaya-plitka.html").write_text(out)
     print(f"trotuarnaya-plitka.html: {total} товаров, 7 форм, от {all_min} ₽/м²")
 

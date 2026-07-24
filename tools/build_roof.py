@@ -23,6 +23,10 @@ import json
 from urllib.parse import quote
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
+from banner_common import banner, BANNER_JS, SLIDE_SALE_TILE, SLIDE_DELIVERY
+
 BASE = Path("/Users/dm/Desktop/сайт")
 
 # Абсолютный адрес сайта — для JSON-LD (относительные пути из /tovar/ бьются)
@@ -35,7 +39,7 @@ COLORS = IMG["colors"]
 P_COLORS = IMG["product_colors"]
 P_IMAGES = IMG["products"]
 
-STYLES_V = 29
+STYLES_V = 30
 IMG_V = 4
 
 
@@ -152,7 +156,7 @@ GALLERY_JS = """
 
 
 def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
-               extra_head="", product=""):
+               extra_head="", product="", promo=True):
     return f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -167,7 +171,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
 </head>
 <body>
 
-{promo_bar(root)}
+{promo_bar(root) if promo else ""}
 
   <header class="masthead">
     <div class="wrap masthead-in">
@@ -939,42 +943,38 @@ def build_hub():
                               f["short"], f["card"], price=None,
                               extra=card_colors(f["products"][0]["id"])))
 
+    hero = banner(
+        "Кровля: металлочерепица и&nbsp;профнастил",
+        "<b>лист до 8 м</b> · 40 цветов · гарантия до 15 лет",
+        [{"eyebrow": "Расчёт",
+          "title": "Посчитаем крышу по размерам <b>за 10 минут</b>",
+          "sub": "Раскрой листов до 8 м без стыков, доборные и цена с доставкой.",
+          "cta": "Посчитать крышу", "href": "#calc",
+          "img": f"img/roof/hero-roof.jpg?v={IMG_V}"},
+         {"eyebrow": "Металлочерепица",
+          "title": "Гарантия на покрытие <b>до 15 лет</b>",
+          "sub": "Супермонтеррей и Испанская дюна — с завода, режем в размер.",
+          "cta": "Выбрать черепицу", "href": "krovlya-metallocherepitsa.html",
+          "img": f"img/roof/cover-mch-monterrey.jpg?v={IMG_V}"},
+         {"eyebrow": "Один цвет — на всё",
+          "title": "<b>40 цветов</b>: кровля, забор и фасад в тон",
+          "sub": "Полиэстер, Granite и Printech — покрытие общее для всех материалов.",
+          "cta": "Смотреть цвета", "href": "#tsveta",
+          "img": f"img/roof/printech-live-1.jpg?v={IMG_V}"},
+         dict(SLIDE_DELIVERY,
+              sub="Листы до 8 м возим аккуратно, разгрузка на месте.",
+              img=f"img/roof/cover-cat-prof.jpg?v={IMG_V}")],
+        crumb="Кровля")
+
     body = f"""
-  <!-- Шапка раздела: в одном ключе с шапкой плитки — текст поверх парящего
-       фото крыши на мобиле, фото справа на десктопе -->
-  <section class="tile-hero roof-hero" aria-label="Кровля">
-    <div class="wrap tile-hero-in">
-      <div class="tile-hero-copy">
-        <nav class="crumbs" aria-label="Хлебные крошки">
-          <a href="index.html">Главная</a> <span aria-hidden="true">/</span>
-          <span>Кровля</span>
-        </nav>
-        <h1>Кровля: металлочерепица и&nbsp;профнастил</h1>
-        <p class="page-sub">Купить кровлю в Краснодаре: четыре материала с одного
-          завода. Режем в размер крыши — без стыков, цвет и покрытие общие.</p>
-        <ul class="tile-facts">
-          <li><strong>до 8 м</strong> лист целиком, без стыков</li>
-          <li><strong>40 цветов</strong> и покрытий на выбор</li>
-          <li><strong>0,4–0,5 мм</strong> сталь с полимером</li>
-          <li><strong>до 15 лет</strong> гарантия на покрытие</li>
-        </ul>
-        <div class="hero-cta">
-          <a class="btn" href="#materialy">Выбрать материал</a>
-          <a class="btn btn-ghost" href="#calc">Посчитать крышу</a>
-        </div>
-      </div>
-      <div class="tile-hero-stage roof-hero-stage" aria-hidden="true">
-        <img class="roof-hero-photo" src="img/roof/hero-roof.jpg?v={IMG_V}" alt="" width="1200" height="800" loading="eager" fetchpriority="high">
-      </div>
-    </div>
-  </section>
+{hero}
 
   <!-- Четыре материала = четыре категории -->
   <section class="section" id="materialy">
     <div class="wrap">
       <div class="section-head">
         <h2>Выберите материал</h2>
-        <p class="caption">Внутри — товары, все размеры и 40&nbsp;цветов.</p>
+        <p class="caption">Купить кровлю в Краснодаре: четыре материала с одного завода, режем в размер до 8 м без стыков. Внутри — товары, все размеры и 40&nbsp;цветов.</p>
       </div>
       <div class="cats cats-roof">{''.join(cards)}</div>
     </div>
@@ -1005,8 +1005,8 @@ def build_hub():
         cta_h2="Посчитаем крышу по вашим размерам",
         cta_note="Пришлите размеры дома или фото чертежа — вернём раскрой листов, "
                  "количество доборных и цену с доставкой.",
-        extra_js=ROOF_CALC_JS,
-        product="кровля")
+        extra_js=ROOF_CALC_JS + BANNER_JS,
+        product="кровля", promo=False)
     (BASE / "krovlya.html").write_text(out)
 
 
