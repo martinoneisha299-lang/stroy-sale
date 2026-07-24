@@ -182,6 +182,21 @@ def plural(n, one, few, many):
     return many
 
 
+def grid_cls(n):
+    """Класс сетки товаров: подбирает число колонок так, чтобы в последнем
+    ряду не оставалась одна сиротливая карточка (5 + 1 читается как дыра).
+    Большие каталоги не трогаем — там ряды и так плотные."""
+    if n <= 1 or n > 20:
+        return ""
+    for c in (5, 4, 3, 2):
+        if n % c == 0:
+            return f" p-grid--c{c}"
+    for c in (5, 4, 3):
+        if n % c != 1:
+            return f" p-grid--c{c}"
+    return ""
+
+
 def esc(s):
     return html.escape(str(s), quote=True)
 
@@ -394,7 +409,7 @@ def page_shell(title, descr, body, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=30">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=33">{extra_head}
 </head>
 <body>
 
@@ -681,7 +696,7 @@ def build_category():
               </span>
             </label>
             <label class="line-calc-group" for="cOpen">
-              <span class="line-calc-label">Окна<br>и двери</span>
+              <span class="line-calc-label">Окна <br>и двери</span>
               <span class="line-calc-input-wrap">
                 <input class="line-calc-input" id="cOpen" type="number" min="0" step="1" inputmode="decimal" placeholder="0" value="18">
                 <span class="line-calc-unit">м²</span>
@@ -702,7 +717,7 @@ def build_category():
               </div>
             </div>
             <a class="btn line-calc-btn" href="#lead">
-              Получить точный расчёт
+              Получить расчёт
             </a>
           </div>
           <p class="caption line-calc-note">Считаем с запасом 5% на бой и подрезку. Раскладку и доставку посчитает менеджер.</p>
@@ -1227,6 +1242,7 @@ def build_zabutovka():
         sub = [p for p in items if p["supplier"] == supplier]
         sub.sort(key=lambda p: (not p["_thumb"], rab_view(p)[0]))
         cards = "\n".join(card_z(p) for p in sub)
+        lane_grid = grid_cls(len(sub))
         lanes.append(f"""
       <section class="lane" aria-label="{esc(lane_name)}">
         <div class="lane-head">
@@ -1235,7 +1251,7 @@ def build_zabutovka():
             <p class="lane-meta">{esc(tagline)}</p>
           </div>
         </div>
-        <div class="p-grid">
+        <div class="p-grid{lane_grid}">
 {cards}
         </div>
       </section>""")
@@ -1663,7 +1679,7 @@ def build_brick_product(p, is_rab=False):
       <div class="section-head">
         <h2>Похожие по цвету и коллекции</h2>
       </div>
-      <div class="p-grid">
+      <div class="p-grid{grid_cls(len(sim))}">
 {sim_cards}
       </div>
       <div class="more">

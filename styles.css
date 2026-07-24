@@ -1,5 +1,5 @@
 /* Hallmark · macrostructure: Photographic · theme: studied-DNA — см. tokens.css */
-@import url("tokens.css?v=10");
+@import url("tokens.css?v=12");
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -27,9 +27,13 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-size: var(--text-base);
-  line-height: 1.55;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* абзацы и пункты списков не оставляют одинокое слово на последней строке */
+p, li { text-wrap: pretty; }
 
 img, svg { display: block; max-width: 100%; }
 
@@ -46,11 +50,15 @@ body { overflow-wrap: break-word; }
 h1, h2, h3 {
   font-style: normal;
   margin: 0;
-  /* длинное слово сначала пробуют перенести по слогам и только в крайнем
-     случае разрывают — иначе при крупном шрифте выходит «Строительст-во» */
-  -webkit-hyphens: auto;
-  hyphens: auto;
-  overflow-wrap: anywhere;
+  /* НИКАКИХ переносов по слогам в заголовках: «напрямую с произ-водства»
+     читается как опечатка. Кегли уже ограничены шириной экрана (clamp с vw),
+     поэтому даже при системном шрифте 200% слово влезает целиком; разрыв
+     остаётся только как крайняя мера для слов длиннее строки. */
+  -webkit-hyphens: manual;
+  hyphens: manual;
+  overflow-wrap: break-word;
+  /* строки заголовка выравниваются по длине, «висячее» слово не остаётся */
+  text-wrap: balance;
   min-width: 0;
 }
 
@@ -69,7 +77,9 @@ a { color: inherit; }
 /* ——— Микро-этикетка (музейная подпись — фирменный приём) ——— */
 .tag {
   font-size: var(--text-micro);
-  letter-spacing: 0.14em;
+  /* кириллица в капсе с трекингом 0.14em «рассыпается» — 0.1em держит слово */
+  letter-spacing: 0.1em;
+  font-weight: 600;
   text-transform: uppercase;
   color: var(--color-ink-soft);
 }
@@ -77,7 +87,8 @@ a { color: inherit; }
 .caption {
   font-size: var(--text-sm);
   color: var(--color-ink-soft);
-  line-height: 1.45;
+  line-height: 1.6;
+  max-width: 68ch;   /* строка не длиннее читаемой меры */
 }
 
 /* ——— Промо-полоска: сезонное предложение ——— */
@@ -86,8 +97,9 @@ a { color: inherit; }
   background: var(--color-ink);
   color: var(--color-paper);
   text-align: center;
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);   /* служебная полоса — одна строка даже на 320px */
   font-weight: 600;
+  letter-spacing: 0.01em;
   line-height: 1.4;
   padding: 10px var(--space-md);
   text-decoration: none;
@@ -309,8 +321,9 @@ a { color: inherit; }
 .hero .tag {
   color: var(--color-amber-soft);
   text-transform: uppercase;
-  font-size: var(--text-xs);
-  letter-spacing: 0.14em;
+  /* перечисление разделов держится в одну строку даже на 320px */
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
   font-weight: 700;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
@@ -320,7 +333,6 @@ a { color: inherit; }
   align-items: center;
   gap: var(--space-md);
   flex-wrap: wrap;
-  margin-top: var(--space-xs);
 }
 
 .hero-hint {
@@ -384,7 +396,7 @@ a { color: inherit; }
 }
 
 /* ——— Секции ——— */
-.section { padding-block: var(--space-3xl) 0; }
+.section { padding-block: var(--space-section) 0; }
 
 .section-head {
   display: flex;
@@ -479,6 +491,9 @@ a { color: inherit; }
   gap: var(--space-md);
 }
 
+/* карточка меряет саму себя — от этого считается кегль заголовка */
+.cat { container-type: inline-size; }
+
 .cat-img {
   width: 100%;
   height: auto;             /* сбрасываем HTML-атрибут height */
@@ -517,7 +532,11 @@ a { color: inherit; }
 }
 
 .cat-row h3 {
+  /* кегль считается от ширины самой карточки: длинное название
+     («Прямоугольник», «Металлочерепица») влезает целиком, без разрыва слова
+     посередине и без переноса по слогам */
   font-size: var(--text-base);
+  font-size: min(var(--text-base), 9.5cqw);
   font-weight: 600;
 }
 
@@ -532,7 +551,7 @@ a { color: inherit; }
 .cat .caption { margin: 0; }
 
 @media (min-width: 45em) {
-  .cats { grid-template-columns: repeat(auto-fill, minmax(var(--card-nav-min), 1fr)); }
+  .cats { grid-template-columns: repeat(auto-fill, minmax(min(var(--card-nav-min), 100vw - 40px), 1fr)); }
 }
 
 /* Сноска о ценах под сеткой категорий */
@@ -543,7 +562,7 @@ a { color: inherit; }
 
 /* ——— «Ещё возим» — второстепенные категории ——— */
 .more {
-  margin-top: var(--space-xl);
+  margin-top: var(--space-lg);
   border-top: var(--rule-hair);
   padding-top: var(--space-md);
   display: flex;
@@ -591,24 +610,28 @@ a { color: inherit; }
   padding-top: var(--space-sm);
 }
 
+/* Номер шага — крупная цифра-указатель, а не мелкая метка: по ней глаз
+   находит начало колонки, и четыре шага перестают быть «газетным разворотом» */
 .step::before {
   counter-increment: step;
   content: counter(step);
   display: block;
-  font-size: var(--text-sm);
-  font-weight: 600;
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1;
   color: var(--color-accent);
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--space-sm);
   font-variant-numeric: tabular-nums;
 }
 
 .step h3 {
-  font-size: var(--text-base);
+  font-size: var(--text-md);
   font-weight: 600;
-  margin-bottom: var(--space-2xs);
+  line-height: 1.25;
+  margin-bottom: var(--space-xs);
 }
 
-.step p { margin: 0; }
+.step p { margin: 0; max-width: 34ch; }
 
 @media (min-width: 45em) {
   .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -669,7 +692,7 @@ a { color: inherit; }
 .lead-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-xl);
+  gap: var(--space-lg);
   border-top: 1px solid var(--color-ink);
   padding-top: var(--space-xl);
 }
@@ -677,19 +700,25 @@ a { color: inherit; }
 .lead-grid h2 {
   font-size: var(--text-2xl);
   font-weight: 700;
+  line-height: 1.15;
   max-width: 18ch;
 }
 
+/* Форма — отдельный бланк на тёплой подложке. Раньше поля тянулись через
+   пол-экрана и «висели» в пустоте рядом с заголовком. */
 .lead-form {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+  background: var(--color-tint);
+  padding: var(--space-lg);
 }
 
 .field label {
   display: block;
   font-size: var(--text-micro);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
+  font-weight: 600;
   text-transform: uppercase;
   color: var(--color-ink-soft);
   margin-bottom: var(--space-2xs);
@@ -700,7 +729,7 @@ a { color: inherit; }
   border: none;
   border-bottom: 1px solid var(--color-ink);
   background: transparent;
-  font: 400 var(--text-lg) var(--font-sans);
+  font: 400 var(--text-md) var(--font-sans);
   color: var(--color-ink);
   padding: var(--space-sm) 0;   /* высота поля ≥44px — удобно пальцем */
   border-radius: var(--radius-none);
@@ -722,10 +751,10 @@ a { color: inherit; }
 
 .form-note {
   margin: 0;
-  font-size: var(--text-micro);
+  font-size: var(--text-xs);
   color: var(--color-ink-soft);   /* контраст ≥4.5:1 — читаемо на телефоне */
-  line-height: 1.5;
-  max-width: 40ch;
+  line-height: 1.6;
+  max-width: 44ch;
 }
 
 .form-note a { color: var(--color-ink-soft); }
@@ -768,13 +797,54 @@ a { color: inherit; }
 }
 .often a:hover { color: var(--color-ink); }
 
-.lead-caption { max-width: 40ch; }
+.lead-caption {
+  max-width: 42ch;
+  font-size: var(--text-base);   /* вводный абзац, а не подпись — читается спокойно */
+}
+
+/* Левая колонка блока заявки: заголовок, абзац и способ связи без формы.
+   Раньше под абзацем оставалось пол-экрана пустоты рядом с полями. */
+.lead-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.lead-call {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: auto;
+  padding-top: var(--space-md);
+  border-top: var(--rule-hair);
+}
+
+.lead-phone {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.lead-phone:hover { color: var(--color-accent); }
+
+.lead-phone small {
+  display: block;
+  margin-top: var(--space-2xs);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--color-ink-soft);
+}
 
 .lead-form.is-sent .form-ok { display: block; }
 .lead-form.is-sent .btn { display: none; }
 
 @media (min-width: 56.25em) {
-  .lead-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  /* поле ввода не длиннее ожидаемого ответа — имя и телефон короткие,
+     линия через пол-экрана выглядела случайной */
+  .lead-grid { grid-template-columns: minmax(0, 1fr) minmax(20rem, 27rem); }
 }
 
 /* ——— Заказ: одно главное действие + тихий ряд мессенджеров ——— */
@@ -877,10 +947,10 @@ a { color: inherit; }
 
 .cta-band .msg-row-label { color: var(--color-paper-soft); }
 
-/* на телефоне телефон и мессенджеры уже в липкой полосе — в CTA-блоке
+/* на телефоне телефон и мессенджеры уже в липкой полосе — в блоке заявки
    не дублируем, оставляем заголовок + форму */
 @media (max-width: 56.1875em) {
-  .cta-left { display: none; }
+  .cta-left, .lead-call { display: none; }
 }
 
 @media (min-width: 56.25em) {
@@ -918,7 +988,7 @@ a { color: inherit; }
 
 /* ——— Карта в контактах ——— */
 .lead-place {
-  margin-top: var(--space-xl);
+  margin-top: var(--space-lg);
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
@@ -1148,23 +1218,76 @@ a { color: inherit; }
   color: var(--color-ink-soft);
 }
 
-/* спец-строка под шапкой страницы (характеристики формы плитки) */
-.page-spec { margin: var(--space-xs) 0 0; }
-
-/* статичные чипы-ссылки (кросс-формы плитки «в других формах») */
-.chip-links {
+/* Факты под шапкой страницы (толщина, морозостойкость, поддон).
+   Раньше это была одна серая строка через «·» — сплошная масса, которую
+   никто не дочитывал. Теперь каждый факт — отдельный пункт с терракотовым
+   «кирпичиком», как в полосе доверия на главной: глаз цепляет цифры. */
+.page-facts {
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  margin: var(--space-sm) 0 0;
+  padding: 0;
+}
+
+.page-facts li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  min-width: 0;              /* в колонке сетки факт ужимается, а не вылезает */
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--color-ink-soft);
+}
+
+/* пояснение — свой блок: вторая строка встаёт под первой, а не «уезжает» */
+.page-facts span { min-width: 0; }
+
+.page-facts li::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 5px;
+  background: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.page-facts b {
+  font-weight: 600;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* на телефоне факты идут парами: четыре строки подряд читались как список дел.
+   auto-fit + min(): на очень узком экране или при крупном системном шрифте
+   пары сами схлопываются в один столбец, ничего не вылезает за край */
+@media (max-width: 37.4375em) {
+  .page-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(8.5rem, 100%), 1fr));
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
+}
+
+/* статичные чипы-ссылки (кросс-формы плитки «в других формах») */
+/* Ряд ссылок «в других формах»: РОВНАЯ сетка, а не flex-лесенка.
+   Разная длина названий («Новый город» / «Прямоугольник») раньше давала
+   ступеньки и дыры справа; теперь колонки одной ширины, цены — в столбик. */
+.chip-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
   gap: var(--space-xs);
 }
 
 .chip-links a {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  flex-wrap: wrap;          /* «Прямоугольник 910 ₽/м²» на узком экране
-                               переносит цену внутрь чипа, а не за край */
-  gap: 6px;
-  max-width: 100%;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  min-width: 0;
   min-height: 44px;
   padding: var(--space-2xs) var(--space-sm);
   border: var(--rule-hair);
@@ -1175,6 +1298,8 @@ a { color: inherit; }
   color: var(--color-ink);
   transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
+
+.chip-links a > span:first-child { min-width: 0; }
 
 .chip-links a:hover { border-color: var(--color-accent); color: var(--color-accent); }
 
@@ -1201,7 +1326,7 @@ a { color: inherit; }
 
 /* ——— Футер ——— */
 .footer {
-  margin-top: var(--space-3xl);
+  margin-top: clamp(32px, 4vw, 48px);
   border-top: var(--rule-hair);
   padding-block: var(--space-lg);
 }
@@ -1219,15 +1344,20 @@ a { color: inherit; }
   .footer-in {
     flex-direction: row;
     flex-wrap: wrap;          /* при крупном шрифте строка переносится, а не вылезает */
-    justify-content: space-between;
+    /* пункты идут подряд слева, а не разлетаются по краям экрана:
+       space-between рвал строку на «газетные» колонки с провалами */
+    justify-content: flex-start;
     align-items: baseline;
-    gap: var(--space-xs) var(--space-lg);
+    gap: var(--space-xs) var(--space-xl);
   }
   .footer-in > * { min-width: 0; }
 }
 
 /* ——— Страница-документ (политика) ——— */
 .policy-text p { max-width: 65ch; }
+
+/* «На главную» под текстом политики — отбивка без инлайн-стиля */
+.policy-back { margin-top: var(--space-lg); }
 
 .policy-text h2 {
   font-size: var(--text-lg);
@@ -1243,23 +1373,28 @@ a { color: inherit; }
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-xs);
-  font-size: var(--text-sm);
-  color: var(--color-ink-soft);
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);   /* служебная строка не спорит с заголовком */
 }
 
 .crumbs a { text-decoration: none; }
 .crumbs a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .page-head h1 {
-  font-size: clamp(1.75rem, 3.5vw + 0.75rem, 2.75rem);
+  font-size: clamp(min(1.875rem, 8vw), 3.5vw + 0.75rem, 2.875rem);
   font-weight: 700;
-  letter-spacing: -0.01em;
-  margin: var(--space-sm) 0 var(--space-xs);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: var(--space-sm) 0 var(--space-sm);
 }
 
+/* Вводный абзац крупнее основного текста: между h1 и описанием появляется
+   ступень, шапка перестаёт читаться одним серым блоком */
 .page-sub {
   margin: 0;
-  max-width: 56ch;
+  max-width: 46ch;
+  font-size: var(--text-md);
+  line-height: 1.45;
   color: var(--color-ink-soft);
 }
 
@@ -1280,7 +1415,7 @@ a { color: inherit; }
 .lanes {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-xl);
+  gap: var(--space-lg);
   margin-top: var(--space-lg);
 }
 
@@ -1313,6 +1448,12 @@ a { color: inherit; }
   font-variant-numeric: tabular-nums;
 }
 
+/* цифры под вводным абзацем шапки — своя строка, а не «хвост» абзаца */
+.page-head .lane-meta {
+  margin-top: var(--space-sm);
+  color: var(--color-ink-faint);
+}
+
 .lane-all {
   flex: none;
   align-self: center;
@@ -1337,10 +1478,21 @@ a { color: inherit; }
 
 @media (min-width: 45em) {
   .p-grid {
-    grid-template-columns: repeat(auto-fill, minmax(var(--card-min), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--card-min), 100vw - 40px), 1fr));
     gap: var(--space-xl) var(--space-md);   /* воздух вместо рамок разделяет карточки */
   }
 }
+
+/* Небольшие наборы (раздел кровли, «похожие», бордюры) раскладываем ровными
+   рядами: при auto-fill шесть товаров вставали 5 + 1, и одинокая карточка
+   висела в пустом ряду. Число колонок считает генератор (grid_cls). */
+@media (min-width: 62.5em) {
+  .p-grid--c2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .p-grid--c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .p-grid--c4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .p-grid--c5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
 
 /* Карточка «фото и есть карточка» (Fireclay/Vandersanden): без подложки
    и рамок — текст лежит на бумаге, иерархию несут фото и воздух. */
@@ -1398,11 +1550,13 @@ a { color: inherit; }
 }
 
 .p-price, .p-ask {
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
   font-weight: 500;
-  /* цена прижата к низу карточки: в ряду цены стоят на одной линии, даже
-     если у соседа имя или описание в две строки */
-  margin: auto 0 0;
+  /* цена идёт сразу под описанием. Прижимать её к низу карточки (margin auto)
+     нельзя: у карточек без второй строки открывалась дыра до 48px — на сетке
+     это читалось как «дырявая» вёрстка. Разная высота цен — норма, так у всех
+     маркетплейсов. */
+  margin: 0;
   padding-top: 6px;
   color: var(--color-ink);
   font-variant-numeric: tabular-nums;
@@ -1497,11 +1651,17 @@ a { color: inherit; }
 }
 
 @media (min-width: 56.25em) {
+  /* три колонки от одной верхней линии: заголовок · телефон · форма.
+     Раньше это был flex со space-between и центровкой — между заголовком
+     и телефоном зияла дыра, а колонки висели на разной высоте. */
   .cta-band {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: var(--space-lg) var(--space-xl);
+    align-items: start;
   }
+
+  .cta-grid { display: contents; }
 }
 
 /* ——— Липкая полоса связи (только телефон) ——— */
@@ -1528,8 +1688,9 @@ a { color: inherit; }
   gap: 2px;
   text-decoration: none;
   /* 4 подписи в ряд: кегль ограничен долей экрана, иначе при системном
-     увеличении шрифта «Позвонить» и «WhatsApp» наезжали друг на друга */
-  font-size: min(var(--text-micro), 3vw);
+     увеличении шрифта «Позвонить» и «WhatsApp» наезжали друг на друга.
+     3.4vw — чтобы на обычном телефоне подпись была полными 12px */
+  font-size: min(var(--text-micro), 3.4vw);
   line-height: 1.15;
   text-align: center;
   overflow-wrap: anywhere;
@@ -1565,6 +1726,7 @@ a { color: inherit; }
 .line-calc {
   background: var(--color-surface);
   border: var(--rule-hair);
+  container-type: inline-size;   /* раскладка считается по ширине блока */
 }
 
 .line-calc-wrap {
@@ -1708,6 +1870,120 @@ a { color: inherit; }
   padding: var(--space-sm) var(--space-md);
   border-top: var(--rule-hair);
   background: var(--color-tint);
+  /* сноска — подложка во всю ширину блока: ограничение меры из .caption
+     обрезало заливку на середине калькулятора */
+  max-width: none;
+}
+
+/* ——— Калькулятор на телефоне: смета в две колонки ———
+   Ярлык слева, значение справа, ряды на волосяных линиях. Раньше поля и
+   результаты «плавали» разной ширины и вставали ступеньками — читалось криво.
+   display:contents вынимает ярлык и значение каждой группы прямо в сетку. */
+@media (max-width: 56.1875em) {
+  .line-calc-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+  }
+
+  .line-calc-group,
+  .line-calc-outputs,
+  .line-calc-block { display: contents; }
+
+  /* «Площадь<br>под плитку» — в одну строку: в столбце места хватает */
+  .line-calc-label br { display: none; }
+
+  .line-calc-label,
+  .line-calc-sub {
+    grid-column: 1;
+    margin: 0;
+    padding: var(--space-sm) var(--space-xs) var(--space-sm) var(--space-md);
+    border-top: var(--rule-hair);
+    white-space: normal;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+
+  .line-calc-input-wrap,
+  .line-calc-group select,
+  .line-calc-val {
+    grid-column: 2;
+    justify-self: stretch;      /* ячейка во всю колонку — линия ряда не рвётся */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    align-self: stretch;
+    border-top: var(--rule-hair);
+    padding: var(--space-xs) var(--space-md) var(--space-xs) 0;
+    text-align: right;
+  }
+
+  /* подчёркивание — только под самим полем: это единственное, что можно менять */
+  .line-calc-input-wrap { border-bottom: 0; gap: 4px; }
+
+  .line-calc-input {
+    border-bottom: 2px solid var(--color-ink);
+    min-height: 32px;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .line-calc-input-wrap:focus-within .line-calc-input {
+    border-bottom-color: var(--color-accent);
+  }
+
+  .line-calc-group select {
+    width: auto;
+    max-width: min(58vw, 24ch);
+    min-height: 40px;
+    text-align: right;
+    padding-left: var(--space-xs);
+  }
+
+  /* первая строка идёт сразу под верхней границей блока — линия не нужна */
+  .line-calc-group:first-child .line-calc-label,
+  .line-calc-group:first-child .line-calc-input-wrap,
+  .line-calc-group:first-child select { border-top: 0; }
+
+  .line-calc-val {
+    font-size: var(--text-xl);
+    line-height: 1.15;
+  }
+
+  .line-calc-btn {
+    grid-column: 1 / -1;
+    margin: var(--space-md);
+    width: auto;
+  }
+
+  /* Совсем узкий экран или крупный системный шрифт: две колонки не влезают
+     («6 поддонов» наезжало на «Отгрузка») — ярлык встаёт над значением.
+     Меряем ширину самого блока, а не экрана: правило срабатывает ровно тогда,
+     когда места действительно нет. */
+  @container (max-width: 17rem) {
+    .line-calc-wrap { grid-template-columns: minmax(0, 1fr); }
+
+    .line-calc-label,
+    .line-calc-sub {
+      padding: var(--space-sm) var(--space-md) 0;
+    }
+
+    .line-calc-input-wrap,
+    .line-calc-group select,
+    .line-calc-val {
+      /* без этого значение уезжает в неявную вторую колонку и наезжает на ярлык */
+      grid-column: 1;
+      justify-self: stretch;
+      justify-content: flex-start;
+      text-align: left;
+      border-top: 0;
+      padding: 2px var(--space-md) var(--space-sm);
+    }
+
+    .line-calc-group select { margin-left: var(--space-md); padding-left: 0; }
+  }
 }
 
 @media (min-width: 56.25em) {
@@ -2017,7 +2293,7 @@ a { color: inherit; }
 }
 
 .works-video {
-  margin-top: var(--space-xl);
+  margin-top: var(--space-lg);
   display: grid;
   gap: var(--space-md);
   align-items: center;
@@ -2118,7 +2394,7 @@ a.p-card:focus-visible {
 
 @media (min-width: 56.25em) {
   .pd-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: var(--space-lg) var(--space-2xl);
     align-items: start;
   }
@@ -2420,11 +2696,14 @@ a.p-card:focus-visible {
     padding-block: var(--space-xs);
   }
   .page-head {
-    padding-block: var(--space-sm);
+    padding-block: var(--space-sm) 0;
   }
+  /* заголовок остаётся заголовком и на телефоне: раньше он падал до 19px и
+     почти сливался с описанием — шапка читалась одним серым пятном */
   .page-head h1 {
-    font-size: var(--text-xl);
+    font-size: clamp(min(1.625rem, 7vw), 3.5vw + 0.75rem, 1.875rem);
   }
+  .page-sub { font-size: var(--text-base); }
   .pick-bar {
     padding-block: var(--space-sm);
   }
@@ -2705,12 +2984,12 @@ a.p-card:focus-visible {
   padding: var(--space-sm);
 }
 
-/* Кровля: длинные слова («Металлочерепица», «Супермонтеррей») в узких
-   карточках 2-в-ряд переносим по слогам, а не разрубаем посередине */
+/* Кровля: слова длиннее («Металлочерепица», «Супермонтеррей») — кегль ниже
+   потолком и сильнее зависит от ширины карточки. Переносы по слогам сняты:
+   дефис посреди названия читается как опечатка. */
 .cats-roof .cat-row h3 {
-  font-size: 0.9375rem;
-  -webkit-hyphens: auto;
-  hyphens: auto;
+  font-size: var(--text-sm);
+  font-size: min(var(--text-sm), 8.4cqw);
 }
 
 /* Две ключевые цифры на карточке товара (как «ширина/высота» у конкурента):
@@ -2920,9 +3199,9 @@ a.p-card:focus-visible {
 }
 
 /* Всё для крыши сразу: фото + тихие списки доборных, водостока, безопасности */
-.kit { display: grid; gap: var(--space-xl); }
+.kit { display: grid; gap: var(--space-lg); }
 
-.kit-col { display: flex; flex-direction: column; }
+.kit-col { display: flex; flex-direction: column; min-width: 0; }
 
 .kit h3 {
   font-size: var(--text-md);
@@ -2978,7 +3257,7 @@ a.swatch, a.budget-chip { text-decoration: none; }
 
 .tiles {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--tile-min), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--tile-min), 100vw - 40px), 1fr));
   gap: var(--space-lg);
 }
 
@@ -2992,7 +3271,7 @@ a.swatch, a.budget-chip { text-decoration: none; }
 
 .tile .mosaic {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 3px;                       /* «шов» между фото, как в кладке */
   background: var(--color-paper);
   border: var(--rule-hair);
@@ -3140,6 +3419,8 @@ a.swatch, a.budget-chip { text-decoration: none; }
 .tile .t-meta {
   display: flex;
   align-items: center;
+  /* при крупном системном шрифте строка переносится, а не распирает плитку */
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 6px;
   font-size: var(--text-base);
@@ -3147,7 +3428,7 @@ a.swatch, a.budget-chip { text-decoration: none; }
   color: inherit;
 }
 
-.tile .t-meta .cnt { color: var(--color-ink-faint); }
+.tile .t-meta .cnt { color: var(--color-ink-faint); min-width: 0; }
 .tile .t-meta .price { font-weight: 600; }
 .tile .t-meta .price-ask { font-weight: 500; color: var(--color-accent); }
 
@@ -3226,8 +3507,10 @@ a.swatch, a.budget-chip { text-decoration: none; }
 
 @media (max-width: 44.9375em) {
   .tiles {
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
+    /* minmax(0,…): голый 1fr раздувается до min-content длинного слова
+       («керамический» при системном шрифте 200%) и плитка вылезала за экран */
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-lg);
   }
 }
 

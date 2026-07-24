@@ -39,7 +39,7 @@ COLORS = IMG["colors"]
 P_COLORS = IMG["product_colors"]
 P_IMAGES = IMG["products"]
 
-STYLES_V = 30
+STYLES_V = 33
 IMG_V = 4
 
 
@@ -695,6 +695,21 @@ def plural(n, one, few, many):
     return many
 
 
+def grid_cls(n):
+    """Класс сетки товаров: подбирает число колонок так, чтобы в последнем
+    ряду не оставалась одна сиротливая карточка (5 + 1 читается как дыра).
+    Большие каталоги не трогаем — там ряды и так плотные."""
+    if n <= 1 or n > 20:
+        return ""
+    for c in (5, 4, 3, 2):
+        if n % c == 0:
+            return f" p-grid--c{c}"
+    for c in (5, 4, 3):
+        if n % c != 1:
+            return f" p-grid--c{c}"
+    return ""
+
+
 def swatch_preview(pid, root=""):
     """Кружки цветов сразу под товаром — клиент видит, что есть варианты,
     не листая до палитры. Показываем первые 7, ссылка ведёт к полной палитре."""
@@ -895,21 +910,21 @@ CALC_SECTION = f"""
       <div class="line-calc">
         <div class="line-calc-wrap">
           <label class="line-calc-group" for="rcLen">
-            <span class="line-calc-label">Длина<br>дома</span>
+            <span class="line-calc-label">Длина <br>дома</span>
             <span class="line-calc-input-wrap">
               <input class="line-calc-input" id="rcLen" type="number" inputmode="decimal" min="1" max="100" step="0.1" placeholder="10">
               <span class="line-calc-unit">м</span>
             </span>
           </label>
           <label class="line-calc-group" for="rcWid">
-            <span class="line-calc-label">Ширина<br>дома</span>
+            <span class="line-calc-label">Ширина <br>дома</span>
             <span class="line-calc-input-wrap">
               <input class="line-calc-input" id="rcWid" type="number" inputmode="decimal" min="1" max="100" step="0.1" placeholder="8">
               <span class="line-calc-unit">м</span>
             </span>
           </label>
           <label class="line-calc-group" for="rcType">
-            <span class="line-calc-label">Тип<br>крыши</span>
+            <span class="line-calc-label">Тип <br>крыши</span>
             <select id="rcType">
               <option value="1.4" selected>Двускатная</option>
               <option value="1.5">Вальмовая (четыре ската)</option>
@@ -922,7 +937,7 @@ CALC_SECTION = f"""
               <span class="line-calc-val val-accent" id="rcArea">—</span>
             </div>
           </div>
-          <a class="btn line-calc-btn" href="#lead">Получить точный расчёт
+          <a class="btn line-calc-btn" href="#lead">Получить расчёт
             {ARR_SVG}</a>
         </div>
         <p class="caption line-calc-note">Оценка по размерам дома со свесами —
@@ -1033,7 +1048,7 @@ def build_family(f):
         main = f"""
   <section class="section">
     <div class="wrap">
-      <div class="p-grid">{cards}</div>
+      <div class="p-grid{grid_cls(len(f["products"]))}">{cards}</div>
       <p class="caption cats-note">{esc(f['note'])}</p>
     </div>
   </section>"""
@@ -1086,7 +1101,8 @@ def similar_html(p, root=""):
     else:
         pool = [x for x in SID if x is not p][:4]
         h2 = "Другой сайдинг"
-    cards = "".join(product_card(x, root) for x in pool[:4])
+    shown = pool[:4]
+    cards = "".join(product_card(x, root) for x in shown)
     fam = FAMILY_OF[p["id"]]
     return f"""
   <section class="section" aria-label="{esc(h2)}">
@@ -1094,7 +1110,7 @@ def similar_html(p, root=""):
       <div class="section-head">
         <h2>{esc(h2)}</h2>
       </div>
-      <div class="p-grid">{cards}</div>
+      <div class="p-grid{grid_cls(len(shown))}">{cards}</div>
       <div class="more">
         <a class="btn btn-ghost" href="{root}krovlya-{fam['slug']}.html">В раздел «{esc(fam['title'])}»</a>
       </div>

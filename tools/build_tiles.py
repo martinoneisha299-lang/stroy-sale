@@ -88,6 +88,21 @@ def plural(n, one, few, many):
     return many
 
 
+def grid_cls(n):
+    """Класс сетки товаров: подбирает число колонок так, чтобы в последнем
+    ряду не оставалась одна сиротливая карточка (5 + 1 читается как дыра).
+    Большие каталоги не трогаем — там ряды и так плотные."""
+    if n <= 1 or n > 20:
+        return ""
+    for c in (5, 4, 3, 2):
+        if n % c == 0:
+            return f" p-grid--c{c}"
+    for c in (5, 4, 3):
+        if n % c != 1:
+            return f" p-grid--c{c}"
+    return ""
+
+
 def esc(s):
     return html.escape(str(s), quote=True)
 
@@ -293,7 +308,7 @@ def page_shell(title, descr, body, cta_h2, cta_note, extra_js="", root="",
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{root}styles.css?v=30">{extra_head}
+  <link rel="stylesheet" href="{root}styles.css?v=33">{extra_head}
 </head>
 <body>
 
@@ -594,7 +609,7 @@ def calc_block(shape_select=None, root="",
     """Калькулятор площади. shape_select: HTML select или None (тогда цена фиксированная в data-price)."""
     fields = f"""
         <label class="line-calc-group" for="cArea">
-          <span class="line-calc-label">Площадь<br>под плитку</span>
+          <span class="line-calc-label">Площадь <br>под плитку</span>
           <span class="line-calc-input-wrap">
             <input class="line-calc-input" id="cArea" type="number" inputmode="decimal" min="1" max="10000" placeholder="0" value="78">
             <span class="line-calc-unit">м²</span>
@@ -603,7 +618,7 @@ def calc_block(shape_select=None, root="",
     if shape_select:
         fields += f"""
         <div class="line-calc-group">
-          <span class="line-calc-label">Форма<br>плитки</span>
+          <span class="line-calc-label">Форма <br>плитки</span>
           {shape_select}
         </div>"""
 
@@ -626,7 +641,7 @@ def calc_block(shape_select=None, root="",
           </div>
         </div>
         <a class="btn line-calc-btn" href="#lead">
-          Получить точный расчёт
+          Получить расчёт
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
       </div>
@@ -714,7 +729,13 @@ def build_category():
     <div class="wrap">
       <div class="section-head">
         <h2>Выберите форму</h2>
-        <p class="caption">Купить тротуарную плитку в Краснодаре: {total} {plural(total, "вариант", "варианта", "вариантов")} в 7 формах с завода-производителя. Вся плитка 40 мм — держит легковую машину (F200, B30). Цвет подберёте внутри — в каждой форме порядка 24 расцветок.</p>
+        <p class="caption">Купить тротуарную плитку в Краснодаре: {total} {plural(total, "вариант", "варианта", "вариантов")} в 7 формах с завода-производителя. Цвет подберёте внутри формы.</p>
+        <ul class="page-facts">
+          <li><b>40 мм</b> <span>толщина</span></li>
+          <li><b>F200</b> <span>200 зим</span></li>
+          <li><b>B30</b> <span>держит машину</span></li>
+          <li><b>~24</b> <span>цвета в форме</span></li>
+        </ul>
       </div>
       <div class="cats cats-tiles">
 {"".join(shape_cards)}
@@ -731,7 +752,7 @@ def build_category():
         <h2>Бордюры — сразу к плитке</h2>
         <p class="caption">Продукция сертифицирована. Посчитаем метраж по вашему плану — просто пришлите размеры.</p>
       </div>
-      <div class="p-grid">
+      <div class="p-grid{grid_cls(len(border_cards))}">
 {"".join(border_cards)}
       </div>
     </div>
@@ -797,8 +818,13 @@ def build_shape(slug):
         f'<a href="plitka-{s}.html">{esc(SHAPES[s]["name"])}</a>'
         for s in SHAPE_ORDER if s != slug)
 
-    spec_bits = ["40 мм толщина", "F200 — 200 циклов зима-лето",
-                 "B30 — выдержит машину", f"поддон {PALLET_M2} м²"]
+    # факты о плитке: цифра выделена, пояснение простыми словами рядом.
+    # Раньше это была одна серая строка через «·» — её не читали.
+    spec_bits = [("40 мм", "толщина"), ("F200", "200 зим"),
+                 ("B30", "держит машину"), (f"{PALLET_M2} м²", "в поддоне")]
+    facts_html = "\n".join(
+        f"        <li><b>{esc(a)}</b> <span>{esc(b)}</span></li>"
+        for a, b in spec_bits)
 
     filter_html = ""
     filter_js = ""
@@ -850,7 +876,9 @@ def build_shape(slug):
       <h1>Плитка «{esc(m['name'])}»</h1>
       <p class="page-sub">{esc(SHAPE_NOTE[slug])}. {n} {plural(n, 'расцветка', 'расцветки', 'расцветок')},
         от {rub(m['min_price'])} ₽/м² с завода.</p>
-      <p class="caption page-spec">{" · ".join(spec_bits)}</p>
+      <ul class="page-facts">
+{facts_html}
+      </ul>
     </div>
   </section>
 
@@ -914,7 +942,7 @@ def build_product(p):
     cross_form_html = ""
     if cross:
         chips = "".join(
-            f'<a href="{root}tovar/{q["slug"]}.html">{esc(SHAPES[q["shape"]]["name"])} '
+            f'<a href="{root}tovar/{q["slug"]}.html"><span>{esc(SHAPES[q["shape"]]["name"])}</span>'
             f'<small>{rub(q["price"]) + " ₽/м²" if q["price"] else "цена по запросу"}</small></a>'
             for q in cross)
         cross_form_html = f"""
@@ -1012,7 +1040,7 @@ def build_product(p):
         <h2>Другие расцветки «{shape_name}»</h2>
         <p class="caption">Та же форма и характеристики — другой рисунок.</p>
       </div>
-      <div class="p-grid">
+      <div class="p-grid{grid_cls(len(related_products(p)))}">
 {"".join(tile_card(q, root) for q in related_products(p))}
       </div>
       <div class="more">
