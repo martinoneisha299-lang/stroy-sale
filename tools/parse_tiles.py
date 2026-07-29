@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Тротуарная плитка (Легион) → data/tiles.json.
+"""Тротуарная плитка (Легион) → _data/tiles.json.
 
 Источник: ~/Desktop/фото/Тротурная плитка/ — 7 форм × ~24 цвета + 2 бордюра.
 Имя поставщика на сайт НЕ выводим (принцип коллекций).
@@ -21,7 +21,7 @@ import numpy as np
 
 SRC = Path("/Users/dm/Desktop/фото/Тротурная плитка")
 BASE = Path("/Users/dm/Desktop/сайт")
-OUT = BASE / "data" / "tiles.json"
+OUT = BASE / "_data" / "tiles.json"
 CLEAN_LIST = BASE / "tools" / "clean_textures.json"
 
 IMG_EXTS = {".webp", ".jpg", ".jpeg", ".png"}

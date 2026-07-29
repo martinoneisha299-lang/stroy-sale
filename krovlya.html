@@ -2,396 +2,246 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Кровля в Краснодаре: металлочерепица и профнастил с завода — Строй-Сейл</title>
-  <meta name="description" content="Металлочерепица, профнастил, штакетник и сайдинг с завода в Краснодаре. Режем в размер крыши до 8 м, 40 цветов, доборные и водосток в цвет. Доставка на объект, оплата при получении.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Кровля в Краснодаре — металлочерепица, профнастил, штакетник, сайдинг</title>
+  <meta name="description" content="Кровля, фасад и забор с завода: 16 профилей металлочерепицы, профнастила, штакетника и металлосайдинга, 40 цветов. Режем в размер, доборные в цвет. Доставка по Краснодару и краю.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=35">
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=54">
 </head>
 <body>
+  <a class="skip" href="#main">К&nbsp;содержанию</a>
+<a class="promo-bar" href="index.html#lead" hidden data-until="2026-12-31"><b>Бесплатный расчёт</b> материала по&nbsp;вашим размерам — ответим за&nbsp;5&nbsp;минут</a>
 
-
-
-  <header class="masthead">
-    <div class="wrap masthead-in">
-      <a class="wordmark" href="index.html">
-        <svg class="brand-mark" viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--color-logo)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
-        <span class="wordmark-text"><strong>СТРОЙСЕЙЛ</strong>
-        <span><span class="wm-long">Стройматериалы · </span>Краснодар</span></span>
+  <header class="hdr">
+    <div class="wrap hdr-top">
+      <a class="logo" href="index.html" aria-label="Стройсейл — на главную">
+        <svg viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--accent)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
+        <span><b>СТРОЙ</b><b>СЕЙЛ</b></span>
       </a>
-      <nav class="masthead-nav" aria-label="Основное меню">
-        <a href="index.html#catalog">Каталог</a>
-        <a href="index.html#order">Доставка и&nbsp;оплата</a>
-        <a href="index.html#lead">Контакты</a>
-      </nav>
-      <div class="masthead-contact">
-        <a href="tel:+79000000000">+7 (900) 000-00-00</a>
+      <div class="hdr-tools">
+        <button class="hdr-cat" type="button" id="catBtn" aria-expanded="false" aria-controls="catDrawer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Каталог</span>
+        </button>
+        <form class="hdr-search" role="search" action="poisk.html" method="get">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+          <input type="search" name="q" id="q" placeholder="Поиск: кирпич, плитка, профнастил"
+                 aria-label="Поиск по каталогу" autocomplete="off" data-root="">
+          <div class="sug" id="sug" hidden></div>
+        </form>
+      </div>
+      <div class="hdr-city">
+        <span>Город</span>
+        <a href="dostavka.html">Краснодар</a>
+      </div>
+      <div class="hdr-contact">
+        <a class="hdr-tel" href="tel:+79000000000">+7 (900) 000-00-00</a>
         <small>Перезвоним за&nbsp;5&nbsp;минут</small>
       </div>
+      <a class="btn hdr-cta" href="#lead">Заказать звонок</a>
+      <a class="hdr-cart" href="zayavka.html" aria-label="Заявка">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h11M8 12h11M8 18h11"/><circle cx="4" cy="6" r="1.2"/><circle cx="4" cy="12" r="1.2"/><circle cx="4" cy="18" r="1.2"/></svg><span class="cart-count" data-cart-count hidden>0</span>
+      </a>
     </div>
+    <nav class="subnav" aria-label="Разделы каталога">
+      <div class="wrap subnav-in">
+        <a class="subnav-sale" href="akcii.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Акции</a>
+        <a href="kirpich-oblitsovochnyy.html">Облицовочный кирпич</a><a href="kirpich-zabutovochnyy.html">Забутовочный кирпич</a><a href="trotuarnaya-plitka.html">Тротуарная плитка</a><a href="krovlya.html" class="is-on" aria-current="page">Кровля</a><a href="krovlya-sayding.html">Сайдинг и&nbsp;штакетник</a><a href="dostavka.html" class="subnav-right">Доставка и&nbsp;оплата</a><a href="raboty.html">Наши работы</a>
+      </div>
+    </nav>
   </header>
 
+  <main id="main">
 
+  <section class="page-head"><div class="wrap">
+    <nav aria-label="Вы здесь"><ol class="crumbs"><li><a href="index.html">Главная</a></li><li><a href="index.html#catalog">Каталог</a></li><li><span>Кровля, фасад и&nbsp;забор</span></li></ol></nav>
+    <h1>Кровля, фасад и&nbsp;забор</h1>
+    <p class="page-sub">Купить кровлю в&nbsp;Краснодаре: металлочерепица, профнастил,
+      штакетник и&nbsp;металлосайдинг с&nbsp;одного завода. Режем листы в&nbsp;размер, доборные
+      гнём в&nbsp;цвет — крыша, забор и&nbsp;обшивка получаются в&nbsp;одном тоне.</p>
+    <ul class="facts">
+      <li class="brick-mark"><b>16</b> профилей</li>
+      <li class="brick-mark"><b>40</b> цветов</li>
+      <li class="brick-mark"><b>до&nbsp;15&nbsp;лет</b> гарантия на&nbsp;покрытие</li>
+      <li class="brick-mark">Оплата при&nbsp;получении</li>
+    </ul>
+  </div></section>
 
-  <!-- Шапка-обложка: фото во всю ширину, акции сменяют друг друга (BANNER_JS) -->
-  <section class="pb" aria-label="Кровля — акции и предложения">
-    <div class="pb-stage">
-      <div class="pb-stack">
-        <div class="pb-frame">
-          <img class="pb-photo" src="img/roof/hero-roof.jpg?v=4" alt="" loading="eager" fetchpriority="high">
-          <div class="pb-veil"></div>
+  <section class="section"><div class="wrap">
+    <div class="section-head"><h2>Выберите материал</h2></div>
+    <div class="tiles"><a class="tile" href="krovlya-metallocherepitsa.html"><strong>Металлочерепица<span>2&nbsp;профиля · для&nbsp;скатной крыши</span></strong><img src="img/roof/cover-cat-mch.jpg?v=4" alt="Красная глянцевая металлочерепица с каплями дождя" width="320" height="240" loading="lazy"></a><a class="tile" href="krovlya-profnastil.html"><strong>Профнастил<span>6&nbsp;профилей · крыша, забор, навес</span></strong><img src="img/roof/cover-cat-prof.jpg?v=4" alt="Профнастил серо-синего цвета крупным планом" width="320" height="240" loading="lazy"></a><a class="tile" href="krovlya-shtaketnik.html"><strong>Штакетник<span>3&nbsp;формы верха · для&nbsp;забора с&nbsp;просветом</span></strong><img src="img/roof/cover-cat-sht.jpg?v=4" alt="Планки графитового евроштакетника крупным планом" width="320" height="240" loading="lazy"></a><a class="tile" href="krovlya-sayding.html"><strong>Металлосайдинг<span>5&nbsp;профилей · фасад и&nbsp;подшивка свесов</span></strong><img src="img/roof/cover-cat-sid.jpg?v=4" alt="Металлосайдинг с фотопечатью под серое дерево крупным планом" width="320" height="240" loading="lazy"></a></div>
+    <p class="note">Внутри каждого материала — профили с&nbsp;размерами, фото,
+      чертежами волны и&nbsp;палитрой цветов.</p>
+  </div></section>
+
+  <section class="section" id="tsveta"><div class="wrap">
+    <div class="section-head"><h2>Один цвет&nbsp;— на&nbsp;всё</h2></div>
+    <p class="page-sub">Лист, конёк, планки, водосток и&nbsp;саморезы красим в&nbsp;один
+      тон&nbsp;— крыша выглядит целой. Всего 40&nbsp;оттенков:
+      20&nbsp;глянцевых полиэстеров, 7&nbsp;матовых Granite Deep Mat,
+      12&nbsp;рисунков Printech под&nbsp;дерево и&nbsp;камень, цинк без&nbsp;покраски.</p>
+    <div class="pd-colors"><a role="img" aria-label="Цвет: Красная окись · Granite 3009" title="Красная окись · Granite 3009" style="background-image:url(img/roof/sw-granite-deep-mat-3009.jpg?v=4)"></a><a role="img" aria-label="Цвет: Тёмная зелень · Granite 6020" title="Тёмная зелень · Granite 6020" style="background-image:url(img/roof/sw-granite-deep-mat-6020.jpg?v=4)"></a><a role="img" aria-label="Цвет: Графит · Granite 7024" title="Графит · Granite 7024" style="background-image:url(img/roof/sw-granite-deep-mat-7024.jpg?v=4)"></a><a role="img" aria-label="Цвет: Терракота · Granite 8004" title="Терракота · Granite 8004" style="background-image:url(img/roof/sw-granite-deep-mat-8004.jpg?v=4)"></a><a role="img" aria-label="Цвет: Шоколад · Granite 8017" title="Шоколад · Granite 8017" style="background-image:url(img/roof/sw-granite-deep-mat-8017.jpg?v=4)"></a><a role="img" aria-label="Цвет: Чёрный · Granite 9005" title="Чёрный · Granite 9005" style="background-image:url(img/roof/sw-granite-deep-mat-9005.jpg?v=4)"></a><a role="img" aria-label="Цвет: Тёмный шоколад · Granite RR32" title="Тёмный шоколад · Granite RR32" style="background-image:url(img/roof/sw-granite-deep-mat-rr32.jpg?v=4)"></a><a role="img" aria-label="Цвет: Античный дуб" title="Античный дуб" style="background-image:url(img/roof/sw-antichnyi-dub.jpg?v=4)"></a><a role="img" aria-label="Цвет: Вишня тёмная" title="Вишня тёмная" style="background-image:url(img/roof/sw-vishnya-temnaya.jpg?v=4)"></a><a role="img" aria-label="Цвет: Бельгийский кирпич" title="Бельгийский кирпич" style="background-image:url(img/roof/sw-belgii-skii-kirpich.jpg?v=4)"></a><a role="img" aria-label="Цвет: Берёза белая" title="Берёза белая" style="background-image:url(img/roof/sw-bereza-belaya.jpg?v=4)"></a><a role="img" aria-label="Цвет: Орех тёмный" title="Орех тёмный" style="background-image:url(img/roof/sw-oreh-temnyi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Дикий камень" title="Дикий камень" style="background-image:url(img/roof/sw-dikii-kamen.jpg?v=4)"></a><a role="img" aria-label="Цвет: Кирпич" title="Кирпич" style="background-image:url(img/roof/sw-kirpich.jpg?v=4)"></a><a role="img" aria-label="Цвет: Античный дуб двухсторонний" title="Античный дуб двухсторонний" style="background-image:url(img/roof/sw-antichnyi-dub-dvuhstoronnii.jpg?v=4)"></a><a role="img" aria-label="Цвет: Светлое дерево" title="Светлое дерево" style="background-image:url(img/roof/sw-svetloe-derevo.jpg?v=4)"></a><a role="img" aria-label="Цвет: Сосна светлая" title="Сосна светлая" style="background-image:url(img/roof/sw-sosna-svetlaya.jpg?v=4)"></a><a role="img" aria-label="Цвет: Ясень светлый" title="Ясень светлый" style="background-image:url(img/roof/sw-yasen-svetlyi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Каштан" title="Каштан" style="background-image:url(img/roof/sw-kashtan.jpg?v=4)"></a><a role="img" aria-label="Цвет: Бежевый · RAL 1014" title="Бежевый · RAL 1014" style="background-image:url(img/roof/sw-ral-1014-bezhevyi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Светло-бежевый · RAL 1015" title="Светло-бежевый · RAL 1015" style="background-image:url(img/roof/sw-ral-1015-svetlo-bezhevyi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Жёлтый · RAL 1018" title="Жёлтый · RAL 1018" style="background-image:url(img/roof/sw-ral-1018-zhe-ltyi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Золото · RAL 1036" title="Золото · RAL 1036" style="background-image:url(img/roof/sw-ral-1036-zoloto.jpg?v=4)"></a><a role="img" aria-label="Цвет: Рубиново-красный · RAL 3003" title="Рубиново-красный · RAL 3003" style="background-image:url(img/roof/sw-ral-3003-rubinovo-krasnyi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Спелая вишня · RAL 3005" title="Спелая вишня · RAL 3005" style="background-image:url(img/roof/sw-ral-3005-spelaya-vishnya.jpg?v=4)"></a><a role="img" aria-label="Цвет: Красно-коричневый · RAL 3011" title="Красно-коричневый · RAL 3011" style="background-image:url(img/roof/sw-ral-3011-krasno-korichnevyi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Ультрамарин · RAL 5002" title="Ультрамарин · RAL 5002" style="background-image:url(img/roof/sw-ral-5002-ultramarin.jpg?v=4)"></a><a role="img" aria-label="Цвет: Бирюза · RAL 5021" title="Бирюза · RAL 5021" style="background-image:url(img/roof/sw-ral-5021-biryuza.jpg?v=4)"></a><a role="img" aria-label="Цвет: Зелёный лист · RAL 6002" title="Зелёный лист · RAL 6002" style="background-image:url(img/roof/sw-ral-6002-zelenyi-list.jpg?v=4)"></a><a role="img" aria-label="Цвет: Зелёный Мох · RAL 6005" title="Зелёный Мох · RAL 6005" style="background-image:url(img/roof/sw-ral-6005-zele-nyi-moh.jpg?v=4)"></a><a role="img" aria-label="Цвет: Серый · RAL 7004" title="Серый · RAL 7004" style="background-image:url(img/roof/sw-ral-7004-seryi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Мышино-серый · RAL 7005" title="Мышино-серый · RAL 7005" style="background-image:url(img/roof/sw-ral-7005-myshino-seryi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Терракотовый · RAL 8004" title="Терракотовый · RAL 8004" style="background-image:url(img/roof/sw-ral-8004-terrakotovyi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Графитовый серый · RAL 7024" title="Графитовый серый · RAL 7024" style="background-image:url(img/roof/sw-ral-7024-grafitovyi-seryi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Шоколад · RAL 8017" title="Шоколад · RAL 8017" style="background-image:url(img/roof/sw-ral-8017-shokolad.jpg?v=4)"></a><a role="img" aria-label="Цвет: Белый · RAL 9003" title="Белый · RAL 9003" style="background-image:url(img/roof/sw-ral-9003-belyi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Серебро · RAL 9006" title="Серебро · RAL 9006" style="background-image:url(img/roof/sw-ral-9006-serebro.jpg?v=4)"></a><a role="img" aria-label="Цвет: Шоколадный глянец · RAL NL 805" title="Шоколадный глянец · RAL NL 805" style="background-image:url(img/roof/sw-ral-nl-805-shokoladnyi-glyanets.jpg?v=4)"></a><a role="img" aria-label="Цвет: Тёмный шоколад · RR 32" title="Тёмный шоколад · RR 32" style="background-image:url(img/roof/sw-rr-32-te-mnyi-shokolad.jpg?v=4)"></a><a role="img" aria-label="Цвет: Цинк" title="Цинк" style="background-image:url(img/roof/sw-tsink.jpg?v=4)"></a></div>
+    <p class="note">Названия и&nbsp;коды RAL показываем в&nbsp;карточке товара&nbsp;— там&nbsp;же
+      видно, какие цвета доступны именно для&nbsp;этого профиля. Перед заказом
+      привезём образец вживую: на&nbsp;экране оттенок всегда врёт.</p>
+  </div></section>
+
+  <section class="section band" id="dobornye"><div class="wrap">
+    <div class="section-head"><h2>Всё для&nbsp;крыши — сразу</h2>
+      <a class="see-all" href="#lead">Посчитать комплект</a></div>
+    <div class="tiles"><div class="tile"><strong>Доборные элементы<span>Гнём сами, в&nbsp;цвет кровли</span></strong></div><div class="tile"><strong>Водосточные системы<span>Круглая и&nbsp;прямоугольная, с&nbsp;крепежом</span></strong></div><div class="tile"><strong>Безопасность кровли<span>Чтобы снег сходил порциями</span></strong></div></div>
+    <p class="note"><b>Доборные элементы:</b> конёк фигурный, конёк полукруглый, конёк-ребро, заглушки конька, планка карнизная, планка ветровая, планка лобовая, ендова верхняя и&nbsp;нижняя, планки примыкания, планки углов, планка снегозадержателя, планка диагональная, L-планка заборная.</p><p class="note"><b>Водосточные системы:</b> круглая система «Оптима» 125/90&nbsp;— желоба, трубы, углы, воронки, прямоугольная гофрированная система — желоба, трубы, колена, крюки, крепления, заглушки — весь крепёж в&nbsp;комплекте.</p><p class="note"><b>Безопасность кровли:</b> снегозадержатели трубчатые, 1&nbsp;м и&nbsp;3&nbsp;м, кровельные ограждения, высота 650&nbsp;и&nbsp;900&nbsp;мм.</p>
+  </div></section>
+
+  <section class="section" id="calc"><div class="wrap">
+    <div class="calc">
+      <h2>Прикиньте площадь крыши</h2>
+      <p class="calc-sub">Оценка по&nbsp;размерам дома со&nbsp;свесами — чтобы понять
+        порядок цифр до&nbsp;звонка.</p>
+      <div class="calc-rows">
+        <div class="calc-row">
+          <label for="rcLen">Длина дома, м</label>
+          <span class="calc-val"><input id="rcLen" type="number" inputmode="decimal"
+            min="1" max="100" step="0.1" placeholder="10"></span>
         </div>
-        <div class="pb-frame">
-          <img class="pb-photo" src="img/roof/cover-mch-monterrey.jpg?v=4" alt="" loading="lazy">
-          <div class="pb-veil"></div>
+        <div class="calc-row">
+          <label for="rcWid">Ширина дома, м</label>
+          <span class="calc-val"><input id="rcWid" type="number" inputmode="decimal"
+            min="1" max="100" step="0.1" placeholder="8"></span>
         </div>
-        <div class="pb-frame">
-          <img class="pb-photo" src="img/roof/printech-live-1.jpg?v=4" alt="" loading="lazy">
-          <div class="pb-veil"></div>
-        </div>
-        <div class="pb-frame">
-          <img class="pb-photo" src="img/roof/cover-cat-prof.jpg?v=4" alt="" loading="lazy">
-          <div class="pb-veil"></div>
-        </div>
-      </div>
-
-      <div class="pb-head">
-        <div class="wrap">
-          <nav aria-label="Хлебные крошки">
-            <a class="pb-back" href="index.html#catalog"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Каталог</a>
-          </nav>
-          <h1>Кровля: металлочерепица и&nbsp;профнастил</h1>
-          <p class="pb-facts"><b>лист до&nbsp;8&nbsp;м</b> · 40&nbsp;цветов · гарантия до&nbsp;15&nbsp;лет</p>
+        <div class="calc-row">
+          <label for="rcType">Тип крыши</label>
+          <span class="calc-val"><select id="rcType">
+            <option value="1.4" selected>Двускатная</option>
+            <option value="1.5">Вальмовая, четыре ската</option>
+            <option value="1.15">Односкатная</option>
+          </select></span>
         </div>
       </div>
-
-      <div class="pb-deck">
-        <a class="pb-slide" href="#calc"><span class="wrap">
-            <span class="pb-eyebrow">Расчёт</span>
-            <span class="pb-title">Посчитаем крышу по&nbsp;размерам <b>за&nbsp;10&nbsp;минут</b></span>
-            <p class="pb-sub">Раскрой листов до&nbsp;8&nbsp;м без&nbsp;стыков, доборные и&nbsp;цена с&nbsp;доставкой.</p>
-            <span class="pb-go">Посчитать крышу</span>
-        </span></a>
-        <a class="pb-slide" href="krovlya-metallocherepitsa.html"><span class="wrap">
-            <span class="pb-eyebrow">Металлочерепица</span>
-            <span class="pb-title">Гарантия на&nbsp;покрытие <b>до&nbsp;15&nbsp;лет</b></span>
-            <p class="pb-sub">Супермонтеррей и&nbsp;Испанская дюна&nbsp;— с&nbsp;завода, режем в&nbsp;размер.</p>
-            <span class="pb-go">Выбрать черепицу</span>
-        </span></a>
-        <a class="pb-slide" href="#tsveta"><span class="wrap">
-            <span class="pb-eyebrow">Один цвет&nbsp;— на&nbsp;всё</span>
-            <span class="pb-title"><b>40&nbsp;цветов</b>: кровля, забор и&nbsp;фасад в&nbsp;тон</span>
-            <p class="pb-sub">Полиэстер, Granite и&nbsp;Printech — покрытие общее для&nbsp;всех материалов.</p>
-            <span class="pb-go">Смотреть цвета</span>
-        </span></a>
-        <a class="pb-slide" href="#lead"><span class="wrap">
-            <span class="pb-eyebrow">Доставка</span>
-            <span class="pb-title">Доставим на&nbsp;объект — <b>оплата при&nbsp;получении</b></span>
-            <p class="pb-sub">Листы до&nbsp;8&nbsp;м возим аккуратно, разгрузка на&nbsp;месте.</p>
-            <span class="pb-go">Как&nbsp;заказать</span>
-        </span></a>
-      </div>
+      <p class="calc-out"><span class="calc-key">Площадь кровли</span>
+        <b id="rcArea">—</b></p>
+      <a class="btn btn--accent btn--wide" href="#lead">Получить точный расчёт</a>
+      <p class="calc-note">Точный раскрой по&nbsp;листам, доборные и&nbsp;водосток
+        менеджер посчитает по&nbsp;вашим размерам или&nbsp;чертежу — бесплатно.</p>
     </div>
+  </div></section>
 
-    <div class="pb-ui">
-      <div class="wrap">
-        <div class="pb-dots" aria-label="Переключение акций"></div>
-        <span class="pb-count">01 / 04</span>
-        <button class="pb-arr pb-prev" type="button" aria-label="Предыдущая акция"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
-        <button class="pb-arr pb-next" type="button" aria-label="Следующая акция"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-      </div>
-    </div>
-  </section>
+  <section class="section"><div class="wrap">
+    <h2 class="section-head">Часто ищут</h2>
+    <div class="applied"><a class="chip" href="krovlya-profnastil.html?task=fence">Профнастил на&nbsp;забор</a><a class="chip" href="krovlya-profnastil.html?task=roof">Профнастил на&nbsp;крышу</a><a class="chip" href="krovlya-metallocherepitsa.html">Металлочерепица</a><a class="chip" href="krovlya-shtaketnik.html">Штакетник под&nbsp;дерево</a><a class="chip" href="krovlya-sayding.html?task=wall">Сайдинг на&nbsp;фасад</a><a class="chip" href="krovlya-sayding.html?task=soffit">Софиты для&nbsp;свесов</a><a class="chip" href="krovlya.html#dobornye">Доборные и&nbsp;водосток</a><a class="chip" href="krovlya.html#calc">Расчёт площади крыши</a></div>
+  </div></section>
 
-  <!-- Четыре материала = четыре категории -->
-  <section class="section" id="materialy">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Выберите материал</h2>
-        <p class="caption">Купить кровлю в&nbsp;Краснодаре: четыре материала с&nbsp;одного завода, режем в&nbsp;размер до&nbsp;8&nbsp;м без&nbsp;стыков. Внутри&nbsp;— товары, все размеры и&nbsp;40&nbsp;цветов.</p>
-      </div>
-      <div class="cats cats-roof"><a class="cat" href="krovlya-metallocherepitsa.html"><img class="cat-img" src="img/roof/cover-cat-mch.jpg?v=4" alt="Красная глянцевая металлочерепица с каплями дождя" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Металлочерепица</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">2&nbsp;профиля · для&nbsp;скатной крыши</p><p class="cat-colors"><span class="cc-row"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-3009.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-6020.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-7024.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8004.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8017.jpg?v=4" alt="" width="28" height="28" loading="lazy"></span><span class="cc-label">40&nbsp;цветов</span></p></a><a class="cat" href="krovlya-profnastil.html"><img class="cat-img" src="img/roof/cover-cat-prof.jpg?v=4" alt="Профнастил серо-синего цвета крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Профнастил</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">6&nbsp;профилей · крыша, забор, навес</p><p class="cat-colors"><span class="cc-row"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-3009.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-6020.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-7024.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8004.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8017.jpg?v=4" alt="" width="28" height="28" loading="lazy"></span><span class="cc-label">40&nbsp;цветов</span></p></a><a class="cat" href="krovlya-shtaketnik.html"><img class="cat-img" src="img/roof/cover-cat-sht.jpg?v=4" alt="Планки графитового евроштакетника крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Штакетник</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">3&nbsp;формы верха · для&nbsp;забора</p><p class="cat-colors"><span class="cc-row"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-6020.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-ral-3005-spelaya-vishnya.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-ral-6005-zele-nyi-moh.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-ral-7024-grafitovyi-seryi.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-ral-8017-shokolad.jpg?v=4" alt="" width="28" height="28" loading="lazy"></span><span class="cc-label">12&nbsp;цветов</span></p></a><a class="cat" href="krovlya-sayding.html"><img class="cat-img" src="img/roof/cover-cat-sid.jpg?v=4" alt="Металлосайдинг с фотопечатью под серое дерево крупным планом" width="600" height="600" loading="lazy"><div class="cat-row"><h3>Металлосайдинг</h3><svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><p class="caption">5&nbsp;профилей · для&nbsp;фасада и&nbsp;свесов</p><p class="cat-colors"><span class="cc-row"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-3009.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-6020.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-7024.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8004.jpg?v=4" alt="" width="28" height="28" loading="lazy"><img class="cc-dot" src="img/roof/sw-granite-deep-mat-8017.jpg?v=4" alt="" width="28" height="28" loading="lazy"></span><span class="cc-label">22&nbsp;цвета</span></p></a></div>
-    </div>
-  </section>
-
-  <!-- Доборные, водосток, безопасность -->
-  <section class="section" id="dobornye">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tag">К&nbsp;любой кровле</span>
-        <h2>Всё для&nbsp;крыши — сразу</h2>
-        <p class="caption">Доборные, водосток и&nbsp;снегозадержатели подберём
-          в&nbsp;цвет кровли и&nbsp;посчитаем по&nbsp;вашим размерам — одним заказом.</p>
-      </div>
-      <div class="kit"><div class="kit-col"><h3>Доборные элементы</h3><p class="caption">Коньки, планки и&nbsp;ендовы гнём на&nbsp;своём оборудовании — в&nbsp;цвет кровли, длина 2&nbsp;м.</p><ul><li>Конёк фигурный</li><li>Конёк полукруглый</li><li>Конёк-ребро</li><li>Заглушки конька</li><li>Планка карнизная</li><li>Планка ветровая</li><li>Планка лобовая</li><li>Ендова верхняя и&nbsp;нижняя</li><li>Планки примыкания</li><li>Планки углов</li><li>Планка снегозадержателя</li><li>Планка диагональная</li><li>L-планка заборная</li></ul></div><div class="kit-col"><h3>Водосточные системы</h3><p class="caption">Комплект под&nbsp;вашу крышу соберёт менеджер: желоба, трубы, крюки&nbsp;— ничего не&nbsp;забудем.</p><ul><li>Круглая система «Оптима» 125/90&nbsp;— желоба, трубы, углы, воронки</li><li>Прямоугольная гофрированная система — желоба, трубы, колена</li><li>Крюки, крепления, заглушки — весь крепёж в&nbsp;комплекте</li></ul></div><div class="kit-col"><h3>Безопасность кровли</h3><p class="caption">Снег сходит порциями, а&nbsp;не&nbsp;лавиной — обязательная вещь над&nbsp;входом и&nbsp;дорожками.</p><ul><li>Снегозадержатели трубчатые, 1&nbsp;м и&nbsp;3&nbsp;м</li><li>Кровельные ограждения, высота 650&nbsp;и&nbsp;900&nbsp;мм</li></ul></div></div>
-    </div>
-  </section>
-
-
-  <section class="section" id="tsveta">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tag">Палитра</span>
-        <h2>Один цвет&nbsp;— на&nbsp;всё</h2>
-        <p class="caption">Лист, конёк, планки, водосток и&nbsp;саморезы красим в&nbsp;один тон&nbsp;—
-          крыша выглядит целой. 40&nbsp;оттенков: глянцевый полиэстер, матовый Granite, Printech под&nbsp;дерево и&nbsp;цинк.</p>
-      </div>
-      <div class="color-strip"><img src="img/roof/sw-ral-1014-bezhevyi.jpg?v=4" alt="Бежевый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-3005-spelaya-vishnya.jpg?v=4" alt="Спелая вишня" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-3011-krasno-korichnevyi.jpg?v=4" alt="Красно-коричневый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-1018-zhe-ltyi.jpg?v=4" alt="Жёлтый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-6002-zelenyi-list.jpg?v=4" alt="Зеленый лист" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-6005-zele-nyi-moh.jpg?v=4" alt="Зелёный Мох" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-5002-ultramarin.jpg?v=4" alt="Ультрамарин" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-7024-grafitovyi-seryi.jpg?v=4" alt="Графитовый серый" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-8017-shokolad.jpg?v=4" alt="Шоколад" width="52" height="52" loading="lazy"><img src="img/roof/sw-ral-9003-belyi.jpg?v=4" alt="Белый" width="52" height="52" loading="lazy"><img src="img/roof/sw-granite-deep-mat-8004.jpg?v=4" alt="Терракота" width="52" height="52" loading="lazy"><img src="img/roof/sw-granite-deep-mat-9005.jpg?v=4" alt="Чёрный" width="52" height="52" loading="lazy"><img src="img/roof/sw-granite-deep-mat-6020.jpg?v=4" alt="Тёмная зелень" width="52" height="52" loading="lazy"><img src="img/roof/sw-antichnyi-dub.jpg?v=4" alt="Античный дуб" width="52" height="52" loading="lazy"><img src="img/roof/sw-oreh-temnyi.jpg?v=4" alt="Орех Темный" width="52" height="52" loading="lazy"><img src="img/roof/sw-svetloe-derevo.jpg?v=4" alt="Светлое дерево" width="52" height="52" loading="lazy"><img src="img/roof/sw-kirpich.jpg?v=4" alt="Кирпич" width="52" height="52" loading="lazy"><img src="img/roof/sw-tsink.jpg?v=4" alt="Цинк" width="52" height="52" loading="lazy"></div>
-      <p class="caption cats-note">Полную палитру под&nbsp;каждый материал показываем
-        в&nbsp;карточке товара. Перед заказом привезём образец вживую.</p>
-    </div>
-  </section>
-
-  <!-- Калькулятор -->
-  <section class="section" id="calc" aria-label="Калькулятор кровли">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tag">Калькулятор</span>
-        <h2>Прикиньте площадь крыши</h2>
-      </div>
-      <div class="line-calc">
-        <div class="line-calc-wrap">
-          <label class="line-calc-group" for="rcLen">
-            <span class="line-calc-label">Длина <br>дома</span>
-            <span class="line-calc-input-wrap">
-              <input class="line-calc-input" id="rcLen" type="number" inputmode="decimal" min="1" max="100" step="0.1" placeholder="10">
-              <span class="line-calc-unit">м</span>
-            </span>
-          </label>
-          <label class="line-calc-group" for="rcWid">
-            <span class="line-calc-label">Ширина <br>дома</span>
-            <span class="line-calc-input-wrap">
-              <input class="line-calc-input" id="rcWid" type="number" inputmode="decimal" min="1" max="100" step="0.1" placeholder="8">
-              <span class="line-calc-unit">м</span>
-            </span>
-          </label>
-          <label class="line-calc-group" for="rcType">
-            <span class="line-calc-label">Тип <br>крыши</span>
-            <select id="rcType">
-              <option value="1.4" selected>Двускатная</option>
-              <option value="1.5">Вальмовая (четыре ската)</option>
-              <option value="1.15">Односкатная</option>
-            </select>
-          </label>
-          <div class="line-calc-outputs">
-            <div class="line-calc-block">
-              <span class="line-calc-sub">Площадь кровли</span>
-              <span class="line-calc-val val-accent" id="rcArea">—</span>
-            </div>
-          </div>
-          <a class="btn line-calc-btn" href="#lead">Получить расчёт
-            <svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        </div>
-        <p class="caption line-calc-note">Оценка по&nbsp;размерам дома со&nbsp;свесами —
-          чтобы прикинуть бюджет. Точный раскрой по&nbsp;листам сделает менеджер
-          по&nbsp;вашим размерам или&nbsp;чертежу — бесплатно.</p>
-      </div>
-    </div>
-  </section>
+  </main>
 
   <section class="section" id="lead">
     <div class="wrap">
-      <div class="cta-band">
+      <div class="lead">
         <div>
-          <h2>Посчитаем крышу по&nbsp;вашим размерам</h2>
-          <p class="caption">Пришлите размеры дома или&nbsp;фото чертежа — вернём раскрой листов, количество доборных и&nbsp;цену с&nbsp;доставкой.</p>
+          <h2>Посчитаем материал и&nbsp;назовём цену</h2>
+          <p class="page-sub">Оставьте номер&nbsp;— перезвоним за&nbsp;5&nbsp;минут, уточним размеры и&nbsp;пришлём расчёт с&nbsp;доставкой.</p>
+          <a class="lead-phone" href="tel:+79000000000">+7 (900) 000-00-00
+            <small>Звонок бесплатный, с&nbsp;8:00&nbsp;до&nbsp;20:00, без&nbsp;выходных</small></a>
+          <p class="msg-row"><span>Или&nbsp;напишите:</span>
+      <a class="msg-circle mc-wa" href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9%D1%81%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener" aria-label="Написать в WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
+      <a class="msg-circle mc-tg" href="https://t.me/stroy_sale" target="_blank" rel="noopener" aria-label="Написать в Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+      <a class="msg-circle mc-max" href="https://max.ru/stroy_sale" target="_blank" rel="noopener" aria-label="Написать в MAX"><img src="img/max-icon-white.svg" alt="" width="22" height="22"></a></p>
         </div>
-        <div class="cta-grid">
-          <div class="cta-left">
-            <a class="cta-phone" href="tel:+79000000000">+7 (900) 000-00-00
-              <small>Перезвоним за&nbsp;5&nbsp;минут</small></a>
-            <p class="msg-row">
-          <span class="msg-row-label">Или&nbsp;напишите:</span>
-          <a class="msg-circle mc-wa" href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BA%D1%80%D0%BE%D0%B2%D0%BB%D1%8F%20%28%D0%BF%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9-%D0%A1%D0%B5%D0%B9%D0%BB%29" target="_blank" rel="noopener" aria-label="Написать в WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
-          <a class="msg-circle mc-tg" href="https://t.me/stroy_sale" target="_blank" rel="noopener" aria-label="Написать в Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
-          <a class="msg-circle mc-max" href="https://max.ru/stroy_sale" target="_blank" rel="noopener" aria-label="Написать в MAX"><img src="img/max-icon-white.svg" alt="" width="22" height="22"></a>
-        </p>
+        <form class="lead-form" data-lead="lfOk" novalidate>
+          <div class="field">
+            <label for="lfName">Как&nbsp;к&nbsp;вам обращаться</label>
+            <input id="lfName" name="name" type="text" autocomplete="name" placeholder="Имя">
           </div>
-          <form class="cta-form" id="ctaForm" novalidate>
-            <div class="field">
-              <label for="cfName">Имя</label>
-              <input id="cfName" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
-            </div>
-            <div class="field">
-              <label for="cfPhone">Телефон</label>
-              <input id="cfPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
-            </div>
-            <button class="btn" type="submit">Оставить заявку</button>
-            <p class="form-err" id="ctaErr" hidden>Проверьте номер&nbsp;— в&nbsp;нём не&nbsp;хватает цифр.</p>
-            <p class="caption form-note">Нажимая кнопку, вы соглашаетесь с&nbsp;<a href="policy.html">политикой конфиденциальности</a>.
-              Номер не&nbsp;передаём третьим лицам.</p>
-          </form>
-          <p class="form-ok" id="ctaOk" role="status" hidden>Заявка принята — скоро перезвоним.</p>
-        </div>
+          <div class="field">
+            <label for="lfPhone">Телефон</label>
+            <input id="lfPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel"
+                   placeholder="+7 (___) ___-__-__" required aria-describedby="lfErr">
+            <p class="form-err" id="lfErr" hidden>В&nbsp;номере не&nbsp;хватает цифр&nbsp;— проверьте, пожалуйста.</p>
+          </div>
+          <button class="btn btn--accent btn--wide" type="submit">Получить расчёт</button>
+          <p class="form-note">Нажимая кнопку, вы соглашаетесь с&nbsp;<a href="policy.html">политикой конфиденциальности</a>. Номер не&nbsp;передаём третьим лицам.</p>
+        </form>
+        <p class="form-ok" id="lfOk" role="status" tabindex="-1" hidden>
+          Форма пока не&nbsp;отправляет заявку сама&nbsp;— приёмник ещё не&nbsp;подключён.
+          Чтобы мы её увидели, напишите в&nbsp;WhatsApp или&nbsp;позвоните:
+          <span class="form-ok-row">
+            <a class="btn btn--accent" data-wa href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9%D1%81%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener">Отправить в&nbsp;WhatsApp</a>
+            <a class="btn btn--ghost" href="tel:+79000000000">Позвонить +7 (900) 000-00-00</a>
+          </span>
+        </p>
       </div>
     </div>
   </section>
 
+
   <footer class="footer">
     <div class="wrap footer-in">
-      <span class="tag">Строй-Сейл · Краснодар · 2026</span>
-      <a href="tel:+79000000000">+7 (900) 000-00-00</a>
-      <span class="caption footer-addr">Краснодар, ул.&nbsp;Ореховая, 182</span>
-      <span class="caption">Работаем с&nbsp;частными застройщиками, прорабами и&nbsp;бригадами</span>
-      <span class="caption">Цены на&nbsp;сайте не&nbsp;являются публичной офертой</span>
-      <a class="footer-policy caption" href="policy.html">Политика конфиденциальности</a>
+      <div>
+        <a class="logo" href="index.html" aria-label="Стройсейл">
+          <svg viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--accent)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
+          <span><b>СТРОЙ</b><b>СЕЙЛ</b></span>
+        </a>
+        <p class="footer-about">Стройматериалы с&nbsp;заводов Юга России: кирпич,
+          тротуарная плитка, кровля и&nbsp;фасад. Работаем с&nbsp;частными застройщиками,
+          прорабами и&nbsp;бригадами.</p>
+      </div>
+      <div>
+        <h3>Каталог</h3>
+        <ul><li><a href="kirpich-oblitsovochnyy.html">Облицовочный кирпич</a></li><li><a href="kirpich-zabutovochnyy.html">Забутовочный кирпич</a></li><li><a href="trotuarnaya-plitka.html">Тротуарная плитка</a></li><li><a href="krovlya.html">Кровля</a></li><li><a href="krovlya-sayding.html">Сайдинг и&nbsp;штакетник</a></li></ul>
+      </div>
+      <div>
+        <h3>Покупателю</h3>
+        <ul>
+          <li><a href="dostavka.html">Доставка и&nbsp;оплата</a></li>
+          <li><a href="akcii.html">Акции</a></li>
+          <li><a href="raboty.html">Наши работы</a></li>
+          <li><a href="zayavka.html">Моя заявка</a></li>
+          <li><a href="policy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Контакты</h3>
+        <a class="footer-tel" href="tel:+79000000000">+7 (900) 000-00-00</a>
+        <p class="footer-hours">Перезвоним за&nbsp;5&nbsp;минут · с&nbsp;8:00&nbsp;до&nbsp;20:00, без&nbsp;выходных</p>
+        <p class="footer-addr">Краснодар, ул.&nbsp;Ореховая, 182</p>
+        <p class="msg-row"><span>Напишите:</span>
+      <a class="msg-circle mc-wa" href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9%D1%81%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener" aria-label="Написать в WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
+      <a class="msg-circle mc-tg" href="https://t.me/stroy_sale" target="_blank" rel="noopener" aria-label="Написать в Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+      <a class="msg-circle mc-max" href="https://max.ru/stroy_sale" target="_blank" rel="noopener" aria-label="Написать в MAX"><img src="img/max-icon-white.svg" alt="" width="22" height="22"></a></p>
+      </div>
+      <p class="footer-legal">
+        Строй-Сейл · Краснодар · 2026. Цены на&nbsp;сайте не&nbsp;являются публичной офертой;
+        точную стоимость с&nbsp;доставкой на&nbsp;ваш адрес называет менеджер.
+      </p>
     </div>
   </footer>
 
-  <nav class="callbar" aria-label="Быстрая связь">
-    <a class="callbar-item callbar-tel" href="tel:+79000000000">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      <span>Позвонить</span></a>
-    <a class="callbar-item cb-wa" href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9-%D0%A1%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-      <span>WhatsApp</span></a>
-    <a class="callbar-item cb-tg" href="https://t.me/stroy_sale" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-      <span>Telegram</span></a>
-    <a class="callbar-item cb-max" href="https://max.ru/stroy_sale" target="_blank" rel="noopener">
-      <img src="img/max-icon.svg" alt="" width="24" height="24">
-      <span>MAX</span></a>
+
+  <div class="drawer drawer--left" id="catDrawer" hidden>
+    <div class="drawer-scrim" data-close></div>
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Каталог">
+      <div class="drawer-head">
+        <strong>Каталог</strong>
+        <button class="drawer-close" type="button" data-close aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div class="drawer-body">
+        <ul class="drawer-nav"><li><a href="kirpich-oblitsovochnyy.html"><img src="img/cat-oblic.jpg" alt="" width="48" height="48" loading="lazy"><span>Облицовочный кирпич<small>264&nbsp;вида, от&nbsp;18,50&nbsp;₽/шт</small></span><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li><li><a href="kirpich-zabutovochnyy.html"><img src="img/cat-brick.jpg" alt="" width="48" height="48" loading="lazy"><span>Забутовочный кирпич<small>Фундамент, стены, перегородки</small></span><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li><li><a href="trotuarnaya-plitka.html"><img src="img/cat-tile.jpg" alt="" width="48" height="48" loading="lazy"><span>Тротуарная плитка<small>172&nbsp;расцветки, от&nbsp;650&nbsp;₽/м²</small></span><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li><li><a href="krovlya.html"><img src="img/cat-roof.jpg" alt="" width="48" height="48" loading="lazy"><span>Кровля<small>Металлочерепица и&nbsp;профнастил</small></span><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li><li><a href="krovlya-sayding.html"><img src="img/roof/cover-cat-sid.jpg" alt="" width="48" height="48" loading="lazy"><span>Сайдинг и&nbsp;штакетник<small>Фасад и&nbsp;забор, 22&nbsp;цвета</small></span><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li><li><a href="akcii.html"><span>Акции и&nbsp;скидки</span><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li><li><a href="dostavka.html"><span>Доставка и&nbsp;оплата</span><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li><li><a href="raboty.html"><span>Наши работы</span><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li><li><a href="zayavka.html"><span>Моя заявка</span><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li></ul>
+      </div>
+    </div>
+  </div>
+
+
+  <nav class="tabbar" aria-label="Основное меню">
+    <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-6.5 8 6.5v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/></svg><span>Главная</span></a>
+    <button type="button" id="catBtn2" aria-controls="catDrawer" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span>Каталог</span></button>
+    <a href="zayavka.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Заявка</span><span class="tab-badge" data-cart-count hidden>0</span></a>
+    <a href="tel:+79000000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span>Позвонить</span></a>
+    <a href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9%D1%81%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.4-.6L3 21l1.8-4.8A8.3 8.3 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/></svg><span>Написать</span></a>
   </nav>
-  <script>
-    (function () {
-      var f = document.getElementById('ctaForm');
-      if (f) {
-        f.addEventListener('submit', function (e) {
-          e.preventDefault();
-          var ph = document.getElementById('cfPhone');
-          var err = document.getElementById('ctaErr');
-          var digits = (ph.value.match(/\d/g) || []).length;
-          if (digits < 10) {
-            if (err) { err.hidden = false; ph.setAttribute('aria-describedby', 'ctaErr'); }
-            ph.focus();
-            return;
-          }
-          if (err) err.hidden = true;
-          f.hidden = true;
-          document.getElementById('ctaOk').hidden = false;
-        });
-      }
-      var promo = document.querySelector('.promo-bar');
-      if (promo && promo.dataset.until) {
-        var end = new Date(promo.dataset.until + 'T23:59:59');
-        if (new Date() > end) { promo.remove(); } else { promo.hidden = false; }
-      }
-    })();
-  </script>
 
-  <script>
-    (function () {
-      var len = document.getElementById('rcLen');
-      var wid = document.getElementById('rcWid');
-      var typ = document.getElementById('rcType');
-      var area = document.getElementById('rcArea');
-      if (!len) return;
-      function recalc() {
-        var l = parseFloat(len.value), w = parseFloat(wid.value);
-        if (!l || !w || l <= 0 || w <= 0) { area.textContent = '—'; return; }
-        var k = parseFloat(typ.value);
-        area.textContent = Math.ceil(l * w * k) + ' м²';
-      }
-      len.addEventListener('input', recalc);
-      wid.addEventListener('input', recalc);
-      typ.addEventListener('change', recalc);
-    })();
-  </script>
-  <script>
-    (function () {
-      // Обложка категории: кадры меняются сами каждые 4 с — и на телефоне
-      // тоже (просьба заказчика). Пауза при наведении, фокусе и когда
-      // вкладка ушла в фон; палец листает свайпом. DUR держать равным
-      // --pb-dur в styles.css — по нему заливается кирпичик-прогресс.
-      var DUR = 4000;
-      var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  <script src="app.js?v=6" defer></script>
 
-      document.querySelectorAll('.pb').forEach(function (root) {
-        var stack = root.querySelector('.pb-stack');
-        var frames = Array.prototype.slice.call(root.querySelectorAll('.pb-frame'));
-        var slides = Array.prototype.slice.call(root.querySelectorAll('.pb-slide'));
-        var dotsWrap = root.querySelector('.pb-dots');
-        var counter = root.querySelector('.pb-count');
-        var ui = root.querySelector('.pb-ui');
-
-        // акция с истёкшей датой убирается сама — вместе со своим кадром
-        var now = new Date();
-        for (var k = slides.length - 1; k >= 0; k--) {
-          var till = slides[k].dataset.until;
-          if (till && new Date(till + 'T23:59:59') < now) {
-            slides[k].remove(); if (frames[k]) frames[k].remove();
-            slides.splice(k, 1); frames.splice(k, 1);
-          }
-        }
-
-        if (!slides.length) { if (stack) stack.hidden = true; if (ui) ui.hidden = true; return; }
-        slides[0].classList.add('is-on');
-        if (frames[0]) frames[0].classList.add('is-on');
-        if (slides.length === 1) { if (ui) ui.hidden = true; return; }
-
-        var i = 0, timer = null;
-        var dots = slides.map(function (_, n) {
-          var b = document.createElement('button');
-          b.type = 'button'; b.className = 'pb-dot';
-          b.setAttribute('aria-label', 'Акция ' + (n + 1) + ' из ' + slides.length);
-          b.addEventListener('click', function () { go(n); start(); });
-          dotsWrap.appendChild(b);
-          return b;
-        });
-
-        function pad(n) { return (n < 10 ? '0' : '') + n; }
-        function go(n) {
-          slides[i].classList.remove('is-on'); dots[i].classList.remove('is-on');
-          if (frames[i]) frames[i].classList.remove('is-on');
-          i = (n + slides.length) % slides.length;
-          slides[i].classList.add('is-on');
-          if (frames[i]) frames[i].classList.add('is-on');
-          // перезапуск заливки полоски: снять класс, дать браузеру
-          // пересчитать элемент, вернуть — иначе анимация не стартует заново
-          void dots[i].offsetWidth;
-          dots[i].classList.add('is-on');
-          if (counter) counter.textContent = pad(i + 1) + ' / ' + pad(slides.length);
-        }
-        function start() {
-          if (reduced) return;
-          stop(); timer = setInterval(function () { go(i + 1); }, DUR);
-          root.classList.add('is-play');
-        }
-        function stop() { clearInterval(timer); timer = null; root.classList.remove('is-play'); }
-
-        var prev = root.querySelector('.pb-prev'), next = root.querySelector('.pb-next');
-        if (prev) prev.addEventListener('click', function () { go(i - 1); start(); });
-        if (next) next.addEventListener('click', function () { go(i + 1); start(); });
-
-        root.addEventListener('mouseenter', stop);
-        root.addEventListener('mouseleave', start);
-        root.addEventListener('focusin', stop);
-        root.addEventListener('focusout', start);
-        document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
-
-        // свайп пальцем: горизонтальный жест листает, вертикальный — скролл
-        var stage = root.querySelector('.pb-stage');
-        var x0 = null, y0 = null;
-        stage.addEventListener('touchstart', function (e) {
-          x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; stop();
-        }, { passive: true });
-        stage.addEventListener('touchend', function (e) {
-          if (x0 === null) return;
-          var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
-          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-            e.preventDefault();
-            go(i + (dx < 0 ? 1 : -1));
-          }
-          x0 = null; start();
-        });
-
-        dots[0].classList.add('is-on');
-        if (counter) counter.textContent = '01 / ' + pad(slides.length);
-        start();
-      });
-    })();
-  </script>
 </body>
 </html>

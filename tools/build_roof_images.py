@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Фото раздела «Кровля» → img/roof/ + data/roof_images.json.
+"""Фото раздела «Кровля» → img/roof/ + _data/roof_images.json.
 
 Источники:
 - ~/Desktop/фото/кровля/<раздел>/<товар>/ — фото поставщика (ВСЕ продуктовые
@@ -365,7 +365,7 @@ manifest["product_colors"] = {}
 for pid, rel, _ in PRODUCTS:
     manifest["product_colors"][pid] = product_colors(SRC / rel)
 
-(BASE / "data" / "roof_images.json").write_text(
+(BASE / "_data" / "roof_images.json").write_text(
     json.dumps(manifest, ensure_ascii=False, indent=1))
 
 n_files = len(list(OUT.glob("*.jpg")))

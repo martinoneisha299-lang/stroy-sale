@@ -23,7 +23,7 @@ W, H = 1200, 900
 CAT.mkdir(parents=True, exist_ok=True)
 PLITKA.mkdir(parents=True, exist_ok=True)
 
-DATA = json.loads((SITE / "data" / "tiles.json").read_text())
+DATA = json.loads((SITE / "_data" / "tiles.json").read_text())
 
 
 def save(img, dst, q=80):

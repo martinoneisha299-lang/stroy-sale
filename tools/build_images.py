@@ -35,6 +35,50 @@ def white_corners(img):
     return all(min(rgb.getpixel(p)) > 232 for p in pts)
 
 
+def white_share(img):
+    """Доля почти-белых пикселей. У студийного кадра «кирпич на белом» она
+    большая, у кадра кладки во всю рамку — маленькая."""
+    small = img.convert("RGB").resize((64, 64), Image.BILINEAR)
+    px = list(small.getdata())
+    return sum(1 for r, g, b in px if r > 238 and g > 238 and b > 238) / len(px)
+
+
+def is_studio(img):
+    """Кадр «объект на белом фоне» (студийный) против полнокадрового.
+
+    Полнокадровый кадр — кладка или текстура во всю рамку — это то, чем товар
+    выбирают на самом деле (так показывает кирпич Brickhunter). Студийный
+    кирпич в пустом поле и есть главная причина «дешёвого» вида карточки.
+    """
+    if has_alpha(img):
+        return True
+    # Белые углы сами по себе не приговор: у части кадров «Палитры» белый фон
+    # запечён в файл узкими полосами сверху и снизу, а сам кадр — кладка.
+    # Решает доля белого по всему кадру, а не четыре угловые точки.
+    return white_corners(img) and white_share(img) > 0.34
+
+
+def trim_white(img, tol=238):
+    """Срезать запечённые белые поля по краям (у «Палитры» они в файле).
+
+    Без этого даже верный кадр кладки даёт белые полосы сверху и снизу,
+    когда карточка кадрирует его под 4:3.
+    """
+    rgb = img.convert("RGB")
+    mask = rgb.point(lambda v: 255 if v < tol else 0).convert("L")
+    box = mask.getbbox()
+    if not box:
+        return img
+    x0, y0, x1, y1 = box
+    # Страховка от съедания кадра целиком. Порог низкий (40%): у панелей
+    # «Палитры» белые поля занимают до половины высоты, и при пороге 66%
+    # обрезка откатывалась назад — полосы оставались в карточке.
+    w, h = rgb.size
+    if (x1 - x0) < w * 0.40 or (y1 - y0) < h * 0.40:
+        return rgb
+    return rgb.crop((x0, y0, x1, y1))
+
+
 def fit_on_paper(img):
     canvas = Image.new("RGB", (W, H), PAPER)
     img = img.convert("RGBA")
@@ -49,7 +93,7 @@ def cover_crop(img):
 
 
 def main():
-    data = json.loads(Path("/Users/dm/Desktop/сайт/data/catalog.json").read_text())
+    data = json.loads(Path("/Users/dm/Desktop/сайт/_data/catalog.json").read_text())
     done = skipped = 0
     # Clean stale gallery extras ТОЛЬКО для id кирпича (эта папка img/catalog
     # общая с плиткой/бордюрами — их трогать нельзя, те собирает другой скрипт).
@@ -65,32 +109,47 @@ def main():
             if f.exists():
                 f.unlink()
 
+    promoted = 0
+    main_kind = {}
     for p in data["products"]:
         if p["category"] not in ("oblitsovochnyy", "obychnyy") or not p["photos"]:
             continue
-        # Process up to 5 photos
-        for idx, photo_name in enumerate(p["photos"][:5]):
-            src = ROOT / p["dir"] / photo_name
-            if idx == 0:
-                dst = OUT / f"{p['id']}.jpg"
-            else:
-                dst = OUT / f"{p['id']}-{idx + 1}.jpg"
 
+        # --- выбор ГЛАВНОГО кадра -------------------------------------
+        # Раньше главным всегда становился первый файл из папки — а это, как
+        # правило, студийный кирпич на белом. Теперь вперёд выходит первый
+        # полнокадровый кадр (кладка/текстура), студийный уходит вторым и
+        # показывается по наведению. Ищем только среди первых четырёх: дальше
+        # в папках поставщиков начинается всякое (сертификаты, кадры видео).
+        loaded = []
+        for name in p["photos"][:5]:
+            src = ROOT / p["dir"] / name
             if not src.exists():
                 print("нет файла:", src)
-                if idx == 0:
-                    skipped += 1
                 continue
-
             img = ImageOps.exif_transpose(Image.open(src))
             if p["dir"].startswith("Губский") and src.suffix.lower() in (".jpg", ".jpeg"):
                 # кадры видео из папки Губского: внизу справа водяной знак
                 # конвертера clideo — срезаем (независимо от того, чей товар)
                 img = img.crop((0, 0, img.width, int(img.height * 0.86)))
-            if has_alpha(img) or white_corners(img):
+            loaded.append((name, img, is_studio(img)))
+
+        if not loaded:
+            skipped += 1
+            continue
+
+        wall_at = next((i for i, (_, _, studio) in enumerate(loaded[:4]) if not studio), None)
+        if wall_at not in (None, 0):
+            loaded.insert(0, loaded.pop(wall_at))
+            promoted += 1
+
+        main_kind[p["id"]] = "studio" if loaded[0][2] else "wall"
+        for idx, (photo_name, img, studio) in enumerate(loaded):
+            dst = OUT / (f"{p['id']}.jpg" if idx == 0 else f"{p['id']}-{idx + 1}.jpg")
+            if studio:
                 out = fit_on_paper(img)
             else:
-                out = cover_crop(img)
+                out = cover_crop(trim_white(img))
             out.save(dst, "JPEG", quality=80, optimize=True, progressive=True)
             if idx == 0:
                 # мини-кружок 68×68 для .cdot/свотчей: кружок 34px не должен
@@ -103,8 +162,15 @@ def main():
                 sq.save(OUT / f"cdot-{p['id']}.jpg", "JPEG",
                         quality=82, optimize=True)
             done += 1
+    # Тип главного кадра — в данные: подборки на главной должны показывать
+    # товар кладкой, а не одиноким кирпичом на белом.
+    Path("/Users/dm/Desktop/сайт/_data/main_frames.json").write_text(
+        json.dumps(main_kind, ensure_ascii=False, indent=1), encoding="utf-8")
+    walls = sum(1 for v in main_kind.values() if v == "wall")
     total_kb = sum(f.stat().st_size for f in OUT.glob("*.jpg")) // 1024
     print(f"готово: {done}, пропущено: {skipped}, всего {total_kb} КБ")
+    print(f"кладка поднята главным кадром у {promoted} товаров")
+    print(f"главный кадр — кладка/текстура у {walls} из {len(main_kind)} товаров")
 
 
 if __name__ == "__main__":

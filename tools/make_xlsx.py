@@ -8,9 +8,9 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
-DATA = json.loads(Path("/Users/dm/Desktop/сайт/data/catalog.json").read_text())
-TILES = json.loads(Path("/Users/dm/Desktop/сайт/data/tiles.json").read_text())
-ROOF_IMG = json.loads(Path("/Users/dm/Desktop/сайт/data/roof_images.json").read_text())
+DATA = json.loads(Path("/Users/dm/Desktop/сайт/_data/catalog.json").read_text())
+TILES = json.loads(Path("/Users/dm/Desktop/сайт/_data/tiles.json").read_text())
+ROOF_IMG = json.loads(Path("/Users/dm/Desktop/сайт/_data/roof_images.json").read_text())
 OUT = "/Users/dm/Desktop/сайт/КАТАЛОГ-ТАБЛИЦА.xlsx"
 
 products = DATA["products"]

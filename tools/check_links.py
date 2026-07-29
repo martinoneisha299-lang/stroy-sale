@@ -6,7 +6,10 @@ from urllib.parse import unquote, urlparse
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 pages = sorted(ROOT.rglob('*.html'))
-pages = [p for p in pages if '__pycache__' not in str(p)]
+# design_handoff_* — присланные заказчиком макеты, не часть сайта:
+# у них свои относительные пути к скриншотам, проверять их бессмысленно.
+SKIP = ('__pycache__', 'design_handoff', '_maket')
+pages = [p for p in pages if not any(k in str(p) for k in SKIP)]
 
 # id-якоря каждой страницы
 ids = {}

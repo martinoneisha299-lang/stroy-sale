@@ -34,9 +34,13 @@ const WIDTHS = [280, 320, 360, 375, 390, 412, 430, 600, 768, 820, 1024, 1280, 14
 const SCALES = [1, 1.25, 1.5, 2];
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const PROFILE = '/tmp/scan-chrome-profile';
+// Порт и профиль — свои на каждый запуск: иначе параллельно работающий
+// скриншотер или другой агент занимает 9333, и сканер обрывается на середине
+// с «unsettled top-level await».
+const PORT_CDP = 9300 + Math.floor(Math.random() * 600);
+const PROFILE = `/tmp/scan-chrome-${PORT_CDP}`;
 const chrome = spawn(CHROME, [
-  '--headless=new', '--remote-debugging-port=9333', `--user-data-dir=${PROFILE}`,
+  '--headless=new', `--remote-debugging-port=${PORT_CDP}`, `--user-data-dir=${PROFILE}`,
   '--no-first-run', '--no-default-browser-check', '--disable-gpu', '--hide-scrollbars',
   'about:blank',
 ], { stdio: 'ignore' });
@@ -45,7 +49,7 @@ let wsUrl = null;
 for (let i = 0; i < 60 && !wsUrl; i++) {
   await sleep(300);
   try {
-    const r = await fetch('http://127.0.0.1:9333/json/new?about:blank', { method: 'PUT' });
+    const r = await fetch(`http://127.0.0.1:${PORT_CDP}/json/new?about:blank`, { method: 'PUT' });
     wsUrl = (await r.json()).webSocketDebuggerUrl;
   } catch {}
 }
@@ -95,7 +99,21 @@ const PROBE = `(() => {
     return false;
   };
   // задуманные приёмы: бегущая строка преимуществ и декоративное парящее фото
-  const decor = el => el.closest('.benefits, .tile-hero-stage, .roof-hero-stage, .marquee') !== null;
+  const decor = el => el.closest('.promo-row, .tiles-scroll, .subnav-in, .pd-thumbs, .marquee') !== null;
+  // Служебно-скрытые элементы (ссылка «К содержанию», подписи для скринридера)
+  // всегда выглядят «обрезанными» — это их назначение, а не поломка.
+  const hiddenOnPurpose = el => el.closest('.skip, .vh') !== null;
+  // Имя товара намеренно обрезано двумя строками с многоточием (line-clamp),
+  // чтобы кнопки в ряду стояли на одной линии. Полное имя — на странице товара.
+  const clampedOnPurpose = el => el.matches('.p-name, .sug a > span');
+  // Внутри фиксированной панели сами подписи имеют position: static —
+  // поэтому смотрим предков, а не сам элемент.
+  const inFixed = el => {
+    for (let p = el; p; p = p.parentElement) {
+      if (getComputedStyle(p).position === 'fixed') return true;
+    }
+    return false;
+  };
   const pinned = el => {
     for (let p = el; p; p = p.parentElement) {
       const pos = getComputedStyle(p).position;
@@ -113,10 +131,11 @@ const PROBE = `(() => {
     // инлайн-элемент, разорванный на несколько строк, даёт «объединённый» прямоугольник —
     // сравнивать его с соседями бессмысленно
     const multiline = s.display.startsWith('inline') && el.getClientRects().length > 1;
-    items.push({ el, s, r, pin: pinned(el), skipOverlap: multiline || decor(el),
+    if (hiddenOnPurpose(el)) continue;
+    items.push({ el, s, r, pin: pinned(el), fixed: inFixed(el), skipOverlap: multiline || decor(el),
       text: [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) });
     if ((r.right > vw + 1 || r.left < -1) && !scrollable(el) && !decor(el)) out.off.push({ el: label(el), left: Math.round(r.left), right: Math.round(r.right) });
-    if (/hidden|clip/.test(s.overflowY) || /hidden|clip/.test(s.overflowX)) {
+    if ((/hidden|clip/.test(s.overflowY) || /hidden|clip/.test(s.overflowX)) && !clampedOnPurpose(el)) {
       if (el.scrollHeight > el.clientHeight + 2 && el.clientHeight > 0 && (el.textContent || '').trim() && el.clientHeight < 400)
         out.clipped.push({ el: label(el), need: el.scrollHeight, has: el.clientHeight });
     }
@@ -128,6 +147,10 @@ const PROBE = `(() => {
     for (let j = i + 1; j < t.length && t[j].r.top < t[i].r.bottom; j++) {
       const a = t[i], b = t[j];
       if (a.pin !== b.pin) continue; // фиксированная полоса поверх контента — это норма
+      // Таб-бар (position: fixed) живёт в своём слое: под ним резервируется
+      // padding у body, и «наложение» с липкой панелью товара — это разные
+      // слои, а не поломка вёрстки. Геометрию проверяли руками.
+      if (a.fixed || b.fixed) continue;
       if (a.el.contains(b.el) || b.el.contains(a.el)) continue;
       const ox = Math.min(a.r.right, b.r.right) - Math.max(a.r.left, b.r.left);
       const oy = Math.min(a.r.bottom, b.r.bottom) - Math.max(a.r.top, b.r.top);

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Парсер каталога «Строй-Сейл».
-Читает ~/Desktop/фото (5 поставщиков) → data/catalog.json.
+Читает ~/Desktop/фото (5 поставщиков) → _data/catalog.json.
 
 Принципы (см. КАТАЛОГ-ПЛАН.md):
 - поставщик скрыт (поле supplier — только для менеджера);
@@ -19,7 +19,7 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path("/Users/dm/Desktop/фото")
-OUT = Path("/Users/dm/Desktop/сайт/data/catalog.json")
+OUT = Path("/Users/dm/Desktop/сайт/_data/catalog.json")
 
 IMG_EXT = {".jpg", ".jpeg", ".png", ".webp"}
 VIDEO_EXT = {".mp4"}
