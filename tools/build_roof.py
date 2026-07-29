@@ -501,19 +501,21 @@ def colors_row(slugs, root="", cap=None, more_href=None):
     return row
 
 
-def color_names(slugs):
-    """Названия и коды строкой. Кружок красив, но искать цвет люди будут
-    по имени — и на телефоне подсказки при наведении не увидят."""
-    out = []
-    for s in slugs:
-        code = COLORS[s]["code"]
-        out.append(color_label(s) + (f" {code}" if code else ""))
-    return " · ".join(out)
+def swatch_labeled(slug, root=""):
+    """Образец с подписью: имя под кружком, код RAL — строкой ниже.
+    Как в палитрах ИКЕА/Hornbach: искать цвет люди будут по имени,
+    и на телефоне подсказка при наведении недоступна — подпись видима всегда."""
+    c = COLORS[slug]
+    code = f"<i>{esc(c['code'])}</i>" if c["code"] else ""
+    return (f'<li><span role="img" aria-label="Цвет: {esc(color_label(slug))}" '
+            f'style="background-image:url({src(c["sw"], root)})"></span>'
+            f'<b>{esc(color_label(slug))}</b>{code}</li>')
 
 
 def palette_sections(slugs, root=""):
     """
-    Полная палитра, разбитая по сериям покрытий.
+    Полная палитра, разбитая по сериям покрытий: сетка подписанных
+    образцов вместо абзаца со всеми именами через «·».
 
     Каждая серия — отдельная секция: у заголовков и абзацев в этой вёрстке
     своих отступов нет, ритм задаёт только .section, иначе Granite слипается
@@ -526,10 +528,10 @@ def palette_sections(slugs, root=""):
             continue
         head = (f"{title} — {n_colors_text(len(mine))}" if key != "zink"
                 else f"{title} — без покраски")
+        cells = "".join(swatch_labeled(s, root) for s in mine)
         out.append(f'<h3>{esc(head)}</h3>'
                    f'<p class="note">{esc(descr)}</p>'
-                   f'{colors_row(mine, root)}'
-                   f'<p class="note">{esc(color_names(mine))}</p>')
+                   f'<ul class="swl">{cells}</ul>')
     return out
 
 
@@ -650,24 +652,12 @@ CALC_SECTION = f"""
 def build_hub():
     n_prod = len(ALL_PRODUCTS)
     n_col = len(COLORS)
-    n_pol = len(SERIES_ORDER.get("polyester", []))
-    n_gra = len(SERIES_ORDER.get("granite", []))
-    n_pri = len(SERIES_ORDER.get("printech", []))
 
     body = f"""
   <section class="page-head"><div class="wrap">
     {crumbs_html([("Главная", "index.html"), ("Каталог", "index.html#catalog"),
                   ("Кровля, фасад и забор", None)])}
     <h1>Кровля, фасад и забор</h1>
-    <p class="page-sub">Купить кровлю в Краснодаре: металлочерепица, профнастил,
-      штакетник и металлосайдинг с одного завода. Режем листы в размер, доборные
-      гнём в цвет — крыша, забор и обшивка получаются в одном тоне.</p>
-    <ul class="facts">
-      <li class="brick-mark"><b>{n_prod}</b> {plural(n_prod, "профиль", "профиля", "профилей")}</li>
-      <li class="brick-mark"><b>{n_col}</b> {plural(n_col, "цвет", "цвета", "цветов")}</li>
-      <li class="brick-mark"><b>до 15 лет</b> гарантия на покрытие</li>
-      <li class="brick-mark">Оплата при получении</li>
-    </ul>
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -680,12 +670,9 @@ def build_hub():
   <section class="section" id="tsveta"><div class="wrap">
     <div class="section-head"><h2>Один цвет — на всё</h2></div>
     <p class="page-sub">Лист, конёк, планки, водосток и саморезы красим в один
-      тон — крыша выглядит целой. Всего {n_col} {plural(n_col, "оттенок", "оттенка", "оттенков")}:
-      {n_pol} глянцевых полиэстеров, {n_gra} матовых Granite Deep Mat,
-      {n_pri} рисунков Printech под дерево и камень, цинк без покраски.</p>
+      тон — крыша выглядит целой.</p>
     {colors_row(list(COLORS))}
-    <p class="note">Названия и коды RAL показываем в карточке товара — там же
-      видно, какие цвета доступны именно для этого профиля. Перед заказом
+    <p class="note">Названия и коды — в карточке профиля. Перед заказом
       привезём образец вживую: на экране оттенок всегда врёт.</p>
   </div></section>
 {kit_section()}
@@ -740,12 +727,6 @@ def build_family(f):
     {crumbs_html([("Главная", "index.html"), ("Кровля", "krovlya.html"),
                   (f["title"], None)])}
     <h1>{esc(f["title"])}</h1>
-    <p class="page-sub">{esc(f["sub"])}</p>
-    <ul class="facts">
-      <li class="brick-mark"><b>{len(items)}</b> {plural(len(items), *f["unit"])}</li>
-      <li class="brick-mark"><b>{len(slugs)}</b> {plural(len(slugs), "цвет", "цвета", "цветов")}</li>
-      <li class="brick-mark">Режем в размер</li>
-    </ul>
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -757,9 +738,7 @@ def build_family(f):
   <section class="section"><div class="wrap">
     <div class="section-head"><h2>Цвета</h2>
       <a class="see-all" href="{first}">Вся палитра с названиями</a></div>
-    <p class="page-sub">Для этого материала доступно
-      {len(slugs)} {plural(len(slugs), "цвет", "цвета", "цветов")} и рисунков.
-      Доборные, планки и саморезы красим в тот же тон.</p>
+    <p class="page-sub">Доборные, планки и саморезы красим в тот же тон.</p>
     {colors_row(slugs, cap=12, more_href=first)}
   </div></section>
 {printech}
@@ -790,7 +769,7 @@ def gallery_html(p, root):
 
     main = (f'<div class="pd-main-wrap">'
             f'<img class="pd-main" id="pdMain" src="{src(shots[0][0], root)}" '
-            f'alt="{esc(shots[0][1])}" width="960" height="960" fetchpriority="high">'
+            f'alt="{esc(shots[0][1])}" width="960" height="720" fetchpriority="high">'
             f'<button class="pd-zoom" id="pdZoom" type="button" '
             f'aria-label="Открыть фото крупно">{ICON["zoom"]}</button></div>')
     thumbs = ""

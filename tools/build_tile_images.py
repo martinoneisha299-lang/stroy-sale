@@ -12,7 +12,7 @@
 
 import json
 from pathlib import Path
-from PIL import Image, ImageOps
+from PIL import Image, ImageFilter, ImageOps
 
 SRC = Path("/Users/dm/Desktop/фото/Тротурная плитка")
 SITE = Path("/Users/dm/Desktop/сайт")
@@ -34,6 +34,14 @@ def load(path):
     return ImageOps.exif_transpose(Image.open(path)).convert("RGB")
 
 
+def sharpen(img, scale):
+    """Лёгкий UnsharpMask после заметного апскейла: у полос-кропов мало
+    пикселей, голая LANCZOS-растяжка даёт мыло."""
+    if scale <= 1.15:
+        return img
+    return img.filter(ImageFilter.UnsharpMask(radius=2, percent=70, threshold=3))
+
+
 def band_crop(img, y0, y1):
     """Горизонтальная полоса кадра → 4:3, по центру ширины."""
     w, h = img.size
@@ -42,16 +50,17 @@ def band_crop(img, y0, y1):
     ch = int(cw * 3 / 4)
     x = (w - cw) // 2
     top = int(h * y0)
-    return img.crop((x, top, x + cw, top + ch)).resize((W, H), Image.LANCZOS)
+    crop = img.crop((x, top, x + cw, top + ch))
+    return sharpen(crop.resize((W, H), Image.LANCZOS), W / cw)
 
 
 def zoom_crop(img):
     """Приближенный фрагмент — деталь фактуры (верхняя левая треть кадра)."""
     w, h = img.size
     cw, ch = int(w * 0.58), int(w * 0.58 * 3 / 4)
-    return img.crop((int(w * 0.04), int(h * 0.05),
-                     int(w * 0.04) + cw, int(h * 0.05) + ch)) \
-              .resize((W, H), Image.LANCZOS)
+    crop = img.crop((int(w * 0.04), int(h * 0.05),
+                     int(w * 0.04) + cw, int(h * 0.05) + ch))
+    return sharpen(crop.resize((W, H), Image.LANCZOS), W / cw)
 
 
 def cover_crop(path, w=W, h=H):
@@ -79,7 +88,9 @@ def product_shots(p):
             continue
         img = load(SRC / im["path"])
         if im.get("clean", False):
-            shots.append(ImageOps.fit(img, (W, H), Image.LANCZOS))
+            src_w = min(img.width, img.height * 4 // 3)
+            shots.append(sharpen(ImageOps.fit(img, (W, H), Image.LANCZOS),
+                                 W / src_w))
             if not im.get("is_render", False):
                 shots.append(zoom_crop(img))
         else:

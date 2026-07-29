@@ -184,7 +184,7 @@ def build_index():
         <div><b>Оплата</b><span>при получении</span></div>
       </div>
       <div class="hero-cta">
-        <a class="btn" href="kirpich-oblitsovochnyy.html">Смотреть каталог</a>
+        <a class="btn btn--accent" href="#catalog">Смотреть каталог</a>
         <a class="hero-ghost" href="#lead">Бесплатный расчёт</a>
       </div>
     </div></div>
@@ -205,7 +205,7 @@ def build_index():
 
   <section class="section"><div class="wrap">
     <div class="section-head"><h2>Часто заказывают</h2>
-      <a class="see-all" href="kirpich-oblitsovochnyy.html">Весь каталог</a></div>
+      <a class="see-all" href="#catalog">Все разделы</a></div>
     {popular_cards()}
   </div></section>
 

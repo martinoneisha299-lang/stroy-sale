@@ -34,7 +34,7 @@ from shell_common import (BASE, ICON, PHONE_HREF, SITE_URL, TERMS_STOCK,
 
 DATA = json.loads((BASE / "_data" / "tiles.json").read_text())
 CAT_IMG = BASE / "img" / "catalog"
-IMG_V = 4          # версия кэша фотографий плитки
+IMG_V = 5          # версия кэша фотографий плитки
 
 PRODUCTS = DATA["products"]
 SHAPES = DATA["shapes"]
@@ -306,14 +306,6 @@ def calc_block(*, price, note, shape_pick=False):
 # ---------------------------------------------------------------------------
 # Витрина категории
 # ---------------------------------------------------------------------------
-FACTS = f"""<ul class="facts">
-      <li class="brick-mark"><b>40 мм</b> толщина</li>
-      <li class="brick-mark"><b>F200</b> двести зим</li>
-      <li class="brick-mark"><b>B30</b> держит машину</li>
-      <li class="brick-mark"><b>{PALLET_M2} м²</b> в поддоне</li>
-    </ul>"""
-
-
 def works_section():
     """Настоящие объекты и видео с производства: плитка — покупка «глазами»."""
     works = "".join(
@@ -349,11 +341,6 @@ def build_category():
     {crumbs_html([("Главная", "index.html"), ("Каталог", "index.html#catalog"),
                   ("Тротуарная плитка", None)])}
     <h1>Тротуарная плитка</h1>
-    <p class="page-sub">Купить тротуарную плитку в Краснодаре:
-      {len(items)} {plural(len(items), "расцветка", "расцветки", "расцветок")}
-      в {len(SHAPE_ORDER)} формах с завода, от {rub(ALL_MIN)} ₽ за м².
-      Посчитаем площадь по вашему плану и привезём на объект.</p>
-    {FACTS}
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -403,7 +390,6 @@ def build_shape(slug):
         return
     cards = "".join(card_of(p, eager=(i < 4), with_shape=False)
                     for i, p in enumerate(items))
-    n_mono = sum(1 for p in items if p["mono"])
     lo = rub(m["min_price"])
 
     body = f"""
@@ -412,11 +398,6 @@ def build_shape(slug):
                   ("Тротуарная плитка", "trotuarnaya-plitka.html"),
                   (m["name"], None)])}
     <h1>Плитка «{esc(m["name"])}»</h1>
-    <p class="page-sub">Купить плитку «{esc(m["name"])}» в Краснодаре:
-      {len(items)} {plural(len(items), "расцветка", "расцветки", "расцветок")}
-      с завода, от {lo} ₽ за м² — {len(items) - n_mono} колормиксов
-      и {n_mono} однотонных. {esc(SHAPE_NOTE[slug])}.</p>
-    {FACTS}
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -486,7 +467,7 @@ def build_product(p):
             f'aria-label="Открыть фото крупно">{ICON["zoom"]}</button>')
     main = (f'<div class="pd-main-wrap">'
             f'<img class="pd-main" id="pdMain" src="{root}{p["_gal"][0]}?v={IMG_V}" '
-            f'alt="{esc(alt_of(p))}" width="640" height="640" fetchpriority="high">{zoom}</div>')
+            f'alt="{esc(alt_of(p))}" width="1200" height="900" fetchpriority="high">{zoom}</div>')
     thumbs = ""
     if len(p["_gal"]) > 1:
         thumbs = '<div class="pd-thumbs">' + "".join(
@@ -608,7 +589,7 @@ def build_border(b):
           <!-- Бордюр снят целиком на белом холсте: квадратный кроп .pd-main срезал бы
                ему торцы, поэтому вписываем кадр карточной .p-img--contain -->
           <img class="p-img p-img--contain" id="pdMain" src="{root}{img}"
-            alt="{esc(b["name"])} к тротуарной плитке" width="640" height="640"
+            alt="{esc(b["name"])} к тротуарной плитке" width="1200" height="900"
             fetchpriority="high">
           <button class="pd-zoom" id="pdZoom" type="button"
             aria-label="Открыть фото крупно">{ICON["zoom"]}</button>

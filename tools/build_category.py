@@ -416,15 +416,6 @@ def build_category():
     {crumbs_html([("Главная", "index.html"), ("Каталог", "index.html#catalog"),
                   ("Облицовочный кирпич", None)])}
     <h1>Облицовочный кирпич</h1>
-    <p class="page-sub">Купить облицовочный кирпич в Краснодаре:
-      {len(items)} {plural(len(items), "вид", "вида", "видов")}
-      с заводов Юга, от {lo} ₽ за штуку. Подберём под проект, посчитаем количество
-      и привезём на объект.</p>
-    <ul class="facts">
-      <li class="brick-mark"><b>{len(items)}</b> {plural(len(items), "вид", "вида", "видов")}</li>
-      <li class="brick-mark"><b>5</b> коллекций</li>
-      <li class="brick-mark">Оплата при получении</li>
-    </ul>
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -466,11 +457,6 @@ def build_collection(slug):
                   ("Облицовочный кирпич", "kirpich-oblitsovochnyy.html"),
                   (c["title"], None)])}
     <h1>Кирпич «{esc(c["title"])}»</h1>
-    <p class="page-sub">{esc(c["desc"])} {esc(c["use"])}</p>
-    <ul class="facts">
-      <li class="brick-mark"><b>{len(items)}</b> {plural(len(items), "вид", "вида", "видов")}</li>
-      <li class="brick-mark">{note}</li>
-    </ul>
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -531,9 +517,6 @@ def build_zabutovka():
     {crumbs_html([("Главная", "index.html"), ("Каталог", "index.html#catalog"),
                   ("Забутовочный кирпич", None)])}
     <h1>Забутовочный кирпич</h1>
-    <p class="page-sub">Купить забутовочный кирпич в Краснодаре: рабочая основа стройки —
-      фундамент, несущие стены, перегородки и хозпостройки. Цену называем при звонке:
-      она зависит от объёма и завода.</p>
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -629,7 +612,7 @@ def build_product(p):
                 f'aria-label="Открыть фото крупно">{ICON["zoom"]}</button>')
         main = (f'<div class="pd-main-wrap">'
                 f'<img class="pd-main" id="pdMain" src="{root}{p["_gal"][0]}?v={IMG_V}" '
-                f'alt="{esc(name)}" width="640" height="640" fetchpriority="high">{zoom}</div>')
+                f'alt="{esc(name)}" width="1200" height="900" fetchpriority="high">{zoom}</div>')
         thumbs = ""
         if len(p["_gal"]) > 1:
             thumbs = '<div class="pd-thumbs">' + "".join(
