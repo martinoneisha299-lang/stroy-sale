@@ -38,25 +38,34 @@ IMG_V = 9          # версия кэша картинок каталога
 COLLECTIONS = {
     "klassika": {"title": "Классика",
                  "desc": "Ровная геометрия и спокойные цвета — самая понятная кладка.",
-                 "use": "Берут на фасад дома и забор, когда нужен предсказуемый результат."},
+                 "use": "Применение: фасад дома и забор, когда нужен ровный предсказуемый результат."},
     "palitra": {"title": "Палитра",
                 "desc": "Самый широкий выбор цветов и фактур: от пшеничного до графита.",
-                "use": "Берут, когда цвет фасада уже выбран по проекту и нужен точный оттенок."},
+                "use": "Применение: фасады, где цвет задан проектом и нужен точный оттенок."},
     "formovka": {"title": "Ручная формовка",
                  "desc": "Неровная «живая» грань, как у старой европейской кладки.",
-                 "use": "Берут на дома в европейском стиле, камины и входные группы."},
+                 "use": "Применение: дома в европейском стиле, камины и входные группы."},
     "evropa": {"title": "Европа",
                "desc": "Длинные форматы WDF и лонг — фасад выглядит вытянутым.",
-               "use": "Берут на современные дома: длинный кирпич зрительно растягивает стену."},
+               "use": "Применение: современные фасады — длинный формат зрительно растягивает стену."},
     "ekonom": {"title": "Эконом",
                "desc": "Самая доступная облицовка: цена ниже, кладка та же.",
-               "use": "Берут на хозпостройки, заборы и большие объёмы, где важна цена."},
+               "use": "Применение: хозпостройки, заборы и большие объёмы, где важна цена."},
 }
 COLL_ORDER = ["ekonom", "klassika", "palitra", "evropa", "formovka"]
 
 COLOR_ORDER = ["красный", "коричневый", "бежевый", "персиковый", "серый",
                "графит", "микс (бавария)", "зелёный"]
 COLOR_LABEL = {"микс (бавария)": "Баварская кладка"}
+
+# Фактура. Сверху то, что понятно частному застройщику, ниже — торговые
+# названия рельефа у заводов (береста, кроста, бриз): по непонятному слову
+# не кликают, поэтому оно не должно стоять первым.
+TEX_ORDER = ["гладкий", "ручная формовка", "рельефный", "фактурный", "руст",
+             "старый город", "антик", "ретро", "винтаж"]
+# «Ручная формовка» — ещё и имя коллекции. В фильтре уточняем, что здесь
+# речь о поверхности, иначе на одном экране два разных числа под одним словом.
+TEX_LABEL = {"ручная формовка": "Ручная формовка (поверхность)"}
 
 # Формат: «1НФ» знают прорабы, «одинарный» — частные застройщики.
 # В фильтре даём оба слова, в имени товара — человеческое.
@@ -91,10 +100,14 @@ NOVINKI = {
 }
 
 # Что люди набирают в поиске — ссылки внизу витрины (приём Лемана и ВИ)
+# Подпись чипа = имя фильтра, на который он ведёт. «Под старину» вело на одну
+# фактуру из трёх (антик, старый город, ретро) — покупатель видел 6 позиций
+# вместо 21 и решал, что выбора нет.
 OFTEN = [("Баварская кладка", "color=микс (бавария)"), ("Графитовый", "color=графит"),
          ("Бежевый", "color=бежевый"), ("Красный", "color=красный"),
-         ("Ручная формовка", "tex=ручная формовка"), ("Длинный кирпич", "fmt=WDF"),
-         ("Гладкий", "tex=гладкий"), ("Под старину", "tex=антик")]
+         ("Кирпич ручной формовки", "tex=ручная формовка"), ("Длинный кирпич", "fmt=WDF"),
+         ("Гладкий", "tex=гладкий"), ("Антик", "tex=антик"),
+         ("Старый город", "tex=старый город")]
 
 PRODUCTS = [p for p in DATA["products"] if p["category"] == "oblitsovochnyy"]
 RAB = [p for p in DATA["products"] if p["category"] == "obychnyy"]
@@ -186,6 +199,10 @@ def nice_name(p):
         parts.append(tex)
     head = " ".join(parts)
     tail = FMT_NAME.get(p.get("format"), p.get("format") or "")
+    # У «Абрамцево 0,5WDF» формат уже назван в самом имени — второй раз
+    # в хвосте он читается как заикание («Абрамцево 0,5WDF, WDF»).
+    if tail and tail.lower() in p["name"].lower():
+        return f"{head}, {p['_dims']}" if p.get("_dims") else head
     if tail and p.get("_dims"):
         return f"{head}, {tail} {p['_dims']}"
     return f"{head}, {tail}" if tail else head
@@ -302,7 +319,8 @@ def facet(items, key, order=None, label=None):
         v = p.get(key)
         if v:
             cnt[v] = cnt.get(v, 0) + 1
-    keys = ([k for k in order if k in cnt] + [k for k in cnt if k not in order]
+    keys = ([k for k in order if k in cnt]
+            + sorted([k for k in cnt if k not in order], key=lambda k: -cnt[k])
             if order else sorted(cnt, key=lambda k: -cnt[k]))
     lab = label or {}
     return [(k, lab.get(k, k[:1].upper() + k[1:]), cnt[k]) for k in keys]
@@ -315,7 +333,8 @@ def brick_filters(items, *, with_coll=True):
     groups.append(fgroup("Цвет", "color",
                          facet(items, "color_group", COLOR_ORDER, COLOR_LABEL),
                          dots=color_dots(items)))
-    groups.append(fgroup("Фактура", "texture", facet(items, "texture")))
+    groups.append(fgroup("Фактура", "texture",
+                         facet(items, "texture", TEX_ORDER, TEX_LABEL)))
     groups.append(fgroup("Формат", "format", facet(items, "format", label=FMT_FILTER)))
     if with_coll:
         coll = [(s, COLLECTIONS[s]["title"],
@@ -369,9 +388,9 @@ def calc_block():
     return f"""
   <section class="section" id="calc"><div class="wrap">
     <div class="calc">
-      <h2>Сколько кирпича нужно</h2>
-      <p class="calc-sub">Посчитаем по площади стен. Окна и двери вычтем,
-        5&nbsp;% добавим на подрезку и бой.</p>
+      <h2>Сколько нужно кирпича</h2>
+      <p class="calc-sub">Считаем по площади стен: проёмы вычитаем,
+        5&nbsp;% добавляем на подрезку и бой.</p>
       <div class="calc-rows">
         <div class="calc-row">
           <label for="bcWall">Площадь стен, м²</label>
@@ -394,10 +413,10 @@ def calc_block():
       </div>
       <p class="calc-out"><span class="calc-key">Нужно кирпича</span>
         <b id="bcQty">—</b></p>
-      <a class="btn btn--accent btn--wide" href="#lead">Получить точный расчёт</a>
-      <p class="calc-note">Это оценка по площади. Точное количество зависит
-        от толщины шва, перевязки и сложности фасада — посчитаем бесплатно
-        по вашему проекту и назовём цену с доставкой.</p>
+      <a class="btn btn--accent btn--wide" href="#lead">Заказать расчёт</a>
+      <p class="calc-note">Это ориентир: фактический расход зависит от толщины
+        шва, перевязки и сложности фасада. Точное количество по проекту
+        посчитает менеджер.</p>
     </div>
   </div></section>"""
 
@@ -437,8 +456,8 @@ def build_category():
     write_page(BASE / "kirpich-oblitsovochnyy.html", page_shell(
         f"Облицовочный кирпич в Краснодаре — {len(items)} "
         f"{plural(len(items), 'вид', 'вида', 'видов')}, цены от {lo} ₽",
-        f"Облицовочный кирпич с заводов Юга: {len(items)} {plural(len(items), 'вид', 'вида', 'видов')}, 5 коллекций, "
-        f"цены от {lo} ₽/шт. Доставка по Краснодару и краю, оплата при получении.",
+        f"Облицовочный кирпич напрямую с заводов: {len(items)} {plural(len(items), 'вид', 'вида', 'видов')}, 5 коллекций, "
+        f"цены от {lo} ₽/шт. Доставка по Краснодару и краю, наличный и безналичный расчёт.",
         body, active="oblic"))
 
 
@@ -457,6 +476,7 @@ def build_collection(slug):
                   ("Облицовочный кирпич", "kirpich-oblitsovochnyy.html"),
                   (c["title"], None)])}
     <h1>Кирпич «{esc(c["title"])}»</h1>
+    <p class="page-sub">{esc(c["desc"])}</p>
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -468,8 +488,8 @@ def build_collection(slug):
   </div></section>
 
   <section class="section"><div class="wrap">
-    <div class="section-head"><h2>Другие коллекции</h2>
-      <a class="see-all" href="kirpich-oblitsovochnyy.html">Весь облицовочный</a></div>
+    <div class="section-head"><h2>Все коллекции</h2>
+      <a class="see-all" href="kirpich-oblitsovochnyy.html">Весь облицовочный кирпич</a></div>
     {coll_tiles(active=slug)}
   </div></section>
 {filters_drawer()}
@@ -478,7 +498,7 @@ def build_collection(slug):
         f"Кирпич «{c['title']}» — {len(items)} {plural(len(items), 'вид', 'вида', 'видов')}, Краснодар",
         f"Коллекция «{c['title']}»: {len(items)} "
         f"{plural(len(items), 'вид', 'вида', 'видов')} облицовочного кирпича, {note}. "
-        f"Доставка по Краснодару и краю, оплата при получении.",
+        f"Доставка по Краснодару и краю, наличный и безналичный расчёт.",
         body, active="oblic"))
 
 
@@ -522,7 +542,7 @@ def build_zabutovka():
   <section class="section"><div class="wrap">
     {toolbar(len(items), has_prices=False)}
     <div class="catalog-body">
-      {filters_panel(fgroup("Куда берут", "task", TASKS))}
+      {filters_panel(fgroup("Назначение", "task", TASKS))}
       {grid_shell("".join(cards), page_size=24)}
     </div>
   </div></section>
@@ -530,8 +550,8 @@ def build_zabutovka():
 """
     write_page(BASE / "kirpich-zabutovochnyy.html", page_shell(
         "Забутовочный кирпич в Краснодаре — фундамент, стены, перегородки",
-        "Забутовочный (рядовой) кирпич с заводов Юга: полнотелый и пустотелый, "
-        "марки М100–М250. Доставка по Краснодару и краю, оплата при получении.",
+        "Забутовочный (рядовой) кирпич напрямую с заводов: полнотелый и пустотелый, "
+        "марки М100–М175. Доставка по Краснодару и краю, условия оплаты согласуем при заказе.",
         body, active="zabut"))
 
 
@@ -546,6 +566,37 @@ SPEC_RENAME = {
     "Марка морозостойкости": "Морозостойкость",
     "Водопоглощение (%)": "Водопоглощение",
 }
+# Числовые графы: их значения в прайсах записаны как попало («кг 1,9-2,0»,
+# «7, 8», «2.4 кг»), а строку без единого числа («упаковки» — обрывок,
+# у которого при парсинге потерялась цифра) печатать нельзя вовсе.
+NUM_SPECS = {"Вес", "Расход на 1м2 (шт)", "Водопоглощение (%)"}
+
+
+def tidy_num(v):
+    """«кг 1,9-2,0» → «1,9–2,0 кг», «7, 8» → «7,8», «2.4» → «2,4», «51,40» → «51,4»."""
+    v = re.sub(r"(\d),\s+(\d)", r"\1,\2", v)          # «7, 8» — пробел рвёт число
+    v = re.sub(r"(?<=\d)\.(?=\d)", ",", v)            # точка в дроби — латинская запись
+    v = re.sub(r"(?<=\d)\s*-\s*(?=\d)", "–", v)       # диапазон через тире
+    v = re.sub(r"(\d,\d+?)0+(?!\d)", r"\1", v)        # хвостовой ноль: «51,40» → «51,4»
+    m = re.match(r"^(кг|шт|мм|т)\s+(.+)$", v)         # единица впереди числа
+    if m:
+        v = f"{m.group(2)} {m.group(1)}"
+    return v.strip()
+
+
+def tidy_color(v):
+    """Цвет из прайса: регистр вразнобой, «е» вместо «ё», внутренние коды."""
+    v = (v or "").strip()
+    if not v:
+        return None
+    low = v.lower()
+    if low.startswith("не регламент"):
+        return None                  # формулировка ГОСТа, покупателю ни о чём
+    if low in COLOR_LABEL or low == "баварская кладка":
+        return COLOR_LABEL.get(low, "Баварская кладка")
+    for bad, good in (("желт", "жёлт"), ("зелен", "зелён"), ("черн", "чёрн")):
+        low = low.replace(bad, good)
+    return low[:1].upper() + low[1:]
 
 
 def spec_rows(p):
@@ -558,7 +609,7 @@ def spec_rows(p):
         seen.add(key)
         rows.append(f"<dt>{esc(key)}</dt><dd>{esc(val)}</dd>")
 
-    add("Цвет", (p.get("color_raw") or "").strip() or src.get("Цвет"))
+    add("Цвет", tidy_color((p.get("color_raw") or "").strip() or src.get("Цвет")))
     add("Фактура", (p.get("texture") or "").capitalize())
     add("Формат", FMT_FILTER.get(p.get("format"), p.get("format")))
     add("Габариты", f"{p['_dims']} мм" if p.get("_dims") else None)
@@ -566,12 +617,22 @@ def spec_rows(p):
         v = str(src.get(k) or "").strip()
         if not v:
             continue
+        if k in NUM_SPECS:
+            v = tidy_num(v)
+            if not re.search(r"\d", v):
+                continue          # числа не осталось — графа бессмысленна
         if k == "Водопоглощение (%)" and "%" not in v:
             v += " %"
         if k == "Расход на 1м2 (шт)":
-            # В прайсе поставщика встречается «51, 40» — пробел после запятой
-            # ломает число; приводим к «51,40».
-            v = re.sub(r"(\d),\s+(\d)", r"\1,\2", v).replace(",00", "") + " шт"
+            v += " шт"
+        # У пяти позиций в графе «Тип» стоит не материал, а назначение
+        # («лицевой»); показываем его в своей графе и одним словом —
+        # тем же, каким назван раздел сайта.
+        if k == "Тип" and v.lower() == "лицевой":
+            add("Назначение", "Облицовочный")
+            continue
+        if k == "Назначение" and v.lower() in ("лицевой", "облицовочный"):
+            v = "Облицовочный"
         add(SPEC_RENAME.get(k, k), v)
     return "".join(rows)
 
@@ -621,20 +682,22 @@ def build_product(p):
                 f'<img src="{root}{g}?v={IMG_V}" alt="" width="76" height="76" loading="lazy">'
                 f'</button>' for i, g in enumerate(p["_gal"])) + "</div>"
         gallery = main + thumbs
-        tone = (f'<p class="pd-note">Оттенок на экране отличается от кирпича на поддоне. '
-                f'<a href="{wa_link("Здравствуйте! Пришлите живое фото: " + name)}" '
-                f'target="_blank" rel="noopener">Пришлём живые фото и видео в WhatsApp</a>.</p>')
+        tone = (f'<p class="pd-note">Цвет на экране передаётся неточно. '
+                f'<a href="{wa_link("Здравствуйте! Пришлите фото и видео товара: " + name)}" '
+                f'target="_blank" rel="noopener">Запросить фото и видео товара в WhatsApp</a>.</p>')
     else:
         gallery = (f'<div class="pd-main p-none">{ICON["photo-off"]}'
-                   f'<span>Фото пришлём в мессенджер по запросу</span></div>')
+                   f'<span>Фотографии пришлём по запросу</span></div>')
         tone = ""
 
     # ---- цена и кнопка
     if has_price:
         per = per_m2(p)
         m2_line = m2_text(p)
-        if per:
-            m2_line = (m2_line + " · " if m2_line else "") + f"{rub(per)} шт в м² кладки"
+        # Расход дублировать не нужно: там, где он есть в характеристиках,
+        # в шапке оставляем только цену за м².
+        if per and not (p.get("specs") or {}).get("Расход на 1м2 (шт)"):
+            m2_line = (m2_line + " · " if m2_line else "") + f"{tidy_num(rub(per))} шт/м²"
         price_block = (f'<p class="pd-price"><b>{rub(p["price"])} ₽</b><span>/шт</span></p>'
                        + (f'<p class="pd-m2">{m2_line}</p>' if m2_line else ""))
         action = (f'<button class="btn btn--accent p-add" type="button" data-add '
@@ -643,7 +706,8 @@ def build_product(p):
                   f'data-url="tovar/kirpich-{p["id"]}.html" data-root="{root}">В заявку</button>')
     else:
         price_block = ('<p class="pd-price"><b>Цена по запросу</b></p>'
-                       '<p class="pd-m2">Назовём при звонке — зависит от объёма и завода.</p>')
+                       '<p class="pd-m2">Подтверждаем при заказе — зависит от объёма '
+                       'и условий поставки.</p>')
         action = (f'<button class="btn btn--accent p-add" type="button" data-add '
                   f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="" '
                   f'data-unit="шт" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
@@ -655,10 +719,17 @@ def build_product(p):
         cls = ' class="is-wait"' if ic == "clock" else ""
         terms_html += f"<li{cls}>{ICON[ic]}<span>{esc(t)}</span></li>"
 
+    # Цены форматов печатаем только там, где показана и основная цена. У забутовки
+    # цены скрыты по решению заказчика — без этой проверки прямо под надписью
+    # «Цена по запросу» выходил заводской прайс.
     fmt_block = ""
     if p.get("formats_prices"):
-        rows = "".join(f"<dt>{esc(FMT_FILTER.get(k, k))}</dt><dd>{rub(v)} ₽/шт</dd>"
-                       for k, v in sorted(p["formats_prices"].items(), key=lambda kv: kv[1]))
+        if has_price:
+            rows = "".join(f"<dt>{esc(FMT_FILTER.get(k, k))}</dt><dd>{rub(v)} ₽/шт</dd>"
+                           for k, v in sorted(p["formats_prices"].items(), key=lambda kv: kv[1]))
+        else:
+            rows = "".join(f"<dt>{esc(FMT_FILTER.get(k, k))}</dt><dd>цену назовёт менеджер</dd>"
+                           for k, v in sorted(p["formats_prices"].items(), key=lambda kv: kv[1]))
         fmt_block = f'<div class="pd-specs"><h2>Другие форматы</h2><dl>{rows}</dl></div>'
 
     sim = [] if is_rab else similar(p)
@@ -667,7 +738,7 @@ def build_product(p):
         sim_html = f"""
   <section class="section"><div class="wrap">
     <div class="section-head"><h2>Похожие по цвету</h2>
-      <a class="see-all" href="{root}kirpich-oblitsovochnyy.html">Весь кирпич</a></div>
+      <a class="see-all" href="{root}kirpich-oblitsovochnyy.html">Весь облицовочный кирпич</a></div>
     <div class="p-grid{grid_cls(len(sim))}">{"".join(card_of(q, root=root) for q in sim)}</div>
   </div></section>"""
 
@@ -678,10 +749,13 @@ def build_product(p):
         crumbs.append(("Облицовочный кирпич", f"{root}kirpich-oblitsovochnyy.html"))
         if coll:
             crumbs.append((COLLECTIONS[coll]["title"], f"{root}collection-{coll}.html"))
-    crumbs.append((p["name"], None))
+    # В крошки берём то же имя, что и в заголовке. Сырое имя из прайса
+    # («КРАСНЫЙ Одинарный некондиционный», «Утолщенный полнотелый М150
+    # (F25 пустот. 12%, 3 скв.отв)») называло товар вторым, непонятным способом.
+    crumbs.append(((f"{_n}, {_m}" if _m else _n) if is_rab else p["name"], None))
 
     where = COLLECTIONS[coll]["use"] if coll else \
-        "Рабочий кирпич для кладки: подскажем марку под задачу и привезём на объект."
+        "Рядовой кирпич для кладки: подбор марки под задачу, доставка до объекта."
 
     body = f"""
   <section class="page-head"><div class="wrap">{crumbs_html(crumbs)}</div></section>
@@ -719,11 +793,15 @@ def build_product(p):
 
     m2d = m2_text(p)
     descr = (f"{name}: {rub(p['price'])} ₽/шт{', ' + m2d if m2d else ''}. "
-             f"Доставка по Краснодару и краю, оплата при получении." if has_price else
-             f"{name}. Цену назовём при звонке, привезём на объект по Краснодару и краю.")
+             f"Доставка по Краснодару и краю, наличный и безналичный расчёт." if has_price else
+             f"{name}. Цена по запросу. Доставка по Краснодару и краю.")
+
+    # Если в имени уже есть тире («некондиция — уценка»), хвост заголовка
+    # цепляем точкой: два тире подряд не дают понять, где кончается товар.
+    title = f"{name}. Купить в Краснодаре" if "—" in name else f"{name} — купить в Краснодаре"
 
     write_page(BASE / "tovar" / f"kirpich-{p['id']}.html", page_shell(
-        f"{name} — купить в Краснодаре", descr, body, root=root,
+        title, descr, body, root=root,
         active="zabut" if is_rab else "oblic", extra_head=head))
 
 

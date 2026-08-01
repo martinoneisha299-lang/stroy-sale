@@ -51,37 +51,37 @@ SHAPE_ORDER = ["novyy-gorod", "staryy-gorod", "bruschatka", "pryamougolnik",
 
 # Короткое «зачем эта форма» — читается под именем в плитке раздела
 SHAPE_NOTE = {
-    "novyy-gorod": "Три размера в одной раскладке — берут чаще всего",
+    "novyy-gorod": "Три размера в одной раскладке — выбирают чаще всего",
     "staryy-gorod": "Рисунок старой мостовой, мягкая фаска",
-    "bruschatka": "Классический «кирпичик» — дорожки и парковки",
+    "bruschatka": "Классический «кирпичик» — дорожки и площадки",
     "pryamougolnik": "Строгая сетка — современные дворы",
-    "myunhen": "Крупный модуль, выглядит дорого",
+    "myunhen": "Крупный модуль, меньше швов",
     "parket": "Узкая доска — укладка «ёлочкой»",
     "asgard": "Крупный формат, парадные площадки",
 }
 
-# «Куда берут» — на странице товара, простым языком, без укладочного жаргона
+# «Применение» — на странице товара, простым языком, без укладочного жаргона
 SHAPE_USE = {
     "novyy-gorod": "дорожки, двор и отмостка вокруг дома; три размера "
                    "в раскладке прощают подрезку у стен и клумб",
     "staryy-gorod": "дорожки и площадки «под старину» — к кирпичному дому "
-                    "и саду; мягкая фаска не собирает грязь в швах",
-    "bruschatka": "садовые дорожки и стоянка легковой машины; классический "
+                    "и саду; фаска не задерживает грязь в швах",
+    "bruschatka": "садовые дорожки и площадки у дома; классический "
                   "«кирпичик» кладётся любым рисунком — ёлочкой, плетёнкой",
     "pryamougolnik": "современные дворы со строгой сеткой швов; хорошо "
                      "смотрится с газоном и бетонной архитектурой",
-    "myunhen": "просторные дворы и зоны отдыха; крупный модуль выглядит "
-               "дорого и кладётся быстрее мелкой плитки",
+    "myunhen": "просторные дворы и зоны отдыха; крупный модуль укладывается "
+               "быстрее мелкой плитки, швов меньше",
     "parket": "акцентные зоны — вход, терраса, патио; узкая доска ёлочкой "
               "смотрится как паркет под открытым небом",
-    "asgard": "парадные площадки и подъезд к дому; самый крупный формат "
+    "asgard": "парадные площадки и зона у входа; самый крупный формат "
               "каталога, минимум швов",
 }
 
 # Что люди набирают в поиске — ссылки внизу витрины (приём Лемана и ВИ)
 OFTEN = [("Плитка «Старый город»", "shape=staryy-gorod"),
          ("Брусчатка", "shape=bruschatka"),
-         ("Ёлочкой (Паркет)", "shape=parket"),
+         ("Плитка ёлочкой — «Паркет»", "shape=parket"),
          ("Однотонная плитка", "kind=mono"),
          ("Колормиксы", "kind=mix"),
          ("Плитка до 700 ₽/м²", "max=700"),
@@ -89,7 +89,7 @@ OFTEN = [("Плитка «Старый город»", "shape=staryy-gorod"),
 
 # У плитки нет ни новинок, ни коллекций — сортировку по новизне не показываем:
 # кнопка без данных за ней сортировала бы «как получится».
-SORTS = [("default", "Рекомендуем"), ("cheap", "Сначала недорогие"),
+SORTS = [("default", "По каталогу"), ("cheap", "Сначала недорогие"),
          ("exp", "Сначала дорогие")]
 
 
@@ -114,6 +114,10 @@ for _p in PRODUCTS:
 ALL_MIN = min(p["price"] for p in PRODUCTS if p["price"])
 ALL_MAX = max(p["price"] for p in PRODUCTS if p["price"])
 
+# Расцветок в каталоге — 32, а позиций 172: одна расцветка идёт в семи формах.
+# Число позиций «расцветками» называть нельзя — покупатель считает цвета.
+ALL_COLORS = len({p["name"] for p in PRODUCTS})
+
 
 def kind_of(p):
     return "mono" if p["mono"] else "mix"
@@ -128,10 +132,14 @@ def shape_name(slug):
 
 
 def nice_name(p):
-    """«Плитка Агат коричневый, Новый город» — имя цвета одно на семь форм,
+    """«Плитка «Агат коричневый», Новый город» — имя цвета одно на семь форм,
     поэтому форма обязана стоять в названии: иначе в общей выдаче семь
-    одинаковых «Агатов» подряд."""
-    return f"Плитка {p['name']}, {shape_name(p['shape'])}"
+    одинаковых «Агатов» подряд.
+
+    Имя расцветки в кавычках: без них прилагательное сталкивается с родом
+    («Плитка Оранжевый, Асгард»), а имена с уточнением («Хаски — Мрамор»)
+    приносят в строку второе тире."""
+    return f"Плитка «{p['name']}», {shape_name(p['shape'])}"
 
 
 def alt_of(p):
@@ -168,7 +176,7 @@ def card_of(p, root="", eager=False, with_shape=True):
         add = {"id": p["id"], "name": nice_name(p), "price": p["price"], "unit": "м²",
                "img": p["_gal"][0] if p["_gal"] else ""}
     return product_card(
-        href=p["_url"], name=nice_name(p) if with_shape else f"Плитка {p['name']}",
+        href=p["_url"], name=nice_name(p) if with_shape else f"Плитка «{p['name']}»",
         img=img, alt=alt_of(p), price_html=price_html(p), m2=pallet_text(p),
         in_stock=bool(p.get("price")), data=data, root=root, add=add, eager=eager)
 
@@ -176,7 +184,7 @@ def card_of(p, root="", eager=False, with_shape=True):
 def border_card(b, root=""):
     """Бордюр в сетке. Фото снято на белом холсте целиком — обрезать его
     в квадрат нельзя, поэтому вписываем (img_contain)."""
-    note = ("К дорожкам и парковкам — держит край полотна"
+    note = ("К дорожкам и парковкам — держит край мощения"
             if "дорожн" in b["name"].lower() else
             "К садовым дорожкам и клумбам")
     return product_card(
@@ -219,8 +227,11 @@ def shape_tiles(active=None, *, borders_href="#borders"):
         note = (f"{n} {plural(n, 'расцветка', 'расцветки', 'расцветок')}"
                 f" · от {rub(m['min_price'])} ₽/м²")
         on = ' aria-current="page"' if slug == active else ""
+        # Вторая строка — «зачем эта форма»: по одним именам («Мюнхен», «Асгард»)
+        # покупатель, который выбирает плитку впервые, разницы не видит.
         out.append(f'<a class="tile" href="plitka-{slug}.html"{on}>'
-                   f'<strong>{esc(m["name"])}<span>{esc(note)}</span></strong>'
+                   f'<strong>{esc(m["name"])}<span>{esc(note)}</span>'
+                   f'<span>{esc(SHAPE_NOTE[slug])}</span></strong>'
                    f'<img src="img/plitka/shape-{slug}.jpg" alt="" width="320" height="240" '
                    f'loading="lazy"></a>')
     b_min = min(b["price"] for b in BORDERS)
@@ -276,9 +287,9 @@ def calc_block(*, price, note, shape_pick=False):
   <section class="section" id="calc"><div class="wrap">
     <div class="calc" data-calc data-price="{price}" data-pallet="{PALLET_M2}"
          data-spare="{SPARE}" data-area="{CALC_AREA}">
-      <h2>Сколько плитки нужно</h2>
-      <p class="calc-sub">Введите площадь двора и дорожек — покажем метры с запасом,
-        число поддонов и примерную стоимость.</p>
+      <h2>Расчёт количества плитки</h2>
+      <p class="calc-sub">Введите площадь двора и дорожек — калькулятор посчитает
+        метры с запасом, число поддонов и примерную стоимость.</p>
       <div class="calc-rows">
         <div class="calc-row">
           <label for="calcArea">Площадь мощения, м²</label>
@@ -297,7 +308,7 @@ def calc_block(*, price, note, shape_pick=False):
       </div>
       <p class="calc-out"><span>Примерная стоимость</span>
         <b id="calcSum">{rub(total)} ₽</b></p>
-      <a class="btn btn--accent btn--wide" href="#lead">Получить точный расчёт</a>
+      <a class="btn btn--accent btn--wide" href="#lead">Заказать расчёт</a>
       <p class="calc-note" id="calcNote">{esc(note)}</p>
     </div>
   </div></section>"""
@@ -307,27 +318,29 @@ def calc_block(*, price, note, shape_pick=False):
 # Витрина категории
 # ---------------------------------------------------------------------------
 def works_section():
-    """Настоящие объекты и видео с производства: плитка — покупка «глазами»."""
+    """Объекты и видео с производства: плитка — покупка «глазами».
+    Кадры сняты не нами, поэтому подписи говорят о самой плитке, а не
+    о «наших работах» — присваивать чужие объекты нельзя."""
     works = "".join(
-        f'<img src="img/plitka/work-{i:02d}.jpg" alt="Двор и дорожки из нашей '
-        f'тротуарной плитки — объект {i}" width="800" height="600" loading="lazy">'
+        f'<img src="img/plitka/work-{i:02d}.jpg" alt="Двор и дорожки, мощённые '
+        f'этой плиткой — объект {i}" width="800" height="600" loading="lazy">'
         for i in range(1, 11))
     return f"""
   <section class="section" id="works"><div class="wrap">
-    <div class="section-head"><h2>Наши работы</h2>
+    <div class="section-head"><h2>Объекты из этой плитки</h2>
       <a class="see-all" href="raboty.html">Все объекты</a></div>
     <div class="works">{works}</div>
   </div></section>
 
   <section class="section"><div class="wrap">
-    <div class="section-head"><h2>Плитку прессуем сами</h2></div>
+    <div class="section-head"><h2>Производство плитки</h2></div>
     <video controls preload="none" poster="img/plitka/works-video-poster.jpg"
            width="360" height="640">
       <source src="img/plitka/works-video.mp4" type="video/mp4">
     </video>
-    <p class="note">Полминуты с производства: вибропресс даёт плотность выше литой
-      плитки, полусухая смесь — точные размеры и ровный шов, камера выдержки —
-      прочность ещё до отгрузки.</p>
+    <p class="note">Съёмка с производственной линии. Плитку формуют вибропрессом
+      из полусухой смеси: она плотнее литой, с ровными гранями и одинаковым швом.
+      Прочность плитка набирает на складе выдержки — до отгрузки.</p>
   </div></section>"""
 
 
@@ -358,25 +371,27 @@ def build_category():
 
   <section class="section" id="borders"><div class="wrap">
     <div class="section-head"><h2>Бордюры к плитке</h2></div>
-    <p class="page-sub">Держат край полотна: без бордюра дорожка со временем
-      расползается, а край крошится. Метраж посчитаем по вашему плану.</p>
+    <p class="page-sub">Держат край мощения: без бордюра дорожка со временем
+      расползается, а край крошится. Количество бордюра менеджер посчитает
+      по плану участка.</p>
     <div class="p-grid{grid_cls(len(BORDERS))}">{b_cards}</div>
   </div></section>
 {calc_block(price=SHAPES[SHAPE_ORDER[0]]["min_price"], shape_pick=True,
-            note=f"Пример для {CALC_AREA} м² и цены «от» выбранной формы. "
-                 f"Колормиксы дороже однотонных — точную смету с раскладкой, "
+            note=f"Пример для {CALC_AREA} м² по цене «от» выбранной формы: "
+                 f"колормиксы дороже однотонных. Точную смету с раскладкой, "
                  f"бордюром и доставкой посчитает менеджер.")}
 {works_section()}
 {often_html()}
 {filters_drawer()}
 """
     write_page(BASE / "trotuarnaya-plitka.html", page_shell(
-        f"Тротуарная плитка в Краснодаре — {len(items)} "
-        f"{plural(len(items), 'расцветка', 'расцветки', 'расцветок')}, цены от {rub(ALL_MIN)} ₽/м²",
-        f"Тротуарная плитка с завода: {len(items)} "
-        f"{plural(len(items), 'расцветка', 'расцветки', 'расцветок')}, {len(SHAPE_ORDER)} форм, "
-        f"толщина 40 мм, F200. Цены от {rub(ALL_MIN)} ₽/м². Доставка по Краснодару "
-        f"и краю, оплата при получении.",
+        f"Тротуарная плитка в Краснодаре — {ALL_COLORS} "
+        f"{plural(ALL_COLORS, 'расцветка', 'расцветки', 'расцветок')} "
+        f"в {len(SHAPE_ORDER)} формах, цены от {rub(ALL_MIN)} ₽/м²",
+        f"Тротуарная плитка напрямую с завода: {ALL_COLORS} "
+        f"{plural(ALL_COLORS, 'расцветка', 'расцветки', 'расцветок')} "
+        f"в {len(SHAPE_ORDER)} формах, толщина 40 мм, F200. Цены от {rub(ALL_MIN)} ₽/м². "
+        f"Доставка по Краснодару и краю, наличный и безналичный расчёт.",
         body, active="plitka"))
 
 
@@ -398,6 +413,7 @@ def build_shape(slug):
                   ("Тротуарная плитка", "trotuarnaya-plitka.html"),
                   (m["name"], None)])}
     <h1>Плитка «{esc(m["name"])}»</h1>
+    <p class="page-sub">{esc(SHAPE_NOTE[slug])}.</p>
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -408,8 +424,8 @@ def build_shape(slug):
     </div>
   </div></section>
 {calc_block(price=m["min_price"],
-            note=f"Пример для {CALC_AREA} м² по цене «от» этой формы. "
-                 f"У колормиксов цена выше — точную смету с раскладкой, бордюром "
+            note=f"Пример для {CALC_AREA} м² по цене «от» этой формы: "
+                 f"у колормиксов цена выше. Точную смету с раскладкой, бордюром "
                  f"и доставкой посчитает менеджер.")}
 
   <section class="section"><div class="wrap">
@@ -423,8 +439,8 @@ def build_shape(slug):
         f"Плитка «{m['name']}» — {len(items)} "
         f"{plural(len(items), 'расцветка', 'расцветки', 'расцветок')} от {lo} ₽/м², Краснодар",
         f"Тротуарная плитка «{m['name']}»: {len(items)} "
-        f"{plural(len(items), 'расцветка', 'расцветки', 'расцветок')}, 40 мм, F200, B30, "
-        f"от {lo} ₽/м². Доставка по Краснодару и краю, оплата при получении.",
+        f"{plural(len(items), 'расцветка', 'расцветки', 'расцветок')}, 40 мм, F200, В30, "
+        f"от {lo} ₽/м². Доставка по Краснодару и краю, наличный и безналичный расчёт.",
         body, active="plitka"))
 
 
@@ -432,11 +448,15 @@ def build_shape(slug):
 # Страница товара
 # ---------------------------------------------------------------------------
 def spec_rows(p):
-    rows = [("Толщина", "40 мм — дорожки, двор, легковая машина"),
-            ("Морозостойкость", "F200 — двести циклов заморозки"),
-            ("Прочность", "B30 — бетон дорожного класса"),
-            ("Окраска", "колормикс — несколько оттенков в замесе"
-                        if not p["mono"] else "однотонная, один цвет по всей партии"),
+    # Проезд и стоянку машины завод для 40 мм не заявляет (в паспорте только
+    # высота, класс прочности и морозостойкость) — своих обещаний не даём.
+    rows = [("Толщина", "40 мм — дорожки, двор, отмостка, зоны отдыха; "
+                        "под заезд автомобиля толщину уточните у менеджера"),
+            ("Морозостойкость", "F200 — 200 циклов замораживания и оттаивания"),
+            ("Класс прочности", "В30 — прочность бетона на сжатие"),
+            ("Окраска", "колормикс — в одной партии несколько оттенков, "
+                        "они смешиваются при укладке"
+                        if not p["mono"] else "однотонная — один пигмент, без переливов"),
             ("Поддон", f"{PALLET_M2} м² · около 1,4 тонны"),
             ("Фура", "225 м² за один рейс")]
     return "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in rows)
@@ -475,9 +495,11 @@ def build_product(p):
             f'data-src="{root}{g}?v={IMG_V}" aria-label="Фото {i + 1}">'
             f'<img src="{root}{g}?v={IMG_V}" alt="" width="76" height="76" loading="lazy">'
             f'</button>' for i, g in enumerate(p["_gal"])) + "</div>"
-    tone = (f'<p class="pd-note">Оттенок на экране отличается от плитки на поддоне. '
-            f'<a href="{wa_link("Здравствуйте! Пришлите живое фото: " + name)}" '
-            f'target="_blank" rel="noopener">Пришлём живые фото и видео в WhatsApp</a>.</p>')
+    tone = (f'<p class="pd-note">Оттенок на экране может отличаться от плитки '
+            f'в партии. '
+            f'<a href="{wa_link("Здравствуйте! Пришлите фото товара: " + name)}" '
+            f'target="_blank" rel="noopener">Запросить фото и видео товара '
+            f'в WhatsApp</a>.</p>')
 
     terms_html = "".join(f"<li>{ICON[ic]}<span>{esc(t)}</span></li>" for ic, t in TERMS_STOCK)
 
@@ -488,7 +510,7 @@ def build_product(p):
         sim_html = f"""
   <section class="section"><div class="wrap">
     <div class="section-head"><h2>Другие расцветки «{esc(m["name"])}»</h2>
-      <a class="see-all" href="{root}plitka-{p["shape"]}.html">Вся форма</a></div>
+      <a class="see-all" href="{root}plitka-{p["shape"]}.html">Все расцветки</a></div>
     <div class="p-grid{grid_cls(len(sim))}">
       {"".join(card_of(q, root=root, with_shape=False) for q in sim)}</div>
   </div></section>"""
@@ -533,7 +555,7 @@ def build_product(p):
           <a class="btn btn--ghost pd-bar-call" href="{PHONE_HREF}"
              aria-label="Позвонить">{ICON["phone"]}</a>
         </div>
-        <p class="pd-note">Куда берут: {esc(SHAPE_USE[p["shape"]])}.</p>
+        <p class="pd-note">Применение: {esc(SHAPE_USE[p["shape"]])}.</p>
         <div class="pd-specs"><h2>Характеристики</h2><dl>{spec_rows(p)}</dl></div>
       </div>
     </div>
@@ -547,7 +569,7 @@ def build_product(p):
     ld = {"@context": "https://schema.org", "@type": "Product", "name": name,
           "sku": p["id"].upper(), "category": "Тротуарная плитка",
           "description": f"Тротуарная плитка «{p['name']}», форма «{m['name']}». "
-                         f"Толщина 40 мм, морозостойкость F200, прочность B30, "
+                         f"Толщина 40 мм, морозостойкость F200, класс прочности В30, "
                          f"поддон {PALLET_M2} м².",
           "image": SITE_URL + p["_gal"][0],
           "offers": {"@type": "Offer", "price": p["price"], "priceCurrency": "RUB",
@@ -556,9 +578,9 @@ def build_product(p):
             + json.dumps(ld, ensure_ascii=False) + "</script>")
 
     write_page(BASE / "tovar" / f"{p['slug']}.html", page_shell(
-        f"{name} — {rub(p['price'])} ₽/м², купить в Краснодаре",
-        f"{name}: {rub(p['price'])} ₽/м², {pallet_text(p)}. Толщина 40 мм, F200, B30. "
-        f"Доставка по Краснодару и краю, оплата при получении.",
+        f"{name} · {rub(p['price'])} ₽/м² — купить в Краснодаре",
+        f"{name}: {rub(p['price'])} ₽/м², {pallet_text(p)}. Толщина 40 мм, F200, В30. "
+        f"Доставка по Краснодару и краю, наличный и безналичный расчёт.",
         body, root=root, active="plitka", extra_head=head))
 
 
@@ -568,11 +590,11 @@ def build_product(p):
 def build_border(b):
     root = "../"
     is_road = "дорожн" in b["name"].lower()
-    use = ("Держит край дорожки и парковки: полотно не расползается, "
-           "край не крошится под колесом."
+    use = ("держит край дорожки и парковки — мощение не расползается, "
+           "край не крошится под колесом"
            if is_road else
-           "Аккуратный край садовых дорожек и клумб — ниже и легче дорожного, "
-           "ставится вручную.")
+           "аккуратный край садовых дорожек и клумб — ниже и легче дорожного, "
+           "ставится вручную")
     img = f"img/catalog/{b['id']}.jpg?v={IMG_V}"
     terms_html = "".join(f"<li>{ICON[ic]}<span>{esc(t)}</span></li>" for ic, t in TERMS_STOCK)
 
@@ -609,13 +631,13 @@ def build_border(b):
           <a class="btn btn--ghost pd-bar-call" href="{PHONE_HREF}"
              aria-label="Позвонить">{ICON["phone"]}</a>
         </div>
-        <p class="pd-note">Зачем нужен: {esc(use)}</p>
+        <p class="pd-note">Назначение: {esc(use)}.</p>
       </div>
     </div>
   </div></section>
 
   <section class="section"><div class="wrap">
-    <div class="section-head"><h2>Бордюр берут вместе с плиткой</h2>
+    <div class="section-head"><h2>Плитка к этому бордюру</h2>
       <a class="see-all" href="{root}trotuarnaya-plitka.html">Вся плитка</a></div>
     <div class="tiles">{"".join(
         f'<a class="tile" href="{root}plitka-{s}.html">'
@@ -634,8 +656,8 @@ def build_border(b):
 
     write_page(BASE / "tovar" / f"{b['id']}.html", page_shell(
         f"{b['name']} — {rub(b['price'])} ₽/шт, купить в Краснодаре",
-        f"{b['name']}: {rub(b['price'])} ₽/шт. Привезём вместе с тротуарной плиткой, "
-        f"метраж посчитаем по плану участка. Оплата при получении.",
+        f"{b['name']}: {rub(b['price'])} ₽/шт. Отгружаем вместе с плиткой или отдельно; "
+        f"количество посчитает менеджер по плану участка. Наличный и безналичный расчёт.",
         body, root=root, active="plitka", extra_head=head))
 
 

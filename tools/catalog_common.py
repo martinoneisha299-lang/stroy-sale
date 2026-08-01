@@ -19,11 +19,14 @@
 
 from shell_common import ICON, esc, plural, terms_line
 
-SORTS = [("default", "Рекомендуем"), ("cheap", "Сначала недорогие"),
+SORTS = [("default", "По каталогу"), ("cheap", "Сначала недорогие"),
          ("exp", "Сначала дорогие"), ("new", "Новинки")]
+# Пункт «Новинки» есть не на каждой странице по факту: в коллекциях без
+# новинок app.js убирает его из списка при загрузке (иначе выбор ничего
+# не менял бы). Здесь список общий, разбор — на стороне страницы.
 
 
-NO_PRICE_SORTS = [("default", "Рекомендуем")]
+NO_PRICE_SORTS = [("default", "По каталогу")]
 
 
 def toolbar(total, unit=("товар", "товара", "товаров"), sorts=None, filters=True,
@@ -109,7 +112,7 @@ def filters_drawer():
   </div>"""
 
 
-def grid_shell(cards_html, page_size=40, empty_note="По этим фильтрам ничего не нашлось."):
+def grid_shell(cards_html, page_size=40, empty_note="По выбранным параметрам товаров не найдено."):
     return f"""
         <div id="catalogWrap" data-page-size="{page_size}">
           <div class="p-grid" id="grid">{cards_html}</div>

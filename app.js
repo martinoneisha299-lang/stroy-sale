@@ -125,7 +125,7 @@
       delete c[id];
       cartWrite(c);
       paintAddButtons();
-      toast('Убрали из заявки', b.dataset.root);
+      toast('Убрано из заявки', b.dataset.root);
     } else {
       c[id] = {
         n: parseInt(b.dataset.qty, 10) || 1,
@@ -137,7 +137,7 @@
       };
       cartWrite(c);
       paintAddButtons();
-      toast('Добавили в заявку', b.dataset.root);
+      toast('Добавлено в заявку', b.dataset.root);
     }
   });
 
@@ -187,13 +187,17 @@
 
     function render(list) {
       if (!list.length) {
-        box.innerHTML = '<p class="sug-empty">Ничего не нашли. Позвоните — подберём по описанию.</p>';
+        box.innerHTML = '<p class="sug-empty">По запросу ничего не найдено. ' +
+          'Уточните запрос — например «кирпич красный», «плитка», «профнастил», — ' +
+          'или позвоните: менеджер подберёт материал по описанию.</p>';
         box.hidden = false;
         return;
       }
       box.innerHTML = list.slice(0, 8).map(function (it) {
         var img = it.i ? '<img src="' + root + it.i + '" alt="" loading="lazy">' : '';
-        var price = it.p ? '<b>' + it.p + '</b>' : '';
+        /* Единица обязательна: без «/м²» цена плитки читается как за штуку. */
+        var unit = it.pu ? '<span class="p-unit">' + it.pu + '</span>' : '';
+        var price = it.p ? '<b>' + it.p + unit + '</b>' : '';
         return '<a href="' + root + it.u + '">' + img + '<span>' + it.n + '</span>' + price + '</a>';
       }).join('');
       box.hidden = false;
@@ -317,6 +321,17 @@
       c._new = c.dataset.new === '1';
     });
 
+    /* «Новинки» показываем только там, где новинки действительно есть:
+       пункт без данных за ним сортировал бы выдачу как получится. */
+    if (sortSel && !cards.some(function (c) { return c._new; })) {
+      var newOpt = sortSel.querySelector('option[value="new"]');
+      if (newOpt) newOpt.parentNode.removeChild(newOpt);
+      if (sortSel.options.length < 2) {
+        var sortBox = sortSel.parentNode;
+        if (sortBox) sortBox.hidden = true;
+      }
+    }
+
     function boxes() {
       return form ? $$('input[data-group]', form) : [];
     }
@@ -415,7 +430,12 @@
       var mn = $('#pmin'), mx = $('#pmax');
       if (mn && p.get('min')) mn.value = p.get('min');
       if (mx && p.get('max')) mx.value = p.get('max');
-      if (sortSel && p.get('sort')) sortSel.value = p.get('sort');
+      /* Сортировки из адреса может не быть в списке (например ?sort=new там,
+         где новинок нет) — тогда остаёмся на «По каталогу». */
+      if (sortSel && p.get('sort')) {
+        sortSel.value = p.get('sort');
+        if (!sortSel.value) sortSel.value = 'default';
+      }
     }
 
     function apply(resetPage) {
@@ -615,8 +635,8 @@
       if (noteEl) {
         noteEl.textContent = ask
           ? 'В заявке ' + ask + ' ' + plural(ask, 'позиция', 'позиции', 'позиций') +
-            ' без цены — назовём при звонке.'
-          : 'Итог примерный: точную цену с доставкой назовёт менеджер.';
+            ' без цены — стоимость уточнит менеджер.'
+          : 'Сумма предварительная. Точную стоимость с доставкой подтвердит менеджер.';
       }
       if (hidden) {
         hidden.value = ids.map(function (id) {
@@ -686,9 +706,12 @@
           return words.every(function (w) { return hay.indexOf(w) >= 0; });
         });
         if (!hits.length) {
-          box.innerHTML = '<div class="empty"><p>По запросу «' + q +
-            '» ничего не нашли. Попробуйте короче: «кирпич красный», «плитка», «профнастил» — ' +
-            'или позвоните, подберём по описанию.</p>' +
+          /* Тот же текст, что в подсказках строки поиска: одна ситуация —
+             одна формулировка. Запрос сюда не подставляем: он и так стоит
+             в поле поиска, а в innerHTML попадал бы без экранирования. */
+          box.innerHTML = '<div class="empty"><p>По запросу ничего не найдено. ' +
+            'Уточните запрос — например «кирпич красный», «плитка», «профнастил», — ' +
+            'или позвоните: менеджер подберёт материал по описанию.</p>' +
             '<a class="btn btn--accent" href="' + root + 'index.html#catalog">В каталог</a></div>';
           return;
         }
@@ -697,8 +720,9 @@
             var img = it.i
               ? '<img class="p-img" src="' + root + it.i + '" alt="" width="640" height="640" loading="lazy">'
               : '<div class="p-img p-none"><span>Фото по запросу</span></div>';
+            var unit = it.pu ? '<span class="p-unit">' + it.pu + '</span>' : '';
             var price = it.p
-              ? '<p class="p-price"><b>' + it.p + '</b></p>'
+              ? '<p class="p-price"><b>' + it.p + '</b>' + unit + '</p>'
               : '<p class="p-ask">Цена по запросу</p>';
             return '<article class="p-card"><a href="' + root + it.u + '" tabindex="-1" aria-hidden="true">' +
               img + '</a><a class="p-name" href="' + root + it.u + '">' + it.n + '</a>' + price + '</article>';

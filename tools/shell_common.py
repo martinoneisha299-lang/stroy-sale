@@ -57,19 +57,28 @@ def wa_link(text="Здравствуйте! Пишу с сайта Стройс�
 # покупателю. Решение заказчика 29.07.2026: «пока не знаю, напомни позже».
 # До тех пор держим осторожные формулировки. Когда появятся данные об остатках —
 # менять ЗДЕСЬ, в одном месте, и пересобрать все четыре генератора.
+#
+# «Оплата при получении» убрана по требованию заказчика: условия оплаты у
+# компании каждый раз разные, обещать их на витрине нельзя. Возвращать нельзя.
 # ---------------------------------------------------------------------------
-AVAIL_STOCK = [("truck", "Доставка по краю"),
-               ("card", "Оплата при получении")]
+# Оплата описана ровно двумя фразами — короткой и полной. До этого по сайту
+# гуляли шесть вариантов одного условия, различавшихся одним словом.
+PAY_SHORT = "Наличный и безналичный расчёт"
+PAY_FULL = ("Наличный и безналичный расчёт, для организаций — по счёту; "
+            "условия согласуем при оформлении заказа")
+
+AVAIL_STOCK = [("truck", "Доставка по Краснодару и краю"),
+               ("card", PAY_SHORT)]
 AVAIL_ORDER = [("clock", "Под заказ"),
-               ("card", "Оплата при получении")]
+               ("card", PAY_SHORT)]
 
 # Развёрнутые формулировки для страницы товара, где место есть
 TERMS_STOCK = [("truck", "Доставка по Краснодару и краю, разгрузка манипулятором"),
-               ("card", "Оплата при получении — наличными или картой"),
-               ("phone", "Перезвоним за 5 минут и уточним объём")]
-TERMS_ORDER = [("clock", "Под заказ — точный срок назовём при звонке"),
+               ("card", PAY_FULL),
+               ("calc", "Количество и стоимость посчитаем бесплатно")]
+TERMS_ORDER = [("clock", "Под заказ — срок поставки уточняет менеджер"),
                ("truck", "Доставка по Краснодару и краю"),
-               ("card", "Оплата при получении — наличными или картой")]
+               ("card", PAY_FULL)]
 
 # ---------------------------------------------------------------------------
 # Разделы. Порядок — как в меню; ключ используется для подсветки активного.
@@ -79,12 +88,16 @@ SECTIONS = [
      "img": "img/cat-oblic.jpg", "note": "264 вида, от 18,50 ₽/шт"},
     {"key": "zabut", "title": "Забутовочный кирпич", "url": "kirpich-zabutovochnyy.html",
      "img": "img/cat-brick.jpg", "note": "Фундамент, стены, перегородки"},
+    # 172 — это позиции (7 форм × расцветки), а самих расцветок 32: карточки
+    # форм на странице плитки пишут «24 расцветки», «29 расцветок».
     {"key": "plitka", "title": "Тротуарная плитка", "url": "trotuarnaya-plitka.html",
-     "img": "img/cat-tile.jpg", "note": "172 расцветки, от 650 ₽/м²"},
-    {"key": "krovlya", "title": "Кровля", "url": "krovlya.html",
-     "img": "img/cat-roof.jpg", "note": "Металлочерепица и профнастил"},
-    {"key": "sayding", "title": "Сайдинг и штакетник", "url": "krovlya-sayding.html",
-     "img": "img/roof/cover-cat-sid.jpg", "note": "Фасад и забор, 22 цвета"},
+     "img": "img/cat-tile.jpg", "note": "32 расцветки в 7 формах, от 650 ₽/м²"},
+    {"key": "krovlya", "title": "Кровля и фасад", "url": "krovlya.html",
+     "img": "img/cat-roof.jpg", "note": "Металлочерепица, профнастил, штакетник, сайдинг"},
+    # Пункт ведёт на страницу металлосайдинга, поэтому и называется так же:
+    # штакетник живёт на своей странице и заявлен в разделе «Кровля».
+    {"key": "sayding", "title": "Металлосайдинг", "url": "krovlya-sayding.html",
+     "img": "img/roof/cover-cat-sid.jpg", "note": "Фасад и софиты, 22 цвета"},
 ]
 
 # Ссылки, которые уходят вправо в меню десктопа
@@ -264,7 +277,7 @@ def catalog_drawer(root=""):
             f'<img src="{root}{s["img"]}" alt="" width="48" height="48" loading="lazy">'
             f'<span>{esc(s["title"])}<small>{esc(s["note"])}</small></span>'
             f'<span class="arr">{ICON["right"]}</span></a></li>')
-    extra = [("Акции и скидки", f"{root}akcii.html"),
+    extra = [("Акции и предложения", f"{root}akcii.html"),
              ("Доставка и оплата", f"{root}dostavka.html"),
              ("Наши работы", f"{root}raboty.html"),
              ("Моя заявка", f"{root}zayavka.html")]
@@ -311,7 +324,7 @@ def promo_bar(root=""):
     # расчёт: это мы точно делаем. Когда акция будет согласована, вернуть
     # сюда «−15% … до <дата>» вместе с data-until.
     return (f'<a class="promo-bar" href="{root}index.html#lead" hidden data-until="2026-12-31">'
-            f'<b>Бесплатный расчёт</b> материала по вашим размерам — ответим за 5 минут</a>')
+            f'<b>Бесплатный расчёт</b> материала по вашим размерам</a>')
 
 
 def msg_circles(product="", label="Или напишите:"):
@@ -322,9 +335,9 @@ def msg_circles(product="", label="Или напишите:"):
       <a class="msg-circle mc-max" href="{MAX_URL}" target="_blank" rel="noopener" aria-label="Написать в MAX"><img src="{{root}}img/max-icon-white.svg" alt="" width="22" height="22"></a></p>"""
 
 
-def lead_block(root="", h2="Посчитаем материал и назовём цену",
-               note="Оставьте номер — перезвоним за 5 минут, уточним размеры "
-                    "и пришлём расчёт с доставкой."):
+def lead_block(root="", h2="Расчёт материала и стоимости",
+               note="Оставьте номер — менеджер уточнит размеры, посчитает "
+                    "объём и пришлёт расчёт с условиями доставки."):
     circles = msg_circles().replace("{root}", root)
     return f"""
   <section class="section" id="lead">
@@ -334,13 +347,13 @@ def lead_block(root="", h2="Посчитаем материал и назовё�
           <h2>{esc(h2)}</h2>
           <p class="page-sub">{esc(note)}</p>
           <a class="lead-phone" href="{PHONE_HREF}">{PHONE}
-            <small>Звонок бесплатный, {WORK_HOURS}</small></a>
+            <small>Приём звонков {WORK_HOURS}</small></a>
           {circles}
         </div>
         <form class="lead-form" data-lead="lfOk" novalidate>
           <div class="field">
-            <label for="lfName">Как к вам обращаться</label>
-            <input id="lfName" name="name" type="text" autocomplete="name" placeholder="Имя">
+            <label for="lfName">Ваше имя</label>
+            <input id="lfName" name="name" type="text" autocomplete="name" placeholder="Иван">
           </div>
           <div class="field">
             <label for="lfPhone">Телефон</label>
@@ -349,12 +362,13 @@ def lead_block(root="", h2="Посчитаем материал и назовё�
             <p class="form-err" id="lfErr" hidden>В номере не хватает цифр — проверьте, пожалуйста.</p>
           </div>
           <button class="btn btn--accent btn--wide" type="submit">Получить расчёт</button>
-          <p class="form-note">Нажимая кнопку, вы соглашаетесь с
-            <a href="{root}policy.html">политикой конфиденциальности</a>. Номер не передаём третьим лицам.</p>
+          <p class="form-note">Нажимая кнопку, вы даёте согласие на обработку персональных данных
+            и принимаете <a href="{root}policy.html">политику конфиденциальности</a>.
+            Номер используем только для связи по вашей заявке.</p>
         </form>
         <p class="form-ok" id="lfOk" role="status" tabindex="-1" hidden>
-          Форма пока не отправляет заявку сама — приёмник ещё не подключён.
-          Чтобы мы её увидели, напишите в WhatsApp или позвоните:
+          Заявка готова. Отправьте её в WhatsApp или позвоните — так менеджер
+          получит её сразу и назовёт цену с доставкой:
           <span class="form-ok-row">
             <a class="btn btn--accent" data-wa href="{wa_link()}" target="_blank" rel="noopener">Отправить в WhatsApp</a>
             <a class="btn btn--ghost" href="{PHONE_HREF}">Позвонить {PHONE}</a>
@@ -376,9 +390,9 @@ def footer_html(root=""):
           <svg viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--accent)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
           <span><b>СТРОЙ</b><b>СЕЙЛ</b></span>
         </a>
-        <p class="footer-about">Стройматериалы с заводов Юга России: кирпич,
-          тротуарная плитка, кровля и фасад. Работаем с частными застройщиками,
-          прорабами и бригадами.</p>
+        <p class="footer-about">Кирпич, тротуарная плитка, кровля и фасадные
+          материалы — напрямую с заводов. Работаем с частными покупателями,
+          подрядчиками и организациями: наличный и безналичный расчёт.</p>
       </div>
       <div>
         <h3>Каталог</h3>
@@ -397,13 +411,14 @@ def footer_html(root=""):
       <div>
         <h3>Контакты</h3>
         <a class="footer-tel" href="{PHONE_HREF}">{PHONE}</a>
-        <p class="footer-hours">{PHONE_NOTE} · {WORK_HOURS}</p>
+        <p class="footer-hours">Приём звонков: {WORK_HOURS}</p>
         <p class="footer-addr">{ADDRESS}</p>
         {msg_circles(label="Напишите:").replace("{root}", root)}
       </div>
       <p class="footer-legal">
-        Строй-Сейл · {CITY} · 2026. Цены на сайте не являются публичной офертой;
-        точную стоимость с доставкой на ваш адрес называет менеджер.
+        Стройсейл · {CITY} · 2026. Информация на сайте носит справочный характер
+        и не является публичной офертой. Наличие, цена и условия поставки
+        подтверждаются отдельно.
       </p>
     </div>
   </footer>
@@ -434,7 +449,7 @@ def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=No
     Универсальная карточка витрины.
 
     href       — ссылка на товар
-    price_html — уже собранная цена («31,40 ₽» + единица) либо "" → «Узнать цену»
+    price_html — уже собранная цена («31,40 ₽» + единица) либо "" → «Цена по запросу»
     add        — dict для кнопки «В заявку»: {id, name, price, unit, img}
     data       — готовая строка data-атрибутов для фильтров и сортировки
     alt_img    — второй кадр: сам товар крупно, всплывает по наведению.
@@ -453,7 +468,7 @@ def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=No
                     f'loading="lazy"></span>')
     else:
         pic = (f'<div class="p-img p-none">{ICON["photo-off"]}'
-               f'<span>Фото пришлём по запросу</span></div>')
+               f'<span>Фотографии пришлём по запросу</span></div>')
 
     badge_html = ""
     if badge:
@@ -470,12 +485,18 @@ def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=No
         price = '<p class="p-ask">Цена по запросу</p>'
 
     if add:
+        # data-root обязателен: по нему тост строит ссылку «Открыть заявку».
+        # Без него на страницах в tovar/ она уводила на tovar/zayavka.html — 404.
         btn = (f'<button class="btn p-add" type="button" data-add '
                f'data-id="{esc(add["id"])}" data-name="{esc(add["name"])}" '
                f'data-price="{add.get("price") or ""}" data-unit="{esc(add.get("unit", "шт"))}" '
-               f'data-img="{esc(add.get("img", ""))}" data-url="{esc(href)}">В заявку</button>')
+               f'data-img="{esc(add.get("img", ""))}" data-url="{esc(href)}" '
+               f'data-root="{root}">В заявку</button>')
     else:
-        btn = f'<a class="btn btn--outline" href="{root}{href}">Узнать цену</a>'
+        # Кнопка ведёт на карточку товара, а не запрашивает цену, — поэтому
+        # и называется тем, что делает. «Запросить цену» обещало действие,
+        # которого не выполняло, и спорило с «В заявку» в соседнем разделе.
+        btn = f'<a class="btn btn--outline" href="{root}{href}">Подробнее</a>'
 
     return f"""<article class="p-card"{data}>{badge_html}
   <a class="p-shot" href="{root}{href}" tabindex="-1" aria-hidden="true">{pic}</a>

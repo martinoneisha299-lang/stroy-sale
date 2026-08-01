@@ -21,7 +21,10 @@ from shell_common import BASE
 RE_NAME = re.compile(r'<h1 class="pd-name">(.*?)</h1>', re.S)
 RE_H1 = re.compile(r"<h1[^>]*>(.*?)</h1>", re.S)
 RE_MAIN = re.compile(r'<img class="pd-main"[^>]*src="\.\./([^"?]+)')
-RE_PRICE = re.compile(r'<p class="pd-price"><b>(.*?)</b>', re.S)
+# Единицу («/м²», «/шт») забираем вместе с числом: без неё цена плитки
+# в поиске выглядела как цена за штуку, хотя на витрине та же позиция
+# подписана «за м²» — страницы противоречили друг другу по главному числу.
+RE_PRICE = re.compile(r'<p class="pd-price"><b>(.*?)</b>(?:<span[^>]*>(.*?)</span>)?', re.S)
 # Крошки берём ТОЛЬКО из блока .crumbs: тот же шаблон ссылки есть в футере,
 # и без границы блока в ключи попадало всё меню сайта.
 RE_CRUMBS_BLOCK = re.compile(r'<ol class="crumbs">(.*?)</ol>', re.S)
@@ -49,8 +52,9 @@ def build():
             continue
         name = text(m.group(1))
         img = RE_MAIN.search(html)
-        price = RE_PRICE.search(html)
-        price = text(price.group(1)) if price else ""
+        pm = RE_PRICE.search(html)
+        price = text(pm.group(1)) if pm else ""
+        unit = text(pm.group(2) or "") if pm else ""
         # крошки дают раздел и коллекцию — по ним тоже ищем.
         # Дедупликация обязательна: крошки встречаются и в шапке, и в блоке
         # «похожие», иначе ключи раздувают индекс втрое.
@@ -67,6 +71,8 @@ def build():
             rec["i"] = img.group(1)
         if price and "запрос" not in price.lower():
             rec["p"] = price          # символ ₽ уже внутри цены на странице
+            if unit:
+                rec["pu"] = unit      # «/м²» или «/шт» — вместе с косой чертой
         if keys:
             rec["k"] = " ".join(keys)
         items.append(rec)

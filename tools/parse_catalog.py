@@ -353,7 +353,8 @@ def parse_donskoy():
             
             photos = images_in(d)
             p_dir = str(d.relative_to(ROOT))
-            # нет фото — честная заглушка «Фото пришлём по запросу»
+            # нет фото — на карточке показывается заглушка «фото по запросу»
+            # (текст заглушки живёт в build_category.py)
 
             key = (name.lower(), texture, fmt, mark, category)
             if key in seen:  # дубль: другой поддон/фасовка при той же марке
@@ -603,7 +604,8 @@ def merge_klassika():
                 if v["format"] != base["format"]:
                     label = v["format"]
                 else:  # тот же формат, другая марка прочности
-                    label = f'{v["format"]}, марка {v.get("mark") or "выше"}'
+                    label = (f'{v["format"]}, марка {v["mark"]}' if v.get("mark")
+                             else f'{v["format"]}, другая марка')
                 # не затираем и не дублируем
                 if label not in base["formats_prices"]:
                     base["formats_prices"][label] = v["price"]
@@ -627,7 +629,7 @@ def merge_exact_twins():
         base = grp[0]
         for v in grp[1:]:
             if v["price"] and v["price"] != base["price"]:
-                label = f'вариант ({v.get("mark") or v["factory_name"][:20]})'
+                label = f'Марка {v["mark"]}' if v.get("mark") else "Другой вариант"
                 base["formats_prices"].setdefault(label, v["price"])
             base["flags"].append(f"объединён двойник: {v['factory_name']}")
             removed.append(id(v))
@@ -725,10 +727,51 @@ def clean_strings(o):
     return fix_latin(o) if isinstance(o, str) else o
 
 
+# ─── Чистка ОТОБРАЖАЕМОГО имени товара ───────────────────────────────────────
+# Идёт ПОСЛЕ присвоения id, поэтому номера карточек и ссылки на страницы
+# товара не сдвигаются.
+#
+# 1. Слово целиком латиницей. У Славянского один и тот же цвет записан в прайсе
+#    двумя алфавитами: «MOKKO-ВТ-РУСТ», но рядом «МОККО-ВТ» и «МОККО-ВТ-КРОСТА».
+#    fix_latin такое слово не трогает (в нём нет кириллицы), и на витрине
+#    соседние карточки одного цвета выглядят как опечатка, а поиск по сайту их
+#    не находит. Правим по списку слов: сплошная транслитерация сломала бы
+#    заводские коды WDF, MODF, WMF, LF.
+# 2. Хвост «-по рф» — служебная пометка прайса Губского (у завода это тот же
+#    кирпич по другой цене), а не часть названия; «Рф» ещё и написано с ошибкой.
+LATIN_NAME_WORDS = {"mokko": "Мокко"}
+
+
+def fix_name(s: str) -> str:
+    """«Mokko Вт Руст» → «Мокко Вт Руст»; «Старый Город Терра-по Рф» → «Старый Город Терра»."""
+    s = re.sub(r"[^\W\d_]+",
+               lambda m: LATIN_NAME_WORDS.get(m.group().lower(), m.group()), s)
+    s = re.sub(r"\s*[-–—]\s*по\s+рф\b\.?", "", s, flags=re.I)
+    return s.strip(" -,")
+
+
 for p in products:
     keep = {k: p[k] for k in ("photos", "factory_name", "video") if k in p}
     p.update(clean_strings({k: v for k, v in p.items() if k not in keep}))
     p.update(keep)  # пути к файлам и заводское имя-путь оставляем как есть
+    p["name"] = fix_name(p["name"])
+
+# После чистки имён может оказаться, что две карточки коллекции неотличимы
+# для покупателя (имя + фактура + формат совпали), а merge_exact_twins прошёл
+# раньше и их не склеил. Не склеиваем автоматически (у позиций разная цена —
+# решение за владельцем), но показываем в отчёте.
+_twins = defaultdict(list)
+for p in products:
+    _twins[(p["collection"], p["name"].lower(),
+            p.get("texture"), p.get("format"))].append(p)
+for grp in _twins.values():
+    if len(grp) > 1:
+        warnings.append(
+            "одинаковые карточки после чистки имени: «{}» — {}".format(
+                grp[0]["name"],
+                ", ".join(f'{v["id"]} {v["factory_name"]} '
+                          f'({v["price"] if v["price"] else "цена по запросу"})'
+                          for v in grp)))
 
 data = {
     "generated": str(date.today()),
