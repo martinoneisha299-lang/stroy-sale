@@ -128,11 +128,18 @@ button { cursor: pointer; }
   width: 100%;
   max-width: var(--wrap);
   margin-inline: auto;
-  padding-inline: var(--pad-x);
+  /* max() с env — страховка для альбомной ориентации iPhone: с
+     viewport-fit=cover страница уходит под «чёлку», текст не должен. */
+  padding-inline:
+    max(var(--pad-x), env(safe-area-inset-left))
+    max(var(--pad-x), env(safe-area-inset-right));
 }
 
 .section { padding-block: var(--s-section); }
 .section + .section { padding-top: 0; }
+/* Первая секция после тёмного героя: на телефоне подтянута к нему вплотную —
+   так верх карточек каталога попадает в первый экран. */
+.hero + .section { padding-top: var(--s-6); }
 /* Первая секция после заголовка страницы прижата к нему: h1 описывает
    ровно её, полный межсекционный воздух здесь читается как дыра */
 .page-head + .section { padding-top: var(--s-4); }
@@ -142,7 +149,7 @@ button { cursor: pointer; }
   align-items: baseline;
   justify-content: space-between;
   gap: var(--s-4);
-  margin-bottom: var(--s-6);
+  margin-bottom: var(--s-4);
 }
 .section-head h2 { min-width: 0; }
 
@@ -326,6 +333,8 @@ input[type="number"], input[type="search"], select, textarea {
   border-bottom: 1px solid var(--rule);
 }
 
+/* На телефоне шапка держится в двух строках и намеренно ужата: каждый её
+   пиксель отодвигает каталог за нижний край первого экрана. */
 .hdr-top {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -333,8 +342,8 @@ input[type="number"], input[type="search"], select, textarea {
     "logo  city"
     "tools tools";
   align-items: center;
-  gap: var(--s-3) var(--s-4);
-  padding-block: var(--s-3);
+  gap: var(--s-2) var(--s-4);
+  padding-block: var(--s-2);
 }
 
 .logo {
@@ -387,7 +396,7 @@ input[type="number"], input[type="search"], select, textarea {
   justify-content: center;
   gap: var(--s-2);
   width: 64px;
-  height: 52px;
+  height: 48px;
   border: none;
   border-radius: var(--r-field);
   background: var(--accent);
@@ -404,7 +413,7 @@ input[type="number"], input[type="search"], select, textarea {
   display: flex;
   align-items: center;
   gap: 11px;
-  height: 52px;
+  height: 48px;
   padding-inline: 16px;
   border-radius: var(--r-field);
   background: var(--field);
@@ -570,7 +579,9 @@ input[type="number"], input[type="search"], select, textarea {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: var(--s-5) var(--s-6);
+  /* Нижний запас — под «домашнюю» черту iPhone: со страницей во весь экран
+     (viewport-fit=cover) последний пункт списка иначе лежит под ней. */
+  padding: var(--s-5) var(--s-6) calc(var(--s-5) + env(safe-area-inset-bottom));
   overscroll-behavior: contain;
 }
 /* Запас снизу под липкую кнопку «Показать N»: без него последний фильтр
@@ -618,10 +629,23 @@ body.is-locked { overflow: hidden; }
   z-index: var(--z-tabbar);
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  /* Полоса жестов iPhone: без этого отступа нижние 34px бара лежат под
+     «домашней» чертой — туда не попасть пальцем. Работает только вместе с
+     viewport-fit=cover в мете (см. shell_common.page_shell). */
   padding-bottom: env(safe-area-inset-bottom);
   background: var(--paper);
   border-top: 1px solid var(--rule);
+  /* Собственный слой композитора. Без него во встроенных браузерах
+     (Telegram, Instagram, ВК) бар «отлипает» при инерционной прокрутке:
+     страница уже уехала, а бар догоняет её рывком. */
+  transform: translateZ(0);
+  will-change: transform;
+  /* Прокрутка страницы не должна проваливаться в бар */
+  overscroll-behavior: contain;
 }
+/* Открыта клавиатура — бар уезжает вниз (класс ставит app.js по
+   visualViewport): иначе он ложится поверх поля, в которое печатают. */
+.tabbar.is-away { transform: translate3d(0, 115%, 0); }
 .tabbar a, .tabbar button {
   position: relative;
   display: flex;
@@ -1563,9 +1587,12 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 /* Шапка главной держится на ФОТОГРАФИИ.
    Было: заголовок в левой половине экрана, правая половина — пустая. Именно
    это читалось как «текст парит»: у текста не было визуальной опоры. */
+/* Первый экран телефона: шапка + герой обязаны уместиться так, чтобы верх
+   карточек каталога выглядывал снизу (референс заказчика — kirpich.ru).
+   Поэтому на телефоне у героя нет нижнего отступа, кегли и поля ужаты,
+   а на планшете и десктопе (≥48em) всё возвращается к просторным значениям. */
 .hero {
   position: relative;
-  margin-bottom: var(--s-8);
   background: var(--dark);
   overflow: hidden;
 }
@@ -1578,18 +1605,23 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   object-position: 62% 50%;
 }
 /* Затемнение плотное слева и сходит на нет справа: текст читается,
-   дом остаётся виден. */
+   дом остаётся виден. На телефоне текст идёт во всю ширину, поэтому
+   добавлена вторая вуаль — снизу вверх: без неё цифры и подписи справа
+   («от 18,50 ₽ за штуку кирпича») ложились на светлое небо и терялись. */
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(96deg, rgba(26, 24, 22, .93) 0%, rgba(26, 24, 22, .82) 34%,
-                                     rgba(26, 24, 22, .30) 66%, rgba(26, 24, 22, .12) 100%);
+  background:
+    linear-gradient(180deg, rgba(26, 24, 22, .48) 0%, rgba(26, 24, 22, .58) 50%,
+                            rgba(26, 24, 22, .88) 100%),
+    linear-gradient(96deg, rgba(26, 24, 22, .93) 0%, rgba(26, 24, 22, .82) 34%,
+                           rgba(26, 24, 22, .30) 66%, rgba(26, 24, 22, .12) 100%);
 }
 .hero-in {
   position: relative;
   z-index: 1;
-  padding-block: clamp(28px, 5vw, 64px) clamp(24px, 4vw, 48px);
+  padding-block: 20px 22px;
 }
 /* max-width вешаем на ВНУТРЕННИЙ блок, а не на .wrap: у .wrap стоит
    margin-inline:auto, и сужение уводит текст в центр экрана на десктопе,
@@ -1599,7 +1631,7 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
-  margin-bottom: var(--s-3);
+  margin-bottom: var(--s-2);
   font-size: var(--fs-micro);
   font-weight: 700;
   letter-spacing: .09em;
@@ -1608,7 +1640,9 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 }
 .hero-eyebrow::before { content: ""; width: 14px; height: 6px; background: var(--accent); }
 .hero h1 {
-  font-size: var(--fs-hero);
+  /* 6,6vw — потолок только для телефона: на 393px даёт 26px вместо 31px и
+     убирает одну строку из четырёх. На планшете и шире потолок недостижим. */
+  font-size: min(var(--fs-hero), 6.6vw);
   line-height: 1.08;
   letter-spacing: -.025em;
   color: var(--on-dark);
@@ -1616,37 +1650,47 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 }
 .hero p {
   max-width: 40ch;
-  margin-top: var(--s-4);
+  margin-top: var(--s-3);
   font-size: var(--fs-md);
-  line-height: 1.55;
+  line-height: 1.5;
   color: #e6e2dd;
 }
-/* Цифры вместо обещаний: всё это проверяется в каталоге */
+/* Цифры вместо обещаний: всё это проверяется в каталоге.
+   На телефоне — три ровные колонки мелким кеглем (раньше цифры шли в две
+   строки и съедали 130px первого экрана). */
 .hero-facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-4) var(--s-8);
-  margin-top: var(--s-7);
-  padding-top: var(--s-6);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
   border-top: 1px solid rgba(255, 255, 255, .18);
 }
 .hero-facts div { min-width: 0; }
 .hero-facts b {
   display: block;
-  font-size: 1.4rem;
+  /* 4,6vw — чтобы «от 18,50 ₽» помещалось в треть экрана одной строкой */
+  font-size: min(1.05rem, 4.6vw);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.15;
   color: var(--on-dark);
   font-variant-numeric: tabular-nums;
 }
-.hero-facts span { font-size: var(--fs-xs); color: #c9c4be; }
+.hero-facts span {
+  font-size: var(--fs-micro);
+  line-height: 1.25;
+  color: #c9c4be;
+}
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-3);
-  margin-top: var(--s-7);
+  margin-top: var(--s-6);
 }
-.hero-cta .btn { min-height: 50px; padding-inline: var(--s-9); }
+/* На телефоне каталог виден сразу под героем — кнопка «Смотреть каталог»
+   вела бы на то, что и так на экране. Остаётся одно действие: расчёт.
+   На планшете и шире кнопка возвращается (см. блок ≥48em). */
+.hero-cta .btn { display: none; min-height: 50px; padding-inline: var(--s-9); }
 /* Вторая кнопка на фото — обводка, а не вторая заливка */
 .hero-ghost {
   display: inline-flex;
@@ -1661,7 +1705,17 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   font-weight: 600;
   transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-.hero-ghost:hover { background: rgba(255, 255, 255, .12); border-color: rgba(255, 255, 255, .75); }
+/* Только для мыши: на таче «наведение» залипает после тапа, и залитая
+   акцентом мобильная кнопка (см. ниже) на секунду становилась прозрачной. */
+/* Наведение — только там, где кнопка действительно с обводкой (≥48em) и есть
+   мышь: на таче «наведение» залипает после тапа, и залитая акцентом мобильная
+   кнопка (правило ниже) на секунду становилась прозрачной. */
+@media (hover: hover) and (min-width: 48em) {
+  .hero-ghost:hover { background: rgba(255, 255, 255, .12); border-color: rgba(255, 255, 255, .75); }
+}
+/* Раз на телефоне она единственная — она же и главная: заливка вместо обводки */
+.hero-ghost { border-color: transparent; background: var(--accent); }
+.hero-ghost:active { transform: translateY(1px); }   /* отклик на нажатие, как у .btn */
 
 /* Полоса условий: короткая строка с кирпичиками */
 .terms-strip {
@@ -1842,7 +1896,10 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 /* Тонкая полоса акции над шапкой */
 .promo-bar {
   display: block;
-  padding: 9px var(--pad-x);
+  padding-block: 8px;
+  padding-inline:
+    max(var(--pad-x), env(safe-area-inset-left))
+    max(var(--pad-x), env(safe-area-inset-right));
   background: var(--dark);
   color: var(--on-dark);
   font-size: var(--fs-xs);
@@ -1992,9 +2049,36 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
     padding-block: var(--s-4);
   }
   .hdr-tools { display: contents; }
-  .hdr-cat { grid-area: cat; width: 52px; }
-  .hdr-search { grid-area: search; }
+  .hdr-cat { grid-area: cat; width: 52px; height: 52px; }
+  .hdr-search { grid-area: search; height: 52px; }
   .hdr-city { grid-area: city; }
+
+  .section-head { margin-bottom: var(--s-6); }
+
+  /* Герой: на большом экране ужимать первый экран незачем — возвращаем
+     воздух, вторую кнопку и крупные цифры (мобильные значения см. в §14). */
+  .hero { margin-bottom: var(--s-8); }
+  .hero + .section { padding-top: var(--s-section); }
+  /* На широком экране текст живёт в левой половине — нижняя вуаль не нужна */
+  .hero::after {
+    background: linear-gradient(96deg, rgba(26, 24, 22, .93) 0%, rgba(26, 24, 22, .82) 34%,
+                                       rgba(26, 24, 22, .30) 66%, rgba(26, 24, 22, .12) 100%);
+  }
+  .hero-in { padding-block: clamp(40px, 5vw, 64px) clamp(32px, 4vw, 48px); }
+  .hero-eyebrow { margin-bottom: var(--s-3); }
+  .hero p { margin-top: var(--s-4); line-height: 1.55; }
+  .hero-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4) var(--s-8);
+    margin-top: var(--s-7);
+    padding-top: var(--s-6);
+  }
+  .hero-facts b { font-size: 1.4rem; line-height: 1.1; }
+  .hero-facts span { font-size: var(--fs-xs); }
+  .hero-cta { margin-top: var(--s-7); }
+  .hero-cta .btn { display: inline-flex; }
+  .hero-ghost { border-color: rgba(255, 255, 255, .45); background: transparent; }
 
   .p-grid {
     grid-template-columns: repeat(auto-fill, minmax(min(var(--card-min), 100%), 1fr));

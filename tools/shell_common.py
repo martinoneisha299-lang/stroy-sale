@@ -25,8 +25,15 @@ SITE_URL = "https://martinoneisha299-lang.github.io/stroy-sale/"
 
 # Версии кэша. Поднимать при ЛЮБОЙ правке styles.css / tokens.css / app.js —
 # иначе у посетителя останется старый файл и вёрстка «поедет».
-STYLES_V = 55
-APP_V = 6
+STYLES_V = 56
+APP_V = 8
+
+# viewport-fit=cover обязателен: без него env(safe-area-inset-*) всегда 0, и во
+# встроенных браузерах (Telegram, Instagram), где страница занимает экран
+# целиком, нижние пункты таб-бара оказываются под «домашней» чертой iPhone —
+# по ним просто не попасть пальцем. Зум НЕ отключаем (никаких maximum-scale).
+VIEWPORT = ('<meta name="viewport" '
+            'content="width=device-width, initial-scale=1, viewport-fit=cover">')
 
 # ---------------------------------------------------------------------------
 # Контакты. Телефон и юзернеймы — заглушки, заказчик пришлёт настоящие.
@@ -525,7 +532,7 @@ def page_shell(title, descr, body, *, root="", active="", extra_js="", extra_hea
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {VIEWPORT}
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(descr)}">
   <link rel="icon" href="{root}favicon.svg" type="image/svg+xml">

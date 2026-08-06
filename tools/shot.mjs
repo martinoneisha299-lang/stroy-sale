@@ -18,6 +18,8 @@ ws.onmessage = e => { const m = JSON.parse(e.data); if (m.id && pend.has(m.id)) 
 const send = (method, params = {}) => new Promise(res => { const i = ++id; pend.set(i, res); ws.send(JSON.stringify({ id: i, method, params })); });
 
 await send('Emulation.setDeviceMetricsOverride', { width: +W, height: +H, deviceScaleFactor: 1, mobile: +W < 700 });
+await send('Network.enable');
+await send('Network.setCacheDisabled', { cacheDisabled: true });
 await send('Page.navigate', { url: `http://localhost:${PORT}/${PAGE}` });
 await sleep(1800);
 if (+Y > 0) { await send('Runtime.evaluate', { expression: `window.scrollTo({top:${Y},behavior:'instant'})` }); await sleep(600); }

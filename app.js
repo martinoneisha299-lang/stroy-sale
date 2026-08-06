@@ -836,8 +836,12 @@
     if (!bar) return;
     var timer;
     function sync() {
-      var h = bar.getBoundingClientRect().height;
-      if (h) document.documentElement.style.setProperty('--tabbar-h', Math.round(h) + 'px');
+      /* Без нижнего отступа безопасной зоны: в CSS его прибавляют отдельно
+         (body, липкая панель товара, тост). Иначе на iPhone он считался
+         дважды — под страницей висела лишняя пустая полоса в 34px. */
+      var pad = parseFloat(getComputedStyle(bar).paddingBottom) || 0;
+      var h = bar.getBoundingClientRect().height - pad;
+      if (h > 0) document.documentElement.style.setProperty('--tabbar-h', Math.round(h) + 'px');
     }
     sync();
     /* ResizeObserver, а не событие resize: высота меняется и без смены размера
@@ -855,6 +859,49 @@
       });
     }
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+  })();
+
+  /* =========================================================================
+     12 · Таб-бар приклеен к видимой части экрана
+
+     position:fixed прижимает бар к низу МАКЕТА страницы, а видимая область
+     бывает ниже: встроенные браузеры (Telegram, Instagram, ВК) держат внизу
+     свою панель, iOS Safari прячет и показывает адресную строку. Тогда бар
+     уезжает под чужую панель или всплывает над ней — это и есть «отлипает».
+
+     visualViewport знает, где реальный низ видимой области. Разницу
+     компенсируем сдвигом. Когда сдвиг нулевой (обычный браузер, десктоп) —
+     ничего не делаем, поведение остаётся прежним.
+     ====================================================================== */
+  (function pinTabbar() {
+    var bar = $('.tabbar');
+    var vv = window.visualViewport;
+    if (!bar || !vv) return;
+    var KEYBOARD = 180;   /* сдвиг больше этого — открыта клавиатура, а не панель браузера */
+    var last = null;
+
+    /* Считаем и двигаем СРАЗУ, без requestAnimationFrame: во встроенных
+       браузерах rAF засыпает (ловили на карусели баннеров), а бар должен
+       стоять на месте в тот же кадр. Работы на событие — три чтения
+       и одна запись стиля, лишнего пересчёта вёрстки нет. */
+    function place() {
+      var gap = Math.round(window.innerHeight - vv.height - vv.offsetTop);
+      if (!isFinite(gap) || gap < 0) gap = 0;
+      if (gap > KEYBOARD) {
+        /* Клавиатура: бар прячем — он мешает полю, в которое печатают */
+        if (last !== 'away') { bar.style.transform = ''; bar.classList.add('is-away'); last = 'away'; }
+        return;
+      }
+      if (last === 'away') bar.classList.remove('is-away');
+      if (last !== gap) {
+        bar.style.transform = gap ? 'translate3d(0,' + (-gap) + 'px,0)' : 'translateZ(0)';
+        last = gap;
+      }
+    }
+    vv.addEventListener('resize', place);
+    vv.addEventListener('scroll', place);
+    addEventListener('orientationchange', place);
+    place();
   })();
 
   /* --- первичная отрисовка счётчиков ------------------------------------ */
