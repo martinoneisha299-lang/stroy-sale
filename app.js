@@ -12,7 +12,7 @@
      2 заявка            6 полоса акции
      3 тост              7 фильтры каталога
      4 поиск             8 галерея товара
-                         9 страница заявки
+                         9 страница заявки · количество на товаре
    ========================================================================== */
 (function () {
   'use strict';
@@ -614,8 +614,8 @@
           ? '<p class="cart-price">' + money(it.price) + ' ₽<span class="p-unit">/' + it.unit + '</span></p>'
           : '<p class="cart-price">Цена по запросу</p>';
         var sum = it.price
-          ? '<span class="muted">' + money(it.price * it.n) + ' ₽</span>'
-          : '';
+          ? '<span class="cart-sum">' + money(it.price * it.n) + ' ₽</span>'
+          : '<span class="cart-sum cart-sum--ask">по запросу</span>';
         return '<li class="cart-item" data-id="' + id + '">' + img +
           '<div><a class="cart-name" href="' + root + it.url + '">' + it.name + '</a>' + price +
           '<div class="cart-row"><span class="qty">' +
@@ -623,14 +623,26 @@
             '<input type="text" inputmode="numeric" value="' + it.n + '" aria-label="Количество, ' + it.unit + '">' +
             '<button type="button" data-step="1" aria-label="Больше">+</button></span>' +
             sum +
-          '<button class="cart-drop" type="button" data-drop>Убрать</button></div></div></li>';
+          '<button class="cart-drop" type="button" data-drop aria-label="Убрать из заявки">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+            'stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>' +
+          '</button></div></div></li>';
       }).join('');
 
-      var total = 0, ask = 0;
+      var total = 0, ask = 0, units = 0;
       ids.forEach(function (id) {
         if (c[id].price) total += c[id].price * c[id].n;
         else ask++;
+        units += c[id].n;
       });
+      /* Состав заявки строкой — «сколько всего» человек проверяет раньше,
+         чем сумму: он заказывает объём, а не деньги. */
+      var meta = $('#cartMeta');
+      if (meta) {
+        meta.textContent = ids.length + ' ' +
+          plural(ids.length, 'позиция', 'позиции', 'позиций') +
+          ' \u00B7 ' + money(units) + ' ' + (c[ids[0]].unit || 'шт');
+      }
       if (totalEl) totalEl.textContent = total ? money(total) + ' ₽' : '—';
       if (noteEl) {
         noteEl.textContent = ask
@@ -676,6 +688,64 @@
 
     document.addEventListener('cart:change', render);
     render();
+  })();
+
+  /* =========================================================================
+     9b · Количество на карточке товара
+
+     Счётчик рядом с ценой (как в макете заказчика 4d): человек кладёт в
+     заявку сразу нужный объём, а не одну штуку. Заодно считает то, ради чего
+     сюда пришли: сколько это в квадратных метрах кладки или в поддонах.
+     ====================================================================== */
+  (function pdQty () {
+    var box = $('[data-qty-box]');
+    if (!box) return;
+
+    var scope = box.closest('.pd-info') || document;
+    var input = box.querySelector('input');
+    var out = scope.querySelector('[data-qty-out]');
+    var per = parseFloat(box.dataset.per || '0');        /* штук в м² кладки */
+    var pallet = parseFloat(box.dataset.pallet || '0');  /* м² в поддоне */
+
+    function val () {
+      var n = parseInt(String(input.value).replace(/[^0-9]/g, ''), 10);
+      return n > 0 ? n : 1;
+    }
+
+    function paint () {
+      var n = val();
+      input.value = n;
+      /* Кнопки только этой колонки: у карточек «Похожие по цвету» ниже
+         тоже есть data-add, и им чужое количество не нужно. */
+      $$('[data-add]', scope).forEach(function (b) {
+        b.dataset.qty = n;
+        /* Товар уже в заявке — количество там тоже меняем, иначе счётчик
+           на странице и строка в заявке разошлись бы. */
+        var c = cartRead();
+        if (c[b.dataset.id]) { c[b.dataset.id].n = n; cartWrite(c); }
+      });
+      if (!out) return;
+      if (per) {
+        /* Меньше квадрата — «≈ 0 м²» выглядит поломкой: показываем обратную
+           подсказку, она полезнее и всегда верна. */
+        out.textContent = n / per < 1
+          ? 'на 1 м² кладки — ' + Math.round(per) + ' шт'
+          : 'хватит на \u2248 ' + money(Math.round(n / per * 10) / 10).replace(/,(\d)0$/, ',$1') +
+            ' м² кладки';
+      } else if (pallet) {
+        var pal = Math.ceil(n / pallet);
+        out.textContent = '\u2248 ' + pal + ' ' + plural(pal, 'поддон', 'поддона', 'поддонов');
+      }
+    }
+
+    box.addEventListener('click', function (e) {
+      var s = e.target.closest('[data-step]');
+      if (!s) return;
+      input.value = Math.max(1, val() + parseInt(s.dataset.step, 10));
+      paint();
+    });
+    input.addEventListener('change', paint);
+    paint();
   })();
 
   /* =========================================================================

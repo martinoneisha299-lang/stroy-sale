@@ -251,6 +251,68 @@ def per_m2(p):
     return round(1 / (((face[0] + 10) / 1000) * ((face[1] + 10) / 1000)), 1)
 
 
+def pallet_qty(p):
+    """
+    Сколько штук в поддоне у ЭТОГО товара.
+
+    Заводы записывают это тремя разными способами:
+      · «На поддоне»: 480            — прямое число (Тандем);
+      · «Штук на поддоне»: 352       — то же другими словами;
+      · «Количество на поддоне (1.4НФ, 1НФ, 0,9НФ, 0.7НФ), (шт)»: «352, 480, 484, 660»
+        — Губский пишет ОДНОЙ графой числа сразу для четырёх форматов, в том
+        порядке, в каком форматы перечислены в названии графы.
+    Из последней берём число, соответствующее формату товара; если формат
+    в перечне не нашёлся — молчим, а не подставляем первое попавшееся.
+    """
+    specs = p.get("specs") or {}
+    for key in ("На поддоне", "Штук на поддоне"):
+        v = str(specs.get(key, "")).strip()
+        if v.isdigit():
+            return int(v)
+    for key, val in specs.items():
+        if not key.startswith("Количество на поддоне"):
+            continue
+        fmts = [float(x.replace(",", ".")) for x in re.findall(r"(\d+[.,]?\d*)\s*НФ", key)]
+        nums = [x.strip() for x in str(val).split(",")]
+        if len(fmts) != len(nums) or not all(n.isdigit() for n in nums):
+            return None
+        m = re.match(r"(\d+[.,]?\d*)\s*НФ", p.get("format") or "")
+        if not m:
+            return None
+        want = float(m.group(1).replace(",", "."))
+        for f, n in zip(fmts, nums):
+            if abs(f - want) < 1e-6:
+                return int(n)
+    return None
+
+
+def qty_block(p, unit="шт"):
+    """
+    Счётчик количества над кнопкой заказа (макет заказчика, блок 4d).
+
+    Человек редко покупает одну штуку: он покупает стену. Поэтому рядом со
+    счётчиком идут две подсказки — сколько штук в поддоне (из спецификации
+    завода, если она там есть) и во сколько квадратов кладки это выльется.
+    Второе считает app.js по data-per: цифра меняется вместе с количеством.
+    """
+    per = per_m2(p)
+    pallet = pallet_qty(p)
+    pal, start = "", 1
+    if pallet:
+        start = pallet                            # кирпич возят поддонами
+        pal = f" · на поддоне {rub(pallet)} шт"
+    out = '<span data-qty-out></span>' if per else ""
+    data_per = f' data-per="{per}"' if per else ""
+    return f"""<div class="pd-buy">
+          <span class="qty" data-qty-box{data_per}>
+            <button type="button" data-step="-1" aria-label="Меньше">−</button>
+            <input type="text" inputmode="numeric" value="{start}" aria-label="Количество, {unit}">
+            <button type="button" data-step="1" aria-label="Больше">+</button>
+          </span>
+          <p class="pd-qty-note"><b>{unit}{pal}</b>{out}</p>
+        </div>"""
+
+
 def m2_price(p):
     """Цена за м² кладки — то, чем кирпич считают на самом деле."""
     per = per_m2(p)
@@ -558,8 +620,10 @@ def build_zabutovka():
 # ---------------------------------------------------------------------------
 # Страница товара
 # ---------------------------------------------------------------------------
+# «Расход на 1 м²» здесь намеренно НЕТ: он печатается строкой под ценой,
+# рядом с «≈ ₽/м² кладки», — там его ищут, а не среди морозостойкости.
 SPEC_ORDER = ["Марка прочности", "Марка морозостойкости", "Структура", "Вес",
-              "Расход на 1м2 (шт)", "Водопоглощение (%)", "Тип", "Назначение"]
+              "Водопоглощение (%)", "Тип", "Назначение"]
 SPEC_RENAME = {
     "Расход на 1м2 (шт)": "Расход на 1 м² кладки",
     "Марка прочности": "Прочность",
@@ -694,13 +758,14 @@ def build_product(p):
     if has_price:
         per = per_m2(p)
         m2_line = m2_text(p)
-        # Расход дублировать не нужно: там, где он есть в характеристиках,
-        # в шапке оставляем только цену за м².
-        if per and not (p.get("specs") or {}).get("Расход на 1м2 (шт)"):
+        # Расход печатаем ВСЕГДА рядом с ценой — это вторая цифра, которую
+        # проверяют первой. В таблице характеристик она не нужна: её место
+        # у цены, а не между морозостойкостью и весом (см. spec_rows).
+        if per:
             m2_line = (m2_line + " · " if m2_line else "") + f"{tidy_num(rub(per))} шт/м²"
         price_block = (f'<p class="pd-price"><b>{rub(p["price"])} ₽</b><span>/шт</span></p>'
                        + (f'<p class="pd-m2">{m2_line}</p>' if m2_line else ""))
-        action = (f'<button class="btn btn--accent p-add" type="button" data-add '
+        action = (f'<button class="btn p-add" type="button" data-add '
                   f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="{p["price"]}" '
                   f'data-unit="шт" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
                   f'data-url="tovar/kirpich-{p["id"]}.html" data-root="{root}">В заявку</button>')
@@ -708,10 +773,12 @@ def build_product(p):
         price_block = ('<p class="pd-price"><b>Цена по запросу</b></p>'
                        '<p class="pd-m2">Подтверждаем при заказе — зависит от объёма '
                        'и условий поставки.</p>')
-        action = (f'<button class="btn btn--accent p-add" type="button" data-add '
+        action = (f'<button class="btn p-add" type="button" data-add '
                   f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="" '
                   f'data-unit="шт" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
                   f'data-url="tovar/kirpich-{p["id"]}.html" data-root="{root}">В заявку</button>')
+
+    qty_html = qty_block(p) if has_price else ""
 
     terms = TERMS_STOCK if has_price else TERMS_ORDER
     terms_html = ""
@@ -768,9 +835,10 @@ def build_product(p):
         <p class="pd-meta">{esc(COLLECTIONS[coll]["title"] if coll else "Рядовой кирпич")}</p>
         {price_block}
         <ul class="pd-terms">{terms_html}</ul>
+        {qty_html}
         <div class="pd-bar">{action}
-          <a class="btn btn--ghost pd-bar-call" href="{PHONE_HREF}"
-             aria-label="Позвонить">{ICON["phone"]}</a>
+          <a class="btn btn--call pd-bar-call" href="{PHONE_HREF}"
+             aria-label="Позвонить">{ICON["phone"]}<span>Позвонить</span></a>
         </div>
         <p class="pd-note">{esc(where)}</p>
         <div class="pd-specs"><h2>Характеристики</h2><dl>{spec_rows(p)}</dl></div>

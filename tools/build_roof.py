@@ -836,7 +836,7 @@ def build_product(p):
 
     specs = "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in p["specs"])
 
-    add = (f'<button class="btn btn--accent p-add" type="button" data-add '
+    add = (f'<button class="btn p-add" type="button" data-add '
            f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="" '
            f'data-unit="м²" data-img="{esc("img/roof/" + entry["gallery"][0]) if entry["gallery"] else ""}" '
            f'data-url="tovar/krovlya-{p["id"]}.html" data-root="{root}">В заявку</button>')
@@ -906,8 +906,8 @@ def build_product(p):
         {colors_row(slugs, root, cap=6, more_href="#tsveta")}
         <ul class="pd-terms">{terms_html}</ul>
         <div class="pd-bar">{add}
-          <a class="btn btn--ghost pd-bar-call" href="{PHONE_HREF}"
-             aria-label="Позвонить">{ICON["phone"]}</a>
+          <a class="btn btn--call pd-bar-call" href="{PHONE_HREF}"
+             aria-label="Позвонить">{ICON["phone"]}<span>Позвонить</span></a>
         </div>
         <p class="pd-note">Область применения: {esc(p["use"])}.</p>
         <div class="pd-specs"><h2>Характеристики</h2><dl>{specs}</dl></div>

@@ -37,19 +37,19 @@ IMG_V = 9
 PROMOS = [
     # ВНИМАНИЕ: процент скидки заказчик пока не подтвердил, и на страницах
     # плитки старой цены нет. Пока обещаем только то, что можем выполнить.
-    {"title": "Плитка «Старый город»",
+    {"tag": "Форма месяца", "title": "Плитка «Старый город»",
      "sub": "Классическая форма — 24 расцветки от 650 ₽/м²",
      "url": "plitka-staryy-gorod.html", "until": None,
      "img": "img/plitka/shape-staryy-gorod.jpg", "accent": True},
-    # Фото у промо теперь ФОН всей плитки, поэтому нужен кадр, который держит
-    # текст: работа или кладка, а не студийный кирпич на белом.
-    {"title": "Расчёт материала",
-     "sub": "Пришлите размеры — рассчитаем количество и запас. Бесплатно",
+    # Кадр стоит рядом с текстом, а не под ним: подойдёт любой — и работа,
+    # и кладка, и студийный кирпич. Затемнять его больше не нужно.
+    {"tag": "Бесплатно", "title": "Расчёт материала",
+     "sub": "Пришлите размеры — рассчитаем количество и запас",
      "url": "#lead", "until": None, "img": "img/plitka/work-06.jpg"},
     # Числа новинок тут не пишем: бейдж «Новинка» ставится по списку имён
     # в build_category.py, и точное количество зависит от него.
-    {"title": "Новинки заводов",
-     "sub": "Новые цвета облицовочного кирпича",
+    {"tag": "Новинки", "title": "Новые цвета кирпича",
+     "sub": "Свежие партии заводов — в каталоге облицовочного",
      "url": "kirpich-oblitsovochnyy.html?sort=new", "until": None,
      "img": "img/catalog/kla-003.jpg"},
 ]
@@ -58,11 +58,13 @@ PROMOS = [
 def promo_card(p, root=""):
     until = f' data-until="{p["until"]}"' if p.get("until") else ""
     cls = "promo promo--accent" if p.get("accent") else "promo"
-    img = (f'<img src="{root}{p["img"]}?v={IMG_V}" alt="" width="380" height="285" loading="lazy">'
+    img = (f'<img src="{root}{p["img"]}?v={IMG_V}" alt="" width="240" height="240" loading="lazy">'
            if p.get("img") else "")
+    tag = f'<span class="promo-tag">{esc(p["tag"])}</span>' if p.get("tag") else ""
     return (f'<a class="{cls}" href="{root}{p["url"]}"{until}>'
-            f'<strong>{esc(p["title"])}</strong><p>{esc(p["sub"])}</p>'
-            f'<span class="go">Подробнее</span>{img}</a>')
+            f'<span class="promo-text">{tag}<strong>{esc(p["title"])}</strong>'
+            f'<span class="promo-sub">{esc(p["sub"])}</span>'
+            f'<span class="go">Подробнее</span></span>{img}</a>')
 
 
 def promo_row(root=""):
@@ -271,6 +273,7 @@ def build_zayavka():
         <ul id="cartList" data-root=""></ul>
       </div>
       <aside class="cart-side">
+        <p class="cart-meta" id="cartMeta"></p>
         <div class="cart-total"><span>Примерно</span><b id="cartTotal">—</b></div>
         <p class="note" id="cartNote"></p>
         <form class="lead-form cart-form" data-lead="czOk" data-clears="cart" novalidate>
@@ -283,6 +286,11 @@ def build_zayavka():
             <input id="czPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
                    placeholder="+7 (___) ___-__-__" required aria-describedby="czErr">
             <p class="form-err" id="czErr" hidden>В номере не хватает цифр — проверьте, пожалуйста.</p>
+          </div>
+          <div class="field">
+            <label for="czNote">Комментарий</label>
+            <textarea id="czNote" name="comment" rows="3"
+                      placeholder="Адрес объекта, сроки, нужна ли разгрузка"></textarea>
           </div>
           <input type="hidden" name="items" id="cartPayload">
           <button class="btn btn--accent btn--wide" type="submit">Отправить заявку</button>

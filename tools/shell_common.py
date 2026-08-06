@@ -25,8 +25,8 @@ SITE_URL = "https://martinoneisha299-lang.github.io/stroy-sale/"
 
 # Версии кэша. Поднимать при ЛЮБОЙ правке styles.css / tokens.css / app.js —
 # иначе у посетителя останется старый файл и вёрстка «поедет».
-STYLES_V = 56
-APP_V = 8
+STYLES_V = 59
+APP_V = 9
 
 # viewport-fit=cover обязателен: без него env(safe-area-inset-*) всегда 0, и во
 # встроенных браузерах (Telegram, Instagram), где страница занимает экран
@@ -157,8 +157,10 @@ ICON = {
                         '<circle cx="12" cy="10" r="2.6"/>'),
     "check": _S % ("2.2", '<path d="M4.5 12.5l5 5 10-11"/>'),
     "filter": _S % ("2", '<path d="M4 6h16M7 12h10M10 18h4"/>'),
-    "sun": _S % ("1.9", '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4'
-                        'M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'),
+    # Рядом со словом «Акции» стоит знак процента — так это подписано в любом
+    # магазине. Солнце, которое было здесь раньше, не значило ничего.
+    "percent": _S % ("1.9", '<path d="M19 5L5 19"/><circle cx="6.8" cy="6.8" r="2.3"/>'
+                            '<circle cx="17.2" cy="17.2" r="2.3"/>'),
 }
 
 # Мессенджеры — фирменные заливки, обводкой их рисовать нельзя
@@ -268,7 +270,7 @@ def header_html(root="", active="", lead=True):
     </div>
     <nav class="subnav" aria-label="Разделы каталога">
       <div class="wrap subnav-in">
-        <a class="subnav-sale" href="{root}akcii.html">{ICON["sun"]}Акции</a>
+        <a class="subnav-sale" href="{root}akcii.html">{ICON["percent"]}Акции</a>
         {"".join(secs)}
       </div>
     </nav>
@@ -439,14 +441,6 @@ def terms_line():
     """Условия одной строкой над выдачей — вместо повтора в каждой карточке."""
     rows = "".join(f'<li>{ICON[ic]}<span>{esc(t)}</span></li>' for ic, t in AVAIL_STOCK)
     return f'<ul class="terms-line">{rows}</ul>'
-
-
-def avail_html(in_stock=True):
-    rows = AVAIL_STOCK if in_stock else AVAIL_ORDER
-    cls = "" if in_stock else ' class="is-wait"'
-    li = "".join(f"<li{cls if i == 0 else ''}>{ICON[ic]}<span>{esc(t)}</span></li>"
-                 for i, (ic, t) in enumerate(rows))
-    return f'<ul class="p-avail">{li}</ul>'
 
 
 def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=None,

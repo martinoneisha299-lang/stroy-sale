@@ -547,13 +547,21 @@ def build_product(p):
         <p class="pd-price"><b>{rub(p["price"])} ₽</b><span>/м²</span></p>
         <p class="pd-m2">{esc(pallet_text(p))}</p>
         <ul class="pd-terms">{terms_html}</ul>
+        <div class="pd-buy">
+          <span class="qty" data-qty-box data-pallet="{PALLET_M2}">
+            <button type="button" data-step="-1" aria-label="Меньше">−</button>
+            <input type="text" inputmode="numeric" value="{PALLET_M2}" aria-label="Количество, м²">
+            <button type="button" data-step="1" aria-label="Больше">+</button>
+          </span>
+          <p class="pd-qty-note"><b>м² · в поддоне {PALLET_M2} м²</b><span data-qty-out></span></p>
+        </div>
         <div class="pd-bar">
-          <button class="btn btn--accent p-add" type="button" data-add
+          <button class="btn p-add" type="button" data-add
             data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="{p["price"]}"
             data-unit="м²" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}"
             data-url="{esc(p["_url"])}" data-root="{root}">В заявку</button>
-          <a class="btn btn--ghost pd-bar-call" href="{PHONE_HREF}"
-             aria-label="Позвонить">{ICON["phone"]}</a>
+          <a class="btn btn--call pd-bar-call" href="{PHONE_HREF}"
+             aria-label="Позвонить">{ICON["phone"]}<span>Позвонить</span></a>
         </div>
         <p class="pd-note">Применение: {esc(SHAPE_USE[p["shape"]])}.</p>
         <div class="pd-specs"><h2>Характеристики</h2><dl>{spec_rows(p)}</dl></div>
@@ -624,12 +632,12 @@ def build_border(b):
         <p class="pd-price"><b>{rub(b["price"])} ₽</b><span>/шт</span></p>
         <ul class="pd-terms">{terms_html}</ul>
         <div class="pd-bar">
-          <button class="btn btn--accent p-add" type="button" data-add
+          <button class="btn p-add" type="button" data-add
             data-id="{esc(b["id"])}" data-name="{esc(b["name"])}" data-price="{b["price"]}"
             data-unit="шт" data-img="img/catalog/{b["id"]}.jpg"
             data-url="tovar/{b["id"]}.html" data-root="{root}">В заявку</button>
-          <a class="btn btn--ghost pd-bar-call" href="{PHONE_HREF}"
-             aria-label="Позвонить">{ICON["phone"]}</a>
+          <a class="btn btn--call pd-bar-call" href="{PHONE_HREF}"
+             aria-label="Позвонить">{ICON["phone"]}<span>Позвонить</span></a>
         </div>
         <p class="pd-note">Назначение: {esc(use)}.</p>
       </div>
