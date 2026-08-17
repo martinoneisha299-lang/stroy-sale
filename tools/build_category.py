@@ -25,8 +25,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from catalog_common import (fgroup, filters_drawer, filters_panel, fprice,
                             grid_shell, toolbar)
 from shell_common import (BASE, ICON, PHONE_HREF, SITE_URL, TERMS_ORDER,
-                          TERMS_STOCK, crumbs_html, esc, grid_cls, page_shell,
-                          plural, product_card, rub, wa_link, write_page)
+                          TERMS_STOCK, VIEWPORT, crumbs_html, esc, grid_cls,
+                          page_shell, plural, price_split, product_card, rub,
+                          spec_dd, wa_link, write_page)
 
 DATA = json.loads((BASE / "_data" / "catalog.json").read_text())
 CAT_IMG = BASE / "img" / "catalog"
@@ -35,24 +36,67 @@ IMG_V = 9          # версия кэша картинок каталога
 # ---------------------------------------------------------------------------
 # Справочники
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Заводы-производители.
+#
+# 17.08.2026, решение владельца: витрина показывает НАСТОЯЩИЕ имена заводов —
+# так устроены все большие магазины стройматериалов (у Славдома это «Бренд»
+# и «Завод российского кирпича», у Леманы — «Бренд»). Прежние выдуманные
+# коллекции («Классика», «Палитра», «Европа», «Ручная формовка», «Эконом»)
+# отменены: покупатель ищет «Тербунский гончар», а не «Эконом».
+#
+# КЛЮЧИ НЕ ТРОГАТЬ. Первые три буквы ключа — префикс id товара (kla-001,
+# pal-014…), а id стоит в адресе всех 284 товарных страниц. Меняются только
+# подписи (title/short/desc/use) и имена файлов страниц (slug).
+# ---------------------------------------------------------------------------
+# Описания — ТОЛЬКО то, что проверяется по нашей же базе (цвета, фактуры,
+# форматы, цены считаются из catalog.json и видны покупателю в фильтре рядом).
+# Аудит 17.08.2026 поймал в первой редакции три выдумки: «оборудование Hans
+# Lingl» приписали Славянскому (в источниках Lingl упомянут у ГУБСКОГО —
+# лаборатория, где мерили глину), фактуру «скала» — Донскому (её нет в базе
+# вообще), и два взаимоисключающих «самый широкий выбор» на соседних плитках.
+# Правило: если утверждение нельзя проверить по catalog.json — его тут нет.
 COLLECTIONS = {
-    "klassika": {"title": "Классика",
-                 "desc": "Ровная геометрия и спокойные цвета — самая понятная кладка.",
+    "klassika": {"title": "Донской кирпич", "short": "Донской", "slug": "zavod-donskoy",
+                 "desc": "47 видов: 6 цветов и 9 фактур — от гладкой до бересты, "
+                         "антика и руста. Форматы одинарный, полуторный и длинный WDF.",
                  "use": "Применение: фасад дома и забор, когда нужен ровный предсказуемый результат."},
-    "palitra": {"title": "Палитра",
-                "desc": "Самый широкий выбор цветов и фактур: от пшеничного до графита.",
+    "palitra": {"title": "Губский кирпичный завод", "short": "Губский", "slug": "zavod-gubskiy",
+                "desc": "Краснодарский край. 65 видов, 8 цветов — от пшеничного "
+                        "до графита; одинарный формат, фактуры от гладкой до коры.",
                 "use": "Применение: фасады, где цвет задан проектом и нужен точный оттенок."},
-    "formovka": {"title": "Ручная формовка",
-                 "desc": "Неровная «живая» грань, как у старой европейской кладки.",
+    "formovka": {"title": "Тандем", "short": "Тандем", "slug": "zavod-tandem",
+                 "desc": "Кирпич ручной формовки: неровная «живая» грань, как у старой "
+                         "европейской кладки. 99 видов в длинных форматах WDF, WMF, "
+                         "лонг и ригель.",
                  "use": "Применение: дома в европейском стиле, камины и входные группы."},
-    "evropa": {"title": "Европа",
-               "desc": "Длинные форматы WDF и лонг — фасад выглядит вытянутым.",
+    "evropa": {"title": "Славянский кирпич", "short": "Славянский", "slug": "zavod-slavyanskiy",
+               "desc": "Славянск-на-Кубани. 26 видов в одинарном и евроформате, "
+                       "фактуры кроста, руст, антик и ретро.",
                "use": "Применение: современные фасады — длинный формат зрительно растягивает стену."},
-    "ekonom": {"title": "Эконом",
-               "desc": "Самая доступная облицовка: цена ниже, кладка та же.",
+    "ekonom": {"title": "Тербунский гончар", "short": "Тербунский", "slug": "zavod-terbunskiy",
+               # Без «самые низкие цены» — это штамп, его ловит check_texts.
+               # Цифра говорит сама: у соседних заводов минимум 22,30 и 25,64 ₽.
+               "desc": "Липецкая область. 27 видов, 6 цветов, гладкая фактура "
+                       "и «старый город». Цена от 18,50 ₽/шт.",
                "use": "Применение: хозпостройки, заборы и большие объёмы, где важна цена."},
 }
 COLL_ORDER = ["ekonom", "klassika", "palitra", "evropa", "formovka"]
+
+# Старые адреса страниц. Сайт лежит на GitHub Pages — серверных редиректов там
+# нет, поэтому на старых путях остаются страницы-заглушки с meta refresh.
+OLD_COLL_PAGES = {s: f"collection-{s}.html" for s in COLL_ORDER}
+
+# Имя завода по полю supplier из данных. Нужно забутовке: у неё collection
+# не задан (подкатегория там — задача, а не производитель), но показать,
+# чей это кирпич, всё равно надо.
+SUPPLIER_TITLE = {
+    "Донской": "Донской кирпич",
+    "Губский": "Губский кирпичный завод",
+    "Тандем": "Тандем",
+    "Славянский": "Славянский кирпич",
+    "Тербунский гончар": "Тербунский гончар",
+}
 
 COLOR_ORDER = ["красный", "коричневый", "бежевый", "персиковый", "серый",
                "графит", "микс (бавария)", "зелёный"]
@@ -324,12 +368,36 @@ def m2_price(p):
 def price_html(p):
     if not p.get("price"):
         return ""
-    return f'<b>{rub(p["price"])} ₽</b><span class="p-unit">/шт</span>'
+    return price_split(p["price"], "шт")
 
 
 def m2_text(p):
     v = m2_price(p)
-    return f"≈ {rub(v)} ₽/м² кладки" if v else ""
+    return f"= {rub(v)} ₽/м² кладки" if v else ""
+
+
+def zavod_line(p, root=""):
+    """Строка «Завод: …» под именем товара.
+
+    У облицовочного завод = коллекция и ведёт на его страницу. У забутовки
+    коллекции нет (подкатегория там — задача), но производителя показать надо:
+    берём его из поля supplier. Без этого рядовой кирпич был единственным
+    разделом, где покупатель не видел, чей товар.
+    """
+    coll = p.get("collection")
+    if coll:
+        c = COLLECTIONS[coll]
+        return (f'<a class="pd-zavod" href="{root}{c["slug"]}.html">'
+                f'Завод: <i>{esc(c["title"])}</i></a>')
+    title = SUPPLIER_TITLE.get(p.get("supplier"))
+    return f'<span class="pd-zavod">Завод: <i>{esc(title)}</i></span>' if title else ""
+
+
+def stock_text(p):
+    """Честная строка срока. Остатков у нас нет (менеджер их не дал), поэтому
+    обещаем только то, что знаем точно: цена есть — возим постоянно, цены нет —
+    позиция под заказ. Когда появятся реальные остатки, править ЗДЕСЬ."""
+    return "Поставка с завода" if p.get("price") else "Под заказ"
 
 
 def sort_key(p):
@@ -347,18 +415,21 @@ def card_of(p, root="", eager=False):
             f' data-price="{p.get("price") or ""}"')
     if p["name"] in NOVINKI:
         data += ' data-new="1"'
-    add = None
-    if p.get("price"):
-        add = {"id": p["id"], "name": nice_name(p), "price": p["price"], "unit": "шт",
-               "img": p["_gal"][0] if p["_gal"] else ""}
+    # Кнопка заявки есть и у позиций БЕЗ цены: «узнайте цену отдельно» —
+    # это тупик, из которого не возвращаются. Такая позиция попадает
+    # в тот же список к менеджеру, просто с пустым data-price.
+    add = {"id": p["id"], "name": nice_name(p), "price": p.get("price"), "unit": "шт",
+           "img": p["_gal"][0] if p["_gal"] else ""}
     # Второй кадр для наведения — только если он реально есть на диске.
     alt_img = f"{p['_gal'][1]}?v={IMG_V}" if len(p["_gal"]) > 1 else None
+    coll = p.get("collection")
     return product_card(
         href=f"tovar/kirpich-{p['id']}.html", name=nice_name(p), img=img,
         alt=nice_name(p), price_html=price_html(p), m2=m2_text(p),
         badge="Новинка" if p["name"] in NOVINKI else None,
-        in_stock=bool(p.get("price")), data=data, root=root, add=add, eager=eager,
-        alt_img=alt_img)
+        meta=COLLECTIONS[coll]["title"] if coll else "",
+        stock=stock_text(p), shots=len(p["_gal"]),
+        data=data, root=root, add=add, eager=eager, alt_img=alt_img)
 
 
 # ---------------------------------------------------------------------------
@@ -402,28 +473,37 @@ def brick_filters(items, *, with_coll=True):
         coll = [(s, COLLECTIONS[s]["title"],
                  sum(1 for p in items if p.get("collection") == s))
                 for s in COLL_ORDER if any(p.get("collection") == s for p in items)]
-        groups.append(fgroup("Коллекция", "coll", coll))
+        groups.insert(1, fgroup("Завод", "coll", coll))
+    if any(p["name"] in NOVINKI for p in items):
+        groups.append(fgroup("", "new", [("1", "Только новинки",
+                                          sum(1 for p in items if p["name"] in NOVINKI))]))
     return filters_panel("".join(groups))
 
 
 def coll_tiles(active=None):
-    """Плитки коллекций над выдачей — подкатегории, как у больших магазинов."""
+    """Лента заводов над выдачей.
+
+    Компактная строка «фото + имя + сколько видов», как ряд подкатегорий
+    у Леманы: она помещается над выдачей целиком и не отодвигает товар вниз.
+    Прежние большие плитки занимали пол-экрана и повторяли то же самое.
+    """
     out = []
     for slug in COLL_ORDER:
         items = [p for p in PRODUCTS if p.get("collection") == slug]
         if not items:
             continue
+        c = COLLECTIONS[slug]
         prices = [p["price"] for p in items if p.get("price")]
         note = (f"{len(items)} {plural(len(items), 'вид', 'вида', 'видов')}"
                 + (f" · от {rub(min(prices))} ₽" if prices else ""))
-        pic = next((p["_gal"][0] for p in items if p["_gal"]), None)
-        img = (f'<img src="{pic}?v={IMG_V}" alt="" width="320" height="240" loading="lazy">'
-               if pic else "")
+        pic = next((f"img/catalog/cdot-{p['id']}.jpg" for p in items
+                    if (CAT_IMG / f"cdot-{p['id']}.jpg").exists()), None)
+        img = (f'<img src="{pic}?v={IMG_V}" alt="" width="56" height="56" loading="lazy">'
+               if pic else '<span class="zv-none"></span>')
         on = ' aria-current="page"' if slug == active else ""
-        out.append(f'<a class="tile" href="collection-{slug}.html"{on}>'
-                   f'<strong>{esc(COLLECTIONS[slug]["title"])}<span>{note}</span></strong>'
-                   f'{img}</a>')
-    return f'<div class="tiles">{"".join(out)}</div>'
+        out.append(f'<a class="zv" href="{c["slug"]}.html"{on}>{img}'
+                   f'<span><b>{esc(c["title"])}</b><small>{note}</small></span></a>')
+    return f'<div class="zv-row">{"".join(out)}</div>'
 
 
 def often_html(base="kirpich-oblitsovochnyy.html"):
@@ -496,11 +576,7 @@ def build_category():
   <section class="page-head"><div class="wrap">
     {crumbs_html([("Главная", "index.html"), ("Каталог", "index.html#catalog"),
                   ("Облицовочный кирпич", None)])}
-    <h1>Облицовочный кирпич</h1>
-  </div></section>
-
-  <section class="section"><div class="wrap">
-    <div class="section-head"><h2>Коллекции</h2></div>
+    <h1>Облицовочный кирпич<span class="h1-n">{len(items)} {plural(len(items), 'вид', 'вида', 'видов')}</span></h1>
     {coll_tiles()}
   </div></section>
 
@@ -518,12 +594,14 @@ def build_category():
     write_page(BASE / "kirpich-oblitsovochnyy.html", page_shell(
         f"Облицовочный кирпич в Краснодаре — {len(items)} "
         f"{plural(len(items), 'вид', 'вида', 'видов')}, цены от {lo} ₽",
-        f"Облицовочный кирпич напрямую с заводов: {len(items)} {plural(len(items), 'вид', 'вида', 'видов')}, 5 коллекций, "
-        f"цены от {lo} ₽/шт. Доставка по Краснодару и краю, наличный и безналичный расчёт.",
+        f"Облицовочный кирпич напрямую с заводов: {len(items)} {plural(len(items), 'вид', 'вида', 'видов')} "
+        f"от 5 заводов, цены от {lo} ₽/шт. Доставка по Краснодару и краю, "
+        f"наличный и безналичный расчёт.",
         body, active="oblic"))
 
 
 def build_collection(slug):
+    """Страница завода: та же витрина, отфильтрованная по производителю."""
     items = sorted([p for p in PRODUCTS if p.get("collection") == slug], key=sort_key)
     if not items:
         return
@@ -537,7 +615,7 @@ def build_collection(slug):
     {crumbs_html([("Главная", "index.html"),
                   ("Облицовочный кирпич", "kirpich-oblitsovochnyy.html"),
                   (c["title"], None)])}
-    <h1>Кирпич «{esc(c["title"])}»</h1>
+    <h1>{esc(c["title"])}<span class="h1-n">{len(items)} {plural(len(items), 'вид', 'вида', 'видов')}</span></h1>
     <p class="page-sub">{esc(c["desc"])}</p>
   </div></section>
 
@@ -550,18 +628,44 @@ def build_collection(slug):
   </div></section>
 
   <section class="section"><div class="wrap">
-    <div class="section-head"><h2>Все коллекции</h2>
+    <div class="section-head"><h2>Другие заводы</h2>
       <a class="see-all" href="kirpich-oblitsovochnyy.html">Весь облицовочный кирпич</a></div>
     {coll_tiles(active=slug)}
   </div></section>
 {filters_drawer()}
 """
-    write_page(BASE / f"collection-{slug}.html", page_shell(
-        f"Кирпич «{c['title']}» — {len(items)} {plural(len(items), 'вид', 'вида', 'видов')}, Краснодар",
-        f"Коллекция «{c['title']}»: {len(items)} "
+    write_page(BASE / f"{c['slug']}.html", page_shell(
+        f"{c['title']} — облицовочный кирпич, {len(items)} "
+        f"{plural(len(items), 'вид', 'вида', 'видов')}, Краснодар",
+        f"{c['title']}: {len(items)} "
         f"{plural(len(items), 'вид', 'вида', 'видов')} облицовочного кирпича, {note}. "
         f"Доставка по Краснодару и краю, наличный и безналичный расчёт.",
         body, active="oblic"))
+    build_redirect(OLD_COLL_PAGES[slug], f"{c['slug']}.html", c["title"])
+
+
+def build_redirect(old, new, title):
+    """Заглушка на старом адресе страницы.
+
+    Страницы коллекций переименованы в страницы заводов, а сайт лежит на
+    GitHub Pages — серверных 301 там нет. Заглушка уводит и человека,
+    и поисковик: canonical + refresh + видимая ссылка, если скрипты выключены.
+    """
+    write_page(BASE / old, f"""<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  {VIEWPORT}
+  <title>{esc(title)} — страница переехала</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="{SITE_URL}{new}">
+  <meta http-equiv="refresh" content="0; url={new}">
+</head>
+<body>
+  <p>Страница переехала: <a href="{new}">{esc(title)}</a></p>
+</body>
+</html>
+""")
 
 
 # ---------------------------------------------------------------------------
@@ -587,7 +691,9 @@ def build_zabutovka():
         cards.append(product_card(
             href=f"tovar/kirpich-{p['id']}.html", name=full,
             img=f"{p['_gal'][0]}?v={IMG_V}" if p["_gal"] else None, alt=name,
-            price_html="", m2="", in_stock=False,   # цены рядового заказчик пока скрывает
+            price_html="", m2="",   # цены рядового заказчик пока скрывает
+            meta=SUPPLIER_TITLE.get(p.get("supplier"), ""),
+            stock="Под заказ", shots=len(p["_gal"]),
             # Позиция без цены всё равно кладётся в ту же заявку: тупик
             # «узнайте цену отдельно» терял бы половину обращений.
             add={"id": p["id"], "name": full, "price": None, "unit": "шт",
@@ -598,7 +704,7 @@ def build_zabutovka():
   <section class="page-head"><div class="wrap">
     {crumbs_html([("Главная", "index.html"), ("Каталог", "index.html#catalog"),
                   ("Забутовочный кирпич", None)])}
-    <h1>Забутовочный кирпич</h1>
+    <h1>Забутовочный кирпич<span class="h1-n">{len(items)} {plural(len(items), "вид", "вида", "видов")}</span></h1>
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -671,7 +777,7 @@ def spec_rows(p):
         if not val or key in seen:
             return
         seen.add(key)
-        rows.append(f"<dt>{esc(key)}</dt><dd>{esc(val)}</dd>")
+        rows.append(f"<dt>{esc(key)}</dt>" + spec_dd(val))
 
     add("Цвет", tidy_color((p.get("color_raw") or "").strip() or src.get("Цвет")))
     add("Фактура", (p.get("texture") or "").capitalize())
@@ -763,8 +869,10 @@ def build_product(p):
         # у цены, а не между морозостойкостью и весом (см. spec_rows).
         if per:
             m2_line = (m2_line + " · " if m2_line else "") + f"{tidy_num(rub(per))} шт/м²"
-        price_block = (f'<p class="pd-price"><b>{rub(p["price"])} ₽</b><span>/шт</span></p>'
-                       + (f'<p class="pd-m2">{m2_line}</p>' if m2_line else ""))
+        price_block = (f'<p class="pd-price">{price_split(p["price"], "шт")}</p>'
+                       + (f'<p class="pd-m2">{m2_line}</p>' if m2_line else "")
+                       + '<p class="pd-price-note">Цена завода. Итог с доставкой '
+                         'до вашего адреса посчитает менеджер.</p>')
         action = (f'<button class="btn p-add" type="button" data-add '
                   f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="{p["price"]}" '
                   f'data-unit="шт" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
@@ -815,7 +923,7 @@ def build_product(p):
     else:
         crumbs.append(("Облицовочный кирпич", f"{root}kirpich-oblitsovochnyy.html"))
         if coll:
-            crumbs.append((COLLECTIONS[coll]["title"], f"{root}collection-{coll}.html"))
+            crumbs.append((COLLECTIONS[coll]["title"], f"{root}{COLLECTIONS[coll]['slug']}.html"))
     # В крошки берём то же имя, что и в заголовке. Сырое имя из прайса
     # («КРАСНЫЙ Одинарный некондиционный», «Утолщенный полнотелый М150
     # (F25 пустот. 12%, 3 скв.отв)») называло товар вторым, непонятным способом.
@@ -830,15 +938,19 @@ def build_product(p):
     <div class="pd-grid">
       <div class="pd-gallery">{gallery}{tone}</div>
       <div class="pd-info">
-        <p class="note">Артикул {esc(p["id"]).upper()}</p>
         <h1 class="pd-name">{esc(name)}</h1>
-        <p class="pd-meta">{esc(COLLECTIONS[coll]["title"] if coll else "Рядовой кирпич")}</p>
-        {price_block}
-        <ul class="pd-terms">{terms_html}</ul>
-        {qty_html}
-        <div class="pd-bar">{action}
-          <a class="btn btn--call pd-bar-call" href="{PHONE_HREF}"
-             aria-label="Позвонить">{ICON["phone"]}<span>Позвонить</span></a>
+        <p class="pd-meta">
+          <span class="pd-art">Артикул {esc(p["id"]).upper()}</span>
+          {zavod_line(p, root)}
+        </p>
+        <div class="buy">
+          {price_block}
+          {qty_html}
+          <div class="pd-bar">{action}
+            <a class="btn btn--call pd-bar-call" href="{PHONE_HREF}"
+               aria-label="Позвонить">{ICON["phone"]}<span>Позвонить</span></a>
+          </div>
+          <ul class="pd-terms">{terms_html}</ul>
         </div>
         <p class="pd-note">{esc(where)}</p>
         <div class="pd-specs"><h2>Характеристики</h2><dl>{spec_rows(p)}</dl></div>

@@ -18,8 +18,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from shell_common import (ADDRESS, BASE, CITY, ICON, PAY_SHORT, PHONE, PHONE_HREF,
                           PHONE_NOTE, SECTIONS, WORK_HOURS, crumbs_html, esc,
-                          msg_circles, page_shell, plural, product_card, rub,
-                          write_page)
+                          msg_circles, page_shell, plural, price_split,
+                          product_card, rub, write_page)
 
 CAT = json.loads((BASE / "_data" / "catalog.json").read_text())["products"]
 TILES = json.loads((BASE / "_data" / "tiles.json").read_text())
@@ -28,6 +28,16 @@ BRICK = [p for p in CAT if p["category"] == "oblitsovochnyy" and p.get("price")]
 TILE = [p for p in TILES["products"] if p.get("price")]
 
 IMG_V = 9
+
+# Имена заводов для строки под названием товара. Ключи — те же, что
+# в build_category.COLLECTIONS (менять там и здесь одновременно).
+BRICK_ZAVOD = {
+    "klassika": "Донской кирпич",
+    "palitra": "Губский кирпичный завод",
+    "formovka": "Тандем",
+    "evropa": "Славянский кирпич",
+    "ekonom": "Тербунский гончар",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -130,22 +140,25 @@ def popular_cards():
     for kind, p in picks:
         if kind == "brick":
             per = p.get("consumption_per_m2") or 51.4
-            m2 = f"≈ {rub(round(p['price'] * per / 10) * 10)} ₽/м² кладки"
+            m2 = f"= {rub(round(p['price'] * per / 10) * 10)} ₽/м² кладки"
             name = f"Кирпич {p['name']}"
             href = f"tovar/kirpich-{p['id']}.html"
             img = f"img/catalog/{p['id']}.jpg?v={IMG_V}"
             unit = "шт"
+            meta = BRICK_ZAVOD.get(p.get("collection"), "")
         else:
             m2 = f"поддон 15 м² ≈ {rub(p['price'] * 15)} ₽"
             name = f"Плитка {TILES['shapes'][p['shape']]['name']} {p['name']}"
             href = f"tovar/{p['slug']}.html"
             img = f"img/catalog/{p['id']}.jpg?v=4"
             unit = "м²"
+            meta = "Тротуарная плитка"
         cards.append(product_card(
             href=href, name=name, img=img, alt=name,
-            price_html=f'<b>{rub(p["price"])} ₽</b><span class="p-unit">/{unit}</span>',
-            m2=m2, add={"id": p["id"], "name": name, "price": p["price"],
-                        "unit": unit, "img": img.split("?")[0]}))
+            price_html=price_split(p["price"], unit), m2=m2, meta=meta,
+            stock="Поставка с завода",
+            add={"id": p["id"], "name": name, "price": p["price"],
+                 "unit": unit, "img": img.split("?")[0]}))
     return f'<div class="p-grid">{"".join(cards)}</div>'
 
 
@@ -214,8 +227,8 @@ def build_index():
   <section class="section" id="catalog"><div class="wrap">
     <div class="section-head"><h2>Каталог</h2></div>
     {section_tiles()}
-    <p class="note mt">Поставляем также газоблок, песок и щебень —
-      отгружаем одной машиной вместе с основным заказом.</p>
+    <p class="note mt">Поставляем также газоблок. Если позиции идут с одного
+      завода, отгружаем их одной машиной — транспорт считается один раз.</p>
   </div></section>
 
   <section class="section"><div class="wrap">{promo_row()}</div></section>
@@ -361,10 +374,10 @@ def build_akcii():
     <ul class="pd-terms">
       <li>{ICON["calc"]}<span>Бесплатный расчёт количества: по размерам дома,
         забора или двора рассчитаем материал и запас.</span></li>
-      <li>{ICON["truck"]}<span>Сборная доставка: кирпич, плитку и кровлю
-        отгружаем одной машиной — транспорт оплачивается один раз.</span></li>
-      <li>{ICON["shield"]}<span>Иногда на складе остаются партии по цене
-        ниже обычной — актуальный список уточняйте у менеджера.</span></li>
+      <li>{ICON["truck"]}<span>Сборная доставка: если позиции идут с одного
+        завода, везём их одной машиной — транспорт считается один раз.</span></li>
+      <li>{ICON["shield"]}<span>По остаткам партий и ценам на большой объём
+        спрашивайте менеджера — такие предложения бывают не всегда.</span></li>
     </ul>
   </div></section>
 """
@@ -411,12 +424,12 @@ def build_dostavka():
   <section class="section"><div class="wrap">
     <div class="section-head"><h2>Частые вопросы</h2></div>
     <ul class="pd-terms">
-      <li>{ICON["truck"]}<span><b>Есть ли самовывоз?</b> По части позиций
-        возможен со склада, часть материалов отгружается напрямую с завода —
-        уточним по вашему заказу.</span></li>
-      <li>{ICON["clock"]}<span><b>Какие сроки доставки?</b> Срок зависит
-        от позиции и объёма: часть материалов идёт со склада, часть — с завода.
-        Точный срок называем при подтверждении заказа.</span></li>
+      <li>{ICON["truck"]}<span><b>Есть ли самовывоз?</b> Отгрузка идёт
+        с завода-производителя. По конкретной позиции уточним, откуда
+        и на каких условиях можно забрать.</span></li>
+      <li>{ICON["clock"]}<span><b>Какие сроки доставки?</b> Зависит от завода
+        и объёма: отгрузка с заводов идёт кратно поддонам. Точный срок
+        называем при подтверждении заказа.</span></li>
       <li>{ICON["card"]}<span><b>Как оплатить заказ?</b> Наличный и безналичный
         расчёт, для организаций — по счёту. Условия по конкретному заказу
         менеджер согласует при оформлении.</span></li>
@@ -492,14 +505,18 @@ def build_policy():
       <p><b>Какие данные собираем.</b> Имя и номер телефона,
         которые вы указали сами, и состав заявки — чтобы перезвонить, рассчитать материал
         и согласовать доставку.</p>
-      <p><b>Зачем.</b> Только для связи по вашему обращению.
-        Рассылок не делаем, третьим лицам данные не передаём и не продаём.</p>
+      <p><b>Зачем.</b> Только для связи по вашему обращению. Рассылок
+        не делаем и данные не продаём. Если вы отправляете заявку через
+        WhatsApp, Telegram или MAX, сообщение уходит этим сервисам
+        по их правилам — это единственный случай передачи.</p>
       <p><b>Сколько храним.</b> До завершения работы
         по обращению или до вашего отзыва согласия — по звонку на {PHONE}.</p>
       <p><b>Хранение в браузере.</b> Состав заявки сохраняется в памяти вашего
         браузера, чтобы список не пропал при переходе между страницами.
-        На наш сервер он попадает только когда вы отправляете заявку.
-        Счётчики посещений на сайте не установлены.</p>
+        Своего сервера и базы у сайта нет: форма ничего не отправляет
+        автоматически — она собирает текст заявки, а отправляете его вы сами
+        в мессенджер или диктуете по телефону. Счётчики посещений
+        не установлены.</p>
       <p><b>Контакты.</b> {ADDRESS}, телефон {PHONE}, {WORK_HOURS}.</p>
     </div>
   </div></section>

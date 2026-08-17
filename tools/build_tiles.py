@@ -30,7 +30,8 @@ from catalog_common import (fgroup, filters_drawer, filters_panel, fprice,
                             grid_shell, toolbar)
 from shell_common import (BASE, ICON, PHONE_HREF, SITE_URL, TERMS_STOCK,
                           crumbs_html, esc, grid_cls, page_shell, plural,
-                          product_card, rub, wa_link, write_page)
+                          price_split, product_card, rub, spec_dd, wa_link,
+                          write_page)
 
 DATA = json.loads((BASE / "_data" / "tiles.json").read_text())
 CAT_IMG = BASE / "img" / "catalog"
@@ -89,8 +90,8 @@ OFTEN = [("Плитка «Старый город»", "shape=staryy-gorod"),
 
 # У плитки нет ни новинок, ни коллекций — сортировку по новизне не показываем:
 # кнопка без данных за ней сортировала бы «как получится».
-SORTS = [("default", "По каталогу"), ("cheap", "Сначала недорогие"),
-         ("exp", "Сначала дорогие")]
+SORTS = [("default", "По каталогу"), ("cheap", "Сначала дешевле"),
+         ("exp", "Сначала дороже")]
 
 
 # ---------------------------------------------------------------------------
@@ -149,7 +150,7 @@ def alt_of(p):
 def price_html(p):
     if not p.get("price"):
         return ""
-    return f'<b>{rub(p["price"])} ₽</b><span class="p-unit">/м²</span>'
+    return price_split(p["price"], "м²")
 
 
 def pallet_text(p):
@@ -171,14 +172,15 @@ def card_of(p, root="", eager=False, with_shape=True):
     data = (f' data-shape="{esc(p["shape"])}"'
             f' data-kind="{kind_of(p)}"'
             f' data-price="{p.get("price") or ""}"')
-    add = None
-    if p.get("price"):
-        add = {"id": p["id"], "name": nice_name(p), "price": p["price"], "unit": "м²",
-               "img": p["_gal"][0] if p["_gal"] else ""}
+    # Кнопка заявки есть и без цены — позиция уходит в тот же список
+    add = {"id": p["id"], "name": nice_name(p), "price": p.get("price"), "unit": "м²",
+           "img": p["_gal"][0] if p["_gal"] else ""}
     return product_card(
         href=p["_url"], name=nice_name(p) if with_shape else f"Плитка «{p['name']}»",
         img=img, alt=alt_of(p), price_html=price_html(p), m2=pallet_text(p),
-        in_stock=bool(p.get("price")), data=data, root=root, add=add, eager=eager)
+        meta=shape_name(p["shape"]) if not with_shape else kind_ru(p),
+        stock="Поставка с завода" if p.get("price") else "Под заказ",
+        shots=len(p["_gal"]), data=data, root=root, add=add, eager=eager)
 
 
 def border_card(b, root=""):
@@ -190,8 +192,8 @@ def border_card(b, root=""):
     return product_card(
         href=f"tovar/{b['id']}.html", name=b["name"],
         img=f"img/catalog/{b['id']}.jpg?v={IMG_V}", alt=f"{b['name']} к тротуарной плитке",
-        price_html=f'<b>{rub(b["price"])} ₽</b><span class="p-unit">/шт</span>',
-        m2=note, root=root, img_contain=True,
+        price_html=price_split(b["price"], "шт"),
+        m2=note, root=root, img_contain=True, stock="Поставка с завода",
         add={"id": b["id"], "name": b["name"], "price": b["price"], "unit": "шт",
              "img": f"img/catalog/{b['id']}.jpg"})
 
@@ -340,7 +342,7 @@ def works_section():
     </video>
     <p class="note">Съёмка с производственной линии. Плитку формуют вибропрессом
       из полусухой смеси: она плотнее литой, с ровными гранями и одинаковым швом.
-      Прочность плитка набирает на складе выдержки — до отгрузки.</p>
+      Прочность плитка набирает на выдержке у завода — до отгрузки.</p>
   </div></section>"""
 
 
@@ -353,7 +355,7 @@ def build_category():
   <section class="page-head"><div class="wrap">
     {crumbs_html([("Главная", "index.html"), ("Каталог", "index.html#catalog"),
                   ("Тротуарная плитка", None)])}
-    <h1>Тротуарная плитка</h1>
+    <h1>Тротуарная плитка<span class="h1-n">{ALL_COLORS} {plural(ALL_COLORS, "расцветка", "расцветки", "расцветок")} в {len(SHAPES)} формах</span></h1>
   </div></section>
 
   <section class="section"><div class="wrap">
@@ -459,7 +461,7 @@ def spec_rows(p):
                         if not p["mono"] else "однотонная — один пигмент, без переливов"),
             ("Поддон", f"{PALLET_M2} м² · около 1,4 тонны"),
             ("Фура", "225 м² за один рейс")]
-    return "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in rows)
+    return "".join(f"<dt>{esc(k)}</dt>" + spec_dd(v) for k, v in rows)
 
 
 def similar(p, k=4):

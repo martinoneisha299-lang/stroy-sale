@@ -568,9 +568,15 @@ def card_of(p, root="", eager=False):
         # ВАЖНО: путь без root — product_card подставит его сам,
         # иначе на страницах товара получается ../../img/…
         img=src(img) if img else None, alt=alt,
-        price_html="", in_stock=False, root=root,
+        price_html="", root=root,
+        # Цен у кровли нет ни у одной позиции — но в заявку она кладётся так же,
+        # как товар с ценой: список уходит менеджеру, он и называет стоимость.
+        add={"id": p["id"], "name": full_name(p), "price": None, "unit": "шт",
+             "img": src(img) if img else ""},
         img_contain=contain,
-        specs=f'<p class="p-m2">{esc(CARD_LINE[p["id"]])}</p>',
+        meta=CARD_LINE[p["id"]],
+        stock="Под заказ",
+        shots=len(entry["gallery"]) + (1 if entry["scheme"] else 0),
         data=f' data-task="{"|".join(p["task"])}" data-price=""',
         eager=eager)
 
@@ -828,7 +834,10 @@ def build_product(p):
     # «10–15» читалось как «не меньше десяти», хотя у полиэстера завод даёт
     # «до 10», а у цинка покрытия нет вовсе.
     terms = TERMS_ORDER + [
-        ("shield", "Срок службы покрытия по данным завода — до 15 лет, зависит от серии")]
+        # Диапазон, а не «до 15»: на этой же странице ниже написано, что
+        # у полиэстера срок до 10 лет, и два числа спорили на одном экране.
+        ("shield", "Срок службы покрытия по данным завода — от 10 до 15 лет "
+                   "в зависимости от серии (см. «Цвета»)")]
     terms_html = ""
     for ic, t in terms:
         cls = ' class="is-wait"' if ic == "clock" else ""

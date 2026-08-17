@@ -1,4 +1,4 @@
-@import url("tokens.css?v=17");
+@import url("tokens.css?v=18");
 
 /* ============================================================================
    СТРОЙСЕЙЛ · витрина магазина стройматериалов
@@ -145,6 +145,7 @@ button { cursor: pointer; }
 .page-head + .section { padding-top: var(--s-4); }
 
 .section-head {
+  flex-wrap: wrap;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -215,12 +216,6 @@ button { cursor: pointer; }
 }
 .btn--ghost:hover { background: var(--field); color: var(--ink); }
 
-.btn--outline {   /* «Узнать цену» — товар без цены */
-  background: var(--paper);
-  color: var(--ink);
-  border: var(--line) solid var(--dark);
-}
-.btn--outline:hover { background: var(--dark); color: var(--on-dark); }
 
 /* «Позвонить» рядом с «В заявку»: обводка фирменным цветом. Главное
    действие остаётся одно — тёмная кнопка, — но телефон виден и на товаре. */
@@ -342,18 +337,46 @@ input[type="number"], input[type="search"], select, textarea {
   border-bottom: 1px solid var(--rule);
 }
 
+/* Верхняя служебная строка. Только десктоп: на телефоне эти ссылки живут
+   в шторке каталога и в футере, а место в первом экране дороже. */
+.hdr-utl { display: none; border-bottom: 1px solid var(--rule); }
+/* min-height, а не height: при системном шрифте 200% ссылки не помещались
+   в 38px и вылезали за полосу — наезжали на строку акции над шапкой. */
+.hdr-utl-in {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-8);
+  min-height: 38px;
+  padding-block: var(--s-1);
+  font-size: var(--fs-sm);
+}
+.hdr-utl-in a { color: var(--ink-2); }
+.hdr-utl-in a:hover { color: var(--ink); }
+.hdr-utl .hdr-city { margin-left: auto; color: var(--ink-3); }
+.hdr-utl .hdr-tel { color: var(--ink); font-weight: 700; }
+/* Пунктир, а не подчёркивание: телефон не ведёт на страницу, по нему звонят.
+   Так референс отличает «действие здесь» от «переход куда-то». */
+.hdr-utl .hdr-tel i { font-style: normal; border-bottom: 1px dashed currentColor; }
+.hdr-utl .hdr-tel:hover { color: var(--accent-ink); }
+
 /* На телефоне шапка держится в двух строках и намеренно ужата: каждый её
    пиксель отодвигает каталог за нижний край первого экрана. */
+/* Колонки: первая — по содержимому (лого, кнопка «Каталог»), вторая —
+   резиновая (заявка прижимается вправо, поле поиска забирает остаток).
+   Наоборот было нельзя: поле поиска в жёсткой колонке отбирало место
+   у кнопки, и её подпись при системном шрифте уезжала за левый край. */
 .hdr-top {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr);
   grid-template-areas:
-    "logo  city"
-    "tools tools";
+    "logo cart"
+    "cat  search";
   align-items: center;
-  gap: var(--s-2) var(--s-4);
+  gap: var(--s-2) var(--s-3);
   padding-block: var(--s-2);
 }
+.hdr-cart { justify-self: end; }
 
 .logo {
   grid-area: logo;
@@ -372,92 +395,87 @@ input[type="number"], input[type="search"], select, textarea {
 }
 .logo b + b { color: var(--accent); }
 
-.hdr-city {
-  grid-area: city;
-  line-height: 1.25;
-  text-align: right;
-}
-.hdr-city span {
-  display: block;
-  font-size: min(var(--fs-micro), 3.4vw);
-  color: var(--ink-3);
-}
-.hdr-city a {
-  font-size: min(var(--fs-base), 4.2vw);
-  font-weight: 600;
-  white-space: nowrap;
-}
-.hdr-city a::after { content: " ›"; }
-
-/* Кнопка каталога + поиск: на телефоне занимают всю вторую строку */
-.hdr-tools {
-  grid-area: tools;
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  min-width: 0;
-}
-
 .hdr-cat {
+  grid-area: cat;
   flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--s-2);
-  width: 64px;
-  height: 48px;
+  height: 46px;
+  padding-inline: var(--s-4);
   border: none;
   border-radius: var(--r-ui);
   background: var(--accent);
   color: var(--on-accent);
+  font-size: var(--fs-base);
+  font-weight: 600;
 }
 .hdr-cat:hover { background: var(--accent-press); color: var(--on-accent); }
-.hdr-cat svg { width: 22px; height: 22px; }
-.hdr-cat span { display: none; font-size: var(--fs-base); font-weight: 700; }
-
-.hdr-search {
-  position: relative;
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  height: 48px;
-  padding-inline: 16px;
-  border-radius: var(--r-ui);
-  background: var(--field);
+.hdr-cat svg { flex: none; width: 20px; height: 20px; }
+/* Совсем узкий экран (или системный шрифт 200%) — от кнопки остаётся значок:
+   подпись «Каталог» вместе с полем поиска не помещалась в строку и уезжала
+   за левый край. Значок бургера понятен и без подписи. */
+@media (max-width: 20em) {
+  .hdr-cat span { display: none; }
+  .hdr-cat { padding-inline: var(--s-3); }
 }
-.hdr-search > svg { flex: none; width: 19px; height: 19px; color: var(--ink-3); }
+
+/* Поиск: поле на волосяной рамке + залитая акцентом кнопка-лупа справа.
+   Так он читается как поиск, а не как «серая плашка с иконкой». */
+.hdr-search {
+  grid-area: search;
+  position: relative;
+  display: flex;
+  min-width: 0;
+  height: 46px;
+}
 .hdr-search input {
   flex: 1;
   min-width: 0;
   min-height: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
+  height: 46px;
+  padding: 0 var(--s-4);
+  border: var(--line) solid var(--rule-strong);
+  border-right: 0;
+  border-radius: var(--r-ui) 0 0 var(--r-ui);
+  background: var(--paper);
   font-size: var(--fs-md);
+  color: var(--ink);
 }
 .hdr-search input::placeholder { color: var(--ink-3); }
 .hdr-search input:focus { outline: none; }
-.hdr-search:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-.hdr-contact, .hdr-cta { display: none; }
-
-/* Иконка заявки в шапке — появляется на десктопе */
-.hdr-cart {
-  position: relative;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 52px; height: 52px;
-  border-radius: var(--r-ui);
-  background: var(--field);
+.hdr-search:focus-within input { border-color: var(--ink-3); }
+.hdr-search-go {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  border: 0;
+  border-radius: 0 var(--r-ui) var(--r-ui) 0;
+  background: var(--accent);
+  color: var(--on-accent);
+  cursor: pointer;
 }
-.hdr-cart:hover { background: var(--rule); color: var(--ink); }
+.hdr-search-go:hover { background: var(--accent-press); }
+.hdr-search-go svg { width: 19px; height: 19px; }
+
+/* Заявка: значок с подписью, как пункт «Корзина» в любом магазине */
+.hdr-cart {
+  grid-area: cart;
+  position: relative;
+  display: inline-grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 2px var(--s-2);
+  font-size: var(--fs-micro);
+  color: var(--ink);
+}
+.hdr-cart:hover { color: var(--accent-ink); }
 .hdr-cart svg { width: 22px; height: 22px; }
 .cart-count {
   position: absolute;
-  top: 6px; right: 6px;
+  top: -2px; right: 0;
   min-width: 18px;
   padding: 0 5px;
   border-radius: var(--r-pill);
@@ -491,9 +509,6 @@ input[type="number"], input[type="search"], select, textarea {
   white-space: nowrap;
 }
 .subnav-in a svg { width: 17px; height: 17px; }
-.subnav-sale { color: var(--sale); font-weight: 700; }
-.subnav-right { margin-left: auto; }   /* «Доставка и оплата» уходит вправо */
-.subnav-sale:hover { color: var(--sale); }
 .subnav-in .is-on { position: relative; font-weight: 700; }
 .subnav-in .is-on::after {   /* кирпичик вместо линии подчёркивания */
   content: "";
@@ -521,6 +536,15 @@ input[type="number"], input[type="search"], select, textarea {
 .crumbs li:not(:last-child)::after { content: "›"; color: var(--ink-4); }
 
 .page-head h1 { margin-bottom: 6px; }
+/* Счётчик рядом с заголовком раздела — «264 вида». Он отвечает на первый
+   вопрос покупателя (много ли выбора) до того, как тот дойдёт до выдачи. */
+.h1-n {
+  margin-left: var(--s-3);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
 
 .page-sub {
   max-width: 62ch;
@@ -691,8 +715,49 @@ body.is-locked { overflow: hidden; }
 body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 
 /* ==========================================================================
-   7 · Плитки разделов и коллекций
+   7 · Плитки разделов, лента заводов
    ========================================================================== */
+/* Лента производителей над выдачей: фото + имя + «сколько видов».
+   Компактная строка, а не сетка больших плиток: она помещается над товаром
+   целиком и не отодвигает выдачу под сгиб. Мелкая чёткая тень — приём
+   навигационных плиток Леманы, там она отделяет плитку от белого фона. */
+.zv-row {
+  display: flex;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+  padding: 2px 2px var(--s-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.zv-row::-webkit-scrollbar { display: none; }
+.zv {
+  flex: 1 1 11rem;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-width: 11rem;
+  max-width: 17rem;
+  padding: var(--s-4);
+  border-radius: var(--r-ui);
+  background: var(--paper);
+  box-shadow: var(--sh-tile);
+  transition: box-shadow var(--dur) var(--ease);
+}
+.zv:hover { box-shadow: 0 2px 8px rgba(0, 0, 0, .2); }
+.zv img, .zv-none {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-ui);
+  object-fit: cover;
+  background: var(--tile);
+}
+.zv b { display: block; font-size: var(--fs-sm); font-weight: 600; line-height: 1.3; }
+.zv small { display: block; margin-top: 2px; font-size: var(--fs-micro); color: var(--ink-3); }
+.zv[aria-current] { box-shadow: 0 0 0 2px var(--ink); }
+
+
 /* На телефоне — всегда 2 в ряд (как в макете 6a), на широком экране плитки
    раскладываются по своей минимальной ширине. auto-fill в мобильной базе
    давал одну плитку на ряд: 216px минимума не помещаются дважды в 343px. */
@@ -765,17 +830,31 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 /* ==========================================================================
    8 · Панель управления каталогом и фильтры
    ========================================================================== */
+/* Телефон: «Фильтры» и сортировка делят строку пополам (как у референса),
+   счётчик уходит на свою строку — втроём они не помещались, и «264 товара»
+   срезалось краем экрана. */
 .toolbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: var(--s-2);
   padding-block: var(--s-4);
 }
 .toolbar-count {
-  margin-left: auto;
+  grid-column: 1 / -1;
   font-size: var(--fs-sm);
   color: var(--ink-3);
-  white-space: nowrap;
+}
+@media (min-width: 48em) {
+  .toolbar { display: flex; }
+  .toolbar-count { margin-left: auto; white-space: nowrap; }
+}
+/* Если в строке остался ОДИН счётчик (кровля и забутовка: цен нет — сортировать
+   нечем, а кнопка фильтров на десктопе скрыта), строка не должна занимать
+   полную высоту ряда: получалась пустая полоса под заголовком. */
+.toolbar:not(:has(.sort)):not(:has(.tool-btn)) { padding-block: 0 var(--s-4); }
+@media (min-width: 64em) {
+  .toolbar:not(:has(.sort)) { padding-block: 0 var(--s-4); }
 }
 
 .tool-btn {
@@ -815,13 +894,23 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 }
 .sort select {
   min-height: 42px;
-  padding: 0 38px 0 16px;
+  padding: 0 38px 0 12px;
   border: none;
   border-radius: var(--r-ui);
   background: transparent;
   font-size: var(--fs-base);
   font-weight: 600;
   appearance: none;
+}
+/* Значок «сортировка» слева от подписи: без него ряд «Фильтры | Популярные»
+   читается как две одинаковые кнопки. Иконка стоит в потоке, шеврон —
+   абсолютом справа (см. ниже), поэтому :first-child здесь обязателен. */
+.sort > svg:first-child {
+  position: static;
+  flex: none;
+  width: 17px; height: 17px;
+  margin-left: 12px;
+  color: var(--ink-2);
 }
 .sort svg {
   position: absolute;
@@ -946,6 +1035,12 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 }
 
 .filters-apply { margin-top: var(--s-7); }
+/* На широком экране панель стоит открытой слева, и выдача пересчитывается
+   сразу при клике по чекбоксу — кнопка «Показать N» там нечего не делает
+   и читается как незакрытое действие. Она нужна только в шторке телефона. */
+@media (min-width: 64em) {
+  .filters-apply { display: none; }
+}
 /* В шторке кнопка «Показать N» липнет к низу: список фильтров длинный,
    и иначе до кнопки нужно долистать до конца. Светлый ореол сверху —
    чтобы под полупрозрачной кнопкой не просвечивал текст. */
@@ -981,59 +1076,139 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
    лишь у выдачи каталога, и на страницах товара сетка оставалась двойной:
    при крупном шрифте кнопка «Подробнее» не помещалась в 124px и наезжала
    на соседнюю карточку (ловил сканер отзывчивости). */
+/* Телефон — всегда две колонки: так устроена витрина любого магазина, и
+   одна колонка на 390px выглядела бы списком, а не каталогом. Ширину
+   карточки на телефоне задаёт экран, а не --card-min (он для десктопа,
+   где колонок считается auto-fill). */
 .p-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(9rem, 100%), 1fr));
-  gap: 1px;
-  background: var(--rule);
-  border-block: 1px solid var(--rule);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+@media (min-width: 48em) {
+  .p-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--card-min), 100%), 1fr));
+    gap: var(--s-6);
+  }
 }
 
+/* Карточка — белый прямоугольник на волосяной рамке, БЕЗ тени в покое.
+   Тень появляется только под курсором и это единственное, что происходит:
+   ни зума фотографии, ни сдвига, ни подчёркивания (снято с витрины
+   референса — там transition .3s и один эффект на наведение). */
 .p-card {
   container-type: inline-size;
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: var(--s-5) var(--s-4) var(--s-6);
   background: var(--paper);
+  border: var(--line) solid var(--rule);
+  border-radius: var(--r-ui);
+  overflow: hidden;
+  transition: box-shadow .3s var(--ease);
+}
+@media (hover: hover) {
+  .p-card:hover { box-shadow: var(--sh-float); }
+}
+@media (prefers-reduced-motion: reduce) { .p-card { transition: none; } }
+
+/* Кликается ВСЯ карточка: ссылка на имени растягивается на неё псевдоэлементом.
+   Так и разметка остаётся честной (ссылка = название товара), и палец
+   попадает по любому месту. Кнопка заявки лежит выше по z-index. */
+.p-in {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  padding: var(--s-5) var(--s-4) var(--s-4);
 }
 
 .p-badge {
   position: absolute;
-  top: var(--s-5);
-  left: var(--s-4);
+  top: var(--s-3);
+  left: var(--s-3);
   z-index: 1;
-  padding: 5px 9px;
+  pointer-events: none;   /* клик по бейджу должен открывать товар */
+  padding: 3px 8px;
   border-radius: var(--r-ui);
-  background: var(--accent);
-  color: var(--on-accent);
+  background: var(--tag-bg);
+  color: var(--tag-ink);
   font-size: var(--fs-micro);
-  font-weight: 800;
-  letter-spacing: .02em;
-  text-transform: uppercase;
+  font-weight: 600;
 }
-.p-badge--new { background: var(--dark); }
 
-/* Обёртка кадра: держит второй кадр (.p-alt) поверх первого.
-   Фотография не скругляется НИКОГДА — ни здесь, ни в галерее, ни в плитке:
-   кадр остаётся прямоугольником, скругление живёт только у интерфейса. */
+/* Обёртка кадра: держит второй кадр (.p-alt), точки и кнопку заявки.
+   Фотография не скругляется НИКОГДА — кадр остаётся прямоугольником. */
 .p-shot {
   position: relative;
   display: block;
   overflow: hidden;
   background: var(--tile);
-  margin-bottom: var(--s-4);
+  border-bottom: var(--line) solid var(--rule);
 }
 
 .p-img {
   width: 100%;
-  /* 4:3, а не квадрат: главный кадр — КЛАДКА, а стена горизонтальна.
-     На квадрате её резало по бокам. */
-  aspect-ratio: 4 / 3;
+  /* Квадрат — формат витрины больших магазинов: в ряду из четырёх карточек
+     кадры выстраиваются в ровную ленту, и кладка читается как образец
+     материала. Файлы на диске 4:3, обрезает CSS. */
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
   background: var(--tile);
 }
+
+/* Точки-индикатор: показывают, что фотографий больше одной. Не листалка —
+   листают на странице товара. Активная точка — капсула цветом акцента. */
+.p-dots {
+  position: absolute;
+  left: 50%;
+  bottom: var(--s-3);
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  z-index: 1;
+}
+.p-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--rule-strong);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .55);
+}
+.p-dots i.on {
+  width: 20px;
+  border-radius: var(--r-ui);
+  background: var(--accent);
+}
+
+/* Угловая кнопка «в заявку». Единственное действие в карточке: текстовых
+   кнопок здесь больше нет — двадцать чёрных плашек в сетке читались забором.
+   Селектор обязан быть вложенным: класс .p-add носит и полноразмерная кнопка
+   на странице товара, и без .p-shot она превращалась в кружок в углу. */
+.p-shot .p-add {
+  position: absolute;
+  top: var(--s-3);
+  right: var(--s-3);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--paper);
+  color: var(--ink-2);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .14);
+  cursor: pointer;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.p-shot .p-add svg { width: 19px; height: 19px; }
+.p-shot .p-add::after { content: ""; position: absolute; inset: -5px; }
+.p-shot .p-add:hover { color: var(--accent); }
+.p-shot .p-add.is-in { background: var(--accent); color: var(--on-accent); }
 .p-img--contain { object-fit: contain; }
 
 /* Второй кадр — сам товар крупно. Кладка отвечает «как на доме»,
@@ -1073,52 +1248,58 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   -webkit-box-orient: vertical;
   overflow: hidden;
   min-height: 2.8em;      /* две строки: низ карточек в ряду совпадает */
-  font-size: var(--fs-base);
+  font-size: var(--fs-sm);
   font-weight: 400;
   line-height: 1.4;
 }
-.p-name:hover { color: var(--accent-ink); }
+.p-name::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.p-card:hover .p-name { color: var(--accent-ink); }
 
-.p-price {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 2px 5px;         /* row-gap обязателен: при переносе единица наезжала на цену */
-  margin-top: var(--s-3);
+/* Завод / форма — мелкая серая строка под именем. Она отвечает на вопрос
+   «чей это кирпич», который раньше был спрятан внутрь товара. */
+/* Строку не обрезаем ни многоточием, ни по высоте: здесь либо имя завода,
+   либо спеки профиля («полезная ширина · высота волны») — единственное,
+   чем товары отличаются друг от друга. Пусть переносится на сколько нужно,
+   низ карточки всё равно держит .p-stock с margin-top:auto. */
+.p-zavod {
+  font-size: var(--fs-micro);
+  color: var(--ink-3);
 }
-.p-price b {
+
+/* Цена: рубли крупно, копейки и единица мелко (см. price_split в генераторе). */
+.p-price {
+  margin-top: var(--s-2);
   font-size: var(--fs-price);
-  font-weight: 800;
+  font-weight: 600;
+  line-height: 1.1;
   letter-spacing: -.01em;
 }
-.p-unit { font-size: var(--fs-sm); font-weight: 600; color: var(--ink-2); }
-/* Слот под «≈ ₽/м² кладки» держим всегда: строка печатается не у всех
-   форматов, и без резерва середина карточки в ряду дышит по-разному. */
-.p-m2 { margin-top: 2px; min-height: 1.35em; font-size: var(--fs-xs); color: var(--ink-3); }
+.p-price b { font-weight: 600; }
+.p-price small { font-size: var(--fs-sm); font-weight: 600; }
+/* Слот под «= ₽/м² кладки» держим всегда: строка печатается не у всех
+   форматов, и без резерва низ карточек в ряду дышит по-разному. */
+.p-m2 { min-height: 1.35em; font-size: var(--fs-sm); color: var(--ink-3); }
+.p-unit { font-size: var(--fs-sm); font-weight: 500; color: var(--ink-2); }
 .p-ask {
-  margin-top: var(--s-3);
+  margin-top: var(--s-2);
   font-size: var(--fs-base);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink-2);
 }
 
-.p-actions {
+/* Строка срока. Пунктир — фирменный приём референса: подчёркнуто то,
+   о чём можно спросить подробнее, а не то, куда ведёт ссылка. */
+.p-stock {
   display: flex;
-  gap: var(--s-2);
-  /* auto прижимает кнопку к низу: у части товаров есть строка «≈ ₽/м²»,
-     у части нет, и без этого кнопки в ряду стояли на разной высоте. */
+  align-items: center;
+  gap: 6px;
   margin-top: auto;
-  padding-top: var(--s-4);
+  padding-top: var(--s-3);
+  font-size: var(--fs-sm);
 }
-.p-actions .btn { flex: 1; min-height: 44px; padding-inline: var(--s-4); }
-
-/* Кнопка в состоянии «уже в заявке» */
-.p-add.is-in {
-  background: var(--paper);
-  color: var(--ok-ink);
-  box-shadow: inset 0 0 0 1px var(--ok-ink);
-}
-.p-add.is-in:hover { background: var(--paper); color: var(--ok-ink); }
+.p-stock { color: var(--ink-2); }
+.p-stock svg { flex: none; width: 15px; height: 15px; color: var(--ink-3); }
+.p-stock i { font-style: normal; }
 
 /* Сколько колонок в сетке — решаем по ширине ОБЁРТКИ выдачи, а не окна.
    Медиазапрос тут не годится: `em` в нём считается от базового шрифта
@@ -1133,25 +1314,27 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 }
 
 /* Когда карточка физически узкая — экран 280px или системный шрифт 200% —
-   строки условий перестают помещаться и лезут в соседнюю колонку. Прячем
-   именно их: цена и кнопка важнее.
-   ВАЖНО: блок стоит ПОСЛЕ правил карточки. Контейнерный запрос не добавляет
-   веса селектору, и объявленный ниже `.p-avail { display: flex }` перебивал бы
-   его — ровно этот баг мы и ловили сканером. */
+   строка срока перестаёт помещаться и лезет в соседнюю колонку. Прячем
+   именно её: цена важнее.
+   ВАЖНО: блок стоит ПОСЛЕ правил карточки — контейнерный запрос не добавляет
+   веса селектору (ровно этот баг ловили сканером). */
 @container (max-width: 10rem) {
-  .p-avail { display: none; }
-  .p-badge { font-size: 11px; padding: 3px 6px; }
+  .p-stock { display: none; }
+  .p-badge { font-size: 11px; padding: 2px 6px; }
+  .p-shot .p-add { width: 32px; height: 32px; }
 }
 
 /* ==========================================================================
    10 · «Показать ещё» и пустая выдача
    ========================================================================== */
 .more-row {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  justify-items: center;
+  gap: var(--s-4);
   padding-top: var(--s-7);
 }
 .more-row .btn { padding-inline: var(--s-12); }
+.more-shown { font-size: var(--fs-sm); color: var(--ink-3); }
 
 .empty { padding: var(--s-12) var(--s-6); text-align: center; }
 .empty p {
@@ -1217,32 +1400,65 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 .pd-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .pd-thumb.is-on { border-color: var(--dark); }
 
-.pd-name { margin-bottom: var(--s-3); font-size: var(--fs-h1); }
-.pd-meta { margin-bottom: var(--s-4); font-size: var(--fs-base); color: var(--ink-3); }
+/* Имя товара мельче заголовка раздела: в нём формат и размеры, оно длинное,
+   и набранное в 32px занимало три строки первого экрана (у референса — 24px). */
+.pd-name {
+  margin-bottom: var(--s-3);
+  font-size: clamp(1.25rem, min(1.1rem + 1vw, 6vw), 1.5rem);
+  line-height: 1.25;
+}
+.pd-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  margin-bottom: var(--s-5);
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+.pd-art { color: var(--ink-3); }
+/* Это ссылка-ПЕРЕХОД на страницу завода, поэтому подчёркивание сплошное:
+   пунктир на сайте означает «действие на месте» (позвонить, раскрыть,
+   уточнить). Смешивать их нельзя — иначе приём перестаёт что-либо значить. */
+.pd-zavod { color: var(--ink-3); }
+.pd-zavod i { font-style: normal; color: var(--ink); text-decoration: underline; }
+.pd-zavod:hover i { color: var(--accent-ink); }
+
+/* Блок покупки. На десктопе — плавающая панель справа от галереи, как
+   в карточке референса: она отрывается от страницы тенью и остаётся
+   на виду при прокрутке. Единственное место с радиусом 6px. */
+.buy {
+  margin: var(--s-5) 0;
+  padding: var(--s-6) 0;
+  border-block: 1px solid var(--rule);
+}
 
 .pd-price {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.pd-price b {
   font-size: clamp(1.75rem, 1.3rem + 2vw, 2rem);
-  font-weight: 800;
+  font-weight: 600;
+  line-height: 1;
   letter-spacing: -.02em;
 }
-.pd-price span { font-size: var(--fs-lg); font-weight: 600; color: var(--ink-2); }
-.pd-m2 { margin-top: var(--s-1); font-size: var(--fs-base); color: var(--ink-3); }
+.pd-price b { font-weight: 600; }
+.pd-price small { font-size: var(--fs-lg); font-weight: 600; }
+.pd-m2 { margin-top: var(--s-2); font-size: var(--fs-base); color: var(--ink-3); }
+/* Ровно то, что мы имеем право обещать: заводская цена — ориентир, итог
+   считает менеджер с доставкой (решение владельца от 14.08.2026). */
+.pd-price-note {
+  margin-top: var(--s-3);
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+}
 
-/* Блок наличия — обрамлён линиями сверху и снизу */
+/* Условия — под кнопкой, на волосяной линии */
 .pd-terms {
   display: flex;
   flex-direction: column;
   gap: var(--s-3);
-  margin: var(--s-5) 0;
-  padding: var(--s-5) 0;
-  border-block: 1px solid var(--rule);
-  font-size: var(--fs-base);
+  margin-top: var(--s-5);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-sm);
 }
 .pd-terms li { display: flex; align-items: flex-start; gap: var(--s-3); }
 .pd-terms svg { flex: none; width: 18px; height: 18px; margin-top: 2px; color: var(--ok); }
@@ -1264,8 +1480,18 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   padding-block: var(--s-3);
   border-top: 1px solid var(--rule);
 }
-.pd-specs dt { padding-right: var(--s-4); color: var(--ink-3); }
+.pd-specs dt {
+  padding-right: var(--s-4);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
 .pd-specs dd { padding-left: var(--s-4); text-align: right; font-weight: 500; }
+/* Значение-предложение («40 мм — дорожки, двор, отмостка…») при выключке
+   вправо получает рваный левый край и читается как «текст просто прижали».
+   Такие значения выравниваем влево — порог по длине задаёт генератор. */
+.pd-specs dd.is-long { text-align: left; }
+.pd-specs dd a { color: var(--accent-ink); }
+.pd-specs dd a:hover { text-decoration: underline; }
 
 /* Количество + что это даст в деле. Цифру м²/поддонов пересчитывает
    app.js: это то, зачем сюда пришли — считать материал, а не штуки. */
@@ -1652,7 +1878,7 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   margin-top: var(--s-3);
   font-size: var(--fs-md);
   line-height: 1.5;
-  color: #e6e2dd;
+  color: var(--on-dark-soft);
 }
 /* Цифры вместо обещаний: всё это проверяется в каталоге.
    На телефоне — три ровные колонки мелким кеглем (раньше цифры шли в две
@@ -1678,7 +1904,7 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 .hero-facts span {
   font-size: var(--fs-micro);
   line-height: 1.25;
-  color: #c9c4be;
+  color: var(--on-dark-soft);
 }
 .hero-cta {
   display: flex;
@@ -2025,7 +2251,6 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 
 /* --- ≥30em (480px): карточка дышит ------------------------------------- */
 @media (min-width: 30em) {
-  .p-card { padding: var(--s-5) var(--s-5) var(--s-6); }
   .works { gap: var(--s-4); }
   .tiles {
     grid-template-columns: repeat(auto-fill, minmax(min(var(--tile-min), 100%), 1fr));
@@ -2042,14 +2267,13 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 
   .hdr-top {
     grid-template-columns: auto auto minmax(0, 1fr) auto;
-    grid-template-areas: "logo cat search city";
-    gap: var(--s-4);
+    grid-template-areas: "logo cat search cart";
+    gap: var(--s-5);
     padding-block: var(--s-4);
   }
-  .hdr-tools { display: contents; }
-  .hdr-cat { grid-area: cat; width: 52px; height: 52px; }
-  .hdr-search { grid-area: search; height: 52px; }
-  .hdr-city { grid-area: city; }
+  .hdr-cat { height: 48px; }
+  .hdr-search { height: 48px; }
+  .hdr-search input, .hdr-search-go { height: 48px; }
 
   .section-head { margin-bottom: var(--s-6); }
 
@@ -2077,18 +2301,6 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   .hero-cta .btn { display: inline-flex; }
   .hero-ghost { border-color: rgba(255, 255, 255, .45); background: transparent; }
 
-  .p-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(var(--card-min), 100%), 1fr));
-    gap: var(--s-5);
-    background: none;
-    border: none;
-  }
-  .p-card {
-    padding: var(--s-5);
-    border: 1px solid var(--rule);
-    transition: border-color var(--dur) var(--ease);
-  }
-  .p-card:hover { border-color: var(--ink-4); }
 
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-8); }
   .works { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -2100,6 +2312,19 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   /* Фото не шире 32rem: кадры каталога 1200×900, колонка во всю ширину
      раздувала их до мыла — как у Ozon/Лемана, фото ~40% строки */
   .pd-grid { grid-template-columns: minmax(0, min(32rem, 45%)) minmax(0, 1fr); gap: var(--s-10); }
+  /* Плавающая панель покупки: белая карточка с мягкой тенью, липнет
+     к верху при прокрутке. Радиус 6px — единственное исключение из 3px
+     на весь сайт (так же выделена цен-панель у референса). */
+  .buy {
+    position: sticky;
+    top: var(--s-6);
+    margin: 0;
+    padding: var(--s-8);
+    border: 0;
+    border-radius: var(--r-float);
+    background: var(--paper);
+    box-shadow: var(--sh-float);
+  }
   .pd-bar {
     position: static;
     bottom: auto;
@@ -2115,29 +2340,20 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 /* --- ≥64em (1024px): панель фильтров слева ----------------------------- */
 @media (min-width: 64em) {
   .catalog-body { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); }
-  .filters { display: block; }
+  /* Панель липнет к верху: страница выдачи длинная (до 9000px), и статичная
+     панель оставляла под собой пустой белый столбец во всю высоту. */
+  .filters {
+    display: block;
+    position: sticky;
+    top: var(--s-4);
+    max-height: calc(100vh - var(--s-8));
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
   .tool-filters { display: none; }   /* кнопка «Фильтры» не нужна */
 
-  .hdr-top {
-    grid-template-columns: auto auto minmax(0, 1fr) auto auto auto;
-    grid-template-areas: "logo cat search city contact cart";
-  }
-  .hdr-contact {
-    grid-area: contact;
-    display: block;
-    text-align: right;
-    line-height: 1.2;
-  }
-  .hdr-tel { font-size: var(--fs-lg); font-weight: 800; white-space: nowrap; }
-  .hdr-contact small {
-    display: block;
-    margin-top: 2px;
-    font-size: var(--fs-micro);
-    color: var(--ink-3);
-  }
-  .hdr-cart { grid-area: cart; display: inline-flex; }
-  .hdr-cat { width: auto; padding-inline: 16px; }
-  .hdr-cat span { display: inline; }
+  .hdr-utl { display: block; }
+  .hdr-search { max-width: 40rem; }
 
   .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .footer-in {
@@ -2150,11 +2366,6 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 /* --- ≥80em (1280px): полная сетка макета ------------------------------- */
 @media (min-width: 80em) {
   .catalog-body { grid-template-columns: minmax(0, 16.25rem) minmax(0, 1fr); gap: var(--s-7); }
-  .hdr-top {
-    grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto;
-    grid-template-areas: "logo cat search city contact cta cart";
-  }
-  .hdr-cta { grid-area: cta; display: inline-flex; min-height: 52px; }
 }
 
 /* Сетки с малым числом карточек: не оставлять сироту в последнем ряду.

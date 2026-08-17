@@ -19,12 +19,12 @@
 
 from shell_common import ICON, esc, plural, terms_line
 
-SORTS = [("default", "По каталогу"), ("cheap", "Сначала недорогие"),
-         ("exp", "Сначала дорогие"), ("new", "Новинки")]
-# Пункт «Новинки» есть не на каждой странице по факту: в коллекциях без
-# новинок app.js убирает его из списка при загрузке (иначе выбор ничего
-# не менял бы). Здесь список общий, разбор — на стороне страницы.
-
+# Ровно три пункта, как в каталоге референса. «Новинки» отсюда убраны
+# 17.08.2026: это не порядок, а признак товара — он переехал в фильтры
+# отдельным чекбоксом «Только новинки», где ему и место (и где его можно
+# сочетать с цветом и заводом, а не выбирать вместо сортировки).
+SORTS = [("default", "По каталогу"), ("cheap", "Сначала дешевле"),
+         ("exp", "Сначала дороже")]
 
 NO_PRICE_SORTS = [("default", "По каталогу")]
 
@@ -44,8 +44,8 @@ def toolbar(total, unit=("товар", "товара", "товаров"), sorts=
     fbtn = (f'<button class="tool-btn tool-filters" type="button" aria-controls="filtersDrawer">'
             f'{ICON["filter"]}Фильтры<b id="filtersOn" hidden>0</b></button>') if filters else ""
     sort_html = "" if len(sorts or SORTS) < 2 else (
-        f'<span class="sort"><select id="sortSel" aria-label="Сортировка">{opts}</select>'
-        f'{ICON["down"]}</span>')
+        f'<span class="sort">{ICON["sort"]}'
+        f'<select id="sortSel" aria-label="Сортировка">{opts}</select>{ICON["down"]}</span>')
     return f"""
       <div class="toolbar">
         {fbtn}
@@ -75,7 +75,11 @@ def fgroup(title, group, opts, dots=None):
         rows.append(
             f'<label class="fopt"><input type="checkbox" data-group="{group}" '
             f'value="{esc(val)}">{dot}<span class="fopt-label">{esc(label)}</span>{cnt}</label>')
-    return (f'<div class="fgroup"><h3>{esc(title)}</h3>'
+    # Заголовок печатаем только если он есть: у группы из одного чекбокса
+    # («Только новинки») подпись стоит на самом чекбоксе, а пустой <h3>
+    # оставлял дырку в дереве доступности и фантомный отступ.
+    head = f"<h3>{esc(title)}</h3>" if title else ""
+    return (f'<div class="fgroup">{head}'
             f'<div class="fgroup-list">{"".join(rows)}</div></div>')
 
 
@@ -121,6 +125,7 @@ def grid_shell(cards_html, page_size=40, empty_note="По выбранным п�
             <button class="btn btn--ghost" type="button" data-reset>Сбросить фильтры</button>
           </div>
           <div class="more-row" id="moreRow" hidden>
+            <p class="more-shown" id="shownNote"></p>
             <button class="btn btn--soft btn--lg" type="button" id="moreBtn">Показать ещё</button>
           </div>
         </div>"""

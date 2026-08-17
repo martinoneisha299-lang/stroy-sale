@@ -9,46 +9,44 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=59">
+  <link rel="stylesheet" href="styles.css?v=60">
 </head>
 <body>
   <a class="skip" href="#main">К&nbsp;содержанию</a>
 <a class="promo-bar" href="index.html#lead" hidden data-until="2026-12-31"><b>Бесплатный расчёт</b> материала по&nbsp;вашим размерам</a>
 
   <header class="hdr">
+    <div class="hdr-utl">
+      <div class="wrap hdr-utl-in">
+        <a href="akcii.html">Акции</a>
+        <a href="dostavka.html">Доставка и&nbsp;оплата</a>
+        <a href="raboty.html">Наши работы</a>
+        <span class="hdr-city">Краснодар</span>
+        <a class="hdr-tel" href="tel:+79000000000"><i>+7 (900) 000-00-00</i></a>
+      </div>
+    </div>
     <div class="wrap hdr-top">
       <a class="logo" href="index.html" aria-label="Стройсейл — на главную">
         <svg viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--accent)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
         <span><b>СТРОЙ</b><b>СЕЙЛ</b></span>
       </a>
-      <div class="hdr-tools">
-        <button class="hdr-cat" type="button" id="catBtn" aria-expanded="false" aria-controls="catDrawer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Каталог</span>
-        </button>
-        <form class="hdr-search" role="search" action="poisk.html" method="get">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
-          <input type="search" name="q" id="q" placeholder="Поиск: кирпич, плитка, профнастил"
-                 aria-label="Поиск по каталогу" autocomplete="off" data-root="">
-          <div class="sug" id="sug" hidden></div>
-        </form>
-      </div>
-      <div class="hdr-city">
-        <span>Город</span>
-        <a href="dostavka.html">Краснодар</a>
-      </div>
-      <div class="hdr-contact">
-        <a class="hdr-tel" href="tel:+79000000000">+7 (900) 000-00-00</a>
-        <small>Перезвоним за&nbsp;5&nbsp;минут</small>
-      </div>
-      <a class="btn hdr-cta" href="#lead">Заказать звонок</a>
-      <a class="hdr-cart" href="zayavka.html" aria-label="Заявка">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h11M8 12h11M8 18h11"/><circle cx="4" cy="6" r="1.2"/><circle cx="4" cy="12" r="1.2"/><circle cx="4" cy="18" r="1.2"/></svg><span class="cart-count" data-cart-count hidden>0</span>
+      <button class="hdr-cat" type="button" id="catBtn" aria-expanded="false" aria-controls="catDrawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Каталог</span>
+      </button>
+      <form class="hdr-search" role="search" action="poisk.html" method="get">
+        <input type="search" name="q" id="q" placeholder="Найти в каталоге"
+               aria-label="Поиск по каталогу" autocomplete="off" data-root="">
+        <button class="hdr-search-go" type="submit" aria-label="Найти"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg></button>
+        <div class="sug" id="sug" hidden></div>
+      </form>
+      <a class="hdr-cart" href="zayavka.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Заявка</span>
+        <span class="cart-count" data-cart-count hidden>0</span>
       </a>
     </div>
     <nav class="subnav" aria-label="Разделы каталога">
       <div class="wrap subnav-in">
-        <a class="subnav-sale" href="akcii.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="6.8" cy="6.8" r="2.3"/><circle cx="17.2" cy="17.2" r="2.3"/></svg>Акции</a>
-        <a href="kirpich-oblitsovochnyy.html">Облицовочный кирпич</a><a href="kirpich-zabutovochnyy.html">Забутовочный кирпич</a><a href="trotuarnaya-plitka.html" class="is-on" aria-current="page">Тротуарная плитка</a><a href="krovlya.html">Кровля и&nbsp;фасад</a><a href="krovlya-sayding.html">Металлосайдинг</a><a href="dostavka.html" class="subnav-right">Доставка и&nbsp;оплата</a><a href="raboty.html">Наши работы</a>
+        <a href="kirpich-oblitsovochnyy.html">Облицовочный кирпич</a><a href="kirpich-zabutovochnyy.html">Забутовочный кирпич</a><a href="trotuarnaya-plitka.html" class="is-on" aria-current="page">Тротуарная плитка</a><a href="krovlya.html">Кровля и&nbsp;фасад</a><a href="krovlya-sayding.html">Металлосайдинг</a>
       </div>
     </nav>
   </header>
@@ -65,7 +63,7 @@
     
       <div class="toolbar">
         <button class="tool-btn tool-filters" type="button" aria-controls="filtersDrawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Фильтры<b id="filtersOn" hidden>0</b></button>
-        <span class="sort"><select id="sortSel" aria-label="Сортировка"><option value="default">По&nbsp;каталогу</option><option value="cheap">Сначала недорогие</option><option value="exp">Сначала дорогие</option></select><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+        <span class="sort"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h13M4 12h9M4 18h5"/></svg><select id="sortSel" aria-label="Сортировка"><option value="default">По&nbsp;каталогу</option><option value="cheap">Сначала дешевле</option><option value="exp">Сначала дороже</option></select><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
         <span class="toolbar-count" id="count" aria-live="polite">24&nbsp;товара</span>
       </div>
       <div class="applied" id="applied"></div>
@@ -81,131 +79,156 @@
       
         <div id="catalogWrap" data-page-size="40">
           <div class="p-grid" id="grid"><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-agat-korichnevyy.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-077.jpg?v=5" alt="Тротуарная плитка «Агат коричневый», форма «Прямоугольник»" width="640" height="480" loading="eager" fetchpriority="high"></a>
-  <a class="p-name" href="tovar/pryamougolnik-agat-korichnevyy.html">Плитка «Агат коричневый»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-077" data-name="Плитка «Агат коричневый», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-077.jpg" data-url="tovar/pryamougolnik-agat-korichnevyy.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-077.jpg?v=5" alt="Тротуарная плитка «Агат коричневый», форма «Прямоугольник»" width="640" height="480" loading="eager" fetchpriority="high"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-077" data-name="Плитка «Агат коричневый», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-077.jpg" data-url="tovar/pryamougolnik-agat-korichnevyy.html" data-root="" aria-label="Добавить в заявку: Плитка «Агат коричневый»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-agat-korichnevyy.html">Плитка «Агат коричневый»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-agat-kofeynyy.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-078.jpg?v=5" alt="Тротуарная плитка «Агат кофейный», форма «Прямоугольник»" width="640" height="480" loading="eager" fetchpriority="high"></a>
-  <a class="p-name" href="tovar/pryamougolnik-agat-kofeynyy.html">Плитка «Агат кофейный»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-078" data-name="Плитка «Агат кофейный», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-078.jpg" data-url="tovar/pryamougolnik-agat-kofeynyy.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-078.jpg?v=5" alt="Тротуарная плитка «Агат кофейный», форма «Прямоугольник»" width="640" height="480" loading="eager" fetchpriority="high"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-078" data-name="Плитка «Агат кофейный», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-078.jpg" data-url="tovar/pryamougolnik-agat-kofeynyy.html" data-root="" aria-label="Добавить в заявку: Плитка «Агат кофейный»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-agat-kofeynyy.html">Плитка «Агат кофейный»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-agat-oranzhevyy.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-079.jpg?v=5" alt="Тротуарная плитка «Агат оранжевый», форма «Прямоугольник»" width="640" height="480" loading="eager" fetchpriority="high"></a>
-  <a class="p-name" href="tovar/pryamougolnik-agat-oranzhevyy.html">Плитка «Агат оранжевый»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-079" data-name="Плитка «Агат оранжевый», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-079.jpg" data-url="tovar/pryamougolnik-agat-oranzhevyy.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-079.jpg?v=5" alt="Тротуарная плитка «Агат оранжевый», форма «Прямоугольник»" width="640" height="480" loading="eager" fetchpriority="high"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-079" data-name="Плитка «Агат оранжевый», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-079.jpg" data-url="tovar/pryamougolnik-agat-oranzhevyy.html" data-root="" aria-label="Добавить в заявку: Плитка «Агат оранжевый»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-agat-oranzhevyy.html">Плитка «Агат оранжевый»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-agat-solnechnyy.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-080.jpg?v=5" alt="Тротуарная плитка «Агат солнечный», форма «Прямоугольник»" width="640" height="480" loading="eager" fetchpriority="high"></a>
-  <a class="p-name" href="tovar/pryamougolnik-agat-solnechnyy.html">Плитка «Агат солнечный»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-080" data-name="Плитка «Агат солнечный», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-080.jpg" data-url="tovar/pryamougolnik-agat-solnechnyy.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-080.jpg?v=5" alt="Тротуарная плитка «Агат солнечный», форма «Прямоугольник»" width="640" height="480" loading="eager" fetchpriority="high"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-080" data-name="Плитка «Агат солнечный», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-080.jpg" data-url="tovar/pryamougolnik-agat-solnechnyy.html" data-root="" aria-label="Добавить в заявку: Плитка «Агат солнечный»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-agat-solnechnyy.html">Плитка «Агат солнечный»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-antratsit.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-081.jpg?v=5" alt="Тротуарная плитка «Антрацит», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-antratsit.html">Плитка «Антрацит»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-081" data-name="Плитка «Антрацит», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-081.jpg" data-url="tovar/pryamougolnik-antratsit.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-081.jpg?v=5" alt="Тротуарная плитка «Антрацит», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-081" data-name="Плитка «Антрацит», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-081.jpg" data-url="tovar/pryamougolnik-antratsit.html" data-root="" aria-label="Добавить в заявку: Плитка «Антрацит»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-antratsit.html">Плитка «Антрацит»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-gonchar.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-082.jpg?v=5" alt="Тротуарная плитка «Гончар», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-gonchar.html">Плитка «Гончар»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-082" data-name="Плитка «Гончар», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-082.jpg" data-url="tovar/pryamougolnik-gonchar.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-082.jpg?v=5" alt="Тротуарная плитка «Гончар», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-082" data-name="Плитка «Гончар», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-082.jpg" data-url="tovar/pryamougolnik-gonchar.html" data-root="" aria-label="Добавить в заявку: Плитка «Гончар»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-gonchar.html">Плитка «Гончар»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-dzhafar.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-083.jpg?v=5" alt="Тротуарная плитка «Джафар», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-dzhafar.html">Плитка «Джафар»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-083" data-name="Плитка «Джафар», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-083.jpg" data-url="tovar/pryamougolnik-dzhafar.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-083.jpg?v=5" alt="Тротуарная плитка «Джафар», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-083" data-name="Плитка «Джафар», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-083.jpg" data-url="tovar/pryamougolnik-dzhafar.html" data-root="" aria-label="Добавить в заявку: Плитка «Джафар»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-dzhafar.html">Плитка «Джафар»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-in-i-yan.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-085.jpg?v=5" alt="Тротуарная плитка «Инь и Ян», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-in-i-yan.html">Плитка «Инь и&nbsp;Ян»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-085" data-name="Плитка «Инь и Ян», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-085.jpg" data-url="tovar/pryamougolnik-in-i-yan.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-085.jpg?v=5" alt="Тротуарная плитка «Инь и Ян», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-085" data-name="Плитка «Инь и Ян», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-085.jpg" data-url="tovar/pryamougolnik-in-i-yan.html" data-root="" aria-label="Добавить в заявку: Плитка «Инь и Ян»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-in-i-yan.html">Плитка «Инь и&nbsp;Ян»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-klinker.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-086.jpg?v=5" alt="Тротуарная плитка «Клинкер», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-klinker.html">Плитка «Клинкер»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-086" data-name="Плитка «Клинкер», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-086.jpg" data-url="tovar/pryamougolnik-klinker.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-086.jpg?v=5" alt="Тротуарная плитка «Клинкер», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-086" data-name="Плитка «Клинкер», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-086.jpg" data-url="tovar/pryamougolnik-klinker.html" data-root="" aria-label="Добавить в заявку: Плитка «Клинкер»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-klinker.html">Плитка «Клинкер»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-kofe-s-molokom.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-087.jpg?v=5" alt="Тротуарная плитка «Кофе с молоком», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-kofe-s-molokom.html">Плитка «Кофе с&nbsp;молоком»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-087" data-name="Плитка «Кофе с молоком», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-087.jpg" data-url="tovar/pryamougolnik-kofe-s-molokom.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-087.jpg?v=5" alt="Тротуарная плитка «Кофе с молоком», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-087" data-name="Плитка «Кофе с молоком», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-087.jpg" data-url="tovar/pryamougolnik-kofe-s-molokom.html" data-root="" aria-label="Добавить в заявку: Плитка «Кофе с молоком»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-kofe-s-molokom.html">Плитка «Кофе с&nbsp;молоком»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-svetlyy-listopad.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-096.jpg?v=5" alt="Тротуарная плитка «Светлый листопад», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-svetlyy-listopad.html">Плитка «Светлый листопад»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-096" data-name="Плитка «Светлый листопад», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-096.jpg" data-url="tovar/pryamougolnik-svetlyy-listopad.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-096.jpg?v=5" alt="Тротуарная плитка «Светлый листопад», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-096" data-name="Плитка «Светлый листопад», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-096.jpg" data-url="tovar/pryamougolnik-svetlyy-listopad.html" data-root="" aria-label="Добавить в заявку: Плитка «Светлый листопад»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-svetlyy-listopad.html">Плитка «Светлый листопад»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-step.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-097.jpg?v=5" alt="Тротуарная плитка «Степь», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-step.html">Плитка «Степь»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-097" data-name="Плитка «Степь», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-097.jpg" data-url="tovar/pryamougolnik-step.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-097.jpg?v=5" alt="Тротуарная плитка «Степь», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-097" data-name="Плитка «Степь», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-097.jpg" data-url="tovar/pryamougolnik-step.html" data-root="" aria-label="Добавить в заявку: Плитка «Степь»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-step.html">Плитка «Степь»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-tyomnyy-listopad.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-098.jpg?v=5" alt="Тротуарная плитка «Тёмный листопад», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-tyomnyy-listopad.html">Плитка «Тёмный листопад»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-098" data-name="Плитка «Тёмный листопад», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-098.jpg" data-url="tovar/pryamougolnik-tyomnyy-listopad.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-098.jpg?v=5" alt="Тротуарная плитка «Тёмный листопад», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-098" data-name="Плитка «Тёмный листопад», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-098.jpg" data-url="tovar/pryamougolnik-tyomnyy-listopad.html" data-root="" aria-label="Добавить в заявку: Плитка «Тёмный листопад»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-tyomnyy-listopad.html">Плитка «Тёмный листопад»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-haski.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-099.jpg?v=5" alt="Тротуарная плитка «Хаски», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-haski.html">Плитка «Хаски»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-099" data-name="Плитка «Хаски», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-099.jpg" data-url="tovar/pryamougolnik-haski.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-099.jpg?v=5" alt="Тротуарная плитка «Хаски», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-099" data-name="Плитка «Хаски», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-099.jpg" data-url="tovar/pryamougolnik-haski.html" data-root="" aria-label="Добавить в заявку: Плитка «Хаски»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-haski.html">Плитка «Хаски»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="910">
-  <a class="p-shot" href="tovar/pryamougolnik-yashma.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-100.jpg?v=5" alt="Тротуарная плитка «Яшма», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-yashma.html">Плитка «Яшма»</a>
-  <p class="p-price"><b>910&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-100" data-name="Плитка «Яшма», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-100.jpg" data-url="tovar/pryamougolnik-yashma.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-100.jpg?v=5" alt="Тротуарная плитка «Яшма», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-100" data-name="Плитка «Яшма», Прямоугольник" data-price="910" data-unit="м²" data-img="img/catalog/tile-100.jpg" data-url="tovar/pryamougolnik-yashma.html" data-root="" aria-label="Добавить в заявку: Плитка «Яшма»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-yashma.html">Плитка «Яшма»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>910 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 13&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mix" data-price="1010">
-  <a class="p-shot" href="tovar/pryamougolnik-dyuna.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-084.jpg?v=5" alt="Тротуарная плитка «Дюна», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-dyuna.html">Плитка «Дюна»</a>
-  <p class="p-price"><b>1&nbsp;010&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 15&nbsp;150&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-084" data-name="Плитка «Дюна», Прямоугольник" data-price="1010" data-unit="м²" data-img="img/catalog/tile-084.jpg" data-url="tovar/pryamougolnik-dyuna.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-084.jpg?v=5" alt="Тротуарная плитка «Дюна», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-084" data-name="Плитка «Дюна», Прямоугольник" data-price="1010" data-unit="м²" data-img="img/catalog/tile-084.jpg" data-url="tovar/pryamougolnik-dyuna.html" data-root="" aria-label="Добавить в заявку: Плитка «Дюна»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-dyuna.html">Плитка «Дюна»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>1&nbsp;010 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 15&nbsp;150&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mono" data-price="650">
-  <a class="p-shot" href="tovar/pryamougolnik-mono-1.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-088.jpg?v=5" alt="Тротуарная плитка «Моно 1», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-mono-1.html">Плитка «Моно 1»</a>
-  <p class="p-price"><b>650&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 9&nbsp;750&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-088" data-name="Плитка «Моно 1», Прямоугольник" data-price="650" data-unit="м²" data-img="img/catalog/tile-088.jpg" data-url="tovar/pryamougolnik-mono-1.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-088.jpg?v=5" alt="Тротуарная плитка «Моно 1», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-088" data-name="Плитка «Моно 1», Прямоугольник" data-price="650" data-unit="м²" data-img="img/catalog/tile-088.jpg" data-url="tovar/pryamougolnik-mono-1.html" data-root="" aria-label="Добавить в заявку: Плитка «Моно 1»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-mono-1.html">Плитка «Моно 1»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>650 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 9&nbsp;750&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mono" data-price="710">
-  <a class="p-shot" href="tovar/pryamougolnik-mono-2.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-089.jpg?v=5" alt="Тротуарная плитка «Моно 2», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-mono-2.html">Плитка «Моно 2»</a>
-  <p class="p-price"><b>710&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 10&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-089" data-name="Плитка «Моно 2», Прямоугольник" data-price="710" data-unit="м²" data-img="img/catalog/tile-089.jpg" data-url="tovar/pryamougolnik-mono-2.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-089.jpg?v=5" alt="Тротуарная плитка «Моно 2», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-089" data-name="Плитка «Моно 2», Прямоугольник" data-price="710" data-unit="м²" data-img="img/catalog/tile-089.jpg" data-url="tovar/pryamougolnik-mono-2.html" data-root="" aria-label="Добавить в заявку: Плитка «Моно 2»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-mono-2.html">Плитка «Моно 2»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>710 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 10&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mono" data-price="710">
-  <a class="p-shot" href="tovar/pryamougolnik-mono-5.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-092.jpg?v=5" alt="Тротуарная плитка «Моно 5», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-mono-5.html">Плитка «Моно 5»</a>
-  <p class="p-price"><b>710&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 10&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-092" data-name="Плитка «Моно 5», Прямоугольник" data-price="710" data-unit="м²" data-img="img/catalog/tile-092.jpg" data-url="tovar/pryamougolnik-mono-5.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-092.jpg?v=5" alt="Тротуарная плитка «Моно 5», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-092" data-name="Плитка «Моно 5», Прямоугольник" data-price="710" data-unit="м²" data-img="img/catalog/tile-092.jpg" data-url="tovar/pryamougolnik-mono-5.html" data-root="" aria-label="Добавить в заявку: Плитка «Моно 5»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-mono-5.html">Плитка «Моно 5»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>710 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 10&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mono" data-price="710">
-  <a class="p-shot" href="tovar/pryamougolnik-mono-6.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-093.jpg?v=5" alt="Тротуарная плитка «Моно 6», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-mono-6.html">Плитка «Моно 6»</a>
-  <p class="p-price"><b>710&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 10&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-093" data-name="Плитка «Моно 6», Прямоугольник" data-price="710" data-unit="м²" data-img="img/catalog/tile-093.jpg" data-url="tovar/pryamougolnik-mono-6.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-093.jpg?v=5" alt="Тротуарная плитка «Моно 6», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-093" data-name="Плитка «Моно 6», Прямоугольник" data-price="710" data-unit="м²" data-img="img/catalog/tile-093.jpg" data-url="tovar/pryamougolnik-mono-6.html" data-root="" aria-label="Добавить в заявку: Плитка «Моно 6»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-mono-6.html">Плитка «Моно 6»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>710 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 10&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mono" data-price="710">
-  <a class="p-shot" href="tovar/pryamougolnik-mono-7.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-094.jpg?v=5" alt="Тротуарная плитка «Моно 7», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-mono-7.html">Плитка «Моно 7»</a>
-  <p class="p-price"><b>710&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 10&nbsp;650&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-094" data-name="Плитка «Моно 7», Прямоугольник" data-price="710" data-unit="м²" data-img="img/catalog/tile-094.jpg" data-url="tovar/pryamougolnik-mono-7.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-094.jpg?v=5" alt="Тротуарная плитка «Моно 7», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-094" data-name="Плитка «Моно 7», Прямоугольник" data-price="710" data-unit="м²" data-img="img/catalog/tile-094.jpg" data-url="tovar/pryamougolnik-mono-7.html" data-root="" aria-label="Добавить в заявку: Плитка «Моно 7»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-mono-7.html">Плитка «Моно 7»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>710 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 10&nbsp;650&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mono" data-price="760">
-  <a class="p-shot" href="tovar/pryamougolnik-mono-3.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-090.jpg?v=5" alt="Тротуарная плитка «Моно 3», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-mono-3.html">Плитка «Моно 3»</a>
-  <p class="p-price"><b>760&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 11&nbsp;400&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-090" data-name="Плитка «Моно 3», Прямоугольник" data-price="760" data-unit="м²" data-img="img/catalog/tile-090.jpg" data-url="tovar/pryamougolnik-mono-3.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-090.jpg?v=5" alt="Тротуарная плитка «Моно 3», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-090" data-name="Плитка «Моно 3», Прямоугольник" data-price="760" data-unit="м²" data-img="img/catalog/tile-090.jpg" data-url="tovar/pryamougolnik-mono-3.html" data-root="" aria-label="Добавить в заявку: Плитка «Моно 3»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-mono-3.html">Плитка «Моно 3»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>760 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 11&nbsp;400&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mono" data-price="760">
-  <a class="p-shot" href="tovar/pryamougolnik-mono-4.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-091.jpg?v=5" alt="Тротуарная плитка «Моно 4», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-mono-4.html">Плитка «Моно 4»</a>
-  <p class="p-price"><b>760&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 11&nbsp;400&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-091" data-name="Плитка «Моно 4», Прямоугольник" data-price="760" data-unit="м²" data-img="img/catalog/tile-091.jpg" data-url="tovar/pryamougolnik-mono-4.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-091.jpg?v=5" alt="Тротуарная плитка «Моно 4», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-091" data-name="Плитка «Моно 4», Прямоугольник" data-price="760" data-unit="м²" data-img="img/catalog/tile-091.jpg" data-url="tovar/pryamougolnik-mono-4.html" data-root="" aria-label="Добавить в заявку: Плитка «Моно 4»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-mono-4.html">Плитка «Моно 4»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>760 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 11&nbsp;400&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article><article class="p-card" data-shape="pryamougolnik" data-kind="mono" data-price="760">
-  <a class="p-shot" href="tovar/pryamougolnik-mono-8.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/catalog/tile-095.jpg?v=5" alt="Тротуарная плитка «Моно 8», форма «Прямоугольник»" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/pryamougolnik-mono-8.html">Плитка «Моно 8»</a>
-  <p class="p-price"><b>760&nbsp;₽</b><span class="p-unit">/м²</span></p><p class="p-m2">поддон 15&nbsp;м² ≈ 11&nbsp;400&nbsp;₽</p>
-  <div class="p-actions"><button class="btn p-add" type="button" data-add data-id="tile-095" data-name="Плитка «Моно 8», Прямоугольник" data-price="760" data-unit="м²" data-img="img/catalog/tile-095.jpg" data-url="tovar/pryamougolnik-mono-8.html" data-root="">В&nbsp;заявку</button></div>
+  <div class="p-shot"><img class="p-img" src="img/catalog/tile-095.jpg?v=5" alt="Тротуарная плитка «Моно 8», форма «Прямоугольник»" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="tile-095" data-name="Плитка «Моно 8», Прямоугольник" data-price="760" data-unit="м²" data-img="img/catalog/tile-095.jpg" data-url="tovar/pryamougolnik-mono-8.html" data-root="" aria-label="Добавить в заявку: Плитка «Моно 8»" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/pryamougolnik-mono-8.html">Плитка «Моно 8»</a>
+    <p class="p-zavod">Прямоугольник</p><p class="p-price"><b>760 </b><small>₽/м²</small></p><p class="p-m2">поддон 15&nbsp;м² ≈ 11&nbsp;400&nbsp;₽</p><p class="p-stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><i>Поставка с&nbsp;завода</i></p>
+  </div>
 </article></div>
           <div class="empty" id="empty" hidden>
             <p>По&nbsp;выбранным параметрам товаров не&nbsp;найдено.</p>
             <button class="btn btn--ghost" type="button" data-reset>Сбросить фильтры</button>
           </div>
           <div class="more-row" id="moreRow" hidden>
+            <p class="more-shown" id="shownNote"></p>
             <button class="btn btn--soft btn--lg" type="button" id="moreBtn">Показать ещё</button>
           </div>
         </div>
@@ -369,7 +392,7 @@
     <a href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9%D1%81%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.4-.6L3 21l1.8-4.8A8.3 8.3 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/></svg><span>Написать</span></a>
   </nav>
 
-  <script src="app.js?v=9" defer></script>
+  <script src="app.js?v=10" defer></script>
 
 </body>
 </html>

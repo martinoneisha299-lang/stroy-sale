@@ -25,8 +25,8 @@ SITE_URL = "https://martinoneisha299-lang.github.io/stroy-sale/"
 
 # Версии кэша. Поднимать при ЛЮБОЙ правке styles.css / tokens.css / app.js —
 # иначе у посетителя останется старый файл и вёрстка «поедет».
-STYLES_V = 59
-APP_V = 9
+STYLES_V = 60
+APP_V = 10
 
 # viewport-fit=cover обязателен: без него env(safe-area-inset-*) всегда 0, и во
 # встроенных браузерах (Telegram, Instagram), где страница занимает экран
@@ -107,7 +107,8 @@ SECTIONS = [
      "img": "img/roof/cover-cat-sid.jpg", "note": "Фасад и софиты, 22 цвета"},
 ]
 
-# Ссылки, которые уходят вправо в меню десктопа
+# Служебные ссылки. С 17.08.2026 живут в верхней строке шапки (hdr-utl),
+# а не в строке разделов: в ней остались только сами разделы каталога.
 SECONDARY = [
     {"key": "dostavka", "title": "Доставка и оплата", "url": "dostavka.html"},
     {"key": "raboty", "title": "Наши работы", "url": "raboty.html"},
@@ -141,6 +142,11 @@ ICON = {
     "chat": _S % ("1.85", '<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.4-.6L3 21l1.8-4.8'
                           'A8.3 8.3 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/>'),
     "bookmark": _S % ("1.8", '<path d="M6 3h12v18l-6-4-6 4z"/>'),
+    # Закладка с плюсом — угловая кнопка карточки. У Славдома там сердце
+    # («избранное»), но избранного у нас нет: кнопка кладёт товар в ЗАЯВКУ,
+    # и знак обязан обещать именно это — тот же значок, что у заявки в меню.
+    "bookmark-add": _S % ("1.8", '<path d="M6 3h9v18l-4.5-3.2L6 21z"/>'
+                                 '<path d="M18.5 4.5v6M15.5 7.5h6"/>'),
     "truck": _S % ("1.9", '<path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/>'
                           '<circle cx="7" cy="18" r="1.7"/><circle cx="17.5" cy="18" r="1.7"/>'),
     "warehouse": _S % ("1.95", '<path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/>'),
@@ -157,6 +163,7 @@ ICON = {
                         '<circle cx="12" cy="10" r="2.6"/>'),
     "check": _S % ("2.2", '<path d="M4.5 12.5l5 5 10-11"/>'),
     "filter": _S % ("2", '<path d="M4 6h16M7 12h10M10 18h4"/>'),
+    "sort": _S % ("2", '<path d="M4 6h13M4 12h9M4 18h5"/>'),
     # Рядом со словом «Акции» стоит знак процента — так это подписано в любом
     # магазине. Солнце, которое было здесь раньше, не значило ничего.
     "percent": _S % ("1.9", '<path d="M19 5L5 19"/><circle cx="6.8" cy="6.8" r="2.3"/>'
@@ -227,50 +234,51 @@ def crumbs_html(items):
 
 
 def header_html(root="", active="", lead=True):
+    """Шапка в две строки + строка разделов.
+
+    Верхняя (только десктоп) — служебные ссылки и телефон: она разгружает
+    основную строку, где раньше стояло всё сразу (город, телефон с подписью,
+    «Заказать звонок», заявка) и лого тонуло среди контролов.
+    Ссылки «Доставка и оплата» и «Наши работы» переехали туда из строки
+    разделов — в ней остаются только сами разделы каталога.
+    """
     secs = []
     for s in SECTIONS:
         on = ' class="is-on" aria-current="page"' if s["key"] == active else ""
         secs.append(f'<a href="{root}{s["url"]}"{on}>{esc(s["title"])}</a>')
-    lead_href = "#lead" if lead else f"{root}index.html#lead"
-    for i, s in enumerate(SECONDARY):
-        on = ' aria-current="page"' if s["key"] == active else ""
-        style = ' class="subnav-right"' if i == 0 else ""
-        secs.append(f'<a href="{root}{s["url"]}"{on}{style}>{esc(s["title"])}</a>')
 
     return f"""
   <header class="hdr">
+    <div class="hdr-utl">
+      <div class="wrap hdr-utl-in">
+        <a href="{root}akcii.html">Акции</a>
+        <a href="{root}dostavka.html">Доставка и оплата</a>
+        <a href="{root}raboty.html">Наши работы</a>
+        <span class="hdr-city">{CITY}</span>
+        <a class="hdr-tel" href="{PHONE_HREF}"><i>{PHONE}</i></a>
+      </div>
+    </div>
     <div class="wrap hdr-top">
       <a class="logo" href="{root}index.html" aria-label="Стройсейл — на главную">
         <svg viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--accent)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
         <span><b>СТРОЙ</b><b>СЕЙЛ</b></span>
       </a>
-      <div class="hdr-tools">
-        <button class="hdr-cat" type="button" id="catBtn" aria-expanded="false" aria-controls="catDrawer">
-          {ICON["menu"]}<span>Каталог</span>
-        </button>
-        <form class="hdr-search" role="search" action="{root}poisk.html" method="get">
-          {ICON["search"]}
-          <input type="search" name="q" id="q" placeholder="Поиск: кирпич, плитка, профнастил"
-                 aria-label="Поиск по каталогу" autocomplete="off" data-root="{root}">
-          <div class="sug" id="sug" hidden></div>
-        </form>
-      </div>
-      <div class="hdr-city">
-        <span>Город</span>
-        <a href="{root}dostavka.html">{CITY}</a>
-      </div>
-      <div class="hdr-contact">
-        <a class="hdr-tel" href="{PHONE_HREF}">{PHONE}</a>
-        <small>{PHONE_NOTE}</small>
-      </div>
-      <a class="btn hdr-cta" href="{lead_href}">Заказать звонок</a>
-      <a class="hdr-cart" href="{root}zayavka.html" aria-label="Заявка">
-        {ICON["list"]}<span class="cart-count" data-cart-count hidden>0</span>
+      <button class="hdr-cat" type="button" id="catBtn" aria-expanded="false" aria-controls="catDrawer">
+        {ICON["menu"]}<span>Каталог</span>
+      </button>
+      <form class="hdr-search" role="search" action="{root}poisk.html" method="get">
+        <input type="search" name="q" id="q" placeholder="Найти в каталоге"
+               aria-label="Поиск по каталогу" autocomplete="off" data-root="{root}">
+        <button class="hdr-search-go" type="submit" aria-label="Найти">{ICON["search"]}</button>
+        <div class="sug" id="sug" hidden></div>
+      </form>
+      <a class="hdr-cart" href="{root}zayavka.html">
+        {ICON["bookmark"]}<span>Заявка</span>
+        <span class="cart-count" data-cart-count hidden>0</span>
       </a>
     </div>
     <nav class="subnav" aria-label="Разделы каталога">
       <div class="wrap subnav-in">
-        <a class="subnav-sale" href="{root}akcii.html">{ICON["percent"]}Акции</a>
         {"".join(secs)}
       </div>
     </nav>
@@ -443,20 +451,50 @@ def terms_line():
     return f'<ul class="terms-line">{rows}</ul>'
 
 
-def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=None,
-                 in_stock=True, data="", root="", add=None, img_contain=False,
-                 specs="", eager=False, alt_img=None):
-    """
-    Универсальная карточка витрины.
+def price_split(value, unit="шт"):
+    """«28,40 ₽/шт»: рубли крупно, копейки и единица мелко.
 
-    href       — ссылка на товар
-    price_html — уже собранная цена («31,40 ₽» + единица) либо "" → «Цена по запросу»
-    add        — dict для кнопки «В заявку»: {id, name, price, unit, img}
-    data       — готовая строка data-атрибутов для фильтров и сортировки
-    alt_img    — второй кадр: сам товар крупно, всплывает по наведению.
-                 Главный кадр — кладка («как это выглядит на доме»), второй —
-                 штучный товар («что именно приедет»). Передавать ТОЛЬКО если
-                 такой кадр реально есть: иначе по наведению будет пустая плашка.
+    Приём с витрины референса: в ряду из четырёх карточек глаз сравнивает
+    рубли, а копейки только шумят. Когда копеек нет — не выдумываем «,00».
+    """
+    if value is None:
+        return ""
+    s = f"{value:,.2f}".replace(",", " ").replace(".", ",")
+    whole, frac = s.rsplit(",", 1)
+    tail = f"{frac} ₽/{esc(unit)}" if frac != "00" else f"₽/{esc(unit)}"
+    sep = "," if frac != "00" else " "
+    return f'<b>{whole}{sep}</b><small>{tail}</small>'
+
+
+def spec_dd(value, limit=26):
+    """Ячейка значения в таблице характеристик.
+
+    Короткое значение («М150», «250×120×65») выключаем вправо — так строка
+    читается как строка паспорта. Значение-предложение («40 мм — дорожки,
+    двор, отмостка…») при выключке вправо даёт рваный левый край, поэтому
+    длинные выравниваем влево (класс перебивает базовое правило).
+    """
+    cls = ' class="is-long"' if len(str(value)) > limit else ""
+    return f"<dd{cls}>{esc(value)}</dd>"
+
+
+def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=None,
+                 meta="", stock="", data="", root="", add=None, img_contain=False,
+                 specs="", eager=False, alt_img=None, shots=0):
+    """
+    Универсальная карточка витрины (кирпич, плитка, кровля).
+
+    href       — ссылка на товар; кликается ВСЯ карточка (см. .p-name::after)
+    price_html — собранная цена (price_split) либо "" → «Цена по запросу»
+    meta       — мелкая серая строка под именем: завод, форма, назначение
+    stock      — честная строка со сроком («Привезём с завода» / «Под заказ»)
+    add        — dict для угловой кнопки-закладки: {id, name, price, unit, img}
+    shots      — сколько кадров в галерее: рисуем точки-индикатор, как в
+                 карточке большого магазина (первая активна)
+
+    Текстовых кнопок в карточке НЕТ. 20 карточек с чёрной кнопкой в каждой
+    читались как забор (жалоба 29.07): действие ушло в угол фотографии
+    иконкой, а полноразмерная кнопка «В заявку» живёт на странице товара.
     """
     if img:
         load = ('loading="eager" fetchpriority="high"' if eager else 'loading="lazy"')
@@ -471,39 +509,58 @@ def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=No
         pic = (f'<div class="p-img p-none">{ICON["photo-off"]}'
                f'<span>Фотографии пришлём по запросу</span></div>')
 
+    # Точки-индикатор кадров. Не листалка: показывают, что фотографий больше
+    # одной, и приглашают открыть товар. Больше пяти не рисуем — сливаются.
+    dots = ""
+    if shots > 1:
+        n = min(shots, 5)
+        dots = ('<span class="p-dots" aria-hidden="true">'
+                + "".join(f'<i{" class=on" if i == 0 else ""}></i>' for i in range(n))
+                + "</span>")
+
     badge_html = ""
     if badge:
-        mod = " p-badge--new" if badge == "Новинка" else ""
-        badge_html = f'<span class="p-badge{mod}">{esc(badge)}</span>'
+        badge_html = f'<span class="p-badge">{esc(badge)}</span>'
 
     if price_html:
         price = f'<p class="p-price">{price_html}</p>'
-        # Строку «≈ ₽/м²» печатаем ВСЕГДА, даже пустой: у форматов без известной
-        # ложковой грани её нет, и без пустого слота цена с кнопкой в соседних
-        # карточках стояли на разной высоте (высоту держит CSS min-height).
+        # Слот «≈ ₽/м²» печатаем ВСЕГДА, даже пустым: у части форматов его нет,
+        # и без резерва низ карточек в ряду разъезжается.
         price += f'<p class="p-m2">{esc(m2)}</p>'
     else:
-        price = '<p class="p-ask">Цена по запросу</p>'
+        price = '<p class="p-ask">Цена по запросу</p><p class="p-m2"></p>'
 
     if add:
         # data-root обязателен: по нему тост строит ссылку «Открыть заявку».
         # Без него на страницах в tovar/ она уводила на tovar/zayavka.html — 404.
-        btn = (f'<button class="btn p-add" type="button" data-add '
+        btn = (f'<button class="p-add" type="button" data-add data-add-icon '
                f'data-id="{esc(add["id"])}" data-name="{esc(add["name"])}" '
                f'data-price="{add.get("price") or ""}" data-unit="{esc(add.get("unit", "шт"))}" '
                f'data-img="{esc(add.get("img", ""))}" data-url="{esc(href)}" '
-               f'data-root="{root}">В заявку</button>')
+               f'data-root="{root}" aria-label="Добавить в заявку: {esc(name)}" '
+               f'title="В заявку">{ICON["bookmark-add"]}</button>')
     else:
-        # Кнопка ведёт на карточку товара, а не запрашивает цену, — поэтому
-        # и называется тем, что делает. «Запросить цену» обещало действие,
-        # которого не выполняло, и спорило с «В заявку» в соседнем разделе.
-        btn = f'<a class="btn btn--outline" href="{root}{href}">Подробнее</a>'
+        btn = ""
 
-    return f"""<article class="p-card"{data}>{badge_html}
-  <a class="p-shot" href="{root}{href}" tabindex="-1" aria-hidden="true">{pic}</a>
-  <a class="p-name" href="{root}{href}">{esc(name)}</a>
-  {specs}{price}
-  <div class="p-actions">{btn}</div>
+    # Строка говорит, ОТКУДА едет товар, а не «есть на складе»: остатков нам
+    # никто не давал. Поэтому зелёной галочки здесь нет — она в рунет-магазине
+    # читается как «в наличии» и спорила бы с нашим же футером («наличие
+    # подтверждается отдельно»). Знак нейтральный: склад-завод или часы.
+    if stock:
+        wait = stock.lower().startswith("под заказ")
+        cls = "p-stock p-stock--wait" if wait else "p-stock"
+        stock_html = (f'<p class="{cls}">{ICON["clock"] if wait else ICON["warehouse"]}'
+                      f'<i>{esc(stock)}</i></p>')
+    else:
+        stock_html = ""
+    meta_html = f'<p class="p-zavod">{esc(meta)}</p>' if meta else ""
+
+    return f"""<article class="p-card"{data}>
+  <div class="p-shot">{pic}{dots}{badge_html}{btn}</div>
+  <div class="p-in">
+    <a class="p-name" href="{root}{href}">{esc(name)}</a>
+    {meta_html}{specs}{price}{stock_html}
+  </div>
 </article>"""
 
 

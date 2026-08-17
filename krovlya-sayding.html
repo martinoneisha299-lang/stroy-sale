@@ -9,46 +9,44 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=59">
+  <link rel="stylesheet" href="styles.css?v=60">
 </head>
 <body>
   <a class="skip" href="#main">К&nbsp;содержанию</a>
 <a class="promo-bar" href="index.html#lead" hidden data-until="2026-12-31"><b>Бесплатный расчёт</b> материала по&nbsp;вашим размерам</a>
 
   <header class="hdr">
+    <div class="hdr-utl">
+      <div class="wrap hdr-utl-in">
+        <a href="akcii.html">Акции</a>
+        <a href="dostavka.html">Доставка и&nbsp;оплата</a>
+        <a href="raboty.html">Наши работы</a>
+        <span class="hdr-city">Краснодар</span>
+        <a class="hdr-tel" href="tel:+79000000000"><i>+7 (900) 000-00-00</i></a>
+      </div>
+    </div>
     <div class="wrap hdr-top">
       <a class="logo" href="index.html" aria-label="Стройсейл — на главную">
         <svg viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--accent)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
         <span><b>СТРОЙ</b><b>СЕЙЛ</b></span>
       </a>
-      <div class="hdr-tools">
-        <button class="hdr-cat" type="button" id="catBtn" aria-expanded="false" aria-controls="catDrawer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Каталог</span>
-        </button>
-        <form class="hdr-search" role="search" action="poisk.html" method="get">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
-          <input type="search" name="q" id="q" placeholder="Поиск: кирпич, плитка, профнастил"
-                 aria-label="Поиск по каталогу" autocomplete="off" data-root="">
-          <div class="sug" id="sug" hidden></div>
-        </form>
-      </div>
-      <div class="hdr-city">
-        <span>Город</span>
-        <a href="dostavka.html">Краснодар</a>
-      </div>
-      <div class="hdr-contact">
-        <a class="hdr-tel" href="tel:+79000000000">+7 (900) 000-00-00</a>
-        <small>Перезвоним за&nbsp;5&nbsp;минут</small>
-      </div>
-      <a class="btn hdr-cta" href="#lead">Заказать звонок</a>
-      <a class="hdr-cart" href="zayavka.html" aria-label="Заявка">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h11M8 12h11M8 18h11"/><circle cx="4" cy="6" r="1.2"/><circle cx="4" cy="12" r="1.2"/><circle cx="4" cy="18" r="1.2"/></svg><span class="cart-count" data-cart-count hidden>0</span>
+      <button class="hdr-cat" type="button" id="catBtn" aria-expanded="false" aria-controls="catDrawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Каталог</span>
+      </button>
+      <form class="hdr-search" role="search" action="poisk.html" method="get">
+        <input type="search" name="q" id="q" placeholder="Найти в каталоге"
+               aria-label="Поиск по каталогу" autocomplete="off" data-root="">
+        <button class="hdr-search-go" type="submit" aria-label="Найти"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg></button>
+        <div class="sug" id="sug" hidden></div>
+      </form>
+      <a class="hdr-cart" href="zayavka.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Заявка</span>
+        <span class="cart-count" data-cart-count hidden>0</span>
       </a>
     </div>
     <nav class="subnav" aria-label="Разделы каталога">
       <div class="wrap subnav-in">
-        <a class="subnav-sale" href="akcii.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="6.8" cy="6.8" r="2.3"/><circle cx="17.2" cy="17.2" r="2.3"/></svg>Акции</a>
-        <a href="kirpich-oblitsovochnyy.html">Облицовочный кирпич</a><a href="kirpich-zabutovochnyy.html">Забутовочный кирпич</a><a href="trotuarnaya-plitka.html">Тротуарная плитка</a><a href="krovlya.html">Кровля и&nbsp;фасад</a><a href="krovlya-sayding.html" class="is-on" aria-current="page">Металлосайдинг</a><a href="dostavka.html" class="subnav-right">Доставка и&nbsp;оплата</a><a href="raboty.html">Наши работы</a>
+        <a href="kirpich-oblitsovochnyy.html">Облицовочный кирпич</a><a href="kirpich-zabutovochnyy.html">Забутовочный кирпич</a><a href="trotuarnaya-plitka.html">Тротуарная плитка</a><a href="krovlya.html">Кровля и&nbsp;фасад</a><a href="krovlya-sayding.html" class="is-on" aria-current="page">Металлосайдинг</a>
       </div>
     </nav>
   </header>
@@ -78,36 +76,42 @@
         </form>
         <div id="catalogWrap" data-page-size="24">
           <div class="p-grid" id="grid"><article class="p-card" data-task="wall" data-price="">
-  <a class="p-shot" href="tovar/krovlya-sid-korabelnaya.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/roof/roof-sid-korabelnaya.jpg?v=4" alt="Корабельная доска" width="640" height="480" loading="eager" fetchpriority="high"></a>
-  <a class="p-name" href="tovar/krovlya-sid-korabelnaya.html">Корабельная доска</a>
-  <p class="p-m2">Полезная ширина 226&nbsp;мм · профиль 14&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p>
-  <div class="p-actions"><a class="btn btn--outline" href="tovar/krovlya-sid-korabelnaya.html">Подробнее</a></div>
+  <div class="p-shot"><img class="p-img" src="img/roof/roof-sid-korabelnaya.jpg?v=4" alt="Корабельная доска" width="640" height="480" loading="eager" fetchpriority="high"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="sid-korabelnaya" data-name="Корабельная доска" data-price="" data-unit="шт" data-img="img/roof/roof-sid-korabelnaya.jpg?v=4" data-url="tovar/krovlya-sid-korabelnaya.html" data-root="" aria-label="Добавить в заявку: Корабельная доска" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/krovlya-sid-korabelnaya.html">Корабельная доска</a>
+    <p class="p-zavod">Полезная ширина 226&nbsp;мм · профиль 14&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p><p class="p-m2"></p><p class="p-stock p-stock--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><i>Под&nbsp;заказ</i></p>
+  </div>
 </article><article class="p-card" data-task="wall" data-price="">
-  <a class="p-shot" href="tovar/krovlya-sid-korabelnaya-evro.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/roof/roof-sid-korabelnaya-evro.jpg?v=4" alt="Корабельная доска Евро" width="640" height="480" loading="eager" fetchpriority="high"></a>
-  <a class="p-name" href="tovar/krovlya-sid-korabelnaya-evro.html">Корабельная доска Евро</a>
-  <p class="p-m2">Полезная ширина 229&nbsp;мм · профиль 14&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p>
-  <div class="p-actions"><a class="btn btn--outline" href="tovar/krovlya-sid-korabelnaya-evro.html">Подробнее</a></div>
+  <div class="p-shot"><img class="p-img" src="img/roof/roof-sid-korabelnaya-evro.jpg?v=4" alt="Корабельная доска Евро" width="640" height="480" loading="eager" fetchpriority="high"><button class="p-add" type="button" data-add data-add-icon data-id="sid-korabelnaya-evro" data-name="Корабельная доска Евро" data-price="" data-unit="шт" data-img="img/roof/roof-sid-korabelnaya-evro.jpg?v=4" data-url="tovar/krovlya-sid-korabelnaya-evro.html" data-root="" aria-label="Добавить в заявку: Корабельная доска Евро" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/krovlya-sid-korabelnaya-evro.html">Корабельная доска Евро</a>
+    <p class="p-zavod">Полезная ширина 229&nbsp;мм · профиль 14&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p><p class="p-m2"></p><p class="p-stock p-stock--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><i>Под&nbsp;заказ</i></p>
+  </div>
 </article><article class="p-card" data-task="wall" data-price="">
-  <a class="p-shot" href="tovar/krovlya-sid-brus-klassik.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/roof/roof-sid-brus-klassik.jpg?v=4" alt="Евробрус Классик" width="640" height="480" loading="eager" fetchpriority="high"></a>
-  <a class="p-name" href="tovar/krovlya-sid-brus-klassik.html">Евробрус Классик</a>
-  <p class="p-m2">Полезная ширина 220&nbsp;мм · длина до&nbsp;6&nbsp;м</p><p class="p-ask">Цена по&nbsp;запросу</p>
-  <div class="p-actions"><a class="btn btn--outline" href="tovar/krovlya-sid-brus-klassik.html">Подробнее</a></div>
+  <div class="p-shot"><img class="p-img" src="img/roof/roof-sid-brus-klassik.jpg?v=4" alt="Евробрус Классик" width="640" height="480" loading="eager" fetchpriority="high"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="sid-brus-klassik" data-name="Евробрус Классик" data-price="" data-unit="шт" data-img="img/roof/roof-sid-brus-klassik.jpg?v=4" data-url="tovar/krovlya-sid-brus-klassik.html" data-root="" aria-label="Добавить в заявку: Евробрус Классик" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/krovlya-sid-brus-klassik.html">Евробрус Классик</a>
+    <p class="p-zavod">Полезная ширина 220&nbsp;мм · длина до&nbsp;6&nbsp;м</p><p class="p-ask">Цена по&nbsp;запросу</p><p class="p-m2"></p><p class="p-stock p-stock--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><i>Под&nbsp;заказ</i></p>
+  </div>
 </article><article class="p-card" data-task="wall" data-price="">
-  <a class="p-shot" href="tovar/krovlya-sid-brus-riflenyy.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/roof/roof-sid-brus-riflenyy.jpg?v=4" alt="Евробрус Рифлёный" width="640" height="480" loading="eager" fetchpriority="high"></a>
-  <a class="p-name" href="tovar/krovlya-sid-brus-riflenyy.html">Евробрус Рифлёный</a>
-  <p class="p-m2">Полезная ширина 240&nbsp;мм · длина до&nbsp;6&nbsp;м</p><p class="p-ask">Цена по&nbsp;запросу</p>
-  <div class="p-actions"><a class="btn btn--outline" href="tovar/krovlya-sid-brus-riflenyy.html">Подробнее</a></div>
+  <div class="p-shot"><img class="p-img" src="img/roof/roof-sid-brus-riflenyy.jpg?v=4" alt="Евробрус Рифлёный" width="640" height="480" loading="eager" fetchpriority="high"><button class="p-add" type="button" data-add data-add-icon data-id="sid-brus-riflenyy" data-name="Евробрус Рифлёный" data-price="" data-unit="шт" data-img="img/roof/roof-sid-brus-riflenyy.jpg?v=4" data-url="tovar/krovlya-sid-brus-riflenyy.html" data-root="" aria-label="Добавить в заявку: Евробрус Рифлёный" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/krovlya-sid-brus-riflenyy.html">Евробрус Рифлёный</a>
+    <p class="p-zavod">Полезная ширина 240&nbsp;мм · длина до&nbsp;6&nbsp;м</p><p class="p-ask">Цена по&nbsp;запросу</p><p class="p-m2"></p><p class="p-stock p-stock--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><i>Под&nbsp;заказ</i></p>
+  </div>
 </article><article class="p-card" data-task="soffit" data-price="">
-  <a class="p-shot" href="tovar/krovlya-sid-sofit.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="img/roof/roof-sid-sofit.jpg?v=4" alt="Софит перфорированный" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="tovar/krovlya-sid-sofit.html">Софит перфорированный</a>
-  <p class="p-m2">Полезная ширина 240&nbsp;мм · с&nbsp;перфорацией</p><p class="p-ask">Цена по&nbsp;запросу</p>
-  <div class="p-actions"><a class="btn btn--outline" href="tovar/krovlya-sid-sofit.html">Подробнее</a></div>
+  <div class="p-shot"><img class="p-img" src="img/roof/roof-sid-sofit.jpg?v=4" alt="Софит перфорированный" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="sid-sofit" data-name="Софит перфорированный" data-price="" data-unit="шт" data-img="img/roof/roof-sid-sofit.jpg?v=4" data-url="tovar/krovlya-sid-sofit.html" data-root="" aria-label="Добавить в заявку: Софит перфорированный" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="tovar/krovlya-sid-sofit.html">Софит перфорированный</a>
+    <p class="p-zavod">Полезная ширина 240&nbsp;мм · с&nbsp;перфорацией</p><p class="p-ask">Цена по&nbsp;запросу</p><p class="p-m2"></p><p class="p-stock p-stock--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><i>Под&nbsp;заказ</i></p>
+  </div>
 </article></div>
           <div class="empty" id="empty" hidden>
             <p>По&nbsp;выбранным параметрам товаров не&nbsp;найдено.</p>
             <button class="btn btn--ghost" type="button" data-reset>Сбросить фильтры</button>
           </div>
           <div class="more-row" id="moreRow" hidden>
+            <p class="more-shown" id="shownNote"></p>
             <button class="btn btn--soft btn--lg" type="button" id="moreBtn">Показать ещё</button>
           </div>
         </div></div>
@@ -250,7 +254,7 @@
     <a href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9%D1%81%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.4-.6L3 21l1.8-4.8A8.3 8.3 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/></svg><span>Написать</span></a>
   </nav>
 
-  <script src="app.js?v=9" defer></script>
+  <script src="app.js?v=10" defer></script>
 
 </body>
 </html>

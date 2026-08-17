@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=59">
+  <link rel="stylesheet" href="../styles.css?v=60">
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "Евроштакетник круглый", "description": "Евроштакетник круглый: забор и палисадник с просветом — ниже ветровая нагрузка, двор не затеняется.", "category": "Штакетник", "brand": {"@type": "Brand", "name": "Стройсейл"}, "image": "https://martinoneisha299-lang.github.io/stroy-sale/img/roof/roof-sht-kruglyy.jpg"}</script>
 </head>
 <body>
@@ -17,39 +17,37 @@
 <a class="promo-bar" href="../index.html#lead" hidden data-until="2026-12-31"><b>Бесплатный расчёт</b> материала по&nbsp;вашим размерам</a>
 
   <header class="hdr">
+    <div class="hdr-utl">
+      <div class="wrap hdr-utl-in">
+        <a href="../akcii.html">Акции</a>
+        <a href="../dostavka.html">Доставка и&nbsp;оплата</a>
+        <a href="../raboty.html">Наши работы</a>
+        <span class="hdr-city">Краснодар</span>
+        <a class="hdr-tel" href="tel:+79000000000"><i>+7 (900) 000-00-00</i></a>
+      </div>
+    </div>
     <div class="wrap hdr-top">
       <a class="logo" href="../index.html" aria-label="Стройсейл — на главную">
         <svg viewBox="0 0 100 88" aria-hidden="true"><path fill="var(--accent)" d="M50 4 L96 84 H70 L50 36 L30 84 H4 Z"/></svg>
         <span><b>СТРОЙ</b><b>СЕЙЛ</b></span>
       </a>
-      <div class="hdr-tools">
-        <button class="hdr-cat" type="button" id="catBtn" aria-expanded="false" aria-controls="catDrawer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Каталог</span>
-        </button>
-        <form class="hdr-search" role="search" action="../poisk.html" method="get">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
-          <input type="search" name="q" id="q" placeholder="Поиск: кирпич, плитка, профнастил"
-                 aria-label="Поиск по каталогу" autocomplete="off" data-root="../">
-          <div class="sug" id="sug" hidden></div>
-        </form>
-      </div>
-      <div class="hdr-city">
-        <span>Город</span>
-        <a href="../dostavka.html">Краснодар</a>
-      </div>
-      <div class="hdr-contact">
-        <a class="hdr-tel" href="tel:+79000000000">+7 (900) 000-00-00</a>
-        <small>Перезвоним за&nbsp;5&nbsp;минут</small>
-      </div>
-      <a class="btn hdr-cta" href="#lead">Заказать звонок</a>
-      <a class="hdr-cart" href="../zayavka.html" aria-label="Заявка">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h11M8 12h11M8 18h11"/><circle cx="4" cy="6" r="1.2"/><circle cx="4" cy="12" r="1.2"/><circle cx="4" cy="18" r="1.2"/></svg><span class="cart-count" data-cart-count hidden>0</span>
+      <button class="hdr-cat" type="button" id="catBtn" aria-expanded="false" aria-controls="catDrawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Каталог</span>
+      </button>
+      <form class="hdr-search" role="search" action="../poisk.html" method="get">
+        <input type="search" name="q" id="q" placeholder="Найти в каталоге"
+               aria-label="Поиск по каталогу" autocomplete="off" data-root="../">
+        <button class="hdr-search-go" type="submit" aria-label="Найти"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg></button>
+        <div class="sug" id="sug" hidden></div>
+      </form>
+      <a class="hdr-cart" href="../zayavka.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Заявка</span>
+        <span class="cart-count" data-cart-count hidden>0</span>
       </a>
     </div>
     <nav class="subnav" aria-label="Разделы каталога">
       <div class="wrap subnav-in">
-        <a class="subnav-sale" href="../akcii.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="6.8" cy="6.8" r="2.3"/><circle cx="17.2" cy="17.2" r="2.3"/></svg>Акции</a>
-        <a href="../kirpich-oblitsovochnyy.html">Облицовочный кирпич</a><a href="../kirpich-zabutovochnyy.html">Забутовочный кирпич</a><a href="../trotuarnaya-plitka.html">Тротуарная плитка</a><a href="../krovlya.html" class="is-on" aria-current="page">Кровля и&nbsp;фасад</a><a href="../krovlya-sayding.html">Металлосайдинг</a><a href="../dostavka.html" class="subnav-right">Доставка и&nbsp;оплата</a><a href="../raboty.html">Наши работы</a>
+        <a href="../kirpich-oblitsovochnyy.html">Облицовочный кирпич</a><a href="../kirpich-zabutovochnyy.html">Забутовочный кирпич</a><a href="../trotuarnaya-plitka.html">Тротуарная плитка</a><a href="../krovlya.html" class="is-on" aria-current="page">Кровля и&nbsp;фасад</a><a href="../krovlya-sayding.html">Металлосайдинг</a>
       </div>
     </nav>
   </header>
@@ -74,7 +72,7 @@
           и&nbsp;рисунков. Доборные, планки
           и&nbsp;саморезы — в&nbsp;том&nbsp;же тоне.</p>
         <div class="pd-colors"><a role="img" aria-label="Цвет: Тёмная зелень · Granite 6020" title="Тёмная зелень · Granite 6020" style="background-image:url(../img/roof/sw-granite-deep-mat-6020.jpg?v=4)"></a><a role="img" aria-label="Цвет: Спелая вишня · RAL 3005" title="Спелая вишня · RAL 3005" style="background-image:url(../img/roof/sw-ral-3005-spelaya-vishnya.jpg?v=4)"></a><a role="img" aria-label="Цвет: Зелёный мох · RAL 6005" title="Зелёный мох · RAL 6005" style="background-image:url(../img/roof/sw-ral-6005-zele-nyi-moh.jpg?v=4)"></a><a role="img" aria-label="Цвет: Графитовый серый · RAL 7024" title="Графитовый серый · RAL 7024" style="background-image:url(../img/roof/sw-ral-7024-grafitovyi-seryi.jpg?v=4)"></a><a role="img" aria-label="Цвет: Шоколад · RAL 8017" title="Шоколад · RAL 8017" style="background-image:url(../img/roof/sw-ral-8017-shokolad.jpg?v=4)"></a><a role="img" aria-label="Цвет: Тёмный шоколад · RR 32" title="Тёмный шоколад · RR 32" style="background-image:url(../img/roof/sw-rr-32-te-mnyi-shokolad.jpg?v=4)"></a></div><p><a class="pd-colors-more" href="#tsveta">Ещё 6&nbsp;цветов</a></p>
-        <ul class="pd-terms"><li class="is-wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Под&nbsp;заказ — срок поставки уточняет менеджер</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.7"/><circle cx="17.5" cy="18" r="1.7"/></svg><span>Доставка по&nbsp;Краснодару и&nbsp;краю</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/></svg><span>Наличный и&nbsp;безналичный расчёт, для&nbsp;организаций — по&nbsp;счёту; условия согласуем при&nbsp;оформлении заказа</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.7-7 9-4.1-1.3-7-4.8-7-9V6z"/><path d="M9.2 12.2l2 2 3.6-3.8"/></svg><span>Срок службы покрытия по&nbsp;данным завода&nbsp;— до&nbsp;15&nbsp;лет, зависит от&nbsp;серии</span></li></ul>
+        <ul class="pd-terms"><li class="is-wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Под&nbsp;заказ — срок поставки уточняет менеджер</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.7"/><circle cx="17.5" cy="18" r="1.7"/></svg><span>Доставка по&nbsp;Краснодару и&nbsp;краю</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/></svg><span>Наличный и&nbsp;безналичный расчёт, для&nbsp;организаций — по&nbsp;счёту; условия согласуем при&nbsp;оформлении заказа</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.7-7 9-4.1-1.3-7-4.8-7-9V6z"/><path d="M9.2 12.2l2 2 3.6-3.8"/></svg><span>Срок службы покрытия по&nbsp;данным завода&nbsp;— от&nbsp;10&nbsp;до&nbsp;15&nbsp;лет в&nbsp;зависимости от&nbsp;серии (см. «Цвета»)</span></li></ul>
         <div class="pd-bar"><button class="btn p-add" type="button" data-add data-id="sht-kruglyy" data-name="Евроштакетник круглый" data-price="" data-unit="м²" data-img="img/roof/roof-sht-kruglyy.jpg" data-url="tovar/krovlya-sht-kruglyy.html" data-root="../">В&nbsp;заявку</button>
           <a class="btn btn--call pd-bar-call" href="tel:+79000000000"
              aria-label="Позвонить"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span>Позвонить</span></a>
@@ -102,25 +100,29 @@
       <a class="see-all" href="../krovlya-shtaketnik.html">В&nbsp;раздел «Штакетник»</a></div>
     <div class="p-grid p-grid--c4">
       <article class="p-card" data-task="fence" data-price="">
-  <a class="p-shot" href="../tovar/krovlya-sht-trapetsiya.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="../img/roof/roof-sht-trapetsiya.jpg?v=4" alt="Евроштакетник трапеция" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="../tovar/krovlya-sht-trapetsiya.html">Евроштакетник трапеция</a>
-  <p class="p-m2">Ширина планки 120&nbsp;мм · профиль 19,5&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p>
-  <div class="p-actions"><a class="btn btn--outline" href="../tovar/krovlya-sht-trapetsiya.html">Подробнее</a></div>
+  <div class="p-shot"><img class="p-img" src="../img/roof/roof-sht-trapetsiya.jpg?v=4" alt="Евроштакетник трапеция" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="sht-trapetsiya" data-name="Евроштакетник трапеция" data-price="" data-unit="шт" data-img="img/roof/roof-sht-trapetsiya.jpg?v=4" data-url="tovar/krovlya-sht-trapetsiya.html" data-root="../" aria-label="Добавить в заявку: Евроштакетник трапеция" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="../tovar/krovlya-sht-trapetsiya.html">Евроштакетник трапеция</a>
+    <p class="p-zavod">Ширина планки 120&nbsp;мм · профиль 19,5&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p><p class="p-m2"></p><p class="p-stock p-stock--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><i>Под&nbsp;заказ</i></p>
+  </div>
 </article><article class="p-card" data-task="fence" data-price="">
-  <a class="p-shot" href="../tovar/krovlya-sht-pryamoy.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="../img/roof/roof-sht-pryamoy.jpg?v=4" alt="Штакетник с прямым резом" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="../tovar/krovlya-sht-pryamoy.html">Штакетник с&nbsp;прямым резом</a>
-  <p class="p-m2">Ширина планки 130&nbsp;мм · профиль 19,5&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p>
-  <div class="p-actions"><a class="btn btn--outline" href="../tovar/krovlya-sht-pryamoy.html">Подробнее</a></div>
+  <div class="p-shot"><img class="p-img" src="../img/roof/roof-sht-pryamoy.jpg?v=4" alt="Штакетник с прямым резом" width="640" height="480" loading="lazy"><button class="p-add" type="button" data-add data-add-icon data-id="sht-pryamoy" data-name="Штакетник с прямым резом" data-price="" data-unit="шт" data-img="img/roof/roof-sht-pryamoy.jpg?v=4" data-url="tovar/krovlya-sht-pryamoy.html" data-root="../" aria-label="Добавить в заявку: Штакетник с прямым резом" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="../tovar/krovlya-sht-pryamoy.html">Штакетник с&nbsp;прямым резом</a>
+    <p class="p-zavod">Ширина планки 130&nbsp;мм · профиль 19,5&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p><p class="p-m2"></p><p class="p-stock p-stock--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><i>Под&nbsp;заказ</i></p>
+  </div>
 </article><article class="p-card" data-task="fence|wall" data-price="">
-  <a class="p-shot" href="../tovar/krovlya-prof-s8.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="../img/roof/roof-prof-s8.jpg?v=4" alt="Профнастил С-8" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="../tovar/krovlya-prof-s8.html">Профнастил С-8</a>
-  <p class="p-m2">Полезная ширина 1,15&nbsp;м · волна 8&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p>
-  <div class="p-actions"><a class="btn btn--outline" href="../tovar/krovlya-prof-s8.html">Подробнее</a></div>
+  <div class="p-shot"><img class="p-img" src="../img/roof/roof-prof-s8.jpg?v=4" alt="Профнастил С-8" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="prof-s8" data-name="Профнастил С-8" data-price="" data-unit="шт" data-img="img/roof/roof-prof-s8.jpg?v=4" data-url="tovar/krovlya-prof-s8.html" data-root="../" aria-label="Добавить в заявку: Профнастил С-8" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="../tovar/krovlya-prof-s8.html">Профнастил С-8</a>
+    <p class="p-zavod">Полезная ширина 1,15&nbsp;м · волна 8&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p><p class="p-m2"></p><p class="p-stock p-stock--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><i>Под&nbsp;заказ</i></p>
+  </div>
 </article><article class="p-card" data-task="fence|wall" data-price="">
-  <a class="p-shot" href="../tovar/krovlya-prof-s10.html" tabindex="-1" aria-hidden="true"><img class="p-img" src="../img/roof/roof-prof-s10.jpg?v=4" alt="Профнастил С-10" width="640" height="480" loading="lazy"></a>
-  <a class="p-name" href="../tovar/krovlya-prof-s10.html">Профнастил С-10</a>
-  <p class="p-m2">Полезная ширина 1,10&nbsp;м · волна 10&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p>
-  <div class="p-actions"><a class="btn btn--outline" href="../tovar/krovlya-prof-s10.html">Подробнее</a></div>
+  <div class="p-shot"><img class="p-img" src="../img/roof/roof-prof-s10.jpg?v=4" alt="Профнастил С-10" width="640" height="480" loading="lazy"><span class="p-dots" aria-hidden="true"><i class=on></i><i></i><i></i></span><button class="p-add" type="button" data-add data-add-icon data-id="prof-s10" data-name="Профнастил С-10" data-price="" data-unit="шт" data-img="img/roof/roof-prof-s10.jpg?v=4" data-url="tovar/krovlya-prof-s10.html" data-root="../" aria-label="Добавить в заявку: Профнастил С-10" title="В заявку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9v18l-4.5-3.2L6 21z"/><path d="M18.5 4.5v6M15.5 7.5h6"/></svg></button></div>
+  <div class="p-in">
+    <a class="p-name" href="../tovar/krovlya-prof-s10.html">Профнастил С-10</a>
+    <p class="p-zavod">Полезная ширина 1,10&nbsp;м · волна 10&nbsp;мм</p><p class="p-ask">Цена по&nbsp;запросу</p><p class="p-m2"></p><p class="p-stock p-stock--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><i>Под&nbsp;заказ</i></p>
+  </div>
 </article></div>
   </div></section>
 
@@ -235,7 +237,7 @@
     <a href="https://wa.me/79000000000?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%A1%D1%82%D1%80%D0%BE%D0%B9%D1%81%D0%B5%D0%B9%D0%BB" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.4-.6L3 21l1.8-4.8A8.3 8.3 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/></svg><span>Написать</span></a>
   </nav>
 
-  <script src="../app.js?v=9" defer></script>
+  <script src="../app.js?v=10" defer></script>
 
 </body>
 </html>

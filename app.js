@@ -111,7 +111,19 @@
     $$('[data-add]').forEach(function (b) {
       var inCart = !!c[b.dataset.id];
       b.classList.toggle('is-in', inCart);
-      b.textContent = inCart ? 'В заявке' : 'В заявку';
+      // Угловая кнопка карточки — только значок: подписи у неё нет, и текст
+      // затёр бы SVG. Состояние сообщаем через подсказку и aria-label.
+      if (b.hasAttribute('data-add-icon')) {
+        b.title = inCart ? 'В заявке' : 'В заявку';
+        b.setAttribute('aria-pressed', inCart ? 'true' : 'false');
+        /* aria-label обязан описывать ТЕКУЩЕЕ действие: когда товар уже
+           в заявке, клик его уберёт — «Добавить в заявку» врал бы. */
+        var nm = b.dataset.name || '';
+        b.setAttribute('aria-label',
+          (inCart ? 'Убрать из заявки: ' : 'Добавить в заявку: ') + nm);
+      } else {
+        b.textContent = inCart ? 'В заявке' : 'В заявку';
+      }
     });
   }
 
@@ -265,6 +277,12 @@
       var lines = ['Здравствуйте! Заявка с сайта Стройсейл.'];
       if (nameField && nameField.value.trim()) lines.push('Имя: ' + nameField.value.trim());
       lines.push('Телефон: ' + phone.value.trim());
+      /* Комментарий обязателен к передаче: в нём адрес объекта, сроки
+         и нужна ли разгрузка — то, от чего зависит доставка. Раньше поле
+         на странице заявки было, а обработчик его не читал, и написанное
+         молча пропадало. */
+      var note = form.querySelector('textarea');
+      if (note && note.value.trim()) lines.push('Комментарий: ' + note.value.trim());
       var items = form.dataset.clears === 'cart' ? cartText() : '';
       if (items) lines.push('Товары:', items);
 
@@ -359,9 +377,16 @@
         var hit = s[g].some(function (v) { return have.indexOf(v) >= 0; });
         if (!hit) return false;
       }
-      if (s._min !== undefined && card._price < s._min) return false;
-      if (s._max !== undefined && card._price !== Infinity && card._price > s._max) return false;
-      if (s._max !== undefined && card._price === Infinity) return false;
+      /* «Цена по запросу» = Infinity. Как только человек задал ЛЮБУЮ границу
+         цены, такие позиции из выдачи уходят: они не сравниваются с числом,
+         и в диапазоне «от 100 ₽» им делать нечего. Раньше это правило
+         работало только для верхней границы — в выдаче «от 100» висели
+         бесценовые карточки (92 позиции вместо 57). */
+      if (s._min !== undefined || s._max !== undefined) {
+        if (card._price === Infinity) return false;
+        if (s._min !== undefined && card._price < s._min) return false;
+        if (s._max !== undefined && card._price > s._max) return false;
+      }
       return true;
     }
     function order(list) {
@@ -407,8 +432,12 @@
       if (onBadge) { onBadge.textContent = n; onBadge.hidden = n === 0; }
     }
 
+    /* Ключи групп в адресе. «new» здесь обязателен: с 17.08.2026 новинки —
+       это чекбокс фильтра, а не пункт сортировки, и без ключа выбор не
+       попадал в ссылку (закладка и «назад» теряли состояние). */
     var KEYS = { color: 'color', texture: 'tex', format: 'fmt', coll: 'coll',
-                 shape: 'shape', task: 'task', kind: 'kind', material: 'mat' };
+                 shape: 'shape', task: 'task', kind: 'kind', material: 'mat',
+                 new: 'new' };
 
     function saveUrl(s) {
       var p = new URLSearchParams();
@@ -453,6 +482,11 @@
       if (moreRow) {
         moreRow.hidden = hits.length <= shown;
         if (moreBtn) moreBtn.textContent = 'Показать ещё ' + Math.min(hits.length - shown, PAGE);
+        // «Показано 40 из 264» — человек должен видеть, сколько ещё впереди,
+        // до того как решит нажимать. Приём с витрины референса.
+        var note = document.getElementById('shownNote');
+        if (note) note.textContent = 'Показано ' + Math.min(shown, hits.length) +
+          ' из ' + hits.length;
       }
       paintApplied(s);
       saveUrl(s);
@@ -785,17 +819,34 @@
             '<a class="btn btn--accent" href="' + root + 'index.html#catalog">В каталог</a></div>';
           return;
         }
+        /* Разметка обязана совпадать с product_card() в shell_common.py:
+           до 17.08.2026 поиск рисовал свою, обеднённую карточку (без обёртки
+           .p-shot, без завода, без пересчёта в м²) — и страница результатов
+           выглядела как кусок другого, недоделанного сайта. */
         box.innerHTML = '<p class="toolbar-count" style="margin:0 0 16px">' + goods(hits.length) +
           '</p><div class="p-grid">' + hits.slice(0, 60).map(function (it) {
             var img = it.i
-              ? '<img class="p-img" src="' + root + it.i + '" alt="" width="640" height="640" loading="lazy">'
-              : '<div class="p-img p-none"><span>Фото по запросу</span></div>';
-            var unit = it.pu ? '<span class="p-unit">' + it.pu + '</span>' : '';
-            var price = it.p
-              ? '<p class="p-price"><b>' + it.p + '</b>' + unit + '</p>'
-              : '<p class="p-ask">Цена по запросу</p>';
-            return '<article class="p-card"><a href="' + root + it.u + '" tabindex="-1" aria-hidden="true">' +
-              img + '</a><a class="p-name" href="' + root + it.u + '">' + it.n + '</a>' + price + '</article>';
+              ? '<img class="p-img" src="' + root + it.i + '" alt="" width="640" height="480" loading="lazy">'
+              : '<div class="p-img p-none"><span>Фотографии пришлём по запросу</span></div>';
+            /* Цена в индексе лежит строкой «28,40 ₽/шт» — делим её так же,
+               как price_split() на сервере: рубли крупно, остальное мелко. */
+            var price;
+            if (it.p) {
+              /* Делим ровно как price_split() на сервере: рубли в <b>,
+                 копейки и единица — в <small>. «22,30 ₽/шт» → «22,» + «30 ₽/шт». */
+              var m = String(it.p).match(/^([\d\s ]+?)(?:[,.](\d+))?\s*(\D.*)$/);
+              price = m
+                ? '<p class="p-price"><b>' + m[1].trim() + (m[2] ? ',' : ' ') + '</b><small>' +
+                  (m[2] ? m[2] + ' ' : '') + (m[3] || '').trim() + '</small></p>'
+                : '<p class="p-price"><b>' + it.p + '</b></p>';
+            } else {
+              price = '<p class="p-ask">Цена по запросу</p>';
+            }
+            var meta = it.z ? '<p class="p-zavod">' + it.z + '</p>' : '';
+            return '<article class="p-card">' +
+              '<div class="p-shot">' + img + '</div>' +
+              '<div class="p-in"><a class="p-name" href="' + root + it.u + '">' + it.n + '</a>' +
+              meta + price + '</div></article>';
           }).join('') + '</div>' +
           (hits.length > 60 ? '<p class="note" style="margin-top:16px">Показаны первые 60 — уточните запрос.</p>' : '');
       })
