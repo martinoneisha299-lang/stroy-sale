@@ -27,7 +27,7 @@ TILES = json.loads((BASE / "_data" / "tiles.json").read_text())
 BRICK = [p for p in CAT if p["category"] == "oblitsovochnyy" and p.get("price")]
 TILE = [p for p in TILES["products"] if p.get("price")]
 
-IMG_V = 10
+IMG_V = 11
 
 # Имена заводов для строки под названием товара. Ключи — те же, что
 # в build_category.COLLECTIONS (менять там и здесь одновременно).
