@@ -1366,265 +1366,1005 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 
 
 /* ==========================================================================
-   11 · Страница товара
+   11 · Страница товара ($10k Tier · Редизайн по стандарту маркетплейсов)
    ========================================================================== */
 .pd { padding-bottom: var(--s-10); }
 
-.pd-grid {
+/* Шапка товара: заголовок и крошки */
+.pd-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-bottom: var(--s-6);
+}
+@media (min-width: 48em) {
+  .pd-header {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-6);
+  }
+}
+.pd-title {
+  margin: 0;
+  font-size: clamp(1.375rem, min(1.15rem + 1.2vw, 5vw), 1.75rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+/* Сетка первого экрана Hero */
+.pd-hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--s-6);
   align-items: start;
 }
+@media (min-width: 60em) {
+  .pd-hero-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--s-8);
+  }
+}
 
-.pd-gallery { min-width: 0; }
-.pd-main-wrap { position: relative; }
-.pd-main {
+/* Левая колонка: галерея и сервис */
+.pd-gallery-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+.pd-main-card {
+  position: relative;
+  background: var(--tile);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.pd-main-img {
+  display: block;
   width: 100%;
-  /* 4:3 — родной формат кадров каталога (1200×900): квадрат резал бы кладку
-     по бокам и дозумливал мыло, а на телефоне съедал целый экран */
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border: 1px solid var(--rule);
-  background: var(--tile);
 }
-.pd-zoom {
+.pd-badges-bar {
   position: absolute;
-  right: var(--s-4); bottom: var(--s-4);
+  top: var(--s-3);
+  left: var(--s-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  z-index: 2;
+  pointer-events: none;
+}
+.pd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--r-ui);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.pd-badge--hit { background: var(--accent); color: #fff; }
+.pd-badge--factory { background: #2a2c2f; color: #fff; }
+.pd-badge--gost { background: #219653; color: #fff; }
+
+.pd-zoom-trigger {
+  position: absolute;
+  right: var(--s-3);
+  bottom: var(--s-3);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px; height: 44px;
-  border: var(--line) solid var(--rule-strong);
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--rule-strong);
   border-radius: var(--r-ui);
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.95);
   color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+  z-index: 2;
 }
-.pd-zoom svg { width: 20px; height: 20px; }
+.pd-zoom-trigger:hover {
+  background: #ffffff;
+  transform: scale(1.05);
+}
+.pd-zoom-trigger svg { width: 20px; height: 20px; }
 
-.pd-thumbs {
+/* Миниатюры галереи */
+.pd-thumbs-strip {
   display: flex;
   gap: var(--s-2);
-  margin-top: var(--s-3);
   overflow-x: auto;
   scrollbar-width: none;
+  padding-bottom: 2px;
 }
-.pd-thumbs::-webkit-scrollbar { display: none; }
-.pd-thumb {
+.pd-thumbs-strip::-webkit-scrollbar { display: none; }
+.pd-thumb-btn {
   flex: none;
-  width: 76px; height: 76px;
+  width: 74px;
+  height: 74px;
   padding: 0;
-  border: var(--line) solid var(--rule);
-  background: none;
-  overflow: hidden;
+  border: 2px solid var(--rule);
+  background: var(--tile);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
 }
-.pd-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.pd-thumb.is-on { border-color: var(--dark); }
+.pd-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pd-thumb-btn.is-on {
+  border-color: var(--accent);
+}
+.pd-thumb-btn:hover:not(.is-on) {
+  border-color: var(--ink-4);
+}
 
-/* Имя товара мельче заголовка раздела: в нём формат и размеры, оно длинное,
-   и набранное в 32px занимало три строки первого экрана (у референса — 24px). */
-.pd-name {
-  margin-bottom: var(--s-3);
-  font-size: clamp(1.25rem, min(1.1rem + 1vw, 6vw), 1.5rem);
-  line-height: 1.25;
-}
-.pd-meta {
+/* Плашка запроса фото/видео образца в WhatsApp */
+.pd-wa-request {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: var(--s-2) var(--s-5);
-  margin-bottom: var(--s-5);
-  font-size: var(--fs-sm);
-  color: var(--ink-3);
-}
-.pd-art { color: var(--ink-3); }
-/* Это ссылка-ПЕРЕХОД на страницу завода, поэтому подчёркивание сплошное:
-   пунктир на сайте означает «действие на месте» (позвонить, раскрыть,
-   уточнить). Смешивать их нельзя — иначе приём перестаёт что-либо значить. */
-.pd-zavod { color: var(--ink-3); }
-.pd-zavod i { font-style: normal; color: var(--ink); text-decoration: underline; }
-.pd-zavod:hover i { color: var(--accent-ink); }
-
-/* Блок покупки. На десктопе — плавающая панель справа от галереи, как
-   в карточке референса: она отрывается от страницы тенью и остаётся
-   на виду при прокрутке. Единственное место с радиусом 6px. */
-.buy {
-  margin: var(--s-5) 0;
-  padding: var(--s-6) 0;
-  border-block: 1px solid var(--rule);
-}
-
-.pd-price {
-  font-size: clamp(1.75rem, 1.3rem + 2vw, 2rem);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -.02em;
-}
-.pd-price b { font-weight: 600; }
-.pd-price small { font-size: var(--fs-lg); font-weight: 600; }
-.pd-m2 { margin-top: var(--s-2); font-size: var(--fs-base); color: var(--ink-3); }
-/* Ровно то, что мы имеем право обещать: заводская цена — ориентир, итог
-   считает менеджер с доставкой (решение владельца от 14.08.2026). */
-.pd-price-note {
-  margin-top: var(--s-3);
-  font-size: var(--fs-xs);
-  color: var(--ink-3);
-}
-
-/* Условия — под кнопкой, на волосяной линии */
-.pd-terms {
-  display: flex;
-  flex-direction: column;
   gap: var(--s-3);
-  margin-top: var(--s-5);
-  padding-top: var(--s-5);
-  border-top: 1px solid var(--rule);
-  font-size: var(--fs-sm);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid rgba(37, 211, 102, 0.35);
+  background: rgba(37, 211, 102, 0.05);
+  border-radius: var(--r-ui);
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+  line-height: 1.4;
 }
-.pd-terms li { display: flex; align-items: flex-start; gap: var(--s-3); }
-.pd-terms svg { flex: none; width: 18px; height: 18px; margin-top: 2px; color: var(--ok); }
-.pd-terms .is-wait svg { color: var(--ink-4); }
+.pd-wa-request svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--wa);
+}
+.pd-wa-request a {
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+}
+.pd-wa-request a:hover {
+  color: var(--accent-ink);
+}
 
-.pd-specs { margin-top: var(--s-6); }
-.pd-specs h2 { margin-bottom: var(--s-4); }
-/* Пары «графа — значение» на волосяных линиях: при десятке граф строки
-   иначе слипаются в кашу, а линия читается как строка таблицы в паспорте. */
-.pd-specs dl {
+/* Плашки сервиса и гарантий под фото */
+.pd-trust-cards {
   display: grid;
-  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
-  font-size: var(--fs-base);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--s-3);
+  margin-top: var(--s-2);
 }
-/* Зазора между колонками нет намеренно: с ним линия строки разрывается
-   посередине. Воздух даёт внутренний паддинг ячеек. */
-.pd-specs dt,
-.pd-specs dd {
-  padding-block: var(--s-3);
-  border-top: 1px solid var(--rule);
+.pd-trust-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--rule);
+  background: var(--tile);
+  border-radius: var(--r-ui);
 }
-.pd-specs dt {
-  padding-right: var(--s-4);
+.pd-trust-card svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--accent);
+  margin-top: 1px;
+}
+.pd-trust-card b {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.pd-trust-card span {
+  display: block;
+  font-size: var(--fs-micro);
   color: var(--ink-3);
-  white-space: nowrap;
+  margin-top: 2px;
+  line-height: 1.35;
 }
-.pd-specs dd { padding-left: var(--s-4); text-align: right; font-weight: 500; }
-/* Значение-предложение («40 мм — дорожки, двор, отмостка…») при выключке
-   вправо получает рваный левый край и читается как «текст просто прижали».
-   Такие значения выравниваем влево — порог по длине задаёт генератор. */
-.pd-specs dd.is-long { text-align: left; }
-.pd-specs dd a { color: var(--accent-ink); }
-.pd-specs dd a:hover { text-decoration: underline; }
 
-/* Количество + что это даст в деле. Цифру м²/поддонов пересчитывает
-   app.js: это то, зачем сюда пришли — считать материал, а не штуки. */
-.pd-buy {
+/* --------------------------------------------------------------------------
+   Правая колонка: Коммерческий Buy Box
+   -------------------------------------------------------------------------- */
+.pd-buybox {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  padding: var(--s-6);
+  box-shadow: var(--sh-float);
+}
+@media (min-width: 60em) {
+  .pd-buybox {
+    position: sticky;
+    top: var(--s-4);
+  }
+}
+
+/* Мета-информация товара в Buy Box */
+.pd-box-meta {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: var(--s-3) var(--s-4);
-  margin-top: var(--s-5);
-}
-.pd-qty-note {
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--rule);
   font-size: var(--fs-xs);
-  line-height: 1.45;
   color: var(--ink-3);
 }
-.pd-qty-note b {
-  display: block;
+.pd-sku {
   font-weight: 600;
   color: var(--ink-2);
 }
-.pd-qty-note span { display: block; }
-/* Счётчик на товаре крупнее, чем в строке заявки: он здесь главный ввод */
-.pd-buy .qty button { width: 44px; min-height: 46px; }
-.pd-buy .qty input { width: 64px; min-height: 46px; font-size: var(--fs-md); }
-
-.pd-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-2);
-  margin-top: var(--s-5);
-}
-.pd-actions .btn { flex: 1 1 12rem; }
-
-/* Липкая панель заказа на телефоне */
-.pd-bar {
-  position: sticky;
-  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
-  z-index: var(--z-bar);
-  display: flex;
-  gap: var(--s-2);
-  margin-inline: calc(var(--pad-x) * -1);
-  padding: var(--s-3) var(--pad-x);
-  background: var(--paper);
-  border-top: 1px solid var(--rule);
-  box-shadow: var(--sh-bar);
-}
-.pd-bar .btn { flex: 1; min-height: 50px; }
-.pd-bar-call { flex: none !important; width: 56px; padding-inline: 0; }
-.pd-bar-call span { display: none; }   /* на телефоне только знак телефона */
-
-.pd-note {
-  margin-top: var(--s-4);
-  font-size: var(--fs-xs);
-  line-height: 1.5;
-  color: var(--ink-3);
-}
-.pd-note a { text-decoration: underline; }
-
-/* Кружки других цветов/форматов этого товара */
-.pd-colors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-2);
-  margin-top: var(--s-5);
-}
-.pd-colors a {
-  width: 44px; height: 44px;
-  border-radius: var(--r-pill);
-  background: var(--tile) center / cover;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
-}
-.pd-colors a.is-on { box-shadow: inset 0 0 0 3px var(--ink); }
-.pd-colors-more {
+.pd-stock-badge {
   display: inline-flex;
   align-items: center;
-  height: 44px;
-  padding: 0 12px;
-  border-radius: var(--r-ui);
-  background: var(--field);
-  font-size: var(--fs-sm);
+  gap: 5px;
+  color: var(--ok-ink);
   font-weight: 600;
+}
+.pd-stock-badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
 }
 
-/* Полная палитра серии: сетка «образец + имя + код», подписи видимы всегда —
-   на телефоне подсказки при наведении нет */
-.swl {
+/* Компактный список ключевых параметров в шапке Buy Box */
+.pd-mini-specs {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(6.5rem, 100%), 1fr));
-  gap: var(--s-6) var(--s-2);
-  margin-top: var(--s-6);
+  grid-template-columns: auto 1fr;
+  gap: 6px var(--s-4);
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-xs);
+  line-height: 1.35;
 }
-.swl li { min-width: 0; text-align: center; }
-.swl li > span {
+.pd-mini-specs dt {
+  color: var(--ink-3);
+}
+.pd-mini-specs dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+}
+.pd-mini-specs a {
+  color: var(--ink);
+  text-decoration: underline;
+}
+.pd-mini-specs a:hover {
+  color: var(--accent-ink);
+}
+
+/* Переключатель единиц измерения (Цена за: [шт] [м²] [поддон]) */
+.pd-unit-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  padding-bottom: var(--s-3);
+}
+.pd-unit-label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.pd-unit-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--field);
+  padding: 3px;
+  border-radius: var(--r-ui);
+}
+.pd-unit-btn {
+  padding: 5px 12px;
+  border: none;
+  background: none;
+  border-radius: var(--r-ui);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.pd-unit-btn.is-active {
+  background: var(--paper);
+  color: var(--accent-ink);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Карточки вариантов цен (Заводская / С доставкой / Опт) */
+.pd-price-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-bottom: var(--s-5);
+}
+.pd-price-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  background: var(--paper);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.pd-price-card:hover {
+  border-color: var(--rule-strong);
+}
+.pd-price-card.is-selected {
+  border-color: var(--accent);
+  background: rgba(205, 71, 44, 0.02);
+}
+.pd-price-card-left {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+.pd-price-card input[type="radio"] {
+  accent-color: var(--accent);
+  margin-top: 3px;
+  cursor: pointer;
+}
+.pd-price-card-title {
   display: block;
-  width: 56px; height: 56px;
-  margin: 0 auto var(--s-2);
-  border-radius: var(--r-pill);
-  background: var(--tile) center / cover;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
 }
-.swl b {
+.pd-price-card-sub {
+  display: block;
+  font-size: var(--fs-micro);
+  color: var(--ink-3);
+  margin-top: 1px;
+}
+.pd-price-card-val {
+  text-align: right;
+  flex: none;
+}
+.pd-price-card-val b {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.pd-price-card.is-selected .pd-price-card-val b {
+  color: var(--accent-ink);
+}
+.pd-price-card-val small {
+  display: block;
+  font-size: var(--fs-micro);
+  color: var(--ink-3);
+}
+
+/* Блок счетчика и добавления в корзину */
+.pd-order-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule);
+}
+.pd-stepper-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+.pd-qty-stepper {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-ui);
+  background: var(--paper);
+}
+.pd-qty-stepper button {
+  width: 44px;
+  min-height: 46px;
+  border: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+.pd-qty-stepper button:hover {
+  background: var(--field);
+}
+.pd-qty-stepper input {
+  width: 72px;
+  min-height: 46px;
+  border: none;
+  border-inline: 1px solid var(--rule);
+  text-align: center;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--ink);
+  background: none;
+}
+.pd-pallet-hint {
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  line-height: 1.3;
+}
+.pd-pallet-hint b {
+  color: var(--ink-2);
+}
+
+/* Быстрые чипы добавления поддонов */
+.pd-presets-row {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+.pd-preset-chip {
+  padding: 5px 10px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  background: var(--field);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.pd-preset-chip:hover {
+  border-color: var(--ink-3);
+  background: var(--paper);
+}
+
+/* Итоговая сумма */
+.pd-total-summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--field);
+  border-radius: var(--r-ui);
+}
+.pd-total-summary-label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.pd-total-summary-val {
+  text-align: right;
+}
+.pd-total-summary-val b {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.pd-total-summary-val small {
+  display: block;
+  font-size: var(--fs-micro);
+  color: var(--ink-3);
+}
+
+/* Кнопка «В заявку» */
+.pd-btn-main {
+  width: 100%;
+  min-height: 52px;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  border-radius: var(--r-ui);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 4px 14px rgba(205, 71, 44, 0.25);
+}
+.pd-btn-main:hover {
+  background: var(--accent-press);
+}
+.pd-btn-main svg {
+  width: 20px;
+  height: 20px;
+}
+.pd-btn-main.is-in {
+  background: var(--dark);
+  box-shadow: none;
+}
+
+/* Кнопки мессенджеров и звонка */
+.pd-fast-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+.pd-fast-btn {
+  min-height: 42px;
+  padding: 0 var(--s-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  background: var(--paper);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--ink-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.pd-fast-btn:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+.pd-fast-btn svg {
+  width: 17px;
+  height: 17px;
+}
+.pd-fast-btn--wa svg { color: var(--wa); }
+.pd-fast-btn--call svg { color: var(--accent); }
+
+/* Быстрый заказ «в 1 клик» */
+.pd-oneclick-wrap {
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule);
+}
+.pd-oneclick-title {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--ink-2);
+  margin-bottom: var(--s-2);
+}
+.pd-oneclick-form {
+  display: flex;
+  gap: var(--s-2);
+}
+.pd-oneclick-input {
+  flex: 1;
+  min-height: 44px;
+  padding: 0 var(--s-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-ui);
+  font-size: var(--fs-sm);
+  background: var(--paper);
+}
+.pd-oneclick-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.pd-oneclick-btn {
+  flex: none;
+  padding: 0 var(--s-4);
+  min-height: 44px;
+  border: 1px solid var(--accent);
+  border-radius: var(--r-ui);
+  background: var(--paper);
+  color: var(--accent-ink);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.pd-oneclick-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+.pd-oneclick-note {
+  font-size: var(--fs-micro);
+  color: var(--ink-4);
+  margin-top: 6px;
+  line-height: 1.35;
+}
+.pd-oneclick-note a {
+  color: var(--ink-3);
+  text-decoration: underline;
+}
+
+/* Гарантия цены */
+.pd-price-guarantee {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+  padding: var(--s-2) var(--s-3);
+  background: rgba(33, 150, 83, 0.06);
+  border-radius: var(--r-ui);
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}
+.pd-price-guarantee svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--ok);
+}
+
+/* --------------------------------------------------------------------------
+   Блок Вкладок (Tabs Section на всю ширину)
+   -------------------------------------------------------------------------- */
+.pd-tabs-section {
+  margin-top: var(--s-10);
+  border-top: 1px solid var(--rule);
+  padding-top: var(--s-6);
+}
+
+.pd-tabs-nav {
+  display: flex;
+  gap: var(--s-6);
+  border-bottom: 2px solid var(--rule);
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: var(--s-6);
+}
+.pd-tabs-nav::-webkit-scrollbar { display: none; }
+
+.pd-tab-btn {
+  position: relative;
+  padding: var(--s-3) 4px;
+  border: none;
+  background: none;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  font-weight: 600;
+  color: var(--ink-3);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pd-tab-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 3px;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+.pd-tab-btn.is-active {
+  color: var(--ink);
+  font-weight: 700;
+}
+.pd-tab-btn.is-active::after {
+  background: var(--accent);
+}
+.pd-tab-btn svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+}
+
+/* Контент вкладок */
+.pd-tab-panel {
+  display: none;
+}
+.pd-tab-panel.is-active {
+  display: block;
+}
+
+/* Вкладка 1: Характеристики в стиле Kirpich.ru (Точечные направляющие) */
+.pd-specs-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-8);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  padding: var(--s-6);
+}
+@media (min-width: 54em) {
+  .pd-specs-sheet {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    padding: var(--s-8);
+  }
+}
+.pd-specs-col h3 {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  margin-bottom: var(--s-4);
+  color: var(--ink);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--rule);
+}
+.dotted-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.dotted-item {
+  display: flex;
+  align-items: baseline;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+.dotted-name {
+  flex: none;
+  color: var(--ink-3);
+}
+.dotted-leader {
+  flex: 1;
+  margin-inline: var(--s-2);
+  border-bottom: 1px dotted var(--rule-strong);
+  min-width: 12px;
+}
+.dotted-val {
+  flex: none;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+}
+
+/* Вкладка 2: Интерактивный калькулятор кладки */
+.pd-calc-interactive {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  padding: var(--s-6);
+}
+@media (min-width: 54em) {
+  .pd-calc-interactive {
+    padding: var(--s-8);
+  }
+}
+.pd-calc-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-8);
+}
+@media (min-width: 54em) {
+  .pd-calc-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  }
+}
+.pd-calc-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+.pd-calc-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+}
+.pd-calc-field label {
   display: block;
   font-size: var(--fs-xs);
   font-weight: 600;
-  line-height: 1.3;
+  color: var(--ink-2);
+  margin-bottom: 4px;
 }
-.swl i {
-  display: block;
-  margin-top: 2px;
-  font-style: normal;
+.pd-calc-field input,
+.pd-calc-field select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--s-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-ui);
+  font-size: var(--fs-sm);
+  background: var(--paper);
+  color: var(--ink);
+}
+.pd-calc-check {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
   font-size: var(--fs-xs);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.pd-calc-check input {
+  accent-color: var(--accent);
+}
+
+.pd-calc-results {
+  background: var(--field);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  padding: var(--s-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.pd-calc-results-title {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  margin-bottom: var(--s-4);
+  color: var(--ink);
+}
+.pd-calc-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-bottom: var(--s-5);
+}
+.pd-calc-res-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--fs-sm);
+  border-bottom: 1px dashed var(--rule-strong);
+  padding-bottom: 4px;
+}
+.pd-calc-res-item span {
   color: var(--ink-3);
+}
+.pd-calc-res-item b {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.pd-calc-res-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: var(--s-3);
+  border-top: 2px solid var(--rule-strong);
+  margin-bottom: var(--s-5);
+}
+.pd-calc-res-total span {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--ink);
+}
+.pd-calc-res-total b {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent-ink);
+}
+
+/* Вкладка 3: Доставка и разгрузка */
+.pd-delivery-info {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  padding: var(--s-6);
+}
+@media (min-width: 54em) {
+  .pd-delivery-info {
+    padding: var(--s-8);
+  }
+}
+.pd-delivery-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--s-4);
+  font-size: var(--fs-sm);
+}
+.pd-delivery-table th,
+.pd-delivery-table td {
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--rule);
+  text-align: left;
+}
+.pd-delivery-table th {
+  background: var(--field);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Вкладка 4: Оплата */
+.pd-payment-info {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  padding: var(--s-6);
+}
+@media (min-width: 54em) {
+  .pd-payment-info {
+    padding: var(--s-8);
+  }
+}
+.pd-payment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--s-6);
+  margin-top: var(--s-4);
+}
+.pd-payment-card {
+  padding: var(--s-5);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  background: var(--field);
+}
+.pd-payment-card h4 {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  margin-bottom: var(--s-2);
+  color: var(--ink);
+}
+.pd-payment-card p {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  line-height: 1.45;
+}
+
+/* Блок сопутствующих товаров */
+.pd-cross-section {
+  margin-top: var(--s-10);
+}
+.pd-cross-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+}
+.pd-cross-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-ui);
+  background: var(--paper);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pd-cross-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-float);
+}
+.pd-cross-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--tile);
+  border: 1px solid var(--rule);
+  margin-bottom: var(--s-3);
+}
+.pd-cross-title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: var(--s-2);
+}
+.pd-cross-price {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--accent-ink);
+  margin-top: auto;
+  margin-bottom: var(--s-3);
+}
+.pd-cross-btn {
+  width: 100%;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--dark);
+  background: var(--paper);
+  color: var(--dark);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  border-radius: var(--r-ui);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.pd-cross-btn:hover {
+  background: var(--dark);
+  color: #ffffff;
 }
 
 /* Лайтбокс галереи */
@@ -2401,3 +3141,4 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   .hdr, .tabbar, .drawer, .promo-bar, .pd-bar, .toast, .footer { display: none !important; }
   body { padding: 0; }
 }
+

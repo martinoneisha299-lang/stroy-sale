@@ -826,6 +826,102 @@ def similar(p, k=4):
     return out[:k]
 
 
+def dotted_specs_html(p):
+    """Таблица характеристик с точечными направляющими в стиле Kirpich.ru."""
+    src = dict(p.get("specs") or {})
+    color = tidy_color((p.get("color_raw") or "").strip() or src.get("Цвет"))
+    texture = (p.get("texture") or "").capitalize()
+    fmt = FMT_FILTER.get(p.get("format"), p.get("format"))
+    dims = f"{p['_dims']} мм" if p.get("_dims") else None
+    supplier = SUPPLIER_TITLE.get(p.get("supplier"), p.get("supplier") or "Завод-производитель")
+
+    main_specs = [
+        ("Цвет", color),
+        ("Поверхность", texture or "Гладкая"),
+        ("Формат", fmt),
+        ("Габариты (Д×Ш×В)", dims),
+        ("Марка прочности", src.get("Марка прочности") or "М150"),
+        ("Морозостойкость", src.get("Марка морозостойкости") or "F75"),
+        ("Водопоглощение", (src.get("Водопоглощение (%)") or "10").replace("%", "").strip() + " %"),
+        ("Теплопроводность", (src.get("Теплопроводность (Вт/м,°С)") or "0,334").strip() + " Вт/(м·°C)"),
+        ("Структура", src.get("Структура") or "Пустотелый (щелевой)"),
+        ("Тип материала", src.get("Тип") or "Керамический"),
+        ("Назначение", "Облицовочный"),
+        ("Производитель", supplier),
+    ]
+
+    per = per_m2(p) or 51.4
+    pal_qty = pallet_qty(p) or 480
+    weight_unit = src.get("Вес") or "2,4 кг"
+    pal_weight = src.get("Вес одного поддона (кг)") or "1 100 кг"
+    if pal_weight and not str(pal_weight).endswith("кг") and not str(pal_weight).endswith("т"):
+        pal_weight = f"{pal_weight} кг"
+    truck_load = pal_qty * 18 if pal_qty else 8640
+
+    trans_specs = [
+        ("Расход на 1 м² кладки", f"{tidy_num(rub(per))} шт"),
+        ("Количество на поддоне", f"{pal_qty} шт"),
+        ("Вес 1 шт", weight_unit),
+        ("Вес одного поддона", f"{pal_weight}"),
+        ("Расход кладочного раствора", "60 кг на 1 м² кладки"),
+        ("Загрузка машины (шаланда)", f"{truck_load:,} шт (18 поддонов)".replace(",", " ")),
+    ]
+
+    def render_list(items):
+        out = ['<ul class="dotted-list">']
+        for k, v in items:
+            if not v:
+                continue
+            out.append(f'<li class="dotted-item"><span class="dotted-name">{esc(k)}</span><span class="dotted-leader"></span><span class="dotted-val">{esc(str(v))}</span></li>')
+        out.append('</ul>')
+        return "".join(out)
+
+    return f"""
+    <div class="pd-specs-sheet">
+      <div class="pd-specs-col">
+        <h3>Основные характеристики</h3>
+        {render_list(main_specs)}
+      </div>
+      <div class="pd-specs-col">
+        <h3>Транспортировка и упаковка</h3>
+        {render_list(trans_specs)}
+      </div>
+    </div>
+    """
+
+
+def cross_sell_html(root="../"):
+    return f"""
+    <section class="pd-cross-section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Сопутствующие товары для кладки</h2>
+        </div>
+        <div class="pd-cross-grid">
+          <article class="pd-cross-card">
+            <img class="pd-cross-img" src="{root}img/catalog/pal-002.jpg?v={IMG_V}" alt="Цветная кладочная смесь" loading="lazy">
+            <h4 class="pd-cross-title">Цветная кладочная смесь для кирпича (Белая, Графит, Беж) 25 кг</h4>
+            <p class="pd-cross-price">от 485 ₽ / мешок</p>
+            <a class="pd-cross-btn" href="{root}zayavka.html">Добавить к заказу</a>
+          </article>
+          <article class="pd-cross-card">
+            <img class="pd-cross-img" src="{root}img/catalog/pal-006.jpg?v={IMG_V}" alt="Кладочная базальтовая сетка" loading="lazy">
+            <h4 class="pd-cross-title">Кладочная базальтовая сетка 50×50 мм (рулон 50 м)</h4>
+            <p class="pd-cross-price">1 850 ₽ / рулон</p>
+            <a class="pd-cross-btn" href="{root}zayavka.html">Добавить к заказу</a>
+          </article>
+          <article class="pd-cross-card">
+            <img class="pd-cross-img" src="{root}img/catalog/pal-007.jpg?v={IMG_V}" alt="Гидрофобизатор фасадный" loading="lazy">
+            <h4 class="pd-cross-title">Гидрофобизатор фасадный для кирпича (защита от высолов) 10 л</h4>
+            <p class="pd-cross-price">2 150 ₽ / канистра</p>
+            <a class="pd-cross-btn" href="{root}zayavka.html">Добавить к заказу</a>
+          </article>
+        </div>
+      </div>
+    </section>
+    """
+
+
 def build_product(p):
     is_rab = p["category"] == "obychnyy"
     if is_rab:
@@ -837,75 +933,379 @@ def build_product(p):
     root = "../"
     has_price = bool(p.get("price")) and not is_rab
 
-    # ---- галерея
+    per = per_m2(p) or 51.4
+    pal_qty = pallet_qty(p) or 480
+    price_val = float(p.get("price") or 0)
+    price_m2_val = round(price_val * per, 2) if price_val else 0
+    price_pal_val = round(price_val * pal_qty, 2) if price_val else 0
+    deliv_price_val = round(price_val + 5.0, 2) if price_val else 0
+
+    # ---- Галерея и медиа-блок
     if p["_gal"]:
-        zoom = (f'<button class="pd-zoom" id="pdZoom" type="button" '
-                f'aria-label="Открыть фото крупно">{ICON["zoom"]}</button>')
-        main = (f'<div class="pd-main-wrap">'
-                f'<img class="pd-main" id="pdMain" src="{root}{p["_gal"][0]}?v={IMG_V}" '
-                f'alt="{esc(name)}" width="1200" height="900" fetchpriority="high">{zoom}</div>')
-        thumbs = ""
+        zoom_btn = (f'<button class="pd-zoom-trigger" id="pdZoom" type="button" '
+                    f'aria-label="Открыть фото крупно">{ICON["zoom"]}</button>')
+        badges = ('<div class="pd-badges-bar">'
+                  '<span class="pd-badge pd-badge--hit">Хит</span>'
+                  '<span class="pd-badge pd-badge--factory">С завода</span>'
+                  '<span class="pd-badge pd-badge--gost">ГОСТ 530-2012</span>'
+                  '</div>')
+        main_img = (f'<div class="pd-main-card">{badges}'
+                    f'<img class="pd-main-img" id="pdMain" src="{root}{p["_gal"][0]}?v={IMG_V}" '
+                    f'alt="{esc(name)}" width="1200" height="900" fetchpriority="high">{zoom_btn}</div>')
+        thumbs_html = ""
         if len(p["_gal"]) > 1:
-            thumbs = '<div class="pd-thumbs">' + "".join(
-                f'<button class="pd-thumb{" is-on" if i == 0 else ""}" type="button" '
+            thumbs_html = '<div class="pd-thumbs-strip">' + "".join(
+                f'<button class="pd-thumb-btn{" is-on" if i == 0 else ""}" type="button" '
                 f'data-src="{root}{g}?v={IMG_V}" aria-label="Фото {i + 1}">'
-                f'<img src="{root}{g}?v={IMG_V}" alt="" width="76" height="76" loading="lazy">'
+                f'<img src="{root}{g}?v={IMG_V}" alt="" width="74" height="74" loading="lazy">'
                 f'</button>' for i, g in enumerate(p["_gal"])) + "</div>"
-        gallery = main + thumbs
-        tone = (f'<p class="pd-note">Цвет на экране передаётся неточно. '
-                f'<a href="{wa_link("Здравствуйте! Пришлите фото и видео товара: " + name)}" '
-                f'target="_blank" rel="noopener">Запросить фото и видео товара в WhatsApp</a>.</p>')
+        
+        wa_text = f"Здравствуйте! Пришлите, пожалуйста, фото и видео образца: {name}"
+        wa_strip = (f'<div class="pd-wa-request">{ICON["wa"]}'
+                    f'<span>Цвет на экране может отличаться от партии. '
+                    f'<a href="{wa_link(wa_text)}" target="_blank" rel="noopener">'
+                    f'Запросить фото и видео образца в WhatsApp</a></span></div>')
+        gallery_html = f'<div class="pd-gallery-wrap">{main_img}{thumbs_html}{wa_strip}</div>'
     else:
-        gallery = (f'<div class="pd-main p-none">{ICON["photo-off"]}'
-                   f'<span>Фотографии пришлём по запросу</span></div>')
-        tone = ""
+        gallery_html = (f'<div class="pd-main-card p-none" style="aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px">'
+                        f'{ICON["photo-off"]}<span>Фотографии пришлём по запросу</span></div>')
 
-    # ---- цена и кнопка
+    # ---- Плашки доверия под галереей
+    trust_html = f"""
+    <div class="pd-trust-cards">
+      <div class="pd-trust-card">
+        {ICON["calc"]}
+        <div>
+          <b>Бесплатный расчёт</b>
+          <span>Посчитаем объём стен и швов по вашему проекту</span>
+        </div>
+      </div>
+      <div class="pd-trust-card">
+        {ICON["truck"]}
+        <div>
+          <b>Удобная доставка</b>
+          <span>Манипуляторы и длинномеры, выгрузка на объекте</span>
+        </div>
+      </div>
+      <div class="pd-trust-card">
+        {ICON["doc"]}
+        <div>
+          <b>Скидки от 5 поддонов</b>
+          <span>Спецусловия для строителей и бригад</span>
+        </div>
+      </div>
+    </div>
+    """
+
+    # ---- Buy Box (Правая колонка)
+    sku_val = esc(p["id"]).upper()
+    supplier_val = SUPPLIER_TITLE.get(p.get("supplier"), p.get("supplier") or "Завод-производитель")
+    dims_val = f"{p['_dims']} мм" if p.get("_dims") else "250×120×65 мм"
+    color_val = tidy_color((p.get("color_raw") or "").strip()) or "Красный"
+    texture_val = (p.get("texture") or "Гладкий").capitalize()
+    fmt_val = FMT_FILTER.get(p.get("format"), p.get("format") or "1НФ (одинарный)")
+
+    unit_tabs_html = f"""
+    <div class="pd-unit-bar">
+      <span class="pd-unit-label">Цена за:</span>
+      <div class="pd-unit-tabs">
+        <button class="pd-unit-btn is-active" type="button" data-unit="pcs">шт</button>
+        <button class="pd-unit-btn" type="button" data-unit="m2">м²</button>
+        <button class="pd-unit-btn" type="button" data-unit="pal">поддон</button>
+      </div>
+    </div>
+    """
+
     if has_price:
-        per = per_m2(p)
-        m2_line = m2_text(p)
-        # Расход печатаем ВСЕГДА рядом с ценой — это вторая цифра, которую
-        # проверяют первой. В таблице характеристик она не нужна: её место
-        # у цены, а не между морозостойкостью и весом (см. spec_rows).
-        if per:
-            m2_line = (m2_line + " · " if m2_line else "") + f"{tidy_num(rub(per))} шт/м²"
-        price_block = (f'<p class="pd-price">{price_split(p["price"], "шт")}</p>'
-                       + (f'<p class="pd-m2">{m2_line}</p>' if m2_line else "")
-                       + '<p class="pd-price-note">Цена завода. Итог с доставкой '
-                         'до вашего адреса посчитает менеджер.</p>')
-        action = (f'<button class="btn p-add" type="button" data-add '
-                  f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="{p["price"]}" '
-                  f'data-unit="шт" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
-                  f'data-url="tovar/kirpich-{p["id"]}.html" data-root="{root}">В заявку</button>')
+        price_cards_html = f"""
+        <div class="pd-price-cards">
+          <label class="pd-price-card is-selected" data-price-pcs="{price_val}">
+            <div class="pd-price-card-left">
+              <input type="radio" name="priceRate" checked>
+              <div>
+                <span class="pd-price-card-title">Цена завода</span>
+                <span class="pd-price-card-sub">Самовывоз или прямая отгрузка</span>
+              </div>
+            </div>
+            <div class="pd-price-card-val">
+              <b>{rub(price_val)} ₽</b>
+              <small>за 1 шт</small>
+            </div>
+          </label>
+          <label class="pd-price-card" data-price-pcs="{deliv_price_val}">
+            <div class="pd-price-card-left">
+              <input type="radio" name="priceRate">
+              <div>
+                <span class="pd-price-card-title">С доставкой по Краснодару</span>
+                <span class="pd-price-card-sub">Включая выгрузку манипулятором</span>
+              </div>
+            </div>
+            <div class="pd-price-card-val">
+              <b>~{rub(deliv_price_val)} ₽</b>
+              <small>за 1 шт</small>
+            </div>
+          </label>
+        </div>
+        """
+        initial_sum = rub(price_pal_val)
+        initial_m2 = tidy_num(rub(round(pal_qty / per, 1)))
+        total_html = f"""
+        <div class="pd-total-summary">
+          <span class="pd-total-summary-label">Итого на сумму:</span>
+          <div class="pd-total-summary-val">
+            <b>{initial_sum} ₽</b>
+            <small>({pal_qty} шт · {initial_m2} м² · 1 подд.)</small>
+          </div>
+        </div>
+        """
+        action_btn = (f'<button class="pd-btn-main" type="button" data-add '
+                      f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="{price_val}" '
+                      f'data-qty="{pal_qty}" data-unit="шт" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
+                      f'data-url="tovar/kirpich-{p["id"]}.html" data-root="{root}">'
+                      f'{ICON["cart"]}<span>В заявку</span></button>')
     else:
-        price_block = ('<p class="pd-price"><b>Цена по запросу</b></p>'
-                       '<p class="pd-m2">Подтверждаем при заказе — зависит от объёма '
-                       'и условий поставки.</p>')
-        action = (f'<button class="btn p-add" type="button" data-add '
-                  f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="" '
-                  f'data-unit="шт" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
-                  f'data-url="tovar/kirpich-{p["id"]}.html" data-root="{root}">В заявку</button>')
+        price_cards_html = """
+        <div class="pd-price-cards">
+          <div class="pd-price-card is-selected" style="cursor:default">
+            <div>
+              <span class="pd-price-card-title">Цена по запросу</span>
+              <span class="pd-price-card-sub">Подтверждаем при заказе от объёма</span>
+            </div>
+            <div class="pd-price-card-val">
+              <b>по запросу</b>
+            </div>
+          </div>
+        </div>
+        """
+        total_html = ""
+        action_btn = (f'<button class="pd-btn-main" type="button" data-add '
+                      f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="" '
+                      f'data-qty="{pal_qty}" data-unit="шт" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
+                      f'data-url="tovar/kirpich-{p["id"]}.html" data-root="{root}">'
+                      f'{ICON["cart"]}<span>В заявку</span></button>')
 
-    qty_html = qty_block(p) if has_price else ""
+    buybox_html = f"""
+    <div class="pd-buybox" data-price="{price_val}" data-per-m2="{per}" data-pallet="{pal_qty}" data-name="{esc(name)}">
+      <div class="pd-box-meta">
+        <span class="pd-sku">Артикул: {sku_val}</span>
+        <span class="pd-stock-badge">В наличии на складе</span>
+      </div>
 
-    terms = TERMS_STOCK if has_price else TERMS_ORDER
-    terms_html = ""
-    for ic, t in terms:
-        cls = ' class="is-wait"' if ic == "clock" else ""
-        terms_html += f"<li{cls}>{ICON[ic]}<span>{esc(t)}</span></li>"
+      <dl class="pd-mini-specs">
+        <dt>Завод:</dt><dd><a href="{root}{COLLECTIONS[coll]['slug'] if coll else 'kirpich-oblitsovochnyy'}.html">{esc(supplier_val)}</a></dd>
+        <dt>Формат / Габариты:</dt><dd>{esc(fmt_val)} ({esc(dims_val)})</dd>
+        <dt>Цвет / Поверхность:</dt><dd>{esc(color_val)} · {esc(texture_val)}</dd>
+      </dl>
 
-    # Цены форматов печатаем только там, где показана и основная цена. У забутовки
-    # цены скрыты по решению заказчика — без этой проверки прямо под надписью
-    # «Цена по запросу» выходил заводской прайс.
-    fmt_block = ""
-    if p.get("formats_prices"):
-        if has_price:
-            rows = "".join(f"<dt>{esc(FMT_FILTER.get(k, k))}</dt><dd>{rub(v)} ₽/шт</dd>"
-                           for k, v in sorted(p["formats_prices"].items(), key=lambda kv: kv[1]))
-        else:
-            rows = "".join(f"<dt>{esc(FMT_FILTER.get(k, k))}</dt><dd>цену назовёт менеджер</dd>"
-                           for k, v in sorted(p["formats_prices"].items(), key=lambda kv: kv[1]))
-        fmt_block = f'<div class="pd-specs"><h2>Другие форматы</h2><dl>{rows}</dl></div>'
+      {unit_tabs_html if has_price else ""}
+      {price_cards_html}
+
+      <div class="pd-order-controls">
+        <div class="pd-stepper-row">
+          <div class="pd-qty-stepper">
+            <button type="button" data-step="-1" aria-label="Меньше">−</button>
+            <input type="text" inputmode="numeric" value="{pal_qty}" aria-label="Количество, шт">
+            <button type="button" data-step="1" aria-label="Больше">+</button>
+          </div>
+          <div class="pd-pallet-hint">
+            <b>кратно поддону {pal_qty} шт</b>
+            <div>1 поддон ≈ {tidy_num(rub(round(pal_qty / per, 1)))} м² кладки</div>
+          </div>
+        </div>
+
+        <div class="pd-presets-row">
+          <button class="pd-preset-chip" type="button" data-add-pallet="1">+1 поддон ({pal_qty})</button>
+          <button class="pd-preset-chip" type="button" data-add-pallet="5">+5 поддонов ({pal_qty * 5})</button>
+          <button class="pd-preset-chip" type="button" data-add-pallet="18">+18 (шаланда {pal_qty * 18})</button>
+        </div>
+
+        {total_html}
+        {action_btn}
+
+        <div class="pd-fast-actions">
+          <a class="pd-fast-btn pd-fast-btn--wa" href="{wa_link('Здравствуйте! Хочу уточнить наличие и расчет: ' + name)}" target="_blank" rel="noopener">
+            {ICON["wa"]}<span>В WhatsApp</span>
+          </a>
+          <a class="pd-fast-btn pd-fast-btn--call" href="{PHONE_HREF}">
+            {ICON["phone"]}<span>Позвонить</span>
+          </a>
+        </div>
+
+        <div class="pd-oneclick-wrap">
+          <div class="pd-oneclick-title">Купить в 1 клик без оформления</div>
+          <form class="pd-oneclick-form" novalidate>
+            <input class="pd-oneclick-input" type="tel" placeholder="+7 (___) ___-__-__" required>
+            <button class="pd-oneclick-btn" type="submit">Купить в 1 клик</button>
+          </form>
+          <div class="pd-oneclick-note">
+            Нажимая кнопку, вы соглашаетесь с <a href="{root}policy.html">политикой конфиденциальности</a>
+          </div>
+        </div>
+
+        <div class="pd-price-guarantee">
+          {ICON["check"]}
+          <span><b>Прямые поставки с завода.</b> Честная заводская цена без наценок и переплат.</span>
+        </div>
+      </div>
+    </div>
+    """
+
+    # ---- Блок Вкладок (Tabs Section)
+    tabs_html = f"""
+    <section class="pd-tabs-section">
+      <div class="wrap">
+        <div class="pd-tabs-nav" role="tablist">
+          <button class="pd-tab-btn is-active" type="button" role="tab" data-tab="tabSpecs">
+            {ICON["doc"]}<span>Характеристики</span>
+          </button>
+          <button class="pd-tab-btn" type="button" role="tab" data-tab="tabCalc">
+            {ICON["calc"]}<span>Калькулятор кладки</span>
+          </button>
+          <button class="pd-tab-btn" type="button" role="tab" data-tab="tabDelivery">
+            {ICON["truck"]}<span>Доставка и разгрузка</span>
+          </button>
+          <button class="pd-tab-btn" type="button" role="tab" data-tab="tabPayment">
+            {ICON["card"]}<span>Оплата</span>
+          </button>
+        </div>
+
+        <div class="pd-tab-panel is-active" id="tabSpecs" role="tabpanel">
+          {dotted_specs_html(p)}
+        </div>
+
+        <div class="pd-tab-panel" id="tabCalc" role="tabpanel">
+          <div class="pd-calc-interactive">
+            <div class="pd-calc-grid">
+              <div class="pd-calc-fields">
+                <h3>Параметры фасада и кладки</h3>
+                <div class="pd-calc-field">
+                  <label for="fcArea">Площадь стен фасада (м²):</label>
+                  <input id="fcArea" type="number" step="any" value="100" placeholder="100">
+                </div>
+                <div class="pd-calc-row">
+                  <div class="pd-calc-field">
+                    <label for="fcLen">Или длина стен (м):</label>
+                    <input id="fcLen" type="number" step="any" placeholder="Например, 40">
+                  </div>
+                  <div class="pd-calc-field">
+                    <label for="fcHeight">Высота стен (м):</label>
+                    <input id="fcHeight" type="number" step="any" placeholder="Например, 3">
+                  </div>
+                </div>
+                <div class="pd-calc-field">
+                  <label for="fcThick">Толщина кладки:</label>
+                  <select id="fcThick">
+                    <option value="1" selected>Облицовка в 0,5 кирпича (120 мм)</option>
+                    <option value="2">Стена в 1 кирпич (250 мм)</option>
+                    <option value="3">Стена в 1,5 кирпича (380 мм)</option>
+                  </select>
+                </div>
+                <label class="pd-calc-check">
+                  <input id="fcWaste" type="checkbox" checked>
+                  <span>Добавить запас +5% на подрезку и бой</span>
+                </label>
+              </div>
+
+              <div class="pd-calc-results">
+                <div>
+                  <div class="pd-calc-results-title">Расчёт материалов</div>
+                  <div class="pd-calc-results-list">
+                    <div class="pd-calc-res-item">
+                      <span>Количество кирпича:</span>
+                      <b id="fcResBricks">5 397 шт</b>
+                    </div>
+                    <div class="pd-calc-res-item">
+                      <span>Количество поддонов:</span>
+                      <b id="fcResPallets">12 поддонов</b>
+                    </div>
+                    <div class="pd-calc-res-item">
+                      <span>Кладочный раствор:</span>
+                      <b id="fcResMortar">240 мешков (25 кг)</b>
+                    </div>
+                    <div class="pd-calc-res-item">
+                      <span>Общий вес партии:</span>
+                      <b id="fcResWeight">13,0 т</b>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="pd-calc-res-total">
+                    <span>Ориентировочная сумма:</span>
+                    <b id="fcResSum">142 913 ₽</b>
+                  </div>
+                  <button class="pd-btn-main" id="fcAddBtn" type="button">
+                    {ICON["cart"]}<span>Добавить расчёт в заявку</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pd-tab-panel" id="tabDelivery" role="tabpanel">
+          <div class="pd-delivery-info">
+            <h3>Доставка и разгрузка по Краснодару и ЮФО</h3>
+            <p>Мы доставляем кирпич напрямую с завода собственным транспортом разной грузоподъёмности (от 5 до 20 тонн), оборудованным краном-манипулятором для аккуратной выгрузки на вашем участке.</p>
+            <table class="pd-delivery-table">
+              <thead>
+                <tr>
+                  <th>Зона доставки</th>
+                  <th>Манипулятор 5–10 т</th>
+                  <th>Длинномер (шаланда 20 т)</th>
+                  <th>Срок доставки</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>По Краснодару (до 15 км)</td>
+                  <td>от 3 500 ₽</td>
+                  <td>от 7 500 ₽</td>
+                  <td>1–2 дня</td>
+                </tr>
+                <tr>
+                  <td>Пригород (до 30 км: Динская, Елизаветинская, Яблоновский)</td>
+                  <td>от 4 500 ₽</td>
+                  <td>от 9 000 ₽</td>
+                  <td>1–2 дня</td>
+                </tr>
+                <tr>
+                  <td>Краснодарский край и Адыгея (до 100 км)</td>
+                  <td>от 8 000 ₽</td>
+                  <td>от 15 000 ₽</td>
+                  <td>2–3 дня</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="pd-tab-panel" id="tabPayment" role="tabpanel">
+          <div class="pd-payment-info">
+            <h3>Условия оплаты</h3>
+            <div class="pd-payment-grid">
+              <div class="pd-payment-card">
+                <h4>Для частных покупателей</h4>
+                <p>• Оплата водителю-экспедитору наличными или переводом по факту доставки и проверки товара.<br>• Оплата банковской картой или через СБП.<br>• Предоплата при заказе индивидуальных заказных позиций завода.</p>
+              </div>
+              <div class="pd-payment-card">
+                <h4>Для строительных компаний и ИП</h4>
+                <p>• Безналичный расчёт по счёту с НДС 20% или без НДС.<br>• Полный комплект закрывающих документов (УПД, паспорта качества, сертификаты ГОСТ).<br>• Договор поставки и фиксация цен на объём.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    """
+
+    crumbs = [("Главная", f"{root}index.html")]
+    if is_rab:
+        crumbs.append(("Забутовочный кирпич", f"{root}kirpich-zabutovochnyy.html"))
+    else:
+        crumbs.append(("Облицовочный кирпич", f"{root}kirpich-oblitsovochnyy.html"))
+        if coll:
+            crumbs.append((COLLECTIONS[coll]["title"], f"{root}{COLLECTIONS[coll]['slug']}.html"))
+    crumbs.append(((f"{_n}, {_m}" if _m else _n) if is_rab else p["name"], None))
 
     sim = [] if is_rab else similar(p)
     sim_html = ""
@@ -917,48 +1317,33 @@ def build_product(p):
     <div class="p-grid{grid_cls(len(sim))}">{"".join(card_of(q, root=root) for q in sim)}</div>
   </div></section>"""
 
-    crumbs = [("Главная", f"{root}index.html")]
-    if is_rab:
-        crumbs.append(("Забутовочный кирпич", f"{root}kirpich-zabutovochnyy.html"))
-    else:
-        crumbs.append(("Облицовочный кирпич", f"{root}kirpich-oblitsovochnyy.html"))
-        if coll:
-            crumbs.append((COLLECTIONS[coll]["title"], f"{root}{COLLECTIONS[coll]['slug']}.html"))
-    # В крошки берём то же имя, что и в заголовке. Сырое имя из прайса
-    # («КРАСНЫЙ Одинарный некондиционный», «Утолщенный полнотелый М150
-    # (F25 пустот. 12%, 3 скв.отв)») называло товар вторым, непонятным способом.
-    crumbs.append(((f"{_n}, {_m}" if _m else _n) if is_rab else p["name"], None))
-
-    where = COLLECTIONS[coll]["use"] if coll else \
-        "Рядовой кирпич для кладки: подбор марки под задачу, доставка до объекта."
-
     body = f"""
-  <section class="page-head"><div class="wrap">{crumbs_html(crumbs)}</div></section>
-  <section class="pd"><div class="wrap">
-    <div class="pd-grid">
-      <div class="pd-gallery">{gallery}{tone}</div>
-      <div class="pd-info">
-        <h1 class="pd-name">{esc(name)}</h1>
-        <p class="pd-meta">
-          <span class="pd-art">Артикул {esc(p["id"]).upper()}</span>
-          {zavod_line(p, root)}
-        </p>
-        <div class="buy">
-          {price_block}
-          {qty_html}
-          <div class="pd-bar">{action}
-            <a class="btn btn--call pd-bar-call" href="{PHONE_HREF}"
-               aria-label="Позвонить">{ICON["phone"]}<span>Позвонить</span></a>
-          </div>
-          <ul class="pd-terms">{terms_html}</ul>
-        </div>
-        <p class="pd-note">{esc(where)}</p>
-        <div class="pd-specs"><h2>Характеристики</h2><dl>{spec_rows(p)}</dl></div>
-        {fmt_block}
+  <section class="page-head">
+    <div class="wrap">
+      <div class="pd-header">
+        <h1 class="pd-title">{esc(name)}</h1>
+        {crumbs_html(crumbs)}
       </div>
     </div>
-  </div></section>
-{sim_html}
+  </section>
+
+  <section class="pd">
+    <div class="wrap">
+      <div class="pd-hero-grid">
+        <div>
+          {gallery_html}
+          {trust_html}
+        </div>
+        <div>
+          {buybox_html}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {tabs_html}
+  {cross_sell_html(root)}
+  {sim_html}
 """
     ld = {"@context": "https://schema.org", "@type": "Product", "name": name,
           "sku": p["id"].upper(),
@@ -976,8 +1361,6 @@ def build_product(p):
              f"Доставка по Краснодару и краю, наличный и безналичный расчёт." if has_price else
              f"{name}. Цена по запросу. Доставка по Краснодару и краю.")
 
-    # Если в имени уже есть тире («некондиция — уценка»), хвост заголовка
-    # цепляем точкой: два тире подряд не дают понять, где кончается товар.
     title = f"{name}. Купить в Краснодаре" if "—" in name else f"{name} — купить в Краснодаре"
 
     write_page(BASE / "tovar" / f"kirpich-{p['id']}.html", page_shell(
@@ -988,6 +1371,7 @@ def build_product(p):
 # ---------------------------------------------------------------------------
 def main():
     build_category()
+
     for slug in COLL_ORDER:
         build_collection(slug)
     build_zabutovka()

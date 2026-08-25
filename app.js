@@ -560,10 +560,10 @@
      8 · Галерея товара и лайтбокс
      ====================================================================== */
   (function gallery() {
-    var main = $('#pdMain');
+    var main = $('#pdMain') || $('.pd-main-img');
     if (!main) return;
 
-    var thumbs = $$('.pd-thumb');
+    var thumbs = $$('.pd-thumb, .pd-thumb-btn');
     var srcs = thumbs.length ? thumbs.map(function (t) { return t.dataset.src; }) : [main.src];
     var cur = 0;
     var lb = null;
@@ -607,7 +607,7 @@
       document.body.classList.remove('is-locked');
     }
 
-    var zoom = $('#pdZoom');
+    var zoom = $('#pdZoom') || $('.pd-zoom-trigger');
     if (zoom) zoom.addEventListener('click', open);
 
     document.addEventListener('keydown', function (e) {
@@ -616,6 +616,243 @@
       if (e.key === 'ArrowRight') show(cur + 1);
       if (e.key === 'ArrowLeft') show(cur - 1);
     });
+  })();
+
+  /* =========================================================================
+     8b · Интерактивная карточка товара ($10k Tier)
+     - Вкладки (Tabs)
+     - Переключатель единиц (шт / м² / поддон)
+     - Выбор типа цены (с завода / с доставкой / опт)
+     - Умный степпер и пресеты поддонов
+     - Интерактивный калькулятор фасада в табе
+     - Заказ в 1 клик
+     ====================================================================== */
+  (function pdProMax() {
+    // 1. Вкладки (Tabs)
+    var tabBtns = $$('.pd-tab-btn');
+    var tabPanels = $$('.pd-tab-panel');
+    if (tabBtns.length) {
+      tabBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var target = btn.dataset.tab;
+          tabBtns.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+          tabPanels.forEach(function (p) {
+            p.classList.toggle('is-active', p.id === target);
+          });
+        });
+      });
+    }
+
+    var buybox = $('.pd-buybox');
+    if (!buybox) return;
+
+    var basePrice = parseFloat(buybox.dataset.price || '0');
+    var perM2 = parseFloat(buybox.dataset.perM2 || '51.4');
+    var palletPcs = parseInt(buybox.dataset.pallet || '480', 10);
+    var mainBtn = $('.pd-btn-main', buybox);
+
+    var qtyInput = $('.pd-qty-stepper input', buybox);
+    var totalVal = $('.pd-total-summary-val b', buybox);
+    var totalSub = $('.pd-total-summary-val small', buybox);
+
+    // Цена за штуку при выбранном тарифе
+    var activeUnitPrice = basePrice;
+
+    function getQty() {
+      if (!qtyInput) return palletPcs;
+      var n = parseInt(String(qtyInput.value).replace(/\D/g, ''), 10);
+      return isNaN(n) || n < 1 ? palletPcs : n;
+    }
+
+    function updateTotal() {
+      var n = getQty();
+      if (qtyInput) qtyInput.value = n;
+      
+      var sum = activeUnitPrice * n;
+      var m2 = (n / perM2).toFixed(1).replace('.', ',');
+      var pal = (n / palletPcs).toFixed(1).replace('.0', '').replace('.', ',');
+
+      if (totalVal) totalVal.textContent = money(sum) + ' ₽';
+      if (totalSub) totalSub.textContent = '(' + money(n) + ' шт · ' + m2 + ' м² · ' + pal + ' подд.)';
+
+      if (mainBtn) {
+        mainBtn.dataset.qty = n;
+        var c = cartRead();
+        if (c[mainBtn.dataset.id]) {
+          c[mainBtn.dataset.id].n = n;
+          cartWrite(c);
+        }
+      }
+    }
+
+    // Степпер + / -
+    var stepper = $('.pd-qty-stepper', buybox);
+    if (stepper) {
+      stepper.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-step]');
+        if (!btn) return;
+        var step = parseInt(btn.dataset.step, 10);
+        var cur = getQty();
+        var delta = (step > 0 ? 1 : -1) * (cur % palletPcs === 0 ? palletPcs : 1);
+        qtyInput.value = Math.max(1, cur + delta);
+        updateTotal();
+      });
+      if (qtyInput) qtyInput.addEventListener('change', updateTotal);
+    }
+
+    // Пресеты (+1 поддон, +5 поддонов, +18 поддонов)
+    $$('.pd-preset-chip', buybox).forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var addPals = parseInt(chip.dataset.addPallet, 10) || 1;
+        var cur = getQty();
+        qtyInput.value = cur + addPals * palletPcs;
+        updateTotal();
+      });
+    });
+
+    // Переключатель единиц (шт / м² / поддон)
+    var unitBtns = $$('.pd-unit-btn', buybox);
+    var priceCards = $$('.pd-price-card', buybox);
+    unitBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        unitBtns.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var u = btn.dataset.unit; // 'pcs', 'm2', 'pal'
+
+        priceCards.forEach(function (card) {
+          var pPcs = parseFloat(card.dataset.pricePcs || '0');
+          var valEl = $('.pd-price-card-val b', card);
+          var subEl = $('.pd-price-card-val small', card);
+          if (!valEl || !pPcs) return;
+
+          if (u === 'm2') {
+            valEl.textContent = money(pPcs * perM2) + ' ₽';
+            if (subEl) subEl.textContent = 'за 1 м²';
+          } else if (u === 'pal') {
+            valEl.textContent = money(pPcs * palletPcs) + ' ₽';
+            if (subEl) subEl.textContent = 'за поддон (' + palletPcs + ' шт)';
+          } else {
+            valEl.textContent = money(pPcs) + ' ₽';
+            if (subEl) subEl.textContent = 'за 1 шт';
+          }
+        });
+      });
+    });
+
+    // Выбор карточки цены (радио)
+    priceCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        priceCards.forEach(function (c) {
+          c.classList.remove('is-selected');
+          var r = c.querySelector('input[type="radio"]');
+          if (r) r.checked = false;
+        });
+        card.classList.add('is-selected');
+        var rad = card.querySelector('input[type="radio"]');
+        if (rad) rad.checked = true;
+
+        var p = parseFloat(card.dataset.pricePcs || '0');
+        if (p > 0) activeUnitPrice = p;
+        updateTotal();
+      });
+    });
+
+    // 1-клик заказ
+    var oneClickForm = $('.pd-oneclick-form', buybox);
+    if (oneClickForm) {
+      var phoneInput = oneClickForm.querySelector('input[type="tel"]');
+      if (phoneInput) {
+        phoneInput.addEventListener('input', function () {
+          var v = phoneInput.value.replace(/\D/g, '');
+          if (v.charAt(0) === '7' || v.charAt(0) === '8') v = v.slice(1);
+          var s = '+7 ';
+          if (v.length > 0) s += '(' + v.slice(0, 3);
+          if (v.length >= 3) s += ') ' + v.slice(3, 6);
+          if (v.length >= 6) s += '-' + v.slice(6, 8);
+          if (v.length >= 8) s += '-' + v.slice(8, 10);
+          phoneInput.value = s.trim();
+        });
+      }
+      oneClickForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var phone = phoneInput ? phoneInput.value.trim() : '';
+        if (phone.replace(/\D/g, '').length < 11) {
+          toast('Пожалуйста, укажите полный номер телефона');
+          if (phoneInput) phoneInput.focus();
+          return;
+        }
+        var prodName = buybox.dataset.name || 'Товар';
+        var q = getQty();
+        var msg = 'Здравствуйте! Хочу оформить быстрый заказ: ' + prodName + ' в количестве ' + q + ' шт. Мой телефон: ' + phone;
+        window.open('https://wa.me/79000000000?text=' + encodeURIComponent(msg), '_blank');
+        toast('Заявка сформирована! Менеджер свяжется с вами.');
+      });
+    }
+
+    // 2. Интерактивный калькулятор фасада в Tab 2
+    var calcBox = $('.pd-calc-interactive');
+    if (calcBox) {
+      var inArea = $('#fcArea', calcBox);
+      var inLen = $('#fcLen', calcBox);
+      var inHeight = $('#fcHeight', calcBox);
+      var inThick = $('#fcThick', calcBox);
+      var inWaste = $('#fcWaste', calcBox);
+
+      var resBricks = $('#fcResBricks', calcBox);
+      var resPallets = $('#fcResPallets', calcBox);
+      var resMortar = $('#fcResMortar', calcBox);
+      var resWeight = $('#fcResWeight', calcBox);
+      var resSum = $('#fcResSum', calcBox);
+      var addCalcBtn = $('#fcAddBtn', calcBox);
+
+      function recalcFacade() {
+        var a = parseFloat((inArea && inArea.value || '').replace(',', '.')) || 0;
+        if (!a && inLen && inHeight) {
+          var l = parseFloat((inLen.value || '').replace(',', '.')) || 0;
+          var h = parseFloat((inHeight.value || '').replace(',', '.')) || 0;
+          a = l * h;
+        }
+        if (a <= 0) a = 100; // Дефолтное значение
+
+        var thickK = parseFloat(inThick ? inThick.value : '1') || 1;
+        var wasteK = (inWaste && inWaste.checked) ? 1.05 : 1.0;
+
+        var totalPieces = Math.ceil(a * perM2 * thickK * wasteK);
+        var totalPallets = Math.ceil(totalPieces / palletPcs);
+        var mortarBags = Math.ceil((a * 60 * thickK) / 25);
+        var weightTons = ((totalPieces * 2.4) / 1000).toFixed(1).replace('.', ',');
+        var totalMoney = Math.ceil(totalPieces * basePrice);
+
+        if (resBricks) resBricks.textContent = money(totalPieces) + ' шт';
+        if (resPallets) resPallets.textContent = totalPallets + ' ' + plural(totalPallets, 'поддон', 'поддона', 'поддонов');
+        if (resMortar) resMortar.textContent = mortarBags + ' ' + plural(mortarBags, 'мешок', 'мешка', 'мешков') + ' (25 кг)';
+        if (resWeight) resWeight.textContent = weightTons + ' т';
+        if (resSum) resSum.textContent = money(totalMoney) + ' ₽';
+
+        if (addCalcBtn) {
+          addCalcBtn.onclick = function () {
+            if (qtyInput) {
+              qtyInput.value = totalPieces;
+              updateTotal();
+            }
+            if (mainBtn) {
+              mainBtn.click();
+            }
+            toast('Расчет на ' + money(totalPieces) + ' шт добавлен в заявку!');
+          };
+        }
+      }
+
+      [inArea, inLen, inHeight, inThick, inWaste].forEach(function (el) {
+        if (el) {
+          el.addEventListener('input', recalcFacade);
+          el.addEventListener('change', recalcFacade);
+        }
+      });
+      recalcFacade();
+    }
+
+    updateTotal();
   })();
 
   /* =========================================================================

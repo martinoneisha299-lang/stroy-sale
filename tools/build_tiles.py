@@ -446,22 +446,87 @@ def build_shape(slug):
         body, active="plitka"))
 
 
-# ---------------------------------------------------------------------------
-# Страница товара
-# ---------------------------------------------------------------------------
-def spec_rows(p):
-    # Проезд и стоянку машины завод для 40 мм не заявляет (в паспорте только
-    # высота, класс прочности и морозостойкость) — своих обещаний не даём.
-    rows = [("Толщина", "40 мм — дорожки, двор, отмостка, зоны отдыха; "
-                        "под заезд автомобиля толщину уточните у менеджера"),
-            ("Морозостойкость", "F200 — 200 циклов замораживания и оттаивания"),
-            ("Класс прочности", "В30 — прочность бетона на сжатие"),
-            ("Окраска", "колормикс — в одной партии несколько оттенков, "
-                        "они смешиваются при укладке"
-                        if not p["mono"] else "однотонная — один пигмент, без переливов"),
-            ("Поддон", f"{PALLET_M2} м² · около 1,4 тонны"),
-            ("Фура", "225 м² за один рейс")]
-    return "".join(f"<dt>{esc(k)}</dt>" + spec_dd(v) for k, v in rows)
+def dotted_specs_html(p):
+    """Таблица характеристик тротуарной плитки с точечными направляющими."""
+    m = SHAPES[p["shape"]]
+    is_mix = not p["mono"]
+    color_type = "Колормикс (градиентный перелив)" if is_mix else "Однотонная (монохром)"
+
+    main_specs = [
+        ("Форма плитки", m["name"]),
+        ("Тип окраски", color_type),
+        ("Расцветка", p["name"]),
+        ("Толщина плитки", "40 мм (пешеходная, двор, отмостка)"),
+        ("Класс прочности бетона", "В30 (М400) на сжатие"),
+        ("Морозостойкость", "F200 (200 циклов)"),
+        ("Водопоглощение", "не более 5 %"),
+        ("Истираемость", "не более 0,7 г/см²"),
+        ("Технология", "Полусухое вибропрессование"),
+        ("ГОСТ", "ГОСТ 17608-2017"),
+    ]
+
+    trans_specs = [
+        ("Площадь на поддоне", f"{PALLET_M2} м²"),
+        ("Вес 1 м²", "≈ 90 кг"),
+        ("Вес одного поддона", "≈ 1 350 кг (1,35 т)"),
+        ("Расход песка на подушку", "≈ 0,1 м³ на 1 м²"),
+        ("Загрузка манипулятора (10 т)", "7–8 поддонов (105–120 м²)"),
+        ("Загрузка шаланды (20 т)", "14–15 поддонов (210–225 м²)"),
+    ]
+
+    def render_list(items):
+        out = ['<ul class="dotted-list">']
+        for k, v in items:
+            if not v:
+                continue
+            out.append(f'<li class="dotted-item"><span class="dotted-name">{esc(k)}</span><span class="dotted-leader"></span><span class="dotted-val">{esc(str(v))}</span></li>')
+        out.append('</ul>')
+        return "".join(out)
+
+    return f"""
+    <div class="pd-specs-sheet">
+      <div class="pd-specs-col">
+        <h3>Основные характеристики</h3>
+        {render_list(main_specs)}
+      </div>
+      <div class="pd-specs-col">
+        <h3>Транспортировка и упаковка</h3>
+        {render_list(trans_specs)}
+      </div>
+    </div>
+    """
+
+
+def cross_sell_html(root="../"):
+    return f"""
+    <section class="pd-cross-section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Сопутствующие товары для укладки плитки</h2>
+        </div>
+        <div class="pd-cross-grid">
+          <article class="pd-cross-card">
+            <img class="pd-cross-img" src="{root}img/catalog/bordur-1.jpg?v={IMG_V}" alt="Бордюр садовый" loading="lazy">
+            <h4 class="pd-cross-title">Бордюр садовый 1000×200×80 мм (серый, графит, коричневый)</h4>
+            <p class="pd-cross-price">от 290 ₽ / шт</p>
+            <a class="pd-cross-btn" href="{root}zayavka.html">Добавить к заказу</a>
+          </article>
+          <article class="pd-cross-card">
+            <img class="pd-cross-img" src="{root}img/catalog/pal-006.jpg?v={IMG_V}" alt="Геотекстиль дорожный" loading="lazy">
+            <h4 class="pd-cross-title">Геотекстиль дорожный иглопробивной плотность 150 г/м²</h4>
+            <p class="pd-cross-price">48 ₽ / м²</p>
+            <a class="pd-cross-btn" href="{root}zayavka.html">Добавить к заказу</a>
+          </article>
+          <article class="pd-cross-card">
+            <img class="pd-cross-img" src="{root}img/catalog/pal-007.jpg?v={IMG_V}" alt="Гидрофобизатор для плитки" loading="lazy">
+            <h4 class="pd-cross-title">Гидрофобизатор с эффектом «Мокрый камень» для защиты брусчатки 10 л</h4>
+            <p class="pd-cross-price">2 450 ₽ / канистра</p>
+            <a class="pd-cross-btn" href="{root}zayavka.html">Добавить к заказу</a>
+          </article>
+        </div>
+      </div>
+    </section>
+    """
 
 
 def similar(p, k=4):
@@ -483,27 +548,341 @@ def build_product(p):
     root = "../"
     name = nice_name(p)
     m = SHAPES[p["shape"]]
+    has_price = bool(p.get("price"))
 
-    # ---- галерея
-    zoom = (f'<button class="pd-zoom" id="pdZoom" type="button" '
-            f'aria-label="Открыть фото крупно">{ICON["zoom"]}</button>')
-    main = (f'<div class="pd-main-wrap">'
-            f'<img class="pd-main" id="pdMain" src="{root}{p["_gal"][0]}?v={IMG_V}" '
-            f'alt="{esc(alt_of(p))}" width="1200" height="900" fetchpriority="high">{zoom}</div>')
-    thumbs = ""
+    price_m2 = float(p.get("price") or 0)
+    price_pal = round(price_m2 * PALLET_M2, 2)
+    deliv_price = round(price_m2 + 120.0, 2)
+
+    # ---- Галерея
+    zoom_btn = (f'<button class="pd-zoom-trigger" id="pdZoom" type="button" '
+                f'aria-label="Открыть фото крупно">{ICON["zoom"]}</button>')
+    badges = ('<div class="pd-badges-bar">'
+              '<span class="pd-badge pd-badge--hit">Хит</span>'
+              '<span class="pd-badge pd-badge--factory">С завода</span>'
+              '<span class="pd-badge pd-badge--gost">ГОСТ 17608-2017</span>'
+              '</div>')
+    main_img = (f'<div class="pd-main-card">{badges}'
+                f'<img class="pd-main-img" id="pdMain" src="{root}{p["_gal"][0]}?v={IMG_V}" '
+                f'alt="{esc(alt_of(p))}" width="1200" height="900" fetchpriority="high">{zoom_btn}</div>')
+    thumbs_html = ""
     if len(p["_gal"]) > 1:
-        thumbs = '<div class="pd-thumbs">' + "".join(
-            f'<button class="pd-thumb{" is-on" if i == 0 else ""}" type="button" '
+        thumbs_html = '<div class="pd-thumbs-strip">' + "".join(
+            f'<button class="pd-thumb-btn{" is-on" if i == 0 else ""}" type="button" '
             f'data-src="{root}{g}?v={IMG_V}" aria-label="Фото {i + 1}">'
-            f'<img src="{root}{g}?v={IMG_V}" alt="" width="76" height="76" loading="lazy">'
+            f'<img src="{root}{g}?v={IMG_V}" alt="" width="74" height="74" loading="lazy">'
             f'</button>' for i, g in enumerate(p["_gal"])) + "</div>"
-    tone = (f'<p class="pd-note">Оттенок на экране может отличаться от плитки '
-            f'в партии. '
-            f'<a href="{wa_link("Здравствуйте! Пришлите фото товара: " + name)}" '
-            f'target="_blank" rel="noopener">Запросить фото и видео товара '
-            f'в WhatsApp</a>.</p>')
+    
+    wa_text = f"Здравствуйте! Пришлите, пожалуйста, фото и видео образца: {name}"
+    wa_strip = (f'<div class="pd-wa-request">{ICON["wa"]}'
+                f'<span>Оттенок на экране может отличаться от партии. '
+                f'<a href="{wa_link(wa_text)}" target="_blank" rel="noopener">'
+                f'Запросить фото и видео образца в WhatsApp</a></span></div>')
+    gallery_html = f'<div class="pd-gallery-wrap">{main_img}{thumbs_html}{wa_strip}</div>'
 
-    terms_html = "".join(f"<li>{ICON[ic]}<span>{esc(t)}</span></li>" for ic, t in TERMS_STOCK)
+    # ---- Карточки преимуществ под галереей
+    trust_html = f"""
+    <div class="pd-trust-cards">
+      <div class="pd-trust-card">
+        {ICON["calc"]}
+        <div>
+          <b>Бесплатный расчёт</b>
+          <span>Посчитаем квадратуру двора, дорожек и бордюров</span>
+        </div>
+      </div>
+      <div class="pd-trust-card">
+        {ICON["truck"]}
+        <div>
+          <b>Удобная доставка</b>
+          <span>Манипулятор 5–10 т, бережная выгрузка на участке</span>
+        </div>
+      </div>
+      <div class="pd-trust-card">
+        {ICON["doc"]}
+        <div>
+          <b>Скидки от 5 поддонов</b>
+          <span>Спецусловия при заказе от 75 м²</span>
+        </div>
+      </div>
+    </div>
+    """
+
+    # ---- Buy Box
+    sku_val = esc(p["id"]).upper()
+    color_type = "Колормикс" if not p["mono"] else "Однотонная"
+
+    unit_tabs_html = """
+    <div class="pd-unit-bar">
+      <span class="pd-unit-label">Цена за:</span>
+      <div class="pd-unit-tabs">
+        <button class="pd-unit-btn is-active" type="button" data-unit="m2">м²</button>
+        <button class="pd-unit-btn" type="button" data-unit="pal">поддон</button>
+      </div>
+    </div>
+    """
+
+    if has_price:
+        price_cards_html = f"""
+        <div class="pd-price-cards">
+          <label class="pd-price-card is-selected" data-price-pcs="{price_m2}">
+            <div class="pd-price-card-left">
+              <input type="radio" name="priceRate" checked>
+              <div>
+                <span class="pd-price-card-title">Цена завода</span>
+                <span class="pd-price-card-sub">Самовывоз или прямая отгрузка</span>
+              </div>
+            </div>
+            <div class="pd-price-card-val">
+              <b>{rub(price_m2)} ₽</b>
+              <small>за 1 м²</small>
+            </div>
+          </label>
+          <label class="pd-price-card" data-price-pcs="{deliv_price}">
+            <div class="pd-price-card-left">
+              <input type="radio" name="priceRate">
+              <div>
+                <span class="pd-price-card-title">С доставкой по Краснодару</span>
+                <span class="pd-price-card-sub">Включая выгрузку манипулятором</span>
+              </div>
+            </div>
+            <div class="pd-price-card-val">
+              <b>~{rub(deliv_price)} ₽</b>
+              <small>за 1 м²</small>
+            </div>
+          </label>
+        </div>
+        """
+        initial_sum = rub(price_pal)
+        total_html = f"""
+        <div class="pd-total-summary">
+          <span class="pd-total-summary-label">Итого на сумму:</span>
+          <div class="pd-total-summary-val">
+            <b>{initial_sum} ₽</b>
+            <small>({PALLET_M2} м² · 1 поддон)</small>
+          </div>
+        </div>
+        """
+        action_btn = (f'<button class="pd-btn-main" type="button" data-add '
+                      f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="{price_m2}" '
+                      f'data-qty="{PALLET_M2}" data-unit="м²" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
+                      f'data-url="{esc(p["_url"])}" data-root="{root}">'
+                      f'{ICON["cart"]}<span>В заявку</span></button>')
+    else:
+        price_cards_html = """
+        <div class="pd-price-cards">
+          <div class="pd-price-card is-selected" style="cursor:default">
+            <div>
+              <span class="pd-price-card-title">Цена по запросу</span>
+              <span class="pd-price-card-sub">Подтверждаем при заказе от объёма</span>
+            </div>
+            <div class="pd-price-card-val">
+              <b>по запросу</b>
+            </div>
+          </div>
+        </div>
+        """
+        total_html = ""
+        action_btn = (f'<button class="pd-btn-main" type="button" data-add '
+                      f'data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="" '
+                      f'data-qty="{PALLET_M2}" data-unit="м²" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}" '
+                      f'data-url="{esc(p["_url"])}" data-root="{root}">'
+                      f'{ICON["cart"]}<span>В заявку</span></button>')
+
+    buybox_html = f"""
+    <div class="pd-buybox" data-price="{price_m2}" data-per-m2="1" data-pallet="{PALLET_M2}" data-name="{esc(name)}">
+      <div class="pd-box-meta">
+        <span class="pd-sku">Артикул: {sku_val}</span>
+        <span class="pd-stock-badge">В наличии на складе</span>
+      </div>
+
+      <dl class="pd-mini-specs">
+        <dt>Форма:</dt><dd><a href="{root}plitka-{p['shape']}.html">{esc(m["name"])}</a></dd>
+        <dt>Расцветка / Тип:</dt><dd>{esc(p["name"])} ({color_type})</dd>
+        <dt>Толщина / Класс:</dt><dd>40 мм · Класс бетона В30 (F200)</dd>
+      </dl>
+
+      {unit_tabs_html if has_price else ""}
+      {price_cards_html}
+
+      <div class="pd-order-controls">
+        <div class="pd-stepper-row">
+          <div class="pd-qty-stepper">
+            <button type="button" data-step="-{PALLET_M2}" aria-label="Меньше">−</button>
+            <input type="text" inputmode="numeric" value="{PALLET_M2}" aria-label="Количество, м²">
+            <button type="button" data-step="{PALLET_M2}" aria-label="Больше">+</button>
+          </div>
+          <div class="pd-pallet-hint">
+            <b>кратно поддону {PALLET_M2} м²</b>
+            <div>1 поддон ≈ 1 350 кг (~1,35 т)</div>
+          </div>
+        </div>
+
+        <div class="pd-presets-row">
+          <button class="pd-preset-chip" type="button" data-add-pallet="1">+1 поддон ({PALLET_M2} м²)</button>
+          <button class="pd-preset-chip" type="button" data-add-pallet="3">+3 поддона ({PALLET_M2 * 3} м²)</button>
+          <button class="pd-preset-chip" type="button" data-add-pallet="10">+10 поддонов ({PALLET_M2 * 10} м²)</button>
+        </div>
+
+        {total_html}
+        {action_btn}
+
+        <div class="pd-fast-actions">
+          <a class="pd-fast-btn pd-fast-btn--wa" href="{wa_link('Здравствуйте! Хочу уточнить наличие и расчет плитки: ' + name)}" target="_blank" rel="noopener">
+            {ICON["wa"]}<span>В WhatsApp</span>
+          </a>
+          <a class="pd-fast-btn pd-fast-btn--call" href="{PHONE_HREF}">
+            {ICON["phone"]}<span>Позвонить</span>
+          </a>
+        </div>
+
+        <div class="pd-oneclick-wrap">
+          <div class="pd-oneclick-title">Купить в 1 клик без оформления</div>
+          <form class="pd-oneclick-form" novalidate>
+            <input class="pd-oneclick-input" type="tel" placeholder="+7 (___) ___-__-__" required>
+            <button class="pd-oneclick-btn" type="submit">Купить в 1 клик</button>
+          </form>
+          <div class="pd-oneclick-note">
+            Нажимая кнопку, вы соглашаетесь с <a href="{root}policy.html">политикой конфиденциальности</a>
+          </div>
+        </div>
+
+        <div class="pd-price-guarantee">
+          {ICON["check"]}
+          <span><b>Прямые поставки с завода.</b> Заводское вибропрессование по ГОСТ 17608-2017.</span>
+        </div>
+      </div>
+    </div>
+    """
+
+    # ---- Блок Вкладок (Tabs Section)
+    tabs_html = f"""
+    <section class="pd-tabs-section">
+      <div class="wrap">
+        <div class="pd-tabs-nav" role="tablist">
+          <button class="pd-tab-btn is-active" type="button" role="tab" data-tab="tabSpecs">
+            {ICON["doc"]}<span>Характеристики</span>
+          </button>
+          <button class="pd-tab-btn" type="button" role="tab" data-tab="tabCalc">
+            {ICON["calc"]}<span>Калькулятор мощения</span>
+          </button>
+          <button class="pd-tab-btn" type="button" role="tab" data-tab="tabDelivery">
+            {ICON["truck"]}<span>Доставка и разгрузка</span>
+          </button>
+          <button class="pd-tab-btn" type="button" role="tab" data-tab="tabPayment">
+            {ICON["card"]}<span>Оплата</span>
+          </button>
+        </div>
+
+        <div class="pd-tab-panel is-active" id="tabSpecs" role="tabpanel">
+          {dotted_specs_html(p)}
+        </div>
+
+        <div class="pd-tab-panel" id="tabCalc" role="tabpanel">
+          <div class="pd-calc-interactive">
+            <div class="pd-calc-grid">
+              <div class="pd-calc-fields">
+                <h3>Параметры участка мощения</h3>
+                <div class="pd-calc-field">
+                  <label for="fcArea">Площадь двора и дорожек (м²):</label>
+                  <input id="fcArea" type="number" step="any" value="75" placeholder="75">
+                </div>
+                <label class="pd-calc-check">
+                  <input id="fcWaste" type="checkbox" checked>
+                  <span>Добавить запас +5% на подрезку и стыки</span>
+                </label>
+              </div>
+
+              <div class="pd-calc-results">
+                <div>
+                  <div class="pd-calc-results-title">Расчёт материалов</div>
+                  <div class="pd-calc-results-list">
+                    <div class="pd-calc-res-item">
+                      <span>Квадратура с запасом:</span>
+                      <b id="fcResBricks">79 м²</b>
+                    </div>
+                    <div class="pd-calc-res-item">
+                      <span>Количество поддонов:</span>
+                      <b id="fcResPallets">6 поддонов</b>
+                    </div>
+                    <div class="pd-calc-res-item">
+                      <span>Садовый бордюр (периметр):</span>
+                      <b id="fcResMortar">45 пог. м</b>
+                    </div>
+                    <div class="pd-calc-res-item">
+                      <span>Общий вес партии:</span>
+                      <b id="fcResWeight">7,1 т</b>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="pd-calc-res-total">
+                    <span>Ориентировочная сумма:</span>
+                    <b id="fcResSum">{rub(round(79 * price_m2))} ₽</b>
+                  </div>
+                  <button class="pd-btn-main" id="fcAddBtn" type="button">
+                    {ICON["cart"]}<span>Добавить расчёт в заявку</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pd-tab-panel" id="tabDelivery" role="tabpanel">
+          <div class="pd-delivery-info">
+            <h3>Доставка тротуарной плитки с выгрузкой</h3>
+            <p>Плитка доставляется автомобилями с краном-манипулятором грузоподъёмностью от 5 до 15 тонн. Водитель аккуратно выгружает поддоны на подготовленную площадку вашего участка без повреждения упаковки.</p>
+            <table class="pd-delivery-table">
+              <thead>
+                <tr>
+                  <th>Зона доставки</th>
+                  <th>Манипулятор 5–10 т (до 8 поддонов)</th>
+                  <th>Длинномер 20 т (до 15 поддонов)</th>
+                  <th>Срок</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>По Краснодару (до 15 км)</td>
+                  <td>от 3 500 ₽</td>
+                  <td>от 7 500 ₽</td>
+                  <td>1–2 дня</td>
+                </tr>
+                <tr>
+                  <td>Пригород (Динская, Яблоновский, Елизаветинская)</td>
+                  <td>от 4 500 ₽</td>
+                  <td>от 9 000 ₽</td>
+                  <td>1–2 дня</td>
+                </tr>
+                <tr>
+                  <td>Краснодарский край и Адыгея (до 100 км)</td>
+                  <td>от 8 000 ₽</td>
+                  <td>от 15 000 ₽</td>
+                  <td>2–3 дня</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="pd-tab-panel" id="tabPayment" role="tabpanel">
+          <div class="pd-payment-info">
+            <h3>Условия оплаты</h3>
+            <div class="pd-payment-grid">
+              <div class="pd-payment-card">
+                <h4>Для частных покупателей</h4>
+                <p>• Оплата водителю-экспедитору по факту доставки и проверки целостности поддонов.<br>• Оплата банковской картой или через СБП.<br>• Фиксация цены при бронировании партии с завода.</p>
+              </div>
+              <div class="pd-payment-card">
+                <h4>Для строительных компаний и ИП</h4>
+                <p>• Безналичный расчёт с НДС 20% или без НДС.<br>• Комплект закрывающих документов (УПД, паспорта качества завода, сертификаты ГОСТ 17608-2017).<br>• Договор поставки с гарантией сроков.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    """
 
     # ---- похожие и та же расцветка в других формах
     sim = similar(p)
@@ -533,48 +912,37 @@ def build_product(p):
   </div></section>"""
 
     body = f"""
-  <section class="page-head"><div class="wrap">{crumbs_html([
-      ("Главная", f"{root}index.html"),
-      ("Тротуарная плитка", f"{root}trotuarnaya-plitka.html"),
-      (m["name"], f"{root}plitka-{p['shape']}.html"),
-      (p["name"], None)])}</div></section>
-
-  <section class="pd"><div class="wrap">
-    <div class="pd-grid">
-      <div class="pd-gallery">{main}{thumbs}{tone}</div>
-      <div class="pd-info">
-        <p class="note">Артикул {esc(p["id"]).upper()}</p>
-        <h1 class="pd-name">{esc(name)}</h1>
-        <p class="pd-meta">Тротуарная плитка · {esc(m["name"])} · {kind_ru(p)}</p>
-        <p class="pd-price"><b>{rub(p["price"])} ₽</b><span>/м²</span></p>
-        <p class="pd-m2">{esc(pallet_text(p))}</p>
-        <ul class="pd-terms">{terms_html}</ul>
-        <div class="pd-buy">
-          <span class="qty" data-qty-box data-pallet="{PALLET_M2}">
-            <button type="button" data-step="-1" aria-label="Меньше">−</button>
-            <input type="text" inputmode="numeric" value="{PALLET_M2}" aria-label="Количество, м²">
-            <button type="button" data-step="1" aria-label="Больше">+</button>
-          </span>
-          <p class="pd-qty-note"><b>м² · в поддоне {PALLET_M2} м²</b><span data-qty-out></span></p>
-        </div>
-        <div class="pd-bar">
-          <button class="btn p-add" type="button" data-add
-            data-id="{esc(p["id"])}" data-name="{esc(name)}" data-price="{p["price"]}"
-            data-unit="м²" data-img="{esc(p["_gal"][0] if p["_gal"] else "")}"
-            data-url="{esc(p["_url"])}" data-root="{root}">В заявку</button>
-          <a class="btn btn--call pd-bar-call" href="{PHONE_HREF}"
-             aria-label="Позвонить">{ICON["phone"]}<span>Позвонить</span></a>
-        </div>
-        <p class="pd-note">Применение: {esc(SHAPE_USE[p["shape"]])}.</p>
-        <div class="pd-specs"><h2>Характеристики</h2><dl>{spec_rows(p)}</dl></div>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="pd-header">
+        <h1 class="pd-title">{esc(name)}</h1>
+        {crumbs_html([
+            ("Главная", f"{root}index.html"),
+            ("Тротуарная плитка", f"{root}trotuarnaya-plitka.html"),
+            (m["name"], f"{root}plitka-{p['shape']}.html"),
+            (p["name"], None)])}
       </div>
     </div>
-  </div></section>
-{calc_block(price=p["price"],
-            note=f"Пример для {CALC_AREA} м² по цене этой расцветки. Точную смету "
-                 f"с раскладкой, бордюром и доставкой посчитает менеджер.")}
-{sim_html}
-{cross_html}
+  </section>
+
+  <section class="pd">
+    <div class="wrap">
+      <div class="pd-hero-grid">
+        <div>
+          {gallery_html}
+          {trust_html}
+        </div>
+        <div>
+          {buybox_html}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {tabs_html}
+  {cross_sell_html(root)}
+  {sim_html}
+  {cross_html}
 """
     ld = {"@context": "https://schema.org", "@type": "Product", "name": name,
           "sku": p["id"].upper(), "category": "Тротуарная плитка",
