@@ -1,4 +1,4 @@
-@import url("tokens.css?v=18");
+@import url("tokens.css?v=19");
 
 /* ============================================================================
    СТРОЙСЕЙЛ · витрина магазина стройматериалов
@@ -761,12 +761,20 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 /* На телефоне — всегда 2 в ряд (как в макете 6a), на широком экране плитки
    раскладываются по своей минимальной ширине. auto-fill в мобильной базе
    давал одну плитку на ряд: 216px минимума не помещаются дважды в 343px. */
+/* Ряд плиток — flex, а не grid, намеренно: в сетке последний ряд оставлял
+   пустые ячейки (5 разделов в две колонки = дыра рядом с «Металлосайдингом»,
+   8 форм плитки в три колонки — тоже). Во flex элементы последнего ряда
+   растягиваются и занимают ширину целиком. */
 .tiles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--s-3);
 }
-.tiles--1 { grid-template-columns: minmax(0, 1fr); }
+.tiles > * {
+  flex: 1 1 calc(50% - var(--s-3));
+  min-width: 0;
+}
+.tiles--1 > * { flex-basis: 100%; }
 
 /* Плитка раздела. Фото занимает ВЕРХ карточки целиком, подпись под ним —
    как в любом привычном магазине. Раньше миниатюра прижималась к правому
@@ -817,7 +825,7 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 /* Тёмная плитка «весь каталог». На телефоне тянется на обе колонки —
    иначе пятая плитка стоит в ряду одна и рядом зияет дыра. */
 .tile--all {
-  grid-column: 1 / -1;
+  flex-basis: 100%;
   justify-content: space-between;
   min-height: 0;
   padding-bottom: var(--s-5);
@@ -826,6 +834,19 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 }
 .tile--all:hover { background: var(--dark-press); color: var(--on-dark); }
 .tile--all span { color: var(--on-dark-soft); }
+
+/* Плитка последнего ряда растягивается на свободное место — и тогда её кадр
+   в пропорции 4:3 вырос бы в баннер на треть экрана. Поэтому у широкой плитки
+   кадр становится лентой. Запрос контейнерный: важна ширина самой плитки, а не
+   экрана. ВАЖНО: сам блок-контейнер своей шириной не опрашивается — правила
+   действуют только на вложенные элементы, поэтому меняем кадр, а не раскладку. */
+.tile { container-type: inline-size; }
+@container (min-width: 21rem) {
+  .tile img { aspect-ratio: 3 / 1; }
+}
+@container (min-width: 40rem) {
+  .tile img { aspect-ratio: 5 / 1; }
+}
 
 /* ==========================================================================
    8 · Панель управления каталогом и фильтры
@@ -2252,12 +2273,10 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
 /* --- ≥30em (480px): карточка дышит ------------------------------------- */
 @media (min-width: 30em) {
   .works { gap: var(--s-4); }
-  .tiles {
-    grid-template-columns: repeat(auto-fill, minmax(min(var(--tile-min), 100%), 1fr));
-    gap: var(--s-4);
-  }
+  .tiles { gap: var(--s-4); }
+  .tiles > * { flex-basis: min(var(--tile-min), 100%); }
   .tile { min-height: 150px; }
-  .tile--all { grid-column: auto; min-height: 150px; }
+  .tile--all { min-height: 150px; }
 }
 
 /* --- ≥48em (768px): планшет. Таб-бар уходит, шапка в одну строку -------- */

@@ -10,13 +10,19 @@
 
 import json
 from pathlib import Path
-from PIL import Image, ImageOps
+from PIL import Image, ImageFilter, ImageOps
 
 ROOT = Path("/Users/dm/Desktop/фото")
 OUT = Path("/Users/dm/Desktop/сайт/img/catalog")
 W, H = 1200, 900
-PAPER = (250, 249, 247)
-PAD = 0.92  # доля кадра под товар в режиме «вписать»
+# Подложка студийного кадра = токен --tile (#f3f4f5). Раньше здесь была
+# тёплая слоновая кость (250, 249, 247) из палитры до 17.08 — на холодной
+# серой плите карточки она читалась кремовым пятном.
+PLATE = (243, 244, 245)
+# Доля СТОРОНЫ КВАДРАТА под товар (не ширины кадра): витрина кадрирует
+# файл 4:3 в квадрат, и объект, вписанный по ширине, там обрезался бы.
+PAD = 0.86
+MAX_UP = 1.5  # предел растяжки мелкого исходника — дальше видно мыло
 
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -79,12 +85,52 @@ def trim_white(img, tol=238):
     return rgb.crop((x0, y0, x1, y1))
 
 
-def fit_on_paper(img):
-    canvas = Image.new("RGB", (W, H), PAPER)
-    img = img.convert("RGBA")
-    img.thumbnail((int(W * PAD), int(H * PAD)), Image.LANCZOS)
-    pos = ((W - img.width) // 2, (H - img.height) // 2)
-    canvas.paste(img, pos, img)
+def object_bbox(img):
+    """Границы самого товара — без полей, которые уже есть в исходнике."""
+    if has_alpha(img):
+        return img.convert("RGBA").getchannel("A").point(
+            lambda v: 255 if v > 8 else 0).getbbox()
+    rgb = img.convert("RGB")
+    return rgb.point(lambda v: 255 if v < 238 else 0).convert("L").getbbox()
+
+
+def plate_color(img):
+    """Цвет подложки: у вырезок — плита сайта, у кадров на белом — их же фон.
+
+    Иначе белый фон исходника лёг бы белым прямоугольником внутри серой
+    плиты — рамка в рамке.
+    """
+    if has_alpha(img):
+        return PLATE
+    rgb = img.convert("RGB")
+    w, h = rgb.size
+    corners = [rgb.getpixel(p) for p in
+               ((2, 2), (w - 3, 2), (2, h - 3), (w - 3, h - 3))]
+    return max(corners, key=sum)
+
+
+def fit_on_plate(img):
+    """Студийный кадр по центру подложки.
+
+    Поля исходника срезаются перед вписыванием: без этого поле накладывалось
+    на поле и товар занимал треть кадра (у «Астры Modf» — 33% ширины), из-за
+    чего карточка читалась дыркой в сетке кладок.
+    """
+    canvas = Image.new("RGB", (W, H), plate_color(img))
+    src = img.convert("RGBA")
+    box = object_bbox(img)
+    if box:
+        src = src.crop(box)
+    # Масштаб считаем сами: thumbnail() умеет только уменьшать, поэтому
+    # мелкий объект в большом кадре так и оставался мелким («Астра Modf» —
+    # 603px исходник, кирпич 404px). Апскейл ограничен MAX_UP, иначе мыло.
+    side = int(H * PAD)
+    scale = min(side / src.width, side / src.height, MAX_UP)
+    src = src.resize((max(1, round(src.width * scale)),
+                      max(1, round(src.height * scale))), Image.LANCZOS)
+    if scale > 1.15:
+        src = src.filter(ImageFilter.UnsharpMask(radius=2, percent=70, threshold=3))
+    canvas.paste(src, ((W - src.width) // 2, (H - src.height) // 2), src)
     return canvas
 
 
@@ -138,7 +184,10 @@ def main():
             skipped += 1
             continue
 
-        wall_at = next((i for i, (_, _, studio) in enumerate(loaded[:4]) if not studio), None)
+        # Кадр кладки ищем по ВСЕМ загруженным, а не по первым четырём:
+        # у семи товаров «Палитры» кладка лежит ровно пятой и раньше
+        # никогда не попадала на карточку.
+        wall_at = next((i for i, (_, _, studio) in enumerate(loaded) if not studio), None)
         if wall_at not in (None, 0):
             loaded.insert(0, loaded.pop(wall_at))
             promoted += 1
@@ -147,7 +196,7 @@ def main():
         for idx, (photo_name, img, studio) in enumerate(loaded):
             dst = OUT / (f"{p['id']}.jpg" if idx == 0 else f"{p['id']}-{idx + 1}.jpg")
             if studio:
-                out = fit_on_paper(img)
+                out = fit_on_plate(img)
             else:
                 out = cover_crop(trim_white(img))
             out.save(dst, "JPEG", quality=80, optimize=True, progressive=True)

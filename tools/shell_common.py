@@ -25,7 +25,7 @@ SITE_URL = "https://martinoneisha299-lang.github.io/stroy-sale/"
 
 # Версии кэша. Поднимать при ЛЮБОЙ правке styles.css / tokens.css / app.js —
 # иначе у посетителя останется старый файл и вёрстка «поедет».
-STYLES_V = 60
+STYLES_V = 61
 APP_V = 10
 
 # viewport-fit=cover обязателен: без него env(safe-area-inset-*) всегда 0, и во

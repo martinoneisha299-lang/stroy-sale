@@ -31,7 +31,7 @@ from shell_common import (BASE, ICON, PHONE_HREF, SITE_URL, TERMS_ORDER,
 
 DATA = json.loads((BASE / "_data" / "catalog.json").read_text())
 CAT_IMG = BASE / "img" / "catalog"
-IMG_V = 9          # версия кэша картинок каталога
+IMG_V = 10          # версия кэша картинок каталога
 
 # ---------------------------------------------------------------------------
 # Справочники
