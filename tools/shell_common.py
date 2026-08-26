@@ -25,8 +25,8 @@ SITE_URL = "https://martinoneisha299-lang.github.io/stroy-sale/"
 
 # Версии кэша. Поднимать при ЛЮБОЙ правке styles.css / tokens.css / app.js —
 # иначе у посетителя останется старый файл и вёрстка «поедет».
-STYLES_V = 64
-APP_V = 13
+STYLES_V = 65
+APP_V = 14
 
 # viewport-fit=cover обязателен: без него env(safe-area-inset-*) всегда 0, и во
 # встроенных браузерах (Telegram, Instagram), где страница занимает экран
@@ -174,6 +174,7 @@ ICON = {
                             '<circle cx="17.2" cy="17.2" r="2.3"/>'),
     "cart": _S % ("1.8", '<path d="M6 6h15l-1.5 9h-13z"/><circle cx="9" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/><path d="M6 6L4 2H1"/>'),
     "doc": _S % ("1.85", '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>'),
+    "camera": _S % ("1.85", '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>'),
     "wa": WA_SVG,
     "tg": TG_SVG,
 }
@@ -295,30 +296,39 @@ def header_html(root="", active="", lead=True):
 
 
 def catalog_drawer(root=""):
-    items = []
+    tiles = []
     for s in SECTIONS:
-        items.append(
-            f'<li><a href="{root}{s["url"]}">'
-            f'<img src="{root}{s["img"]}" alt="" width="48" height="48" loading="lazy">'
-            f'<span>{esc(s["title"])}<small>{esc(s["note"])}</small></span>'
-            f'<span class="arr">{ICON["right"]}</span></a></li>')
-    extra = [("Акции и предложения", f"{root}akcii.html"),
-             ("Доставка и оплата", f"{root}dostavka.html"),
-             ("Наши работы", f"{root}raboty.html"),
-             ("Моя заявка", f"{root}zayavka.html")]
-    for title, href in extra:
-        items.append(f'<li><a href="{href}"><span>{esc(title)}</span>'
-                     f'<span class="arr">{ICON["right"]}</span></a></li>')
+        tiles.append(
+            f'<a class="drawer-tile" href="{root}{s["url"]}">'
+            f'<img src="{root}{s["img"]}?v=11" alt="" width="320" height="240" loading="lazy">'
+            f'<strong>{esc(s["title"])}<span>{esc(s["note"])}</span></strong>'
+            f'</a>'
+        )
     return f"""
   <div class="drawer drawer--left" id="catDrawer" hidden>
     <div class="drawer-scrim" data-close></div>
-    <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Каталог">
+    <div class="drawer-panel drawer-panel--catalog" role="dialog" aria-modal="true" aria-label="Каталог">
       <div class="drawer-head">
-        <strong>Каталог</strong>
+        <strong>Каталог товаров</strong>
         <button class="drawer-close" type="button" data-close aria-label="Закрыть">{ICON["close"]}</button>
       </div>
       <div class="drawer-body">
-        <ul class="drawer-nav">{"".join(items)}</ul>
+        <div class="drawer-tiles">
+          {"".join(tiles)}
+        </div>
+
+        <div class="drawer-service">
+          <div class="drawer-nav-service">
+            <a href="{root}akcii.html">{ICON["percent"]} <span>Акции и спецпредложения</span><span class="arr">{ICON["right"]}</span></a>
+            <a href="{root}dostavka.html">{ICON["truck"]} <span>Доставка манипулятором</span><span class="arr">{ICON["right"]}</span></a>
+            <a href="{root}raboty.html">{ICON["camera"]} <span>Наши работы (фото объектов)</span><span class="arr">{ICON["right"]}</span></a>
+            <a href="{root}zayavka.html">{ICON["bookmark"]} <span>Моя заявка</span><span class="arr">{ICON["right"]}</span></a>
+          </div>
+          <div class="drawer-contact-box">
+            <a href="{PHONE_HREF}" class="drawer-tel">{ICON["phone"]} <span>{PHONE}</span></a>
+            <p class="drawer-hours">{CITY} и ЮФО · Без выходных 8:00–20:00</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

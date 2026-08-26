@@ -625,60 +625,69 @@ input[type="number"], input[type="search"], select, textarea {
   background: var(--paper);
 }
 
-/* Список разделов в шторке каталога */
-.drawer-group {
-  margin-bottom: var(--s-5);
+/* Панель каталога (шторка с плитками разделов) */
+.drawer-panel--catalog {
+  max-width: 420px;
 }
-.drawer-subhead {
-  display: block;
-  font-size: var(--fs-micro);
-  font-weight: 800;
-  color: var(--ink-4);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  margin-bottom: var(--s-2);
+.drawer-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-3);
 }
-.drawer-nav li + li { border-top: 1px solid var(--rule); }
-.drawer-nav a {
+.drawer-tile {
   display: flex;
-  align-items: center;
-  gap: var(--s-4);
-  padding: var(--s-3) 0;
-  font-size: var(--fs-base);
-  font-weight: 600;
-  color: var(--ink);
-}
-.drawer-nav a:hover { color: var(--accent); }
-.drawer-nav img {
-  flex: none;
-  width: 44px; height: 44px;
-  object-fit: cover;
-  background: var(--tile);
+  flex-direction: column;
+  border: 1px solid var(--rule);
   border-radius: var(--r-ui);
+  background: var(--paper);
+  overflow: hidden;
+  text-decoration: none;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
-.drawer-nav small {
+.drawer-tile:hover {
+  border-color: var(--ink-3);
+  box-shadow: var(--sh-float);
+}
+.drawer-tile img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #ffffff;
+}
+.drawer-tile strong {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-3);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.drawer-tile span {
   display: block;
-  font-size: var(--fs-xs);
+  margin-top: 2px;
+  font-size: var(--fs-micro);
   font-weight: 500;
   color: var(--ink-3);
-  margin-top: 2px;
+  line-height: 1.25;
 }
-.drawer-badge {
+.drawer-tile:last-child:nth-child(odd) {
+  grid-column: span 2;
+  flex-direction: row;
+  align-items: center;
+}
+.drawer-tile:last-child:nth-child(odd) img {
+  width: 110px;
+  height: 82px;
   flex: none;
-  font-size: var(--fs-micro);
-  font-weight: 700;
-  color: var(--accent-ink);
-  background: var(--accent-tint);
-  padding: 2px 6px;
-  border-radius: var(--r-ui);
-  margin-left: auto;
 }
-.drawer-nav .arr { margin-left: var(--s-2); color: var(--ink-4); display: flex; align-items: center; }
-.drawer-nav .arr svg { width: 16px; height: 16px; }
+.drawer-tile:last-child:nth-child(odd) strong {
+  padding: var(--s-3) var(--s-4);
+}
 
 /* Сервисный блок шторки */
 .drawer-service {
-  margin-top: var(--s-6);
+  margin-top: var(--s-5);
   padding-top: var(--s-5);
   border-top: 1px solid var(--rule);
 }
