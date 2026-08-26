@@ -337,6 +337,8 @@
       var p = parseFloat(c.dataset.price);
       c._price = isNaN(p) ? Infinity : p;   /* «по запросу» всегда в конце */
       c._new = c.dataset.new === '1';
+      var z = c.querySelector('.p-zavod');
+      c._factory = (z ? z.textContent.trim() : (c.dataset.coll || '')).toLowerCase();
     });
 
     /* «Новинки» показываем только там, где новинки действительно есть:
@@ -399,6 +401,10 @@
           var ap = a._price === Infinity ? -1 : a._price;
           var bp = b._price === Infinity ? -1 : b._price;
           return bp - ap || a._i - b._i;
+        });
+      } else if (by === 'factory') {
+        out.sort(function (a, b) {
+          return a._factory.localeCompare(b._factory, 'ru') || a._price - b._price || a._i - b._i;
         });
       } else if (by === 'new') {
         out.sort(function (a, b) { return (b._new ? 1 : 0) - (a._new ? 1 : 0) || a._i - b._i; });
@@ -557,12 +563,114 @@
   })();
 
   /* =========================================================================
-     8 · Галерея товара и лайтбокс
+     7b · Интерактивная галерея и свайп в карточках каталога
+     ====================================================================== */
+  (function cardGalleries() {
+    // Наведение мыши на десктопе (деление карточки на N зон)
+    document.addEventListener('pointerenter', function (e) {
+      var shot = e.target.closest('.p-shot[data-gallery]');
+      if (!shot) return;
+      var imgs = (shot.dataset.gallery || '').split('|');
+      if (imgs.length < 2) return;
+      var mainImg = shot.querySelector('img.p-img');
+      var dots = $$('.p-dots i', shot);
+      if (!mainImg) return;
+
+      function onMove(me) {
+        if (me.pointerType === 'touch') return;
+        var rect = shot.getBoundingClientRect();
+        var x = me.clientX - rect.left;
+        var idx = Math.floor((x / rect.width) * imgs.length);
+        if (idx < 0) idx = 0;
+        if (idx >= imgs.length) idx = imgs.length - 1;
+        if (mainImg.getAttribute('src') !== imgs[idx]) {
+          mainImg.setAttribute('src', imgs[idx]);
+          dots.forEach(function (d, n) { d.classList.toggle('on', n === idx); });
+        }
+      }
+      function onLeave() {
+        shot.removeEventListener('pointermove', onMove);
+        shot.removeEventListener('pointerleave', onLeave);
+        mainImg.setAttribute('src', imgs[0]);
+        dots.forEach(function (d, n) { d.classList.toggle('on', n === 0); });
+      }
+      shot.addEventListener('pointermove', onMove);
+      shot.addEventListener('pointerleave', onLeave);
+    }, true);
+
+    // Мобильный Touch-свайп по карточке товара
+    var touchStartX = 0, touchStartY = 0, touchMoved = false, currentShot = null;
+    document.addEventListener('touchstart', function (e) {
+      var shot = e.target.closest('.p-shot[data-gallery]');
+      if (shot && e.touches.length === 1) {
+        currentShot = shot;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchMoved = false;
+      } else {
+        currentShot = null;
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function (e) {
+      if (!currentShot || e.touches.length !== 1) return;
+      var dx = e.touches[0].clientX - touchStartX;
+      var dy = e.touches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+        touchMoved = true;
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchend', function (e) {
+      if (!currentShot || !touchMoved || e.changedTouches.length !== 1) {
+        currentShot = null;
+        return;
+      }
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy) * 1.1) {
+        var imgs = (currentShot.dataset.gallery || '').split('|');
+        if (imgs.length > 1) {
+          var mainImg = currentShot.querySelector('img.p-img');
+          var dots = $$('.p-dots i', currentShot);
+          var curSrc = mainImg ? mainImg.getAttribute('src') : '';
+          var curIdx = imgs.indexOf(curSrc);
+          if (curIdx < 0) curIdx = 0;
+          var nextIdx = dx < 0 ? (curIdx + 1) % imgs.length : (curIdx - 1 + imgs.length) % imgs.length;
+          if (mainImg) mainImg.setAttribute('src', imgs[nextIdx]);
+          dots.forEach(function (d, n) { d.classList.toggle('on', n === nextIdx); });
+        }
+      }
+      currentShot = null;
+    }, { passive: true });
+
+    // Клик по точкам карточки
+    document.addEventListener('click', function (e) {
+      var dot = e.target.closest('.p-dots i[data-idx]');
+      if (!dot) return;
+      var shot = dot.closest('.p-shot[data-gallery]');
+      if (!shot) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var idx = parseInt(dot.dataset.idx, 10);
+      var imgs = (shot.dataset.gallery || '').split('|');
+      if (imgs[idx]) {
+        var mainImg = shot.querySelector('img.p-img');
+        var dots = $$('.p-dots i', shot);
+        if (mainImg) mainImg.setAttribute('src', imgs[idx]);
+        dots.forEach(function (d, n) { d.classList.toggle('on', n === idx); });
+      }
+    });
+  })();
+
+  /* =========================================================================
+     8 · Галерея товара и лайтбокс (с Touch-свайпом)
      ====================================================================== */
   (function gallery() {
     var main = $('#pdMain') || $('.pd-main-img');
     if (!main) return;
 
+    var stage = main.closest('.pd-main-card') || main.closest('.pd-gallery-wrap') || main.parentNode;
     var thumbs = $$('.pd-thumb, .pd-thumb-btn');
     var srcs = thumbs.length ? thumbs.map(function (t) { return t.dataset.src; }) : [main.src];
     var cur = 0;
@@ -577,6 +685,40 @@
     thumbs.forEach(function (t, i) {
       t.addEventListener('click', function () { show(i); });
     });
+
+    // Touch-свайпы для главной галереи и лайтбокса
+    function addSwipe(el, onLeft, onRight) {
+      if (!el) return;
+      var startX = 0, startY = 0, moved = false;
+      el.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1) {
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          moved = false;
+        }
+      }, { passive: true });
+      el.addEventListener('touchmove', function (e) {
+        if (e.touches.length === 1) {
+          var dx = e.touches[0].clientX - startX;
+          var dy = e.touches[0].clientY - startY;
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+            moved = true;
+          }
+        }
+      }, { passive: true });
+      el.addEventListener('touchend', function (e) {
+        if (moved && e.changedTouches.length === 1) {
+          var dx = e.changedTouches[0].clientX - startX;
+          var dy = e.changedTouches[0].clientY - startY;
+          if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy) * 1.1) {
+            if (dx < 0) onRight();
+            else onLeft();
+          }
+        }
+      }, { passive: true });
+    }
+
+    addSwipe(stage || main, function () { show(cur - 1); }, function () { show(cur + 1); });
 
     function build() {
       lb = document.createElement('div');
@@ -593,6 +735,7 @@
         else if (e.target.closest('.lb-prev')) show(cur - 1);
         else if (e.target === lb || e.target.closest('.lb-close')) close();
       });
+      addSwipe(lb, function () { show(cur - 1); }, function () { show(cur + 1); });
     }
     function open() {
       if (!lb) build();

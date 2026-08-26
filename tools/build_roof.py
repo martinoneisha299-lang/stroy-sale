@@ -563,6 +563,7 @@ def card_of(p, root="", eager=False):
         contain = True
     else:
         img, alt = None, ""
+    gal_urls = [src(g) for g in entry["gallery"]] if entry.get("gallery") else None
     return product_card(
         href=f"tovar/krovlya-{p['id']}.html", name=full_name(p),
         # ВАЖНО: путь без root — product_card подставит его сам,
@@ -577,6 +578,7 @@ def card_of(p, root="", eager=False):
         meta=CARD_LINE[p["id"]],
         stock="Под заказ",
         shots=len(entry["gallery"]) + (1 if entry["scheme"] else 0),
+        gallery=gal_urls,
         data=f' data-task="{"|".join(p["task"])}" data-price=""',
         eager=eager)
 

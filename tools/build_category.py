@@ -75,13 +75,11 @@ COLLECTIONS = {
                        "фактуры кроста, руст, антик и ретро.",
                "use": "Применение: современные фасады — длинный формат зрительно растягивает стену."},
     "ekonom": {"title": "Тербунский гончар", "short": "Тербунский", "slug": "zavod-terbunskiy",
-               # Без «самые низкие цены» — это штамп, его ловит check_texts.
-               # Цифра говорит сама: у соседних заводов минимум 22,30 и 25,64 ₽.
                "desc": "Липецкая область. 27 видов, 6 цветов, гладкая фактура "
                        "и «старый город». Цена от 18,50 ₽/шт.",
-               "use": "Применение: хозпостройки, заборы и большие объёмы, где важна цена."},
+               "use": "Применение: фасады жилых домов, коттеджей и заборов — высокая морозостойкость и прочность."},
 }
-COLL_ORDER = ["ekonom", "klassika", "palitra", "evropa", "formovka"]
+COLL_ORDER = ["palitra", "evropa", "klassika", "ekonom", "formovka"]
 
 # Старые адреса страниц. Сайт лежит на GitHub Pages — серверных редиректов там
 # нет, поэтому на старых путях остаются страницы-заглушки с meta refresh.
@@ -401,9 +399,11 @@ def stock_text(p):
 
 
 def sort_key(p):
-    """Цвет → имя → гладкий раньше фактурного: цветовые семьи идут подряд."""
+    """Цвет → популярные заводы перед ручной формовкой → цена по возрастанию."""
     ci = COLOR_ORDER.index(p["color_group"]) if p["color_group"] in COLOR_ORDER else 99
-    return (ci, p["name"].lower(), 0 if p.get("texture") == "гладкий" else 1)
+    is_premium = 1 if p.get("collection") == "formovka" else 0
+    price_val = p.get("price") or 9999
+    return (ci, is_premium, price_val, p["name"].lower())
 
 
 def card_of(p, root="", eager=False):
@@ -423,12 +423,13 @@ def card_of(p, root="", eager=False):
     # Второй кадр для наведения — только если он реально есть на диске.
     alt_img = f"{p['_gal'][1]}?v={IMG_V}" if len(p["_gal"]) > 1 else None
     coll = p.get("collection")
+    gal_urls = [f"{g}?v={IMG_V}" for g in p["_gal"]] if p.get("_gal") else None
     return product_card(
         href=f"tovar/kirpich-{p['id']}.html", name=nice_name(p), img=img,
         alt=nice_name(p), price_html=price_html(p), m2=m2_text(p),
         badge="Новинка" if p["name"] in NOVINKI else None,
         meta=COLLECTIONS[coll]["title"] if coll else "",
-        stock=stock_text(p), shots=len(p["_gal"]),
+        stock=stock_text(p), shots=len(p["_gal"]), gallery=gal_urls,
         data=data, root=root, add=add, eager=eager, alt_img=alt_img)
 
 
@@ -461,19 +462,20 @@ def facet(items, key, order=None, label=None):
 
 def brick_filters(items, *, with_coll=True):
     prices = [p["price"] for p in items if p.get("price")]
-    groups = [fprice(rub(min(prices)) if prices else "0",
-                     rub(max(prices)) if prices else "0")]
+    groups = []
+    if with_coll:
+        coll = [(s, COLLECTIONS[s]["title"],
+                 sum(1 for p in items if p.get("collection") == s))
+                for s in COLL_ORDER if any(p.get("collection") == s for p in items)]
+        groups.append(fgroup("Производитель (завод)", "coll", coll))
+    groups.append(fprice(rub(min(prices)) if prices else "0",
+                         rub(max(prices)) if prices else "0"))
     groups.append(fgroup("Цвет", "color",
                          facet(items, "color_group", COLOR_ORDER, COLOR_LABEL),
                          dots=color_dots(items)))
     groups.append(fgroup("Фактура", "texture",
                          facet(items, "texture", TEX_ORDER, TEX_LABEL)))
     groups.append(fgroup("Формат", "format", facet(items, "format", label=FMT_FILTER)))
-    if with_coll:
-        coll = [(s, COLLECTIONS[s]["title"],
-                 sum(1 for p in items if p.get("collection") == s))
-                for s in COLL_ORDER if any(p.get("collection") == s for p in items)]
-        groups.insert(1, fgroup("Завод", "coll", coll))
     if any(p["name"] in NOVINKI for p in items):
         groups.append(fgroup("", "new", [("1", "Только новинки",
                                           sum(1 for p in items if p["name"] in NOVINKI))]))

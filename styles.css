@@ -626,28 +626,100 @@ input[type="number"], input[type="search"], select, textarea {
 }
 
 /* Список разделов в шторке каталога */
+.drawer-group {
+  margin-bottom: var(--s-5);
+}
+.drawer-subhead {
+  display: block;
+  font-size: var(--fs-micro);
+  font-weight: 800;
+  color: var(--ink-4);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-2);
+}
 .drawer-nav li + li { border-top: 1px solid var(--rule); }
 .drawer-nav a {
   display: flex;
   align-items: center;
   gap: var(--s-4);
-  padding: var(--s-4) 0;
-  font-size: var(--fs-md);
+  padding: var(--s-3) 0;
+  font-size: var(--fs-base);
   font-weight: 600;
+  color: var(--ink);
 }
+.drawer-nav a:hover { color: var(--accent); }
 .drawer-nav img {
   flex: none;
-  width: 48px; height: 48px;
+  width: 44px; height: 44px;
   object-fit: cover;
   background: var(--tile);
+  border-radius: var(--r-ui);
 }
 .drawer-nav small {
   display: block;
   font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--ink-3);
+  margin-top: 2px;
 }
-.drawer-nav .arr { margin-left: auto; color: var(--ink-4); }
+.drawer-badge {
+  flex: none;
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  color: var(--accent-ink);
+  background: var(--accent-tint);
+  padding: 2px 6px;
+  border-radius: var(--r-ui);
+  margin-left: auto;
+}
+.drawer-nav .arr { margin-left: var(--s-2); color: var(--ink-4); display: flex; align-items: center; }
+.drawer-nav .arr svg { width: 16px; height: 16px; }
+
+/* Сервисный блок шторки */
+.drawer-service {
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+}
+.drawer-nav-service {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  margin-bottom: var(--s-5);
+}
+.drawer-nav-service a {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.drawer-nav-service a:hover { color: var(--accent); }
+.drawer-nav-service svg { width: 18px; height: 18px; color: var(--ink-3); flex: none; }
+.drawer-nav-service .arr { margin-left: auto; color: var(--ink-4); }
+.drawer-contact-box {
+  background: var(--field);
+  padding: var(--s-4);
+  border-radius: var(--r-ui);
+  border: 1px solid var(--rule);
+}
+.drawer-tel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-base);
+  font-weight: 800;
+  color: var(--ink);
+}
+.drawer-tel svg { width: 18px; height: 18px; color: var(--accent); }
+.drawer-hours {
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  margin-top: 4px;
+}
 
 body.is-locked { overflow: hidden; }
 
@@ -1179,8 +1251,11 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   background: var(--tile);
 }
 
-/* Точки-индикатор: показывают, что фотографий больше одной. Не листалка —
-   листают на странице товара. Активная точка — капсула цветом акцента. */
+/* Точки-индикатор и интерактивный свайп в карточке каталога */
+.p-shot[data-gallery] {
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
 .p-dots {
   position: absolute;
   left: 50%;
@@ -1189,19 +1264,33 @@ body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
   display: flex;
   gap: 4px;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
+  padding: 4px 6px;
+  background: rgba(0, 0, 0, .28);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: var(--r-pill);
 }
 .p-dots i {
+  display: block;
   width: 6px;
   height: 6px;
   border-radius: var(--r-pill);
-  background: var(--rule-strong);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, .55);
+  background: rgba(255, 255, 255, .7);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .3);
+  cursor: pointer;
+  transition: width var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }
 .p-dots i.on {
-  width: 20px;
-  border-radius: var(--r-ui);
+  width: 18px;
+  border-radius: var(--r-pill);
   background: var(--accent);
+}
+.p-dots i:hover {
+  background: #ffffff;
+}
+.pd-main-card, .pd-gallery-wrap, .lightbox {
+  touch-action: pan-y pinch-zoom;
 }
 
 /* Угловая кнопка «в заявку». Единственное действие в карточке: текстовых

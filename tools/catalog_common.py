@@ -24,9 +24,9 @@ from shell_common import ICON, esc, plural, terms_line
 # отдельным чекбоксом «Только новинки», где ему и место (и где его можно
 # сочетать с цветом и заводом, а не выбирать вместо сортировки).
 SORTS = [("default", "По каталогу"), ("cheap", "Сначала дешевле"),
-         ("exp", "Сначала дороже")]
+         ("exp", "Сначала дороже"), ("factory", "По заводу (А → Я)")]
 
-NO_PRICE_SORTS = [("default", "По каталогу")]
+NO_PRICE_SORTS = [("default", "По каталогу"), ("factory", "По заводу (А → Я)")]
 
 
 def toolbar(total, unit=("товар", "товара", "товаров"), sorts=None, filters=True,

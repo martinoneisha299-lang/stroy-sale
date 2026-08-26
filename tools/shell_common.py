@@ -25,8 +25,8 @@ SITE_URL = "https://martinoneisha299-lang.github.io/stroy-sale/"
 
 # Версии кэша. Поднимать при ЛЮБОЙ правке styles.css / tokens.css / app.js —
 # иначе у посетителя останется старый файл и вёрстка «поедет».
-STYLES_V = 63
-APP_V = 12
+STYLES_V = 64
+APP_V = 13
 
 # viewport-fit=cover обязателен: без него env(safe-area-inset-*) всегда 0, и во
 # встроенных браузерах (Telegram, Instagram), где страница занимает экран
@@ -488,7 +488,7 @@ def spec_dd(value, limit=26):
 
 def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=None,
                  meta="", stock="", data="", root="", add=None, img_contain=False,
-                 specs="", eager=False, alt_img=None, shots=0):
+                 specs="", eager=False, alt_img=None, shots=0, gallery=None):
     """
     Универсальная карточка витрины (кирпич, плитка, кровля).
 
@@ -499,6 +499,7 @@ def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=No
     add        — dict для угловой кнопки-закладки: {id, name, price, unit, img}
     shots      — сколько кадров в галерее: рисуем точки-индикатор, как в
                  карточке большого магазина (первая активна)
+    gallery    — список относительных путей картинок для интерактивного переключения
 
     Текстовых кнопок в карточке НЕТ. 20 карточек с чёрной кнопкой в каждой
     читались как забор (жалоба 29.07): действие ушло в угол фотографии
@@ -517,13 +518,19 @@ def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=No
         pic = (f'<div class="p-img p-none">{ICON["photo-off"]}'
                f'<span>Фотографии пришлём по запросу</span></div>')
 
-    # Точки-индикатор кадров. Не листалка: показывают, что фотографий больше
-    # одной, и приглашают открыть товар. Больше пяти не рисуем — сливаются.
+    # Точки-индикатор кадров и интерактивная галерея
     dots = ""
-    if shots > 1:
+    gal_attr = ""
+    if gallery and len(gallery) > 1:
+        gal_slice = gallery[:5]
+        gal_attr = f' data-gallery="{"|".join(esc(root + g) for g in gal_slice)}"'
+        dots = ('<span class="p-dots" aria-hidden="true">'
+                + "".join(f'<i{" class=on" if i == 0 else ""} data-idx="{i}"></i>' for i in range(len(gal_slice)))
+                + "</span>")
+    elif shots > 1:
         n = min(shots, 5)
         dots = ('<span class="p-dots" aria-hidden="true">'
-                + "".join(f'<i{" class=on" if i == 0 else ""}></i>' for i in range(n))
+                + "".join(f'<i{" class=on" if i == 0 else ""} data-idx="{i}"></i>' for i in range(n))
                 + "</span>")
 
     badge_html = ""
@@ -564,7 +571,7 @@ def product_card(*, href, name, img=None, alt="", price_html="", m2="", badge=No
     meta_html = f'<p class="p-zavod">{esc(meta)}</p>' if meta else ""
 
     return f"""<article class="p-card"{data}>
-  <div class="p-shot">{pic}{dots}{badge_html}{btn}</div>
+  <div class="p-shot"{gal_attr}>{pic}{dots}{badge_html}{btn}</div>
   <div class="p-in">
     <a class="p-name" href="{root}{href}">{esc(name)}</a>
     {meta_html}{specs}{price}{stock_html}

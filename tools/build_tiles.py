@@ -175,12 +175,13 @@ def card_of(p, root="", eager=False, with_shape=True):
     # Кнопка заявки есть и без цены — позиция уходит в тот же список
     add = {"id": p["id"], "name": nice_name(p), "price": p.get("price"), "unit": "м²",
            "img": p["_gal"][0] if p["_gal"] else ""}
+    gal_urls = [f"{g}?v={IMG_V}" for g in p["_gal"]] if p.get("_gal") else None
     return product_card(
         href=p["_url"], name=nice_name(p) if with_shape else f"Плитка «{p['name']}»",
         img=img, alt=alt_of(p), price_html=price_html(p), m2=pallet_text(p),
         meta=shape_name(p["shape"]) if not with_shape else kind_ru(p),
         stock="Поставка с завода" if p.get("price") else "Под заказ",
-        shots=len(p["_gal"]), data=data, root=root, add=add, eager=eager)
+        shots=len(p["_gal"]), gallery=gal_urls, data=data, root=root, add=add, eager=eager)
 
 
 def border_card(b, root=""):
